@@ -1,14 +1,21 @@
 {
   "name": "hackathon-5iw",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "description": "Hackathon Comutitres x ESGI",
   "scripts": {
-    "build": "tsc"
+    "dev": "pnpm --parallel --filter @comutitres/frontend --filter @comutitres/backend dev",
+    "dev:front": "pnpm --filter @comutitres/frontend dev",
+    "dev:back": "pnpm --filter @comutitres/backend dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "typescript": "^5.5.3"
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
   },
-  "private": true
+  "devDependencies": {}
 }
