@@ -19,6 +19,7 @@ make install
 Lancer toute la stack avec Docker :
 
 ```bash
+make docker-build
 make docker-up
 ```
 
@@ -33,6 +34,12 @@ Arreter la stack :
 
 ```bash
 make docker-down
+```
+
+Option plus rapide sur Docker recent :
+
+```bash
+make docker-up-bake
 ```
 
 ## Workflow dev local

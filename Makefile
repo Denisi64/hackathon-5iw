@@ -1,4 +1,4 @@
-.PHONY: help install dev dev-front dev-back build test lint docker-up docker-down db-migrate db-seed clean
+.PHONY: help install dev dev-front dev-back build test lint docker-build docker-up docker-up-bake docker-down db-migrate db-seed clean
 
 help:
 	@echo "Commandes disponibles:"
@@ -9,7 +9,9 @@ help:
 	@echo "  make build        Compiler le projet"
 	@echo "  make test         Lancer les tests"
 	@echo "  make lint         Verifier TypeScript"
+	@echo "  make docker-build Builder les images Docker"
 	@echo "  make docker-up    Lancer tous les services Docker"
+	@echo "  make docker-up-bake Lancer Docker avec BuildKit Bake"
 	@echo "  make docker-down  Arreter Docker"
 	@echo "  make db-migrate   Appliquer le schema BDD"
 	@echo "  make db-seed      Ajouter les donnees de test"
@@ -36,8 +38,14 @@ test:
 lint:
 	pnpm lint
 
+docker-build:
+	COMPOSE_BAKE=true docker compose build
+
 docker-up:
-	docker compose up --build
+	docker compose up
+
+docker-up-bake:
+	COMPOSE_BAKE=true docker compose up --build
 
 docker-down:
 	docker compose down
