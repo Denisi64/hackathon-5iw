@@ -12,7 +12,7 @@ export class PaymentsService {
 
   constructor(private readonly configService: ConfigService) {
     this.stripe = new Stripe(configService.get<string>('STRIPE_SECRET_KEY') ?? '', {
-      apiVersion: '2024-12-18.acacia',
+      apiVersion: '2025-02-24.acacia',
     })
     this.webhookSecret = configService.get<string>('STRIPE_WEBHOOK_SECRET') ?? ''
   }
