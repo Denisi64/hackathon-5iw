@@ -1,52 +1,66 @@
-import { Activity, ShieldCheck } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Menu, Mic, X } from 'lucide-react'
+import { useState } from 'react'
+import { NavLink, Route, Routes } from 'react-router-dom'
+import { AssistantScreen } from './screens/AssistantScreen'
+import { DashboardScreen } from './screens/DashboardScreen'
+import { HomeScreen } from './screens/HomeScreen'
+import { SimulateurScreen } from './screens/SimulateurScreen'
+import { SubscriptionScreen } from './screens/SubscriptionScreen'
+import { TimelineScreen } from './screens/TimelineScreen'
+import { VoiceButton } from './components/ui/VoiceButton'
 
-type HealthResponse = {
-  status: 'ok'
-  service: string
-  timestamp: string
-}
+const NAV_ITEMS = [
+  ['/', 'Accueil'],
+  ['/simulateur', 'Simulateur'],
+  ['/souscrire', 'Souscrire'],
+  ['/timeline', 'Timeline'],
+  ['/assistant', 'Assistant'],
+  ['/dashboard', 'Espace client'],
+] as const
 
 export function App() {
-  const [health, setHealth] = useState<HealthResponse | null>(null)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    fetch('/api/health')
-      .then(async (response) => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`)
-        return response.json() as Promise<HealthResponse>
-      })
-      .then(setHealth)
-      .catch((err: unknown) => {
-        setError(err instanceof Error ? err.message : 'Erreur inconnue')
-      })
-  }, [])
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [voiceEnabled, setVoiceEnabled] = useState(false)
 
   return (
-    <main className="app-shell">
-      <section className="hero" aria-labelledby="page-title">
-        <div className="brand">Comutitres</div>
-        <h1 id="page-title">Socle hackathon pret a coder</h1>
-        <p>
-          Front React, backend NestJS, PostgreSQL et MinIO sont prets pour lancer
-          le MVP de souscription.
-        </p>
-        <div className="status-list" aria-label="Etat des services">
-          <article className="status-card">
-            <Activity aria-hidden="true" />
-            <span>Frontend Vite</span>
-            <strong>OK</strong>
-          </article>
-          <article className="status-card">
-            <ShieldCheck aria-hidden="true" />
-            <span>Backend NestJS</span>
-            <strong>{health ? 'OK' : error ? 'KO' : '...'}</strong>
-          </article>
-        </div>
-        {health && <small>Dernier healthcheck: {new Date(health.timestamp).toLocaleString('fr-FR')}</small>}
-        {error && <small role="alert">API indisponible: {error}</small>}
-      </section>
-    </main>
+    <div className="app-shell">
+      <header className="topbar">
+        <NavLink className="brand-lockup" to="/">
+          <strong>Comutitres</strong>
+          <span>Souscription transport en ligne</span>
+        </NavLink>
+        <button
+          className="icon-button topbar__menu"
+          onClick={() => setMenuOpen((current) => !current)}
+          type="button"
+          aria-label="Ouvrir le menu"
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </button>
+        <nav className={menuOpen ? 'main-nav main-nav--open' : 'main-nav'} aria-label="Navigation principale">
+          {NAV_ITEMS.map(([to, label]) => (
+            <NavLink key={to} to={to} onClick={() => setMenuOpen(false)}>
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+      </header>
+
+      <Routes>
+        <Route element={<HomeScreen />} path="/" />
+        <Route element={<SimulateurScreen />} path="/simulateur" />
+        <Route element={<SubscriptionScreen />} path="/souscrire" />
+        <Route element={<TimelineScreen />} path="/timeline" />
+        <Route element={<AssistantScreen />} path="/assistant" />
+        <Route element={<DashboardScreen />} path="/dashboard" />
+      </Routes>
+
+      <button className="speech-shortcut" type="button">
+        <Mic aria-hidden="true" />
+        Aide vocale disponible
+      </button>
+      <VoiceButton listening={voiceEnabled} onPress={() => setVoiceEnabled((current) => !current)} />
+    </div>
   )
 }
