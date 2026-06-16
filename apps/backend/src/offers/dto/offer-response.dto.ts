@@ -1,13 +1,13 @@
-import type { ProfilUsager } from '../../types/domain'
+import type { UserProfile } from '../../types/domain'
 
 export class OfferResponseDto {
   declare id: string
-  declare nom: string
+  declare name: string
   declare description: string | null
-  declare prixAn: number | null
-  declare prixMois: number | null
-  declare renouvellement: string | null
-  declare profils: ProfilUsager[]
-  declare justificatifsRequis: string[]
+  declare yearlyPrice: number | null
+  declare monthlyPrice: number | null
+  declare renewal: string | null
+  declare profiles: UserProfile[]
+  declare requiredDocuments: string[]
   declare meta: Record<string, unknown> | null
 }

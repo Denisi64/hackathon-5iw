@@ -22,7 +22,7 @@ describe('MockJwtAuthGuard', () => {
     expect(context.switchToHttp().getRequest().user).toEqual({
       sub: 'user-dev-a',
       email: 'dev-a@comutitres.local',
-      role: 'payeur',
+      role: 'payer',
     })
   })
 

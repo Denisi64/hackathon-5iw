@@ -8,6 +8,7 @@ import { HoldersModule } from './holders/holders.module'
 import { NotificationsModule } from './notifications/notifications.module'
 import { UsersModule } from './users/users.module'
 import { OffersModule } from './offers/offers.module'
+import { SubscriptionsModule } from './subscriptions/subscriptions.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { OffersModule } from './offers/offers.module'
     NotificationsModule,
     ExternalModule,
     OffersModule,
+    SubscriptionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

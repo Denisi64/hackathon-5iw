@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 import { db } from '../db'
 import { offers } from '../db/schema'
-import type { ProfilUsager } from '../types/domain'
+import type { UserProfile } from '../types/domain'
 import { OfferResponseDto } from './dto/offer-response.dto'
 
 function centsToEuros(value: number | null): number | null {
@@ -12,23 +12,23 @@ function centsToEuros(value: number | null): number | null {
 function toOfferResponse(row: typeof offers.$inferSelect): OfferResponseDto {
   return {
     id: row.id,
-    nom: row.nom,
+    name: row.name,
     description: row.description,
-    prixAn: centsToEuros(row.prixAn),
-    prixMois: centsToEuros(row.prixMois),
-    renouvellement: row.renouvellement,
-    profils: row.profils as ProfilUsager[],
-    justificatifsRequis: row.justificatifsRequis as string[],
+    yearlyPrice: centsToEuros(row.yearlyPrice),
+    monthlyPrice: centsToEuros(row.monthlyPrice),
+    renewal: row.renewal,
+    profiles: row.profiles as UserProfile[],
+    requiredDocuments: row.requiredDocuments as string[],
     meta: row.meta as Record<string, unknown> | null,
   }
 }
 
 @Injectable()
 export class OffersService {
-  async findAll(profil?: ProfilUsager): Promise<OfferResponseDto[]> {
-    const rows = await db.select().from(offers).where(eq(offers.actif, true))
-    const filtered = profil
-      ? rows.filter((row) => (row.profils as ProfilUsager[]).includes(profil))
+  async findAll(profile?: UserProfile): Promise<OfferResponseDto[]> {
+    const rows = await db.select().from(offers).where(eq(offers.active, true))
+    const filtered = profile
+      ? rows.filter((row) => (row.profiles as UserProfile[]).includes(profile))
       : rows
     return filtered.map(toOfferResponse)
   }

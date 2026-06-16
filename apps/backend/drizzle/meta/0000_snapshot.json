@@ -1,5 +1,5 @@
 {
-  "id": "79e1b38b-76e2-4fa5-ab34-e44a7735b1d5",
+  "id": "7ee8f21f-0961-4ecf-b399-e29646549b6b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -111,8 +111,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "nom": {
-          "name": "nom",
+        "name": {
+          "name": "name",
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true
@@ -123,40 +123,40 @@
           "primaryKey": false,
           "notNull": false
         },
-        "prix_an": {
-          "name": "prix_an",
+        "yearly_price": {
+          "name": "yearly_price",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
-        "prix_mois": {
-          "name": "prix_mois",
+        "monthly_price": {
+          "name": "monthly_price",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
-        "renouvellement": {
-          "name": "renouvellement",
+        "renewal": {
+          "name": "renewal",
           "type": "varchar(20)",
           "primaryKey": false,
           "notNull": false
         },
-        "actif": {
-          "name": "actif",
+        "active": {
+          "name": "active",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
           "default": true
         },
-        "profils": {
-          "name": "profils",
+        "profiles": {
+          "name": "profiles",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true,
           "default": "'[]'::jsonb"
         },
-        "justificatifs_requis": {
-          "name": "justificatifs_requis",
+        "required_documents": {
+          "name": "required_documents",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true,
@@ -188,32 +188,32 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "payeur_id": {
-          "name": "payeur_id",
+        "payer_id": {
+          "name": "payer_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "porteur_id": {
-          "name": "porteur_id",
+        "holder_id": {
+          "name": "holder_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
-        "porteur_nom": {
-          "name": "porteur_nom",
+        "holder_last_name": {
+          "name": "holder_last_name",
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": false
         },
-        "porteur_prenom": {
-          "name": "porteur_prenom",
+        "holder_first_name": {
+          "name": "holder_first_name",
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": false
         },
-        "porteur_ddn": {
-          "name": "porteur_ddn",
+        "holder_date_of_birth": {
+          "name": "holder_date_of_birth",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
@@ -298,12 +298,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "subscriptions_payeur_id_users_id_fk": {
-          "name": "subscriptions_payeur_id_users_id_fk",
+        "subscriptions_payer_id_users_id_fk": {
+          "name": "subscriptions_payer_id_users_id_fk",
           "tableFrom": "subscriptions",
           "tableTo": "users",
           "columnsFrom": [
-            "payeur_id"
+            "payer_id"
           ],
           "columnsTo": [
             "id"
@@ -311,12 +311,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "subscriptions_porteur_id_users_id_fk": {
-          "name": "subscriptions_porteur_id_users_id_fk",
+        "subscriptions_holder_id_users_id_fk": {
+          "name": "subscriptions_holder_id_users_id_fk",
           "tableFrom": "subscriptions",
           "tableTo": "users",
           "columnsFrom": [
-            "porteur_id"
+            "holder_id"
           ],
           "columnsTo": [
             "id"
@@ -385,9 +385,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "profil": {
-          "name": "profil",
-          "type": "profil",
+        "profile": {
+          "name": "profile",
+          "type": "user_profile",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false
@@ -399,15 +399,15 @@
           "notNull": false,
           "default": "'fr'"
         },
-        "rgpd_consent": {
-          "name": "rgpd_consent",
+        "gdpr_consent": {
+          "name": "gdpr_consent",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
           "default": false
         },
-        "rgpd_consent_at": {
-          "name": "rgpd_consent_at",
+        "gdpr_consent_at": {
+          "name": "gdpr_consent_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
@@ -464,19 +464,6 @@
         "high"
       ]
     },
-    "public.profil": {
-      "name": "profil",
-      "schema": "public",
-      "values": [
-        "salarie",
-        "etudiant",
-        "scolaire_junior",
-        "scolaire",
-        "senior",
-        "tst",
-        "amethyste"
-      ]
-    },
     "public.subscription_status": {
       "name": "subscription_status",
       "schema": "public",
@@ -488,6 +475,19 @@
         "suspended",
         "cancelled",
         "expired"
+      ]
+    },
+    "public.user_profile": {
+      "name": "user_profile",
+      "schema": "public",
+      "values": [
+        "employee",
+        "student",
+        "junior_school",
+        "school",
+        "senior",
+        "tst",
+        "amethyste"
       ]
     }
   },

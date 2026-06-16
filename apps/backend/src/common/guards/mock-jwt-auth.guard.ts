@@ -7,7 +7,7 @@ const MOCK_TOKEN = 'mock-token-devA'
 const MOCK_USER: JwtPayload = {
   sub: 'user-dev-a',
   email: 'dev-a@comutitres.local',
-  role: 'payeur',
+  role: 'payer',
 }
 
 @Injectable()
