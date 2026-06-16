@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { GLOSSAIRE } from '../../utils/glossaire'
+import { GLOSSARY } from '../../utils/glossary'
 
 interface GlossaryTooltipProps {
   term: string
@@ -7,7 +7,7 @@ interface GlossaryTooltipProps {
 }
 
 export function GlossaryTooltip({ term, children }: GlossaryTooltipProps) {
-  const definition = children ?? GLOSSAIRE[term]
+  const definition = children ?? GLOSSARY[term]
   return (
     <span className="glossary">
       <button className="glossary__term" type="button" aria-describedby={`glossary-${term}`}>

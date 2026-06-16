@@ -246,7 +246,7 @@ p {
 
 .subscription-preview,
 .panel,
-.forfait-card,
+.offer-card,
 .feature-tile,
 .side-summary,
 .chat-panel {
@@ -267,7 +267,7 @@ p {
 
 .subscription-preview__header,
 .preview-row,
-.forfait-card__header,
+.offer-card__header,
 .active-pass,
 .document-list div,
 .payment-box,
@@ -376,34 +376,34 @@ input[type="range"] {
   gap: 14px;
 }
 
-.forfait-card {
+.offer-card {
   display: grid;
   gap: 12px;
   padding: 20px;
 }
 
-.forfait-card--recommended {
+.offer-card--recommended {
   border-color: var(--brand-primary);
   background: linear-gradient(180deg, #ffffff, #f9f9ff);
 }
 
-.forfait-card__header strong {
+.offer-card__header strong {
   color: var(--brand-dark);
   font-size: 1.25rem;
   white-space: nowrap;
 }
 
-.forfait-card__header h3 {
+.offer-card__header h3 {
   margin: 8px 0 0;
 }
 
-.forfait-card__meta {
+.offer-card__meta {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.forfait-card__meta span,
+.offer-card__meta span,
 .badge {
   display: inline-flex;
   align-items: center;
@@ -422,7 +422,7 @@ input[type="range"] {
   background: var(--color-success-bg);
 }
 
-.forfait-card__tip {
+.offer-card__tip {
   margin-bottom: 0;
   color: var(--brand-dark);
 }
@@ -899,7 +899,7 @@ input[type="range"] {
     grid-template-columns: 1fr;
   }
 
-  .forfait-card__header,
+  .offer-card__header,
   .active-pass {
     align-items: flex-start;
     flex-direction: column;

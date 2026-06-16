@@ -1,52 +1,52 @@
-export type ProfilUsager =
-  | 'salarie'
-  | 'etudiant'
-  | 'scolaire_junior'
-  | 'scolaire'
+export type UserProfile =
+  | 'employee'
+  | 'student'
+  | 'junior_school'
+  | 'school'
   | 'senior'
-  | 'tst'
-  | 'amethyste'
+  | 'solidarity'
+  | 'amethyst'
 
-export type NiveauZone = 1 | 2 | 3 | 4 | 5
+export type ZoneLevel = 1 | 2 | 3 | 4 | 5
 
-export type Renouvellement = 'annuel' | 'mensuel' | 'trimestriel' | 'hebdomadaire' | 'usage'
+export type RenewalFrequency = 'annual' | 'monthly' | 'quarterly' | 'weekly' | 'pay_as_you_go'
 
-export interface SimulateurParams {
-  profil: ProfilUsager
-  joursParSemaine: number
-  trajetsParJour: number
-  zones: NiveauZone
+export interface SimulatorParams {
+  profile: UserProfile
+  weeklyUsageDays: number
+  tripsPerDay: number
+  zones: ZoneLevel
   age?: number
-  boursier?: boolean
+  scholarshipHolder?: boolean
 }
 
-export interface Forfait {
+export interface Offer {
   id: string
-  nom: string
+  name: string
   description: string
-  profils: ProfilUsager[]
-  prixAn: number | null
-  prixMois: number | null
-  zones: { min: NiveauZone; max: NiveauZone }
-  renouvellement: Renouvellement
-  justificatifsRequis: string[]
-  condition?: (params: SimulateurParams) => boolean
-  remboursementEmployeur?: number
+  profiles: UserProfile[]
+  yearlyPrice: number | null
+  monthlyPrice: number | null
+  zones: { min: ZoneLevel; max: ZoneLevel }
+  renewalFrequency: RenewalFrequency
+  requiredDocuments: string[]
+  condition?: (params: SimulatorParams) => boolean
+  employerRefundRate?: number
 }
 
-export interface TarifResultat {
-  forfait: Forfait
-  prixAnnuel: number
-  economieVsTickets: number
+export interface PriceResult {
+  offer: Offer
+  yearlyPrice: number
+  savingsVsTickets: number
   eligible: boolean
   recommended: boolean
-  conseil: string
+  advice: string
 }
 
 export interface SubscriptionDraft {
-  profil: ProfilUsager
-  forfaitId: string
+  profile: UserProfile
+  offerId: string
   currentStep: number
-  porteurDifferent: boolean
-  verificationAutomatique: boolean
+  hasDifferentPayer: boolean
+  usesAutomaticVerification: boolean
 }

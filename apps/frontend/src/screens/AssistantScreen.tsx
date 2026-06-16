@@ -87,7 +87,7 @@ function getMockAnswer(content: string): string {
 
 export function AssistantCta() {
   return (
-    <Link className="button button--primary button--md" to="/souscrire?forfait=imagine_r_etudiant">
+    <Link className="button button--primary button--md" to="/souscrire?forfait=imagine_r_student">
       Souscrire
     </Link>
   )

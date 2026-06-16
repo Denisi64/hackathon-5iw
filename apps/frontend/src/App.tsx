@@ -4,7 +4,7 @@ import { NavLink, Route, Routes } from 'react-router-dom'
 import { AssistantScreen } from './screens/AssistantScreen'
 import { DashboardScreen } from './screens/DashboardScreen'
 import { HomeScreen } from './screens/HomeScreen'
-import { SimulateurScreen } from './screens/SimulateurScreen'
+import { SimulatorScreen } from './screens/SimulatorScreen'
 import { SubscriptionScreen } from './screens/SubscriptionScreen'
 import { TimelineScreen } from './screens/TimelineScreen'
 import { VoiceButton } from './components/ui/VoiceButton'
@@ -49,7 +49,7 @@ export function App() {
 
       <Routes>
         <Route element={<HomeScreen />} path="/" />
-        <Route element={<SimulateurScreen />} path="/simulateur" />
+        <Route element={<SimulatorScreen />} path="/simulateur" />
         <Route element={<SubscriptionScreen />} path="/souscrire" />
         <Route element={<TimelineScreen />} path="/timeline" />
         <Route element={<AssistantScreen />} path="/assistant" />

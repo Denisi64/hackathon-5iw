@@ -1,30 +1,30 @@
-import type { ProfilUsager } from '../../types/domain'
+import type { UserProfile } from '../../types/domain'
 
-const LABELS: Record<ProfilUsager, string> = {
-  salarie: 'Salarie',
-  etudiant: 'Etudiant',
-  scolaire_junior: 'Junior',
-  scolaire: 'Scolaire',
+const LABELS: Record<UserProfile, string> = {
+  employee: 'Salarie',
+  student: 'Etudiant',
+  junior_school: 'Junior',
+  school: 'Scolaire',
   senior: 'Senior',
-  tst: 'Aide TST',
-  amethyste: 'Amethyste',
+  solidarity: 'Aide TST',
+  amethyst: 'Amethyste',
 }
 
 interface ProfileChipProps {
-  profil: ProfilUsager
+  profile: UserProfile
   active?: boolean
-  onSelect?: (profil: ProfilUsager) => void
+  onSelect?: (profile: UserProfile) => void
 }
 
-export function ProfileChip({ profil, active = false, onSelect }: ProfileChipProps) {
+export function ProfileChip({ profile, active = false, onSelect }: ProfileChipProps) {
   return (
     <button
       className={`profile-chip ${active ? 'profile-chip--active' : ''}`}
       type="button"
       aria-pressed={active}
-      onClick={() => onSelect?.(profil)}
+      onClick={() => onSelect?.(profile)}
     >
-      {LABELS[profil]}
+      {LABELS[profile]}
     </button>
   )
 }

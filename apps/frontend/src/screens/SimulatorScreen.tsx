@@ -1,13 +1,13 @@
 import { SlidersHorizontal } from 'lucide-react'
-import { ForfaitCard } from '../components/domain/ForfaitCard'
+import { OfferCard } from '../components/domain/OfferCard'
 import { ProfileChip } from '../components/domain/ProfileChip'
-import type { NiveauZone, ProfilUsager } from '../types/domain'
+import type { UserProfile, ZoneLevel } from '../types/domain'
 import { useSimulator } from '../hooks/useSimulator'
 
-const PROFILS: ProfilUsager[] = ['salarie', 'etudiant', 'scolaire_junior', 'scolaire', 'senior', 'tst', 'amethyste']
+const PROFILES: UserProfile[] = ['employee', 'student', 'junior_school', 'school', 'senior', 'solidarity', 'amethyst']
 
-export function SimulateurScreen() {
-  const { params, resultats, setProfil, setJoursParSemaine, setTrajetsParJour, setZones } = useSimulator()
+export function SimulatorScreen() {
+  const { params, results, setProfile, setWeeklyUsageDays, setTripsPerDay, setZones } = useSimulator()
 
   return (
     <main className="screen screen--split">
@@ -18,36 +18,30 @@ export function SimulateurScreen() {
         </span>
         <h1 id="simulator-title">Comparez selon votre usage reel.</h1>
         <div className="chip-row" aria-label="Profil usager">
-          {PROFILS.map((profil) => (
-            <ProfileChip active={params.profil === profil} key={profil} onSelect={setProfil} profil={profil} />
+          {PROFILES.map((profile) => (
+            <ProfileChip active={params.profile === profile} key={profile} onSelect={setProfile} profile={profile} />
           ))}
         </div>
         <Slider
           label="Jours par semaine"
           max={7}
           min={1}
-          onChange={setJoursParSemaine}
-          value={params.joursParSemaine}
+          onChange={setWeeklyUsageDays}
+          value={params.weeklyUsageDays}
         />
-        <Slider
-          label="Trajets par jour"
-          max={10}
-          min={1}
-          onChange={setTrajetsParJour}
-          value={params.trajetsParJour}
-        />
+        <Slider label="Trajets par jour" max={10} min={1} onChange={setTripsPerDay} value={params.tripsPerDay} />
         <Slider
           label="Zones parcourues"
           max={5}
           min={1}
-          onChange={(value) => setZones(value as NiveauZone)}
+          onChange={(value) => setZones(value as ZoneLevel)}
           value={params.zones}
         />
       </section>
 
       <section className="results-stack" aria-label="Classement des abonnements">
-        {resultats.length > 0 ? (
-          resultats.map((resultat) => <ForfaitCard key={resultat.forfait.id} resultat={resultat} />)
+        {results.length > 0 ? (
+          results.map((result) => <OfferCard key={result.offer.id} result={result} />)
         ) : (
           <article className="empty-state">
             <h2>Aucune offre directe</h2>

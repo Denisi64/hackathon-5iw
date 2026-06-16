@@ -5,17 +5,17 @@ import { DocumentUpload } from '../components/domain/DocumentUpload'
 import { GlossaryTooltip } from '../components/domain/GlossaryTooltip'
 import { Button } from '../components/ui/Button'
 import { StepProgress } from '../components/ui/StepProgress'
-import { FORFAITS } from '../utils/tarifsData'
+import { OFFERS } from '../utils/pricesData'
 import { formatCurrency } from '../utils/format'
 
 const STEPS = ['Profil', 'Offre', 'Justificatifs', 'Paiement', 'Confirmation']
 
 export function SubscriptionScreen() {
   const [searchParams] = useSearchParams()
-  const preselectedForfait = searchParams.get('forfait') ?? 'navigo_annuel'
+  const preselectedOffer = searchParams.get('forfait') ?? 'navigo_annual'
   const [step, setStep] = useState(1)
-  const [forfaitId, setForfaitId] = useState(preselectedForfait)
-  const forfait = useMemo(() => FORFAITS.find((item) => item.id === forfaitId) ?? FORFAITS[0], [forfaitId])
+  const [offerId, setOfferId] = useState(preselectedOffer)
+  const offer = useMemo(() => OFFERS.find((item) => item.id === offerId) ?? OFFERS[0], [offerId])
 
   return (
     <main className="screen">
@@ -28,7 +28,8 @@ export function SubscriptionScreen() {
           <div className="tunnel-step">
             <h2>Qui utilisera l'abonnement ?</h2>
             <p>
-              Le <GlossaryTooltip term="porteur" /> peut etre different du <GlossaryTooltip term="payeur" />.
+              Le <GlossaryTooltip term="holder">porteur</GlossaryTooltip> peut etre different du{' '}
+              <GlossaryTooltip term="payer">payeur</GlossaryTooltip>.
             </p>
             <div className="form-grid">
               <label className="text-field">
@@ -51,15 +52,15 @@ export function SubscriptionScreen() {
           <div className="tunnel-step">
             <h2>Offre recommandee</h2>
             <div className="offer-picker">
-              {FORFAITS.slice(0, 6).map((item) => (
+              {OFFERS.slice(0, 6).map((item) => (
                 <button
-                  className={item.id === forfaitId ? 'offer-option offer-option--active' : 'offer-option'}
+                  className={item.id === offerId ? 'offer-option offer-option--active' : 'offer-option'}
                   key={item.id}
-                  onClick={() => setForfaitId(item.id)}
+                  onClick={() => setOfferId(item.id)}
                   type="button"
                 >
-                  <strong>{item.nom}</strong>
-                  <span>{item.prixMois === null ? 'Selon dossier' : `${formatCurrency(item.prixMois)} / mois`}</span>
+                  <strong>{item.name}</strong>
+                  <span>{item.monthlyPrice === null ? 'Selon dossier' : `${formatCurrency(item.monthlyPrice)} / mois`}</span>
                 </button>
               ))}
             </div>
@@ -69,7 +70,7 @@ export function SubscriptionScreen() {
         {step === 3 && (
           <div className="tunnel-step">
             <h2>Justificatifs</h2>
-            {forfait.id.startsWith('tst') ? (
+            {offer.id.startsWith('solidarity') ? (
               <div className="api-check">
                 <ShieldCheck aria-hidden="true" />
                 <div>
@@ -77,8 +78,8 @@ export function SubscriptionScreen() {
                   <p>Aucun document a uploader pour cette demo.</p>
                 </div>
               </div>
-            ) : forfait.justificatifsRequis.length > 0 ? (
-              forfait.justificatifsRequis.map((documentType) => <DocumentUpload key={documentType} type={documentType} />)
+            ) : offer.requiredDocuments.length > 0 ? (
+              offer.requiredDocuments.map((documentType) => <DocumentUpload key={documentType} type={documentType} />)
             ) : (
               <div className="api-check">
                 <CheckCircle2 aria-hidden="true" />
@@ -101,8 +102,8 @@ export function SubscriptionScreen() {
             <div className="payment-box">
               <CreditCard aria-hidden="true" />
               <div>
-                <strong>{forfait.nom}</strong>
-                <p>{forfait.prixMois === null ? 'Montant confirme apres validation' : `${formatCurrency(forfait.prixMois)} par mois`}</p>
+                <strong>{offer.name}</strong>
+                <p>{offer.monthlyPrice === null ? 'Montant confirme apres validation' : `${formatCurrency(offer.monthlyPrice)} par mois`}</p>
               </div>
             </div>
             <label className="check-row">
@@ -131,9 +132,9 @@ export function SubscriptionScreen() {
       </section>
       <aside className="side-summary" aria-label="Resume">
         <UserRound aria-hidden="true" />
-        <h2>{forfait.nom}</h2>
-        <p>{forfait.description}</p>
-        <strong>{forfait.prixAn === null ? 'Selon dossier' : `${formatCurrency(forfait.prixAn)} / an`}</strong>
+        <h2>{offer.name}</h2>
+        <p>{offer.description}</p>
+        <strong>{offer.yearlyPrice === null ? 'Selon dossier' : `${formatCurrency(offer.yearlyPrice)} / an`}</strong>
       </aside>
     </main>
   )
