@@ -14,43 +14,43 @@ Projet hackathon ESGI x Comutitres.
 make install
 ```
 
-## Workflow dev recommande
+## Docker
 
-Lancer toute la stack avec Docker :
+Lancer le projet :
 
 ```bash
 make docker-build
 make docker-up
 ```
 
-URLs utiles :
+URLs :
 
 - Front : http://localhost:5173
 - API : http://localhost:3000/api/health
 - MinIO console : http://localhost:9001
 - PostgreSQL : localhost:5432
 
-Arreter la stack :
+Arreter :
 
 ```bash
 make docker-down
 ```
 
-Option plus rapide sur Docker recent :
+Avec Bake :
 
 ```bash
 make docker-up-bake
 ```
 
-## Workflow dev local
+## Local
 
-Si PostgreSQL et MinIO tournent deja, lancer seulement les apps :
+Si PostgreSQL et MinIO tournent deja :
 
 ```bash
 make dev
 ```
 
-Commandes separees :
+Separément :
 
 ```bash
 make dev-front
@@ -59,14 +59,14 @@ make dev-back
 
 ## Base de donnees
 
-La base tourne dans Docker. Appliquer le schema puis charger les donnees de test :
+Appliquer le schema et charger les donnees de test :
 
 ```bash
 make db-migrate
 make db-seed
 ```
 
-Si besoin de repartir de zero :
+Reset :
 
 ```bash
 make docker-down
@@ -76,7 +76,7 @@ make db-migrate
 make db-seed
 ```
 
-Comptes de test apres le seed :
+Comptes de test :
 
 - `salarie@test.com`
 - `etudiant@test.com`
@@ -111,15 +111,3 @@ apps/
   backend/        NestJS + Drizzle
 hackathon-context/ contexte metier
 ```
-
-## Variables d'environnement
-
-Les valeurs de dev sont dans `.env.example`.
-
-Docker utilise ce fichier par defaut. Pour une config locale personnalisee :
-
-```bash
-cp .env.example .env
-```
-
-Ne pas commit `.env`.

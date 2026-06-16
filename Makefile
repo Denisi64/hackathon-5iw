@@ -1,4 +1,4 @@
-.PHONY: help install dev dev-front dev-back build test lint docker-build docker-up docker-up-bake docker-down db-migrate db-seed clean
+.PHONY: help install dev dev-front dev-back build test lint ci docker-build docker-up docker-up-bake docker-down db-migrate db-seed clean
 
 help:
 	@echo "Commandes disponibles:"
@@ -9,6 +9,7 @@ help:
 	@echo "  make build        Compiler le projet"
 	@echo "  make test         Lancer les tests"
 	@echo "  make lint         Verifier TypeScript"
+	@echo "  make ci           Lancer les checks de CI en local"
 	@echo "  make docker-build Builder les images Docker"
 	@echo "  make docker-up    Lancer tous les services Docker"
 	@echo "  make docker-up-bake Lancer Docker avec BuildKit Bake"
@@ -38,8 +39,14 @@ test:
 lint:
 	pnpm lint
 
+ci:
+	pnpm install --frozen-lockfile
+	pnpm lint
+	pnpm test
+	pnpm build
+
 docker-build:
-	COMPOSE_BAKE=true docker compose build
+	docker compose build
 
 docker-up:
 	docker compose up
