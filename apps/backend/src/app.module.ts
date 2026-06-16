@@ -9,6 +9,7 @@ import { HoldersModule } from './holders/holders.module'
 import { NotificationsModule } from './notifications/notifications.module'
 import { UsersModule } from './users/users.module'
 import { OffersModule } from './offers/offers.module'
+import { PaymentsModule } from './payments/payments.module'
 import { SubscriptionsModule } from './subscriptions/subscriptions.module'
 
 @Module({
@@ -22,6 +23,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module'
     OffersModule,
     SubscriptionsModule,
     DocumentsModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
