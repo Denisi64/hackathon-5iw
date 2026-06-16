@@ -1,16 +1,17 @@
 import { Injectable, Logger } from '@nestjs/common'
+import { Cron } from '@nestjs/schedule'
 import { eq } from 'drizzle-orm'
 import { db } from '../db'
 import { subscriptions } from '../db/schema'
 import { NotificationsService } from './notifications.service'
 
-// TODO Sprint 4: ajouter @nestjs/schedule et décorer checkLifecycleEvents avec @Cron('0 8 * * *')
 @Injectable()
 export class NotificationsCron {
   private readonly logger = new Logger(NotificationsCron.name)
 
   constructor(private readonly notificationsService: NotificationsService) {}
 
+  @Cron('0 8 * * *')
   async checkLifecycleEvents() {
     this.logger.log('Vérification des événements lifecycle')
 
