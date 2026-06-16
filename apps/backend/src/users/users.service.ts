@@ -13,10 +13,10 @@ export class UsersService {
         email: users.email,
         firstName: users.firstName,
         lastName: users.lastName,
-        profil: users.profil,
+        profile: users.profile,
         role: users.role,
         language: users.language,
-        rgpdConsent: users.rgpdConsent,
+        gdprConsent: users.gdprConsent,
         createdAt: users.createdAt,
       })
       .from(users)
@@ -33,7 +33,7 @@ export class UsersService {
       .set({
         ...(dto.firstName && { firstName: dto.firstName }),
         ...(dto.lastName && { lastName: dto.lastName }),
-        ...(dto.profil && { profil: dto.profil as typeof users.$inferInsert['profil'] }),
+        ...(dto.profile && { profile: dto.profile as typeof users.$inferInsert['profile'] }),
         ...(dto.language && { language: dto.language }),
         updatedAt: new Date(),
       })
@@ -48,7 +48,7 @@ export class UsersService {
     const [sub] = await db
       .select()
       .from(subscriptions)
-      .where(eq(subscriptions.payeurId, userId))
+      .where(eq(subscriptions.payerId, userId))
       .orderBy(subscriptions.createdAt)
       .limit(1)
 
@@ -60,7 +60,7 @@ export class UsersService {
       .select({ id: documents.id, type: documents.type, status: documents.status, createdAt: documents.createdAt })
       .from(documents)
       .innerJoin(subscriptions, eq(documents.subscriptionId, subscriptions.id))
-      .where(eq(subscriptions.payeurId, userId))
+      .where(eq(subscriptions.payerId, userId))
   }
 
   async getNotifications(userId: string) {
@@ -87,7 +87,7 @@ export class UsersService {
       .returning()
 
     if (accepted && type === 'rgpd') {
-      await db.update(users).set({ rgpdConsent: true, rgpdConsentAt: new Date() }).where(eq(users.id, userId))
+      await db.update(users).set({ gdprConsent: true, gdprConsentAt: new Date() }).where(eq(users.id, userId))
     }
 
     return consent

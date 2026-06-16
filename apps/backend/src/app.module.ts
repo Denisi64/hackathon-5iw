@@ -2,11 +2,17 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { AiModule } from './ai/ai.module'
+import { DocumentsModule } from './documents/documents.module'
 import { AuthModule } from './auth/auth.module'
 import { ExternalModule } from './external/external.module'
 import { HoldersModule } from './holders/holders.module'
 import { NotificationsModule } from './notifications/notifications.module'
 import { UsersModule } from './users/users.module'
+import { FraudModule } from './fraud/fraud.module'
+import { OffersModule } from './offers/offers.module'
+import { PaymentsModule } from './payments/payments.module'
+import { SubscriptionsModule } from './subscriptions/subscriptions.module'
 
 @Module({
   imports: [
@@ -16,6 +22,12 @@ import { UsersModule } from './users/users.module'
     HoldersModule,
     NotificationsModule,
     ExternalModule,
+    OffersModule,
+    SubscriptionsModule,
+    DocumentsModule,
+    PaymentsModule,
+    FraudModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -15,8 +15,8 @@ export class RegisterDto {
   lastName!: string
 
   @IsOptional()
-  @IsIn(['salarie', 'etudiant', 'scolaire_junior', 'scolaire', 'senior', 'tst', 'amethyste'])
-  profil?: string
+  @IsIn(['employee', 'student', 'junior_school', 'school', 'senior', 'tst', 'amethyste'])
+  profile?: string
 
   @IsOptional()
   @IsString()

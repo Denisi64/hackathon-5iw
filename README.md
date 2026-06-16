@@ -90,8 +90,8 @@ make db-seed
 
 Comptes de test :
 
-- `salarie@test.com`
-- `etudiant@test.com`
+- `employee@test.com`
+- `student@test.com`
 - `tst@test.com`
 
 Mot de passe : `password123`
@@ -123,3 +123,32 @@ apps/
   backend/        NestJS + Drizzle
 hackathon-context/ contexte metier
 ```
+
+## Variables d'environnement
+
+Les valeurs de dev sont dans `.env.example`.
+
+Docker utilise ce fichier par defaut. Pour une config locale personnalisee :
+
+```bash
+cp .env.example .env
+```
+
+Ne pas commit `.env`.
+
+## API Endpoints
+
+| Method | Path | Auth | Description |
+|---|---|---|---|
+| GET | `/api/offers` | public | List active offers (optional `?profile=` filter) |
+| GET | `/api/offers/:id` | public | Get offer by id |
+| POST | `/api/subscriptions` | JWT | Create a subscription (status: draft) |
+| GET | `/api/subscriptions/:id` | JWT | Get subscription (payer or holder only) |
+| PATCH | `/api/subscriptions/:id` | JWT | Update subscription (payer only) |
+| POST | `/api/subscriptions/:id/confirm` | JWT | Create Stripe checkout session |
+| POST | `/api/subscriptions/:id/compute-fraud-score` | JWT | Compute fraud score — returns 204, score never exposed |
+| POST | `/api/documents/upload` | JWT | Upload document to MinIO (multipart/form-data) |
+| POST | `/api/documents/verify` | JWT | Run Claude vision OCR on a document |
+| POST | `/api/payments/webhook` | Stripe signature | Stripe webhook — activates subscription on payment |
+| POST | `/api/ai/chat` | JWT | Stream Claude chatbot response (text/plain chunked) |
+| POST | `/api/ai/recommend` | public | Get structured offer recommendation from Claude |
