@@ -8,6 +8,7 @@ import { ExternalModule } from './external/external.module'
 import { HoldersModule } from './holders/holders.module'
 import { NotificationsModule } from './notifications/notifications.module'
 import { UsersModule } from './users/users.module'
+import { FraudModule } from './fraud/fraud.module'
 import { OffersModule } from './offers/offers.module'
 import { PaymentsModule } from './payments/payments.module'
 import { SubscriptionsModule } from './subscriptions/subscriptions.module'
@@ -24,6 +25,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module'
     SubscriptionsModule,
     DocumentsModule,
     PaymentsModule,
+    FraudModule,
   ],
   controllers: [AppController],
   providers: [AppService],
