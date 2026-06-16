@@ -4,7 +4,6 @@ import { db } from '../db'
 import { subscriptions } from '../db/schema'
 import { NotificationsService } from './notifications.service'
 
-// TODO Sprint 4: ajouter @nestjs/schedule et décorer checkLifecycleEvents avec @Cron('0 8 * * *')
 @Injectable()
 export class NotificationsCron {
   private readonly logger = new Logger(NotificationsCron.name)
@@ -32,7 +31,7 @@ export class NotificationsCron {
 
     if (daysLeft === 30 || daysLeft === 7) {
       await this.notificationsService.createNotification(
-        sub.payeurId,
+        sub.payerId,
         'renewal',
         `Votre abonnement expire dans ${daysLeft} jours — renouvelez en 1 clic`,
       )
@@ -46,7 +45,7 @@ export class NotificationsCron {
 
     if (daysLeft === 15 || daysLeft === 5) {
       await this.notificationsService.createNotification(
-        sub.payeurId,
+        sub.payerId,
         'tst_expiry',
         `Vos droits TST expirent dans ${daysLeft} jours — pensez à votre attestation CAF`,
       )

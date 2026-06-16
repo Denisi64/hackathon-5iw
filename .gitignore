@@ -17,7 +17,7 @@ coverage/
 .turbo/
 .DS_Store
 .pnpm-store/
-pnpm-lock.yaml
+apps/*/pnpm-lock.yaml
 .idea/
 
 /claude
