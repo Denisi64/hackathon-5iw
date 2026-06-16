@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { DocumentsModule } from './documents/documents.module'
 import { AuthModule } from './auth/auth.module'
 import { ExternalModule } from './external/external.module'
 import { HoldersModule } from './holders/holders.module'
@@ -20,6 +21,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module'
     ExternalModule,
     OffersModule,
     SubscriptionsModule,
+    DocumentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
