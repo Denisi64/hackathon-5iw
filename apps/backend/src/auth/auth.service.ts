@@ -28,7 +28,7 @@ export class AuthService {
         passwordHash,
         firstName: dto.firstName,
         lastName: dto.lastName,
-        profile: (dto.profile as typeof users.$inferInsert['profile']) ?? null,
+        profil: (dto.profil as typeof users.$inferInsert['profil']) ?? null,
         language: dto.language ?? 'fr',
       })
       .returning()
@@ -53,10 +53,10 @@ export class AuthService {
         email: users.email,
         firstName: users.firstName,
         lastName: users.lastName,
-        profile: users.profile,
+        profil: users.profil,
         role: users.role,
         language: users.language,
-        gdprConsent: users.gdprConsent,
+        rgpdConsent: users.rgpdConsent,
         createdAt: users.createdAt,
       })
       .from(users)

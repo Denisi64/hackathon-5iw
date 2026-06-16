@@ -1,15 +1,15 @@
-export type UserProfile =
-  | 'employee'
-  | 'student'
-  | 'junior_school'
-  | 'school'
+export type ProfilUsager =
+  | 'salarie'
+  | 'etudiant'
+  | 'scolaire_junior'
+  | 'scolaire'
   | 'senior'
   | 'tst'
   | 'amethyste'
 
-export type ZoneLevel = 1 | 2 | 3 | 4 | 5
+export type NiveauZone = 1 | 2 | 3 | 4 | 5
 
-export type Renewal = 'annual' | 'monthly' | 'quarterly' | 'weekly' | 'usage'
+export type Renouvellement = 'annuel' | 'mensuel' | 'trimestriel' | 'hebdomadaire' | 'usage'
 
 export type SubscriptionStatus =
   | 'draft'
@@ -21,22 +21,3 @@ export type SubscriptionStatus =
   | 'expired'
 
 export type DocumentStatus = 'uploaded' | 'validating' | 'valid' | 'rejected'
-
-export type FraudLevel = 'low' | 'medium' | 'high'
-
-export interface SimulatorParams {
-  profile: UserProfile
-  daysPerWeek: number
-  tripsPerDay: number
-  zones: ZoneLevel
-  age?: number
-  scholarship?: boolean
-}
-
-export interface JwtPayload {
-  sub: string
-  email: string
-  role: string
-  iat?: number
-  exp?: number
-}
