@@ -58,21 +58,17 @@ jobs:
         run: docker compose config
 
       - name: Start
-        run: docker compose up -d --build
+        run: make start
 
       - name: Backend
-        run: |
-          for i in {1..40}; do
-            if curl -fsS http://localhost:3000/api/health; then
-              exit 0
-            fi
-            sleep 3
-          done
-          docker compose logs
-          exit 1
+        run: curl -fsS http://localhost:3000/api/health
 
       - name: Frontend
         run: curl -fsSI http://localhost:5173
+
+      - name: Logs
+        if: failure()
+        run: docker compose logs
 
       - name: Stop
         if: always()

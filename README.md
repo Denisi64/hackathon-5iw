@@ -14,6 +14,18 @@ Projet hackathon ESGI x Comutitres.
 make install
 ```
 
+## Demarrage rapide
+
+```bash
+make start
+```
+
+Ouvrir http://localhost:5173.
+
+```bash
+make stop
+```
+
 ## Docker
 
 Lancer le projet :
@@ -33,7 +45,7 @@ URLs :
 Arreter :
 
 ```bash
-make docker-down
+make stop
 ```
 
 Avec Bake :
