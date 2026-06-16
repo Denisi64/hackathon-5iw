@@ -21,3 +21,13 @@ export type SubscriptionStatus =
   | 'expired'
 
 export type DocumentStatus = 'uploaded' | 'validating' | 'valid' | 'rejected'
+
+export type FraudLevel = 'low' | 'medium' | 'high'
+
+export interface JwtPayload {
+  sub: string
+  email: string
+  role: string
+  iat?: number
+  exp?: number
+}

@@ -1,4 +1,4 @@
-import { boolean, date, integer, pgEnum, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { boolean, integer, jsonb, date, pgEnum, integer, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
 export const profilEnum = pgEnum('profil', [
   'salarie',
@@ -23,6 +23,8 @@ export const subscriptionStatusEnum = pgEnum('subscription_status', [
 ])
 
 export const documentStatusEnum = pgEnum('document_status', ['uploaded', 'validating', 'valid', 'rejected'])
+
+export const fraudLevelEnum = pgEnum('fraud_level', ['low', 'medium', 'high'])
 
 export const consentTypeEnum = pgEnum('consent_type', ['rgpd', 'cookies', 'document_upload'])
 
@@ -50,6 +52,9 @@ export const offers = pgTable('offers', {
   prixMois: integer('prix_mois'),
   renouvellement: varchar('renouvellement', { length: 20 }),
   actif: boolean('actif').default(true),
+  profils: jsonb('profils').notNull().default([]),
+  justificatifsRequis: jsonb('justificatifs_requis').notNull().default([]),
+  meta: jsonb('meta'),
 })
 
 export const subscriptions = pgTable('subscriptions', {
@@ -68,6 +73,9 @@ export const subscriptions = pgTable('subscriptions', {
   stripeSubscriptionId: varchar('stripe_subscription_id', { length: 255 }),
   stripeCustomerId: varchar('stripe_customer_id', { length: 255 }),
   fraudScore: integer('fraud_score'),
+  fraudLevel: fraudLevelEnum('fraud_level'),
+  fraudSignals: jsonb('fraud_signals'),
+  fraudCheckedAt: timestamp('fraud_checked_at'),
   startDate: timestamp('start_date'),
   endDate: timestamp('end_date'),
   createdAt: timestamp('created_at').defaultNow(),
@@ -84,6 +92,7 @@ export const documents = pgTable('documents', {
   status: documentStatusEnum('status').default('uploaded'),
   aiConfidence: integer('ai_confidence'),
   aiExtractedData: text('ai_extracted_data'),
+  aiIssues: jsonb('ai_issues'),
   validatedAt: timestamp('validated_at'),
   expiresAt: timestamp('expires_at'),
   createdAt: timestamp('created_at').defaultNow(),
