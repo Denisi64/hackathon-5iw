@@ -19,3 +19,5 @@ coverage/
 .pnpm-store/
 pnpm-lock.yaml
 .idea/
+
+/claude
