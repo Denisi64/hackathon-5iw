@@ -24,6 +24,15 @@ export type DocumentStatus = 'uploaded' | 'validating' | 'valid' | 'rejected'
 
 export type FraudLevel = 'low' | 'medium' | 'high'
 
+export interface SimulatorParams {
+  profile: UserProfile
+  daysPerWeek: number
+  tripsPerDay: number
+  zones: ZoneLevel
+  age?: number
+  scholarship?: boolean
+}
+
 export interface JwtPayload {
   sub: string
   email: string

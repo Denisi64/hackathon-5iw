@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common'
+import { OffersModule } from '../offers/offers.module'
+import { AiController } from './ai.controller'
 import { AiService } from './ai.service'
 
 @Module({
+  imports: [OffersModule],
+  controllers: [AiController],
   providers: [AiService],
   exports: [AiService],
 })

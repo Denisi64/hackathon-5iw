@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { AiModule } from './ai/ai.module'
 import { DocumentsModule } from './documents/documents.module'
 import { AuthModule } from './auth/auth.module'
 import { ExternalModule } from './external/external.module'
@@ -26,6 +27,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module'
     DocumentsModule,
     PaymentsModule,
     FraudModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
