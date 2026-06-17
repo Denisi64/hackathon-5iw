@@ -1,5 +1,5 @@
-/* Cinematic ambient background — 4 layers : radial base, noise, blobs animés, grid.
-   Léger en light, plus saturé en dark. */
+/* Cinematic ambient background: radial base, noise, animated blobs, and grid.
+   Lighter in light mode, more saturated in dark mode. */
 const NOISE_SVG =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(

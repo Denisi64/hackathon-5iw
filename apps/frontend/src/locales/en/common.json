@@ -1,7 +1,7 @@
 {
   "header": {
     "logoAriaLabel": "Comutitres, home",
-    "nav": { "simulator": "Simulator", "forfaits": "Plans", "subscribe": "Subscribe", "assistant": "Assistant", "login": "Sign in", "account": "My space" },
+    "nav": { "simulator": "Simulator", "plans": "Plans", "subscribe": "Subscribe", "assistant": "Assistant", "login": "Sign in", "account": "My space" },
     "menu": { "open": "Open menu", "close": "Close menu" }
   },
   "themeToggle": {
@@ -46,7 +46,7 @@
       "quote": "“{{text}}”",
       "ctaSimulate": "Launch the simulator",
       "otherStories": "Other stories",
-      "recommendedForfait": "Recommended plan"
+      "recommendedPlan": "Recommended plan"
     }
   },
   "stats": {
@@ -70,13 +70,13 @@
     }
   },
   "profiles": {
-    "salarie": "Employee",
-    "etudiant": "Student",
-    "scolaire_junior": "Junior",
-    "scolaire": "Pupil",
+    "employee": "Employee",
+    "student": "Student",
+    "junior_school": "Junior",
+    "school": "Pupil",
     "senior": "Senior",
-    "tst": "TST",
-    "amethyste": "Améthyste"
+    "solidarity": "TST",
+    "amethyst": "Améthyste"
   },
   "simulator": {
     "title": "Find your ideal plan",
@@ -122,7 +122,7 @@
       "jobseeker": { "title": "Job seeker / TST", "description": "Solidarity transport pricing based on your rights." },
       "parent": { "title": "Parent", "description": "Subscribing for your kids." },
       "scholar": { "title": "Pupil 11-17", "description": "You study in Île-de-France." },
-      "amethyste": { "title": "Améthyste", "description": "Person with disability (MDPH) — fare based on your department." }
+      "amethyst": { "title": "Améthyste", "description": "Person with disability (MDPH) — fare based on your department." }
     },
     "questions": {
       "age": "Your age",
@@ -142,7 +142,7 @@
       "jobseeker": { "summary": "Solidarity Transport Pricing adapts the fare to your resources.", "reasons": ["Automated CAF rights check", "No documents to upload", "Easy quarterly renewal"] },
       "parent":    { "summary": "One place to manage all your kids' subscriptions.", "reasons": ["Imagine R Pupil for each child", "A single family record covers all", "Automatic reminders before school year"] },
       "scholar":   { "summary": "Imagine R Pupil covers the full school year for ages 11-25.", "reasons": ["Full IDF network included", "Discounted scholarship rate available", "Automatic renewal each year"] },
-      "amethyste": { "summary": "The Améthyste fare adapts to your department of residence and your MDPH status.", "reasons": ["Fare varies by department", "Automatic check via MDPH notification", "Annual renewal with no paperwork"] }
+      "amethyst": { "summary": "The Améthyste fare adapts to your department of residence and your MDPH status.", "reasons": ["Fare varies by department", "Automatic check via MDPH notification", "Annual renewal with no paperwork"] }
     },
     "documents": {
       "upload": "Choose a file",
@@ -150,14 +150,14 @@
       "analyzing": "AI analysis in progress…",
       "validated": "Verified",
       "validatedHint": "Document checked automatically.",
-      "certificat_scolarite": { "label": "School certificate", "help": "Document issued by your school for the current year." },
-      "attestation_bourse":   { "label": "Scholarship proof", "help": "CROUS scholarship award letter." },
-      "contrat_travail":      { "label": "Employment contract", "help": "Optional — speeds up employer refund." },
-      "piece_identite":       { "label": "ID document", "help": "ID or passport to confirm your age." },
+      "school_certificate": { "label": "School certificate", "help": "Document issued by your school for the current year." },
+      "scholarship_certificate":   { "label": "Scholarship proof", "help": "CROUS scholarship award letter." },
+      "employment_contract":      { "label": "Employment contract", "help": "Optional — speeds up employer refund." },
+      "identity_document":       { "label": "ID document", "help": "ID or passport to confirm your age." },
       "france_connect":       { "label": "CAF verification via FranceConnect", "help": "Secure sign-in — no document to upload." },
-      "livret_famille":       { "label": "Family record book", "help": "One document covers all your kids." },
-      "carte_invalidite":     { "label": "Disability card", "help": "Inclusion Mobility Card (CMI) or legacy disability card." },
-      "notification_mdph":    { "label": "MDPH notification", "help": "Decision notification from the Departmental House for Disabled People." }
+      "family_record_book":       { "label": "Family record book", "help": "One document covers all your kids." },
+      "disability_card":     { "label": "Disability card", "help": "Inclusion Mobility Card (CMI) or legacy disability card." },
+      "mdph_notice":    { "label": "MDPH notification", "help": "Decision notification from the Departmental House for Disabled People." }
     },
     "account": {
       "firstName": "First name",
@@ -171,7 +171,7 @@
       "you": "there",
       "subtitle": "Your subscription is ready. Everything is verified.",
       "summary": "Summary",
-      "forfait": "Plan",
+      "plan": "Plan",
       "price": "Price",
       "startDate": "Start date",
       "email": "Email",
@@ -219,7 +219,7 @@
       "network": "Unable to reach the authentication server"
     }
   },
-  "forfaits": {
+  "plans": {
     "kicker": "All plans",
     "title": "Find the Navigo plan that fits you.",
     "subtitle": "Official Île-de-France Mobilités 2026 fares. Filter by profile for personal recommendations.",
@@ -230,7 +230,7 @@
     "flagDays": "Days per week",
     "flag": { "student": "Student", "alternant": "Apprentice", "worker": "Employee", "retired": "Retired", "rsa": "Income support (RSA)", "css": "CSS no copay", "ass": "ASS", "ame": "AME" },
     "recommended": "Recommended",
-    "type": { "jour": "Day", "hebdo": "Week", "mensuel": "Month", "annuel": "Yearly", "usage": "Pay-per-use" },
+    "type": { "day": "Day", "weekly": "Week", "monthly": "Month", "yearly": "Yearly", "usage": "Pay-per-use" },
     "documents": "Required documents",
     "documentsHint": "document(s)",
     "employerRefund": "{{percent}}% refunded by your employer",
@@ -246,19 +246,19 @@
     "perTrip": "per trip",
     "source": "Source:",
     "catalog": {
-      "navigo_jour": { "name": "Navigo Day", "description": "Unlimited travel for one full day." },
-      "navigo_semaine": { "name": "Navigo Week", "description": "Unlimited travel for the whole week." },
-      "navigo_mois": { "name": "Navigo Month", "description": "Unlimited travel for the month, with no annual commitment." },
-      "navigo_annuel": { "name": "Navigo Annual", "description": "Travel all year, with the 12th month included." },
+      "navigo_day": { "name": "Navigo Day", "description": "Unlimited travel for one full day." },
+      "navigo_week": { "name": "Navigo Week", "description": "Unlimited travel for the whole week." },
+      "navigo_month": { "name": "Navigo Month", "description": "Unlimited travel for the month, with no annual commitment." },
+      "navigo_yearly": { "name": "Navigo Annual", "description": "Travel all year, with the 12th month included." },
       "navigo_senior": { "name": "Navigo Senior", "description": "Preferential fare for people aged 62 and over." },
-      "imagine_r_etudiant": { "name": "Imagine R Student", "description": "The essential plan for students in Île-de-France." },
-      "imagine_r_scolaire": { "name": "Imagine R School", "description": "The annual plan for pupils, secondary students and apprentices." },
+      "imagine_r_student": { "name": "Imagine R Student", "description": "The essential plan for students in Île-de-France." },
+      "imagine_r_school": { "name": "Imagine R School", "description": "The annual plan for pupils, secondary students and apprentices." },
       "imagine_r_junior": { "name": "Imagine R Junior", "description": "Imagine R at a very low price for children under 11." },
-      "liberte_plus": { "name": "Navigo Liberté+", "description": "Pay per trip, from €1.64 per journey, all zones." },
-      "navigo_solidarite_75": { "name": "Solidarity 75%", "description": "75% discount for CSS without contribution or ASS beneficiaries." },
-      "navigo_reduction_50": { "name": "50% Discount", "description": "50% discount for AME beneficiaries." },
-      "navigo_gratuite": { "name": "Free Transport", "description": "Free transport for eligible RSA beneficiaries or ASS + CSS without contribution." },
-      "amethyste": { "name": "Améthyste", "description": "Plan for people with disabilities, depending on department." }
+      "liberty_plus": { "name": "Navigo Liberté+", "description": "Pay per trip, from €1.64 per journey, all zones." },
+      "navigo_solidarity_75": { "name": "Solidarity 75%", "description": "75% discount for CSS without contribution or ASS beneficiaries." },
+      "navigo_discount_50": { "name": "50% Discount", "description": "50% discount for AME beneficiaries." },
+      "navigo_free": { "name": "Free Transport", "description": "Free transport for eligible RSA beneficiaries or ASS + CSS without contribution." },
+      "amethyst": { "name": "Améthyste", "description": "Plan for people with disabilities, depending on department." }
     },
     "list": {
       "kicker": "Plan catalog",
@@ -271,7 +271,7 @@
       "resultsAria": "Plan list",
       "yearlyEquivalent": "Yearly equivalent: {{amount}}",
       "viewDetail": "View details",
-      "filters": { "all": "All", "salarie": "Employee", "etudiant": "Student", "scolaire": "School", "senior": "Senior", "tst": "Solidarity", "amethyste": "Améthyste" }
+      "filters": { "all": "All", "employee": "Employee", "student": "Student", "school": "School", "senior": "Senior", "solidarity": "Solidarity", "amethyst": "Améthyste" }
     },
     "detail": {
       "notFoundBadge": "Plan not found",
@@ -303,9 +303,9 @@
       "pricePerYear": "{{price}} / year",
       "priceOnFile": "Fare based on file",
       "payAsYouGo": "Pay-as-you-go billing",
-      "profiles": { "salarie": "Employees", "etudiant": "Students", "scolaire_junior": "Children", "scolaire": "School pupils", "senior": "Seniors", "tst": "Solidarity", "amethyste": "Disability" },
-      "documents": { "piece_identite": "Identity document", "certificat_scolarite": "School certificate", "attestation_bourse": "Scholarship certificate", "livret_famille": "Family record book", "attestation_caf": "CAF certificate", "avis_imposition": "Tax notice", "carte_invalidite": "Disability card", "notification_mdph": "MDPH notice" },
-      "renewal": { "annuel": "Annual renewal", "mensuel": "Monthly renewal", "trimestriel": "Quarterly renewal", "hebdomadaire": "Valid for one week", "usage": "Pay as you go", "jour": "Valid for one day" },
+      "profiles": { "employee": "Employees", "student": "Students", "junior_school": "Children", "school": "School pupils", "senior": "Seniors", "solidarity": "Solidarity", "amethyst": "Disability" },
+      "documents": { "identity_document": "Identity document", "school_certificate": "School certificate", "scholarship_certificate": "Scholarship certificate", "family_record_book": "Family record book", "caf_certificate": "CAF certificate", "tax_notice": "Tax notice", "disability_card": "Disability card", "mdph_notice": "MDPH notice" },
+      "renewal": { "yearly": "Annual renewal", "monthly": "Monthly renewal", "quarterly": "Quarterly renewal", "weekly": "Valid for one week", "usage": "Pay as you go", "day": "Valid for one day" },
       "benefits": { "zones": "Zones {{min}} to {{max}}", "employerRefund": "{{percent}}% employer reimbursement", "noDocuments": "No supporting document required", "documentCheck": "Guided document verification", "solidarityCheck": "Solidarity rights verification", "schoolRhythm": "Designed for the school year", "payOnlyWhenTraveling": "Pay only when you travel" }
     }
   },
@@ -328,7 +328,7 @@
       "send": "Send",
       "stop": "Stop",
       "reset": "New conversation",
-      "viewForfait": "View plan",
+      "viewPlan": "View plan",
       "subscribe": "Subscribe"
     },
     "side": {
@@ -350,7 +350,7 @@
       "stream": "The chatbot response could not be read."
     }
   },
-  "monEspace": {
+  "account": {
     "kicker": "My space",
     "welcome": "Hi, {{firstName}}",
     "subtitle": "Find your subscription and manage your account.",

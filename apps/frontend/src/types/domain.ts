@@ -1,67 +1,67 @@
-export type ProfilUsager =
-  | 'salarie'
-  | 'etudiant'
-  | 'scolaire_junior'
-  | 'scolaire'
+export type UserProfile =
+  | 'employee'
+  | 'student'
+  | 'junior_school'
+  | 'school'
   | 'senior'
-  | 'tst'
-  | 'amethyste'
+  | 'solidarity'
+  | 'amethyst'
 
-export type NiveauZone = 1 | 2 | 3 | 4 | 5
+export type ZoneLevel = 1 | 2 | 3 | 4 | 5
 
-export type ForfaitType = 'jour' | 'hebdo' | 'mensuel' | 'annuel' | 'usage'
+export type PlanType = 'day' | 'weekly' | 'monthly' | 'yearly' | 'usage'
 
-export interface ProfilFlags {
-  /** Sous statut "étudiant" en école d'enseignement supérieur. */
-  isEtudiant?: boolean
-  /** Apprenti ou alternant (couvert par Imagine R Scolaire). */
-  isAlternant?: boolean
-  /** Salarié — déclenche le remboursement employeur 50%. */
-  isSalarie?: boolean
-  /** Retraité, indépendant de l'âge. */
-  isRetraite?: boolean
-  /** Bénéficiaire RSA (sous conditions). */
+export interface ProfileFlags {
+  /** Enrolled as a higher-education student. */
+  isStudent?: boolean
+  /** Apprentice or work-study student covered by Imagine R School. */
+  isApprentice?: boolean
+  /** Employee status, enabling the 50% employer refund hint. */
+  isEmployee?: boolean
+  /** Retired status, independent from declared age. */
+  isRetired?: boolean
+  /** RSA beneficiary, subject to conditions. */
   hasRSA?: boolean
-  /** Bénéficiaire CSS sans participation financière. */
-  hasCSSSansParticipation?: boolean
-  /** Bénéficiaire ASS (Allocation Solidarité Spécifique). */
+  /** CSS beneficiary without financial copay. */
+  hasCssWithoutCopay?: boolean
+  /** ASS beneficiary. */
   hasASS?: boolean
-  /** Bénéficiaire AME (Aide Médicale d'État). */
+  /** AME beneficiary. */
   hasAME?: boolean
 }
 
-export interface SimulateurParams {
-  profil: ProfilUsager
-  joursParSemaine: number
-  trajetsParJour: number
-  zones: NiveauZone
+export interface SimulatorParams {
+  profile: UserProfile
+  daysPerWeek: number
+  tripsPerDay: number
+  zones: ZoneLevel
   age?: number
-  boursier?: boolean
-  flags?: ProfilFlags
+  scholarship?: boolean
+  flags?: ProfileFlags
 }
 
-export interface Forfait {
+export interface Plan {
   id: string
-  nom: string
-  /** Type d'engagement / périodicité de facturation. */
-  type: ForfaitType
-  /** Phrase d'accroche courte affichée sur la card forfait. */
+  name: string
+  /** Commitment and billing cadence. */
+  type: PlanType
+  /** Short fallback description shown on the plan card. */
   description: string
-  /** Image officielle IDFM si dispo, sinon null (fallback gradient). */
+  /** Official-looking visual when available, otherwise null for the gradient fallback. */
   image: string | null
-  /** Priorité de tri (1 = mis en avant en premier, plus grand = moins prioritaire). */
-  priorite: number
-  /** URL source officielle. */
+  /** Sort priority, lower values appear first. */
+  priority: number
+  /** Official source URL. */
   sourceUrl: string
-  profils: ProfilUsager[]
-  prixAn: number | null
-  prixMois: number | null
-  zones: { min: NiveauZone; max: NiveauZone }
-  renouvellement: 'annuel' | 'mensuel' | 'trimestriel' | 'hebdomadaire' | 'usage' | 'jour'
-  justificatifsRequis: string[]
-  /** Filtre de base utilisé par le simulateur historique (jours/semaine, âge). */
-  condition?: (p: SimulateurParams) => boolean
-  /** Prédicat d'éligibilité riche (utilise flags + age + profil). */
-  eligible?: (p: SimulateurParams) => boolean
-  remboursementEmployeur?: number
+  profiles: UserProfile[]
+  yearlyPrice: number | null
+  monthlyPrice: number | null
+  zones: { min: ZoneLevel; max: ZoneLevel }
+  renewal: 'yearly' | 'monthly' | 'quarterly' | 'weekly' | 'usage' | 'day'
+  requiredDocuments: string[]
+  /** Basic simulator predicate for usage frequency and age. */
+  condition?: (p: SimulatorParams) => boolean
+  /** Rich eligibility predicate based on flags, age, and profile. */
+  eligible?: (p: SimulatorParams) => boolean
+  employerRefund?: number
 }

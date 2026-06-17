@@ -7,10 +7,10 @@ import { Badge } from '../components/ui/Badge'
 import { useAuthStore } from '../stores/authStore'
 import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
-import { FORFAITS } from '../utils/tarifsData'
-import { getForfaitName } from '../utils/forfaitDisplay'
+import { PLANS } from '../utils/faresData'
+import { getPlanName } from '../utils/planDisplay'
 
-export default function MonEspaceScreen() {
+export default function AccountScreen() {
   const { t } = useTranslation()
   const { locale } = useLocale()
   const navigate = useNavigate()
@@ -30,18 +30,18 @@ export default function MonEspaceScreen() {
   return (
     <div className="flex flex-col gap-10 pb-10">
       <header className="flex flex-col gap-3">
-        <span className="font-mono text-xs tracking-widest uppercase text-fg-muted">{t('monEspace.kicker')}</span>
+        <span className="font-mono text-xs tracking-widest uppercase text-fg-muted">{t('account.kicker')}</span>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">
             <span className="bg-gradient-to-b from-fg via-fg to-fg/60 bg-clip-text text-transparent">
-              {t('monEspace.welcome', { firstName: user.firstName })}
+              {t('account.welcome', { firstName: user.firstName })}
             </span>
           </h1>
           <Button variant="ghost" size="sm" onClick={onLogout} leftIcon={<LogOut className="h-4 w-4" aria-hidden="true" />}>
-            {t('monEspace.logout')}
+            {t('account.logout')}
           </Button>
         </div>
-        <p className="text-fg-muted">{t('monEspace.subtitle')}</p>
+        <p className="text-fg-muted">{t('account.subtitle')}</p>
       </header>
 
       {sub ? (
@@ -54,10 +54,10 @@ export default function MonEspaceScreen() {
                     variant={sub.status === 'active' ? 'success' : sub.status === 'pending_payment' ? 'info' : 'neutral'}
                     icon={<Sparkles className="h-3 w-3" aria-hidden="true" />}
                   >
-                    {sub.status === 'active' ? t('monEspace.subscriptionActive')
-                      : sub.status === 'pending_payment' ? t('monEspace.subscriptionPendingPayment')
-                      : sub.status === 'pending_documents' ? t('monEspace.subscriptionPendingDocs')
-                      : t('monEspace.subscriptionDraft')}
+                    {sub.status === 'active' ? t('account.subscriptionActive')
+                      : sub.status === 'pending_payment' ? t('account.subscriptionPendingPayment')
+                      : sub.status === 'pending_documents' ? t('account.subscriptionPendingDocs')
+                      : t('account.subscriptionDraft')}
                   </Badge>
                   <h2 className="mt-3 text-2xl font-semibold tracking-tight text-fg">{sub.offerName ?? sub.offerId}</h2>
                 </div>
@@ -69,8 +69,8 @@ export default function MonEspaceScreen() {
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
-                <Stat icon={<Calendar className="h-3.5 w-3.5" aria-hidden="true" />} label={t('monEspace.startDate')} value={startDateStr ?? '—'} />
-                <Stat icon={<Sparkles className="h-3.5 w-3.5" aria-hidden="true" />} label={t('monEspace.status')} value={t('monEspace.statusValid')} />
+                <Stat icon={<Calendar className="h-3.5 w-3.5" aria-hidden="true" />} label={t('account.startDate')} value={startDateStr ?? '—'} />
+                <Stat icon={<Sparkles className="h-3.5 w-3.5" aria-hidden="true" />} label={t('account.status')} value={t('account.statusValid')} />
               </div>
             </div>
           </Card.Body>
@@ -79,11 +79,11 @@ export default function MonEspaceScreen() {
         <Card spotlight>
           <Card.Body>
             <div className="flex flex-col items-start gap-4 py-2">
-              <Badge variant="info">{t('monEspace.empty.kicker')}</Badge>
-              <h2 className="text-xl font-semibold tracking-tight text-fg">{t('monEspace.empty.title')}</h2>
-              <p className="text-fg-muted">{t('monEspace.empty.description')}</p>
+              <Badge variant="info">{t('account.empty.kicker')}</Badge>
+              <h2 className="text-xl font-semibold tracking-tight text-fg">{t('account.empty.title')}</h2>
+              <p className="text-fg-muted">{t('account.empty.description')}</p>
               <Button size="md" onClick={() => navigate('/souscrire')} rightIcon={<ChevronRight className="h-4 w-4" aria-hidden="true" />}>
-                {t('monEspace.empty.cta')}
+                {t('account.empty.cta')}
               </Button>
             </div>
           </Card.Body>
@@ -93,18 +93,18 @@ export default function MonEspaceScreen() {
       <section className="grid gap-4 md:grid-cols-2">
         <Card>
           <Card.Body>
-            <span className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('monEspace.account')}</span>
+            <span className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('account.account')}</span>
             <h3 className="mt-2 text-lg font-semibold tracking-tight text-fg">{user.firstName} {user.lastName}</h3>
             <p className="mt-1 text-sm text-fg-muted">{user.email}</p>
           </Card.Body>
         </Card>
         <Card>
           <Card.Body>
-            <span className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('monEspace.actions')}</span>
+            <span className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('account.actions')}</span>
             <ul className="mt-3 flex flex-col gap-2">
-              <ActionItem to="/simulateur" label={t('monEspace.action.simulate')} />
-              <ActionItem to="/histoires/lucas" label={t('monEspace.action.stories')} />
-              <ActionItem to="/souscrire" label={t('monEspace.action.newSubscription')} />
+              <ActionItem to="/simulateur" label={t('account.action.simulate')} />
+              <ActionItem to="/histoires/lucas" label={t('account.action.stories')} />
+              <ActionItem to="/souscrire" label={t('account.action.newSubscription')} />
             </ul>
           </Card.Body>
         </Card>

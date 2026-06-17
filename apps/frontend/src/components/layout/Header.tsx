@@ -15,7 +15,7 @@ export function Header() {
   const location = useLocation()
   const user = useAuthStore((s) => s.user)
 
-  // Ferme le menu mobile dès qu'on change de route.
+  // Close the mobile menu whenever the route changes.
   useEffect(() => { setMobileOpen(false) }, [location.pathname])
 
   return (
@@ -33,7 +33,7 @@ export function Header() {
           className="shrink-0 inline-flex items-center rounded-xl transition-all duration-200 hover:opacity-90
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-base"
         >
-          {/* Wrapper invisible en clair / léger halo blanc en sombre pour intégrer le badge IDFM. */}
+          {/* Invisible in light mode, with a subtle white halo in dark mode for the IDFM badge. */}
           <span className="block rounded-xl p-0 dark:bg-white dark:p-1.5 dark:shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_2px_12px_rgba(0,0,0,0.4)] transition-all">
             <img
               src={logo}
@@ -64,7 +64,7 @@ export function Header() {
                 isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
               )}
             >
-              {t('header.nav.forfaits')}
+              {t('header.nav.plans')}
             </NavLink>
           </li>
           <li>
@@ -154,7 +154,7 @@ export function Header() {
               isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
             )}
           >
-            {t('header.nav.forfaits')}
+            {t('header.nav.plans')}
           </NavLink>
           <NavLink
             to="/souscrire"

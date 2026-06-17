@@ -95,7 +95,7 @@ Comptes de test :
 
 - `salarie@test.com`
 - `etudiant@test.com`
-- `tst@test.com`
+- `solidarite@test.com`
 
 Mot de passe : `password123`
 
