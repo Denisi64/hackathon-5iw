@@ -26,7 +26,6 @@ describe('computeFraudScore', () => {
       { name: 'mismatch', weight: 2, triggered: false },
       { name: 'rejected', weight: 3, triggered: false },
     ]
-    // 3*100 / (3+2+2+3)*100 = 300/1000 = 30
     expect(computeFraudScore(signals)).toBe(30)
   })
 

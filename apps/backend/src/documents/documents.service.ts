@@ -37,17 +37,17 @@ export class DocumentsService {
 
     const [doc] = await db.insert(documents).values({
       subscriptionId,
-      type: (aiResult.type_document as string) ?? 'inconnu',
+      type: (aiResult.documentType as string) ?? 'inconnu',
       minioKey: key,
-      status: aiResult.valide ? 'valid' : 'rejected',
+      status: aiResult.valid ? 'valid' : 'rejected',
       aiConfidence: aiResult.confidence as number,
       aiExtractedData: JSON.stringify(aiResult),
-      expiresAt: aiResult.date_expiration ? new Date(aiResult.date_expiration as string) : null,
+      expiresAt: aiResult.expiryDate ? new Date(aiResult.expiryDate as string) : null,
     }).returning()
 
     return {
       ...doc,
-      valid: aiResult.valide,
+      valid: aiResult.valid,
       confidence: aiResult.confidence,
       issues: aiResult.issues,
     }

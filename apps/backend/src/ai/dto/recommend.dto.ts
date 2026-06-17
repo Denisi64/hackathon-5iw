@@ -2,7 +2,7 @@ import { IsBoolean, IsIn, IsInt, IsNumber, IsOptional, IsString, Max, Min } from
 
 export class RecommendDto {
   @IsString()
-  @IsIn(['salarie', 'etudiant', 'scolaire_junior', 'scolaire', 'senior', 'tst', 'amethyste'])
+  @IsIn(['employee', 'student', 'junior_school', 'school', 'senior', 'tst', 'amethyste'])
   profile!: string
 
   @IsInt()

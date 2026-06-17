@@ -8,8 +8,8 @@ export class ExternalApiController {
   constructor(private readonly externalApiService: ExternalApiService) {}
 
   @Post('caf')
-  verifyCaf(@Body() body: { numeroAllocataire: string; codePostal: string }) {
-    return this.externalApiService.verifyTSTEligibility(body.numeroAllocataire, body.codePostal)
+  verifyCaf(@Body() body: { allocateeNumber: string; postalCode: string }) {
+    return this.externalApiService.verifyTSTEligibility(body.allocateeNumber, body.postalCode)
   }
 
   @Post('student')

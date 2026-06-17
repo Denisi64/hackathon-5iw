@@ -38,7 +38,7 @@ function extractLastName(aiExtractedData: string | null): string | null {
   if (!aiExtractedData) return null
   try {
     const parsed = JSON.parse(aiExtractedData) as Record<string, unknown>
-    return (parsed.nom_famille as string) ?? (parsed.lastName as string) ?? null
+    return (parsed.lastName as string) ?? null
   } catch {
     return null
   }

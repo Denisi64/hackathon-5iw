@@ -87,25 +87,25 @@ Analyse le document fourni et extrais les informations suivantes.
 Réponds UNIQUEMENT en JSON valide, sans texte avant ou après.
 
 {
-  "type_document": string,
-  "nom": string | null,
-  "prenom": string | null,
-  "date_naissance": string | null,
-  "date_expiration": string | null,
-  "annee_scolaire": string | null,
-  "etablissement": string | null,
-  "valide": boolean,
+  "documentType": string,
+  "lastName": string | null,
+  "firstName": string | null,
+  "birthDate": string | null,
+  "expiryDate": string | null,
+  "schoolYear": string | null,
+  "institution": string | null,
+  "valid": boolean,
   "confidence": number,
   "issues": string[],
-  "lisible": boolean
+  "readable": boolean
 }
 
 Types de document reconnus : "cni" | "passeport" | "certificat_scolarite" | "attestation_caf" | "livret_famille" | "carte_invalidite" | "avis_imposition" | "inconnu"
 Dates au format ISO 8601 : "YYYY-MM-DD"
 
 RÈGLES :
-- Si le document est flou, mal cadré ou incomplet : lisible = false, confidence < 30
-- Si une date d'expiration est passée : valide = false, ajoute "Document expiré" dans issues
+- Si le document est flou, mal cadré ou incomplet : readable = false, confidence < 30
+- Si une date d'expiration est passée : valid = false, ajoute "Document expiré" dans issues
 - Ne pas inventer d'informations absentes du document
 - Si tu n'es pas sûr d'une valeur, mets null plutôt que de deviner
 - N'extrais AUCUNE information non visible sur le document
