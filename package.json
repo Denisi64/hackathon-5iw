@@ -8,6 +8,8 @@
     "dev:back": "pnpm --filter @comutitres/backend dev",
     "build": "pnpm -r build",
     "test": "pnpm -r test",
+    "test:report": "pnpm -r test:report",
+    "coverage": "pnpm -r coverage",
     "lint": "pnpm -r lint",
     "docker:up": "docker compose up --build",
     "docker:down": "docker compose down"

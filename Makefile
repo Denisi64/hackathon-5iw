@@ -1,4 +1,4 @@
-.PHONY: help install start stop refresh-deps wait-api dev dev-front dev-back build test lint ci docker-build docker-up docker-up-bake docker-down db-migrate db-seed clean
+.PHONY: help install start stop refresh-deps wait-api dev dev-front dev-back build test test-report coverage lint ci docker-build docker-up docker-up-bake docker-down db-migrate db-seed clean
 
 help:
 	@echo "Commandes disponibles:"
@@ -11,6 +11,8 @@ help:
 	@echo "  make dev-back     Lancer le backend"
 	@echo "  make build        Compiler le projet"
 	@echo "  make test         Lancer les tests"
+	@echo "  make test-report  Lancer les tests avec rapport JUnit"
+	@echo "  make coverage     Generer la couverture de tests"
 	@echo "  make lint         Verifier TypeScript"
 	@echo "  make ci           Lancer les checks de CI en local"
 	@echo "  make docker-build Builder les images Docker"
@@ -71,13 +73,20 @@ build:
 test:
 	pnpm test
 
+test-report:
+	pnpm test:report
+
+coverage:
+	pnpm coverage
+
 lint:
 	pnpm lint
 
 ci:
 	pnpm install --frozen-lockfile
 	pnpm lint
-	pnpm test
+	pnpm test:report
+	pnpm coverage
 	pnpm build
 
 docker-build:
@@ -99,4 +108,4 @@ db-seed:
 	pnpm --filter @comutitres/backend db:seed
 
 clean:
-	rm -rf apps/frontend/dist apps/backend/dist apps/frontend/coverage apps/backend/coverage
+	rm -rf apps/frontend/dist apps/backend/dist apps/frontend/coverage apps/backend/coverage apps/frontend/reports apps/backend/reports

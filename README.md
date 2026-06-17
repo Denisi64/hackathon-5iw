@@ -105,6 +105,8 @@ Mot de passe : `password123`
 make help
 make build
 make test
+make test-report
+make coverage
 make lint
 make clean
 ```
@@ -117,6 +119,18 @@ pnpm build
 pnpm test
 pnpm lint
 ```
+
+## CI/CD
+
+La pipeline GitHub Actions lance :
+
+- lint TypeScript
+- tests avec rapports JUnit
+- couverture HTML/JSON
+- build front/back
+- smoke test Docker avec `make start`
+- upload des rapports et logs Docker en artifacts
+- publication des images Docker sur GHCR lors d'un push sur `develop`, `main` ou `master`
 
 ## Structure
 
