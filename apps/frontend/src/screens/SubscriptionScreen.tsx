@@ -96,7 +96,8 @@ export default function SubscriptionScreen() {
     if (step === 3) return plan !== undefined
     if (step === 4) {
       if (!profileDef) return false
-      return profileDef.documents.every((d) => docStatuses[d] === 'valid')
+      const optional = new Set(profileDef.optionalDocuments ?? [])
+      return profileDef.documents.every((d) => optional.has(d) || docStatuses[d] === 'valid')
     }
     if (step === 5) {
       const errs: Partial<Record<keyof Account, string>> = {}
@@ -432,9 +433,10 @@ function Step3Recommendation({ profile, plan, answers, locale }: {
   )
 }
 
-function Step4Documents({ profile, docs, statuses, confidence, onUpload }: {
+function Step4Documents({ profile, docs, optionalDocs, statuses, confidence, onUpload }: {
   profile: ProfileSlug
   docs: string[]
+  optionalDocs?: string[]
   statuses: Record<string, DocStatus>
   confidence: Record<string, number | null>
   onUpload: (key: string, file?: File) => void
@@ -442,20 +444,25 @@ function Step4Documents({ profile, docs, statuses, confidence, onUpload }: {
   const { t } = useTranslation()
   const fileRefs = useRef<Record<string, HTMLInputElement | null>>({})
   void profile
+  const optionalSet = new Set(optionalDocs ?? [])
   return (
     <div className="flex flex-col gap-4">
       {docs.map((docKey) => {
         const status = statuses[docKey] ?? 'idle'
         const isFranceConnect = docKey === 'france_connect'
+        const isOptional = optionalSet.has(docKey)
         const score = confidence[docKey]
         return (
           <Card key={docKey}>
             <Card.Body>
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
-                  <h3 className="text-base font-semibold tracking-tight text-fg">
-                    {t(`subscription.documents.${docKey}.label`)}
-                  </h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-semibold tracking-tight text-fg">
+                      {t(`subscription.documents.${docKey}.label`)}
+                    </h3>
+                    {isOptional && <Badge variant="neutral">{t('subscription.documents.optional')}</Badge>}
+                  </div>
                   <p className="mt-1 text-sm text-fg-muted">
                     {t(`subscription.documents.${docKey}.help`)}
                   </p>

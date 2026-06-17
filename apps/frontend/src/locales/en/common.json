@@ -149,6 +149,7 @@
       "franceConnect": "Sign in with FranceConnect",
       "analyzing": "AI analysis in progress…",
       "validated": "Verified",
+      "optional": "Optional",
       "validatedHint": "Document checked automatically.",
       "school_certificate": { "label": "School certificate", "help": "Document issued by your school for the current year." },
       "scholarship_certificate":   { "label": "Scholarship proof", "help": "CROUS scholarship award letter." },

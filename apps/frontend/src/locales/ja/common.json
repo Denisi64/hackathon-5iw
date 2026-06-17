@@ -144,6 +144,7 @@
       "franceConnect": "FranceConnectでログイン",
       "analyzing": "AIで解析中…",
       "validated": "承認済み",
+      "optional": "任意",
       "validatedHint": "書類は自動で確認されました。",
       "school_certificate": { "label": "在学証明書", "help": "当年度に学校から発行された書類。" },
       "scholarship_certificate":   { "label": "奨学金証明", "help": "CROUS奨学金支給通知書。" },

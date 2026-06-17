@@ -144,6 +144,7 @@
       "franceConnect": "Conectar con FranceConnect",
       "analyzing": "Análisis IA en curso…",
       "validated": "Validado",
+      "optional": "Opcional",
       "validatedHint": "Documento verificado automáticamente.",
       "school_certificate": { "label": "Certificado escolar", "help": "Documento emitido por tu centro para el curso actual." },
       "scholarship_certificate":   { "label": "Justificante de beca", "help": "Carta de concesión de la beca CROUS." },

@@ -12,6 +12,8 @@ export interface ProfileDef {
   recommendedPlanId: string
   /** Document keys required (used to look up i18n labels). */
   documents: string[]
+  /** Subset of documents that are optional (upload not required to proceed). */
+  optionalDocuments?: string[]
 }
 
 export const PROFILES: ProfileDef[] = [
