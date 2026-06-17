@@ -168,7 +168,6 @@
       "franceConnect": "Me connecter à FranceConnect",
       "analyzing": "Analyse IA en cours…",
       "validated": "Validé",
-      "optional": "Facultatif",
       "validatedHint": "Document vérifié automatiquement.",
       "certificat_scolarite": { "label": "Certificat de scolarité", "help": "Document fourni par votre établissement pour l'année en cours." },
       "attestation_bourse":   { "label": "Attestation de bourse", "help": "Justificatif d'attribution de bourse du CROUS." },

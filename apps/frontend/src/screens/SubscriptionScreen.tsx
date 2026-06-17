@@ -96,8 +96,7 @@ export default function SubscriptionScreen() {
     if (step === 3) return forfait !== undefined
     if (step === 4) {
       if (!profileDef) return false
-      const optional = new Set(profileDef.optionalDocuments ?? [])
-      return profileDef.documents.every((d) => optional.has(d) || docStatuses[d] === 'valid')
+      return profileDef.documents.every((d) => docStatuses[d] === 'valid')
     }
     if (step === 5) {
       const errs: Partial<Record<keyof Account, string>> = {}
@@ -181,7 +180,7 @@ export default function SubscriptionScreen() {
         {step === 1 && <Step1Profile profile={profile} setProfile={setProfile} />}
         {step === 2 && profileDef && <Step2Details profile={profileDef.slug} answers={answers} setAnswers={setAnswers} />}
         {step === 3 && profileDef && forfait && <Step3Recommendation profile={profileDef.slug} forfait={forfait} answers={answers} locale={locale} />}
-        {step === 4 && profileDef && <Step4Documents profile={profileDef.slug} docs={profileDef.documents} optionalDocs={profileDef.optionalDocuments} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
+        {step === 4 && profileDef && <Step4Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
         {step === 5 && <Step5Account account={account} setAccount={setAccount} errors={accountErrors} />}
         {step === 6 && profileDef && forfait && <Step6Confirmation firstName={account.firstName} email={account.email} forfait={forfait} answers={answers} locale={locale} />}
       </div>
@@ -433,10 +432,9 @@ function Step3Recommendation({ profile, forfait, answers, locale }: {
   )
 }
 
-function Step4Documents({ profile, docs, optionalDocs, statuses, confidence, onUpload }: {
+function Step4Documents({ profile, docs, statuses, confidence, onUpload }: {
   profile: ProfileSlug
   docs: string[]
-  optionalDocs?: string[]
   statuses: Record<string, DocStatus>
   confidence: Record<string, number | null>
   onUpload: (key: string, file?: File) => void
@@ -444,25 +442,20 @@ function Step4Documents({ profile, docs, optionalDocs, statuses, confidence, onU
   const { t } = useTranslation()
   const fileRefs = useRef<Record<string, HTMLInputElement | null>>({})
   void profile
-  const optionalSet = new Set(optionalDocs ?? [])
   return (
     <div className="flex flex-col gap-4">
       {docs.map((docKey) => {
         const status = statuses[docKey] ?? 'idle'
         const isFranceConnect = docKey === 'france_connect'
-        const isOptional = optionalSet.has(docKey)
         const score = confidence[docKey]
         return (
           <Card key={docKey}>
             <Card.Body>
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-base font-semibold tracking-tight text-fg">
-                      {t(`subscription.documents.${docKey}.label`)}
-                    </h3>
-                    {isOptional && <Badge variant="neutral">{t('subscription.documents.optional')}</Badge>}
-                  </div>
+                  <h3 className="text-base font-semibold tracking-tight text-fg">
+                    {t(`subscription.documents.${docKey}.label`)}
+                  </h3>
                   <p className="mt-1 text-sm text-fg-muted">
                     {t(`subscription.documents.${docKey}.help`)}
                   </p>
