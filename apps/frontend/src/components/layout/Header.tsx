@@ -58,6 +58,17 @@ export function Header() {
           </li>
           <li>
             <NavLink
+              to="/forfaits"
+              className={({ isActive }) => cn(
+                'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
+                isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+              )}
+            >
+              {t('header.nav.forfaits')}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/souscrire"
               className={({ isActive }) => cn(
                 'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
@@ -65,6 +76,17 @@ export function Header() {
               )}
             >
               {t('header.nav.subscribe')}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/assistant"
+              className={({ isActive }) => cn(
+                'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
+                isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+              )}
+            >
+              {t('header.nav.assistant')}
             </NavLink>
           </li>
         </ul>
@@ -95,7 +117,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-label={mobileOpen ? t('header.menu.close') : t('header.menu.open')}
             aria-expanded={mobileOpen}
             className={cn(
               'sm:hidden h-9 w-9 grid place-items-center rounded-lg bg-surface border border-border-default text-fg-muted',
@@ -126,6 +148,15 @@ export function Header() {
             {t('header.nav.simulator')}
           </NavLink>
           <NavLink
+            to="/forfaits"
+            className={({ isActive }) => cn(
+              'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+              isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+            )}
+          >
+            {t('header.nav.forfaits')}
+          </NavLink>
+          <NavLink
             to="/souscrire"
             className={({ isActive }) => cn(
               'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
@@ -133,6 +164,15 @@ export function Header() {
             )}
           >
             {t('header.nav.subscribe')}
+          </NavLink>
+          <NavLink
+            to="/assistant"
+            className={({ isActive }) => cn(
+              'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+              isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+            )}
+          >
+            {t('header.nav.assistant')}
           </NavLink>
           {user ? (
             <NavLink

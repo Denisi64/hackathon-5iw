@@ -5,6 +5,7 @@ import { Badge } from '../ui/Badge'
 import { Button } from '../ui/Button'
 import { formatCurrency } from '../../lib/formatters'
 import { useLocale } from '../../hooks/useLocale'
+import { getForfaitName } from '../../utils/forfaitDisplay'
 
 export interface ForfaitCardProps {
   forfait: Forfait
@@ -25,7 +26,7 @@ export function ForfaitCard({ forfait, prixAn, economie, isRecommended, onSelect
           <span className="text-xs font-mono tracking-widest text-fg-muted uppercase">
             {forfait.renouvellement}
           </span>
-          <h3 className="text-lg font-semibold tracking-tight text-fg">{forfait.nom}</h3>
+          <h3 className="text-lg font-semibold tracking-tight text-fg">{getForfaitName(forfait, t)}</h3>
         </div>
         {isRecommended && <Badge variant="recommended">{t('simulator.recommended')}</Badge>}
       </Card.Header>
@@ -54,7 +55,7 @@ export function ForfaitCard({ forfait, prixAn, economie, isRecommended, onSelect
 
       <Card.Footer>
         <Button variant={isRecommended ? 'primary' : 'secondary'} size="md" onClick={onSelect} fullWidth>
-          {t('simulator.subscribe')}
+          {t('forfaits.list.viewDetail')}
         </Button>
       </Card.Footer>
     </Card>

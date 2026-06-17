@@ -5,8 +5,13 @@
       "simulator": "Simulateur",
       "forfaits": "Forfaits",
       "subscribe": "Souscrire",
+      "assistant": "Assistant",
       "login": "Se connecter",
       "account": "Mon espace"
+    },
+    "menu": {
+      "open": "Ouvrir le menu",
+      "close": "Fermer le menu"
     }
   },
   "themeToggle": {
@@ -50,7 +55,8 @@
       "ageBadge": "{{age}} ans",
       "quote": "« {{text}} »",
       "ctaSimulate": "Lancer le simulateur",
-      "otherStories": "D'autres histoires"
+      "otherStories": "D'autres histoires",
+      "recommendedForfait": "Forfait recommandé"
     }
   },
   "stats": {
@@ -113,6 +119,7 @@
   },
   "common": {
     "loading": "Chargement…",
+    "back": "Retour",
     "yes": "Oui",
     "no": "Non"
   },
@@ -230,7 +237,7 @@
       "password": "Mot de passe",
       "passwordConfirm": "Confirmer le mot de passe"
     },
-    "passwordHint": "Minimum 6 caractères.",
+    "passwordHint": "Minimum 8 caractères.",
     "passwordShow": "Afficher le mot de passe",
     "passwordHide": "Masquer le mot de passe",
     "errors": {
@@ -238,10 +245,11 @@
       "emailInvalid": "Email invalide",
       "emailTaken": "Un compte existe déjà avec cet email",
       "passwordRequired": "Mot de passe requis",
-      "passwordShort": "Mot de passe trop court (6 minimum)",
+      "passwordShort": "Mot de passe trop court (8 minimum)",
       "passwordMismatch": "Les mots de passe ne correspondent pas",
       "noAccount": "Aucun compte trouvé avec cet email",
-      "badPassword": "Mot de passe incorrect"
+      "badPassword": "Mot de passe incorrect",
+      "network": "Impossible de joindre le serveur d'authentification"
     }
   },
   "forfaits": {
@@ -288,7 +296,155 @@
     "perMonth": "par mois",
     "perYear": "par an",
     "perTrip": "par trajet",
-    "source": "Source :"
+    "source": "Source :",
+    "catalog": {
+      "navigo_jour": { "name": "Navigo Jour", "description": "Voyager en illimité pendant une journée entière." },
+      "navigo_semaine": { "name": "Navigo Semaine", "description": "Voyager en illimité toute la semaine." },
+      "navigo_mois": { "name": "Navigo Mois", "description": "Voyager en illimité tout le mois, sans engagement." },
+      "navigo_annuel": { "name": "Navigo Annuel", "description": "Voyager toute l'année, avec le 12e mois offert." },
+      "navigo_senior": { "name": "Navigo Senior", "description": "Tarif préférentiel pour les 62 ans et plus." },
+      "imagine_r_etudiant": { "name": "Imagine R Étudiant", "description": "Le forfait indispensable des étudiants en Île-de-France." },
+      "imagine_r_scolaire": { "name": "Imagine R Scolaire", "description": "Le forfait annuel des jeunes du primaire, secondaire et apprentis." },
+      "imagine_r_junior": { "name": "Imagine R Junior", "description": "Imagine R à un prix imbattable pour les moins de 11 ans." },
+      "liberte_plus": { "name": "Navigo Liberté+", "description": "Payez vos trajets à l'unité, dès 1,64 € par trajet, toutes zones." },
+      "navigo_solidarite_75": { "name": "Solidarité 75 %", "description": "Réduction de 75 % pour les bénéficiaires CSS sans participation ou ASS." },
+      "navigo_reduction_50": { "name": "Réduction 50 %", "description": "Réduction de 50 % pour les bénéficiaires AME." },
+      "navigo_gratuite": { "name": "Gratuité Transport", "description": "Transport gratuit pour les bénéficiaires RSA sous conditions ou ASS + CSS sans participation." },
+      "amethyste": { "name": "Améthyste", "description": "Forfait pour les personnes en situation de handicap, selon département." }
+    },
+    "list": {
+      "kicker": "Catalogue des forfaits",
+      "title": "Trouvez le forfait qui accompagne votre prochain trajet.",
+      "subtitle": "Une liste globale des forfaits Navigo, Imagine R, Solidarité et Améthyste, alignée avec le simulateur et le tunnel de souscription.",
+      "recommendationTitle": "Besoin d'une recommandation ?",
+      "recommendationBody": "Le simulateur trie ces forfaits selon votre profil, votre âge et vos usages.",
+      "openSimulator": "Ouvrir le simulateur",
+      "filterAria": "Filtrer les forfaits",
+      "resultsAria": "Liste des forfaits",
+      "yearlyEquivalent": "Équivalent annuel : {{amount}}",
+      "viewDetail": "Voir le détail",
+      "filters": {
+        "all": "Tous",
+        "salarie": "Salarié",
+        "etudiant": "Étudiant",
+        "scolaire": "Scolaire",
+        "senior": "Senior",
+        "tst": "Solidarité",
+        "amethyste": "Améthyste"
+      }
+    },
+    "detail": {
+      "notFoundBadge": "Forfait introuvable",
+      "notFoundTitle": "Ce forfait n'existe pas dans le catalogue.",
+      "notFoundBody": "Revenez à la liste globale pour choisir une offre disponible.",
+      "viewAll": "Voir tous les forfaits",
+      "viewAllShort": "Voir tout",
+      "badge": "Détail forfait",
+      "employerRefundBadge": "Remboursement employeur",
+      "subscribe": "Souscrire à ce forfait",
+      "resimulate": "Refaire une simulation",
+      "indicativePrice": "Prix indicatif",
+      "forWhom": "Pour qui ?",
+      "eligibleProfiles": "Profils éligibles",
+      "documentsKicker": "Documents",
+      "documentsTitle": "Justificatifs",
+      "noDocuments": "Aucun justificatif requis pour démarrer.",
+      "sourceKicker": "Source",
+      "officialFare": "Tarif officiel",
+      "sourceLink": "Consulter la source",
+      "benefitsAria": "Points forts du forfait",
+      "relatedAria": "Forfaits proches",
+      "alternatives": "Alternatives",
+      "relatedTitle": "Forfaits proches",
+      "metric": {
+        "price": "Prix",
+        "rhythm": "Rythme",
+        "zones": "Zones"
+      }
+    },
+    "display": {
+      "pricePerMonth": "{{price}} / mois",
+      "pricePerYear": "{{price}} / an",
+      "priceOnFile": "Tarif selon dossier",
+      "payAsYouGo": "Facturation à l'usage",
+      "profiles": {
+        "salarie": "Salariés",
+        "etudiant": "Étudiants",
+        "scolaire_junior": "Enfants",
+        "scolaire": "Scolaires",
+        "senior": "Seniors",
+        "tst": "Solidarité",
+        "amethyste": "Handicap"
+      },
+      "documents": {
+        "piece_identite": "Pièce d'identité",
+        "certificat_scolarite": "Certificat de scolarité",
+        "attestation_bourse": "Attestation de bourse",
+        "livret_famille": "Livret de famille",
+        "attestation_caf": "Attestation CAF",
+        "avis_imposition": "Avis d'imposition",
+        "carte_invalidite": "Carte d'invalidité",
+        "notification_mdph": "Notification MDPH"
+      },
+      "renewal": {
+        "annuel": "Renouvellement annuel",
+        "mensuel": "Renouvellement mensuel",
+        "trimestriel": "Renouvellement trimestriel",
+        "hebdomadaire": "Valable une semaine",
+        "usage": "Paiement à l'usage",
+        "jour": "Valable une journée"
+      },
+      "benefits": {
+        "zones": "Zones {{min}} à {{max}}",
+        "employerRefund": "Remboursement employeur {{percent}}%",
+        "noDocuments": "Aucun justificatif requis",
+        "documentCheck": "Vérification des justificatifs accompagnée",
+        "solidarityCheck": "Vérification des droits solidaire",
+        "schoolRhythm": "Pensé pour le rythme scolaire",
+        "payOnlyWhenTraveling": "Paiement uniquement quand vous voyagez"
+      }
+    }
+  },
+  "chatbot": {
+    "kicker": "Assistant Navigo",
+    "title": "Posez votre question à l'assistant Comutitres.",
+    "subtitle": "Il vous aide à comprendre les forfaits, les justificatifs et les étapes de souscription.",
+    "welcomeMessage": "Bonjour ! Je peux vous aider à choisir un forfait, préparer vos justificatifs ou comprendre une étape de souscription. Quelle est votre situation ?",
+    "messagesAria": "Conversation avec l'assistant",
+    "inputLabel": "Votre message",
+    "placeholder": "Écrivez votre question...",
+    "emptyResponse": "Je n'ai pas reçu de réponse complète. Vous pouvez reformuler votre question ?",
+    "suggestions": {
+      "student": "Je suis étudiant, quel forfait choisir ?",
+      "worker": "Je travaille 5 jours par semaine",
+      "solidarity": "Ai-je droit à un tarif solidaire ?",
+      "documents": "Quels justificatifs dois-je préparer ?"
+    },
+    "actions": {
+      "send": "Envoyer",
+      "stop": "Arrêter",
+      "reset": "Nouvelle conversation",
+      "viewForfait": "Voir le forfait",
+      "subscribe": "Souscrire"
+    },
+    "side": {
+      "profileTitle": "Session sécurisée",
+      "signedIn": "Connecté en tant que {{firstName}}. Les échanges passent par l'API protégée.",
+      "signedOut": "Connectez-vous pour discuter avec l'assistant.",
+      "detected": "Forfait détecté",
+      "detectedHint": "L'assistant semble recommander ce forfait. Vous pouvez consulter le détail ou lancer la souscription.",
+      "scopeTitle": "L'assistant peut aider sur",
+      "scope1": "Le choix d'un forfait selon votre profil",
+      "scope2": "Les documents nécessaires à la souscription",
+      "scope3": "Les étapes du parcours Comutitres"
+    },
+    "errors": {
+      "not_authenticated": "Connectez-vous pour utiliser l'assistant.",
+      "backend_auth_failed": "Impossible de synchroniser votre session avec l'API. Vérifiez que votre mot de passe contient au moins 8 caractères ou reconnectez-vous.",
+      "network": "Le chatbot est momentanément indisponible. Vérifiez que le backend est lancé.",
+      "unauthorized": "Votre session API a expiré. Déconnectez-vous puis reconnectez-vous.",
+      "stream": "La réponse du chatbot n'a pas pu être lue."
+    }
   },
   "monEspace": {
     "kicker": "Mon espace",

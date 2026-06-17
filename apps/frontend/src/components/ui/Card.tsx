@@ -44,7 +44,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
         className={cn(
           'group/card relative overflow-hidden rounded-2xl text-fg shadow-card',
           'border border-border-default',
-          'transition-[transform,box-shadow,border-color] duration-300',
+          'transition-all duration-300',
           variants[variant],
           hover && 'hover:-translate-y-1 hover:shadow-card-hover hover:border-border-hover',
           className,
@@ -64,7 +64,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
             className="pointer-events-none absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
             style={{
               background:
-                'radial-gradient(300px circle at var(--mx,50%) var(--my,50%), rgba(var(--spotlight-rgb), 0.15), transparent 70%)',
+                'radial-gradient(200px circle at var(--mx,50%) var(--my,50%), rgba(var(--spotlight-rgb), 0.10), transparent 70%)',
             }}
           />
         )}

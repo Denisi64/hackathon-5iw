@@ -7,6 +7,8 @@ import { Badge } from '../components/ui/Badge'
 import { useAuthStore } from '../stores/authStore'
 import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
+import { FORFAITS } from '../utils/tarifsData'
+import { getForfaitName } from '../utils/forfaitDisplay'
 
 export default function MonEspaceScreen() {
   const { t } = useTranslation()

@@ -5,12 +5,14 @@ import { Eye, EyeOff, Lock, Mail, ShieldCheck, User as UserIcon } from 'lucide-r
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
+import { useLocale } from '../hooks/useLocale'
 import { useAuthStore } from '../stores/authStore'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function RegisterScreen() {
   const { t } = useTranslation()
+  const { locale } = useLocale()
   const navigate = useNavigate()
   const register = useAuthStore((s) => s.register)
 
@@ -21,6 +23,7 @@ export default function RegisterScreen() {
   const [confirm, setConfirm] = useState('')
   const [showPass, setShowPass] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -30,14 +33,17 @@ export default function RegisterScreen() {
     if (!email.trim()) next.email = t('auth.errors.required')
     else if (!EMAIL_RE.test(email.trim())) next.email = t('auth.errors.emailInvalid')
     if (!password) next.password = t('auth.errors.required')
-    else if (password.length < 6) next.password = t('auth.errors.passwordShort')
+    else if (password.length < 8) next.password = t('auth.errors.passwordShort')
     if (confirm !== password) next.confirm = t('auth.errors.passwordMismatch')
     setErrors(next)
     if (Object.keys(next).length > 0) return
 
-    const result = await register({ firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim(), password })
+    setIsSubmitting(true)
+    const result = await register({ firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim(), password, language: locale })
+    setIsSubmitting(false)
+
     if (!result.ok) {
-      setErrors({ email: result.error })
+      setErrors({ email: result.error === 'email_taken' ? t('auth.errors.emailTaken') : t('auth.errors.network') })
       return
     }
     navigate('/mon-espace', { replace: true })
@@ -115,7 +121,7 @@ export default function RegisterScreen() {
               error={errors.confirm}
             />
 
-            <Button type="submit" size="md" fullWidth>
+            <Button type="submit" size="md" fullWidth loading={isSubmitting}>
               {t('auth.register.cta')}
             </Button>
           </form>

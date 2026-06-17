@@ -18,10 +18,11 @@ import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
 import { cn } from '../lib/cn'
 import type { Forfait } from '../types/domain'
-import { useAuthStore } from '../stores/authStore'
 import { subscriptionsService } from '../services/subscriptions'
 import { documentsService } from '../services/documents'
 import { paymentsService } from '../services/payments'
+import { useAuthStore } from '../stores/authStore'
+import { getForfaitName } from '../utils/forfaitDisplay'
 
 type Answers = {
   age?: number
@@ -401,7 +402,7 @@ function Step3Recommendation({ profile, forfait, answers, locale }: {
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-start">
           <div>
             <Badge variant="recommended">{t('simulator.recommended')}</Badge>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-fg">{forfait.nom}</h2>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-fg">{getForfaitName(forfait, t)}</h2>
             <p className="mt-1 text-fg-muted">{t(`subscription.recommendation.${profile}.summary`)}</p>
             <ul className="mt-5 flex flex-col gap-2">
               {reasonsList.map((r, i) => (
@@ -611,7 +612,7 @@ function Step6Confirmation({ firstName, email, forfait, answers, locale }: {
           <div className="w-full max-w-md rounded-xl bg-surface border border-border-default p-5 text-left">
             <p className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('subscription.confirmation.summary')}</p>
             <div className="mt-3 flex flex-col gap-2 text-sm">
-              <Row label={t('subscription.confirmation.forfait')} value={forfait.nom} />
+              <Row label={t('subscription.confirmation.forfait')} value={getForfaitName(forfait, t)} />
               <Row label={t('subscription.confirmation.price')} value={forfait.prixAn !== null ? formatCurrency(forfait.prixAn, locale) + t('simulator.perYear') : '—'} />
               <Row label={t('subscription.confirmation.startDate')} value={startDateStr} />
               <Row label={t('subscription.confirmation.email')} value={email} />

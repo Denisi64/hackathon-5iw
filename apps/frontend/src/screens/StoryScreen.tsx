@@ -144,7 +144,7 @@ export default function StoryScreen() {
             <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
               <div>
                 <span className="font-mono text-xs tracking-widest uppercase text-fg-muted">
-                  Forfait recommandé
+                  {t('stories.screen.recommendedForfait')}
                 </span>
                 <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-fg">
                   {story.forfait.nom}
