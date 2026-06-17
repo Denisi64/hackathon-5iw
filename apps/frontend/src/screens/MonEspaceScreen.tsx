@@ -7,6 +7,8 @@ import { Badge } from '../components/ui/Badge'
 import { useAuthStore } from '../stores/authStore'
 import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
+import { FORFAITS } from '../utils/tarifsData'
+import { getForfaitName } from '../utils/forfaitDisplay'
 
 export default function MonEspaceScreen() {
   const { t } = useTranslation()
@@ -21,6 +23,7 @@ export default function MonEspaceScreen() {
   }
 
   const sub = user.subscription
+  const activeForfait = sub ? FORFAITS.find((forfait) => forfait.id === sub.forfaitId) : undefined
   const startDateStr = sub
     ? new Date(sub.startDate).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })
     : null
@@ -49,7 +52,9 @@ export default function MonEspaceScreen() {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <Badge variant="success" icon={<Sparkles className="h-3 w-3" aria-hidden="true" />}>{t('monEspace.subscriptionActive')}</Badge>
-                  <h2 className="mt-3 text-2xl font-semibold tracking-tight text-fg">{sub.forfaitNom}</h2>
+                  <h2 className="mt-3 text-2xl font-semibold tracking-tight text-fg">
+                    {activeForfait ? getForfaitName(activeForfait, t) : sub.forfaitNom}
+                  </h2>
                 </div>
                 <div className="text-right">
                   <p className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('simulator.perYear')}</p>

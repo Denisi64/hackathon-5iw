@@ -20,8 +20,9 @@ export default function LoginScreen() {
   const [showPass, setShowPass] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [emailError, setEmailError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setError(null)
     setEmailError(null)
@@ -33,9 +34,15 @@ export default function LoginScreen() {
       setError(t('auth.errors.passwordRequired'))
       return
     }
-    const result = login(email.trim(), password)
+
+    setIsSubmitting(true)
+    const result = await login(email.trim(), password)
+    setIsSubmitting(false)
+
     if (!result.ok) {
-      setError(result.error === 'no_account' ? t('auth.errors.noAccount') : t('auth.errors.badPassword'))
+      if (result.error === 'no_account') setError(t('auth.errors.noAccount'))
+      else if (result.error === 'network') setError(t('auth.errors.network'))
+      else setError(t('auth.errors.badPassword'))
       return
     }
     const from = (location.state as { from?: string } | null)?.from ?? '/mon-espace'
@@ -90,7 +97,13 @@ export default function LoginScreen() {
               <p role="alert" className="text-sm font-medium text-rose-500">{error}</p>
             )}
 
-            <Button type="submit" size="md" fullWidth leftIcon={<LogIn className="h-4 w-4" aria-hidden="true" />}>
+            <Button
+              type="submit"
+              size="md"
+              fullWidth
+              loading={isSubmitting}
+              leftIcon={<LogIn className="h-4 w-4" aria-hidden="true" />}
+            >
               {t('auth.login.cta')}
             </Button>
           </form>
