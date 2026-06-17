@@ -105,6 +105,8 @@ Mot de passe : `password123`
 make help
 make build
 make test
+make test-report
+make coverage
 make lint
 make clean
 ```
@@ -117,8 +119,6 @@ pnpm build
 pnpm test
 pnpm lint
 ```
-
-## Structure
 
 ```text
 apps/
