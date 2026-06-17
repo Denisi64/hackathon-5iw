@@ -99,7 +99,7 @@ docker-up-bake:
 	COMPOSE_BAKE=true docker compose up --build
 
 docker-down:
-	docker compose down
+	docker compose down -v
 
 db-migrate:
 	pnpm --filter @comutitres/backend db:migrate
