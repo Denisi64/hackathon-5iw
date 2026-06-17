@@ -10,6 +10,7 @@ const ForfaitsScreen = lazy(() => import('./screens/ForfaitsScreen'))
 const ForfaitDetailScreen = lazy(() => import('./screens/ForfaitDetailScreen'))
 const StoryScreen = lazy(() => import('./screens/StoryScreen'))
 const SubscriptionScreen = lazy(() => import('./screens/SubscriptionScreen'))
+const ChatbotScreen = lazy(() => import('./screens/ChatbotScreen'))
 const LoginScreen = lazy(() => import('./screens/LoginScreen'))
 const RegisterScreen = lazy(() => import('./screens/RegisterScreen'))
 const MonEspaceScreen = lazy(() => import('./screens/MonEspaceScreen'))
@@ -33,6 +34,7 @@ export function App() {
             <Route path="/forfaits/:forfaitId" element={<ForfaitDetailScreen />} />
             <Route path="/histoires/:slug" element={<StoryScreen />} />
             <Route path="/souscrire" element={<SubscriptionScreen />} />
+            <Route path="/assistant" element={<ProtectedRoute><ChatbotScreen /></ProtectedRoute>} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/mon-espace" element={<ProtectedRoute><MonEspaceScreen /></ProtectedRoute>} />

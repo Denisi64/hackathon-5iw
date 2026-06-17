@@ -1,7 +1,7 @@
 {
   "header": {
     "logoAriaLabel": "Comutitres, home",
-    "nav": { "simulator": "Simulator", "forfaits": "Plans", "subscribe": "Subscribe", "login": "Sign in", "account": "My space" },
+    "nav": { "simulator": "Simulator", "forfaits": "Plans", "subscribe": "Subscribe", "assistant": "Assistant", "login": "Sign in", "account": "My space" },
     "menu": { "open": "Open menu", "close": "Close menu" }
   },
   "themeToggle": {
@@ -204,7 +204,7 @@
       "password": "Password",
       "passwordConfirm": "Confirm password"
     },
-    "passwordHint": "Minimum 6 characters.",
+    "passwordHint": "Minimum 8 characters.",
     "passwordShow": "Show password",
     "passwordHide": "Hide password",
     "errors": {
@@ -212,7 +212,7 @@
       "emailInvalid": "Invalid email",
       "emailTaken": "An account already exists for this email",
       "passwordRequired": "Password required",
-      "passwordShort": "Password too short (6 min)",
+      "passwordShort": "Password too short (8 min)",
       "passwordMismatch": "Passwords don't match",
       "noAccount": "No account found for this email",
       "badPassword": "Incorrect password"
@@ -306,6 +306,47 @@
       "documents": { "piece_identite": "Identity document", "certificat_scolarite": "School certificate", "attestation_bourse": "Scholarship certificate", "livret_famille": "Family record book", "attestation_caf": "CAF certificate", "avis_imposition": "Tax notice", "carte_invalidite": "Disability card", "notification_mdph": "MDPH notice" },
       "renewal": { "annuel": "Annual renewal", "mensuel": "Monthly renewal", "trimestriel": "Quarterly renewal", "hebdomadaire": "Valid for one week", "usage": "Pay as you go", "jour": "Valid for one day" },
       "benefits": { "zones": "Zones {{min}} to {{max}}", "employerRefund": "{{percent}}% employer reimbursement", "noDocuments": "No supporting document required", "documentCheck": "Guided document verification", "solidarityCheck": "Solidarity rights verification", "schoolRhythm": "Designed for the school year", "payOnlyWhenTraveling": "Pay only when you travel" }
+    }
+  },
+  "chatbot": {
+    "kicker": "Navigo assistant",
+    "title": "Ask the Comutitres assistant your question.",
+    "subtitle": "It helps you understand plans, supporting documents and subscription steps.",
+    "welcomeMessage": "Hello! I can help you choose a plan, prepare your documents or understand a subscription step. What is your situation?",
+    "messagesAria": "Conversation with the assistant",
+    "inputLabel": "Your message",
+    "placeholder": "Write your question...",
+    "emptyResponse": "I did not receive a complete answer. Could you rephrase your question?",
+    "suggestions": {
+      "student": "I am a student, which plan should I choose?",
+      "worker": "I work 5 days a week",
+      "solidarity": "Am I eligible for a solidarity fare?",
+      "documents": "Which documents should I prepare?"
+    },
+    "actions": {
+      "send": "Send",
+      "stop": "Stop",
+      "reset": "New conversation",
+      "viewForfait": "View plan",
+      "subscribe": "Subscribe"
+    },
+    "side": {
+      "profileTitle": "Secure session",
+      "signedIn": "Signed in as {{firstName}}. Messages go through the protected API.",
+      "signedOut": "Sign in to chat with the assistant.",
+      "detected": "Detected plan",
+      "detectedHint": "The assistant seems to recommend this plan. You can view the details or start subscribing.",
+      "scopeTitle": "The assistant can help with",
+      "scope1": "Choosing a plan for your profile",
+      "scope2": "Documents needed for subscription",
+      "scope3": "Steps in the Comutitres journey"
+    },
+    "errors": {
+      "not_authenticated": "Sign in to use the assistant.",
+      "backend_auth_failed": "Could not synchronize your session with the API. Check that your password has at least 8 characters or sign in again.",
+      "network": "The chatbot is temporarily unavailable. Check that the backend is running.",
+      "unauthorized": "Your API session has expired. Sign out and sign in again.",
+      "stream": "The chatbot response could not be read."
     }
   },
   "monEspace": {

@@ -30,7 +30,7 @@ export default function RegisterScreen() {
     if (!email.trim()) next.email = t('auth.errors.required')
     else if (!EMAIL_RE.test(email.trim())) next.email = t('auth.errors.emailInvalid')
     if (!password) next.password = t('auth.errors.required')
-    else if (password.length < 6) next.password = t('auth.errors.passwordShort')
+    else if (password.length < 8) next.password = t('auth.errors.passwordShort')
     if (confirm !== password) next.confirm = t('auth.errors.passwordMismatch')
     setErrors(next)
     if (Object.keys(next).length > 0) return

@@ -1,7 +1,7 @@
 {
   "header": {
     "logoAriaLabel": "Comutitres, home",
-    "nav": { "simulator": "Simulatore", "forfaits": "Abbonamenti", "subscribe": "Iscriviti", "login": "Accedi", "account": "Il mio spazio" },
+    "nav": { "simulator": "Simulatore", "forfaits": "Abbonamenti", "subscribe": "Iscriviti", "assistant": "Assistente", "login": "Accedi", "account": "Il mio spazio" },
     "menu": { "open": "Apri menu", "close": "Chiudi menu" }
   },
   "themeToggle": {
@@ -199,7 +199,7 @@
       "password": "Password",
       "passwordConfirm": "Conferma password"
     },
-    "passwordHint": "Minimo 6 caratteri.",
+    "passwordHint": "Minimo 8 caratteri.",
     "passwordShow": "Mostra password",
     "passwordHide": "Nascondi password",
     "errors": {
@@ -207,7 +207,7 @@
       "emailInvalid": "Email non valida",
       "emailTaken": "Esiste già un account con questa email",
       "passwordRequired": "Password obbligatoria",
-      "passwordShort": "Password troppo corta (minimo 6)",
+      "passwordShort": "Password troppo corta (minimo 8)",
       "passwordMismatch": "Le password non coincidono",
       "noAccount": "Nessun account trovato per questa email",
       "badPassword": "Password errata"
@@ -301,6 +301,47 @@
       "documents": { "piece_identite": "Documento d'identità", "certificat_scolarite": "Certificato scolastico", "attestation_bourse": "Certificato borsa", "livret_famille": "Libretto di famiglia", "attestation_caf": "Attestazione CAF", "avis_imposition": "Avviso fiscale", "carte_invalidite": "Tessera disabilità", "notification_mdph": "Notifica MDPH" },
       "renewal": { "annuel": "Rinnovo annuale", "mensuel": "Rinnovo mensile", "trimestriel": "Rinnovo trimestrale", "hebdomadaire": "Valido una settimana", "usage": "Pagamento a consumo", "jour": "Valido un giorno" },
       "benefits": { "zones": "Zone {{min}} a {{max}}", "employerRefund": "{{percent}}% rimborso datore", "noDocuments": "Nessun documento richiesto", "documentCheck": "Verifica documenti guidata", "solidarityCheck": "Verifica diritti solidali", "schoolRhythm": "Pensato per il ritmo scolastico", "payOnlyWhenTraveling": "Paghi solo quando viaggi" }
+    }
+  },
+  "chatbot": {
+    "kicker": "Assistente Navigo",
+    "title": "Fai la tua domanda all'assistente Comutitres.",
+    "subtitle": "Ti aiuta a capire gli abbonamenti, i documenti richiesti e le fasi di iscrizione.",
+    "welcomeMessage": "Ciao! Posso aiutarti a scegliere un abbonamento, preparare i documenti o capire una fase di iscrizione. Qual è la tua situazione?",
+    "messagesAria": "Conversazione con l'assistente",
+    "inputLabel": "Il tuo messaggio",
+    "placeholder": "Scrivi la tua domanda...",
+    "emptyResponse": "Non ho ricevuto una risposta completa. Puoi riformulare la domanda?",
+    "suggestions": {
+      "student": "Sono studente, quale abbonamento scegliere?",
+      "worker": "Lavoro 5 giorni a settimana",
+      "solidarity": "Ho diritto a una tariffa solidale?",
+      "documents": "Quali documenti devo preparare?"
+    },
+    "actions": {
+      "send": "Invia",
+      "stop": "Interrompi",
+      "reset": "Nuova conversazione",
+      "viewForfait": "Vedi abbonamento",
+      "subscribe": "Iscriviti"
+    },
+    "side": {
+      "profileTitle": "Sessione sicura",
+      "signedIn": "Accesso effettuato come {{firstName}}. I messaggi passano dall'API protetta.",
+      "signedOut": "Accedi per parlare con l'assistente.",
+      "detected": "Abbonamento rilevato",
+      "detectedHint": "L'assistente sembra consigliare questo abbonamento. Puoi consultare i dettagli o iniziare l'iscrizione.",
+      "scopeTitle": "L'assistente può aiutare con",
+      "scope1": "La scelta di un abbonamento secondo il tuo profilo",
+      "scope2": "I documenti necessari per l'iscrizione",
+      "scope3": "Le fasi del percorso Comutitres"
+    },
+    "errors": {
+      "not_authenticated": "Accedi per usare l'assistente.",
+      "backend_auth_failed": "Impossibile sincronizzare la sessione con l'API. Verifica che la password abbia almeno 8 caratteri o accedi di nuovo.",
+      "network": "Il chatbot è temporaneamente non disponibile. Verifica che il backend sia avviato.",
+      "unauthorized": "La tua sessione API è scaduta. Esci e accedi di nuovo.",
+      "stream": "Impossibile leggere la risposta del chatbot."
     }
   },
   "monEspace": {

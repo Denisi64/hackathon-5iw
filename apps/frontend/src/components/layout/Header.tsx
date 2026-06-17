@@ -78,6 +78,17 @@ export function Header() {
               {t('header.nav.subscribe')}
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/assistant"
+              className={({ isActive }) => cn(
+                'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
+                isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+              )}
+            >
+              {t('header.nav.assistant')}
+            </NavLink>
+          </li>
         </ul>
 
         <div className="flex items-center gap-2">
@@ -153,6 +164,15 @@ export function Header() {
             )}
           >
             {t('header.nav.subscribe')}
+          </NavLink>
+          <NavLink
+            to="/assistant"
+            className={({ isActive }) => cn(
+              'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+              isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+            )}
+          >
+            {t('header.nav.assistant')}
           </NavLink>
           {user ? (
             <NavLink
