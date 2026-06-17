@@ -144,6 +144,7 @@
       "franceConnect": "Entrar com FranceConnect",
       "analyzing": "Análise IA em curso…",
       "validated": "Validado",
+      "optional": "Opcional",
       "validatedHint": "Documento verificado automaticamente.",
       "certificat_scolarite": { "label": "Certificado escolar", "help": "Documento emitido pela escola para o ano corrente." },
       "attestation_bourse":   { "label": "Comprovativo de bolsa", "help": "Carta de atribuição de bolsa CROUS." },
