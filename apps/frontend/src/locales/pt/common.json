@@ -210,7 +210,8 @@
       "passwordShort": "Palavra-passe demasiado curta (mínimo 8)",
       "passwordMismatch": "As palavras-passe não coincidem",
       "noAccount": "Nenhuma conta encontrada para este email",
-      "badPassword": "Palavra-passe incorreta"
+      "badPassword": "Palavra-passe incorreta",
+      "network": "Não foi possível contactar o servidor de autenticação"
     }
   },
   "forfaits": {

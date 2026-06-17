@@ -215,7 +215,8 @@
       "passwordShort": "Password too short (8 min)",
       "passwordMismatch": "Passwords don't match",
       "noAccount": "No account found for this email",
-      "badPassword": "Incorrect password"
+      "badPassword": "Incorrect password",
+      "network": "Unable to reach the authentication server"
     }
   },
   "forfaits": {

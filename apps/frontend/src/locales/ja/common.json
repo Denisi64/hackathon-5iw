@@ -210,7 +210,8 @@
       "passwordShort": "パスワードが短すぎます（最低8文字）",
       "passwordMismatch": "パスワードが一致しません",
       "noAccount": "このメールのアカウントが見つかりません",
-      "badPassword": "パスワードが正しくありません"
+      "badPassword": "パスワードが正しくありません",
+      "network": "認証サーバーに接続できません"
     }
   },
   "forfaits": {

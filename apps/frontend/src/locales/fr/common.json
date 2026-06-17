@@ -244,7 +244,8 @@
       "passwordShort": "Mot de passe trop court (8 minimum)",
       "passwordMismatch": "Les mots de passe ne correspondent pas",
       "noAccount": "Aucun compte trouvé avec cet email",
-      "badPassword": "Mot de passe incorrect"
+      "badPassword": "Mot de passe incorrect",
+      "network": "Impossible de joindre le serveur d'authentification"
     }
   },
   "forfaits": {
