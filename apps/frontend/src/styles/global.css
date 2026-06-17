@@ -1,85 +1,37 @@
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-body {
+html, body {
   margin: 0;
-  color: var(--color-text);
-  background: var(--color-bg);
-  font-family:
-    Inter, Marianne, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  line-height: 1.6;
+  padding: 0;
+  background-color: var(--bg-base);
+  color: var(--fg);
+  font-family: "Inter", "Geist Sans", system-ui, -apple-system, "Noto Sans JP", sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-button,
-a {
+button, a {
   min-height: 44px;
 }
 
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
 :focus-visible {
-  outline: 2px solid var(--brand-primary);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
+  border-radius: 6px;
 }
 
-.app-shell {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: linear-gradient(180deg, var(--brand-primary-bg), var(--color-bg));
+::selection {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--fg);
 }
 
-.hero {
-  width: min(100%, 880px);
-}
-
-.brand {
-  color: var(--brand-primary);
-  font-weight: 700;
-  margin-bottom: 12px;
-}
-
-h1 {
-  max-width: 720px;
-  margin: 0;
-  color: var(--brand-dark);
-  font-size: clamp(2rem, 4vw, 3.25rem);
-  line-height: 1.1;
-}
-
-p {
-  max-width: 680px;
-  color: var(--color-text-muted);
-  font-size: 1.125rem;
-}
-
-.status-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin: 32px 0 16px;
-}
-
-.status-card {
-  display: grid;
-  grid-template-columns: 32px 1fr auto;
-  align-items: center;
-  min-height: 76px;
-  padding: 16px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background: var(--color-bg);
-}
-
-.status-card svg {
-  color: var(--brand-primary);
-}
-
-.status-card strong {
-  color: var(--color-success);
-}
-
-small {
-  color: var(--color-text-muted);
-}
+/* Layered background canvas — applies to body via a wrapper, NOT body directly,
+   so React Suspense fallback isn't surrounded by stale shadows. The actual
+   layered background is composed in <App /> via the Shell. */

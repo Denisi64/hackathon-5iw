@@ -1,0 +1,104 @@
+/* Tokens Comutitres Linear/Modern — Dark cinematic + Day doux IDFM.
+   Dark = data-theme="dark" + .dark. Default light = data-theme="light". */
+
+:root,
+[data-theme="light"] {
+  /* Canvas & surfaces — Day doux IDFM */
+  --bg-deep: #E5EFFB;
+  --bg-base: #F4F8FE;
+  --bg-elevated: #FFFFFF;
+  --surface: rgba(25, 114, 210, 0.04);
+  --surface-hover: rgba(25, 114, 210, 0.08);
+
+  /* Text */
+  --fg: #25303B;
+  --fg-muted: #53606E;
+  --fg-subtle: rgba(37, 48, 59, 0.55);
+
+  /* Accent — IDFM */
+  --accent: #1972D2;
+  --accent-bright: #2A82E1;
+  --accent-glow: rgba(25, 114, 210, 0.25);
+
+  /* Borders */
+  --border-default: rgba(37, 48, 59, 0.08);
+  --border-hover: rgba(37, 48, 59, 0.14);
+  --border-accent: rgba(25, 114, 210, 0.28);
+
+  /* Shadows — soft daytime, fewer layers but same multi-layer logic */
+  --shadow-card:
+    0 0 0 1px rgba(37, 48, 59, 0.05),
+    0 2px 12px rgba(37, 48, 59, 0.06),
+    0 0 32px rgba(25, 114, 210, 0.04);
+  --shadow-card-hover:
+    0 0 0 1px rgba(25, 114, 210, 0.18),
+    0 8px 28px rgba(37, 48, 59, 0.08),
+    0 0 48px rgba(25, 114, 210, 0.08);
+  --shadow-button:
+    0 0 0 1px rgba(25, 114, 210, 0.5),
+    0 4px 14px rgba(25, 114, 210, 0.25),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+  --shadow-button-hover:
+    0 0 0 1px rgba(25, 114, 210, 0.6),
+    0 6px 22px rgba(25, 114, 210, 0.35),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+  --shadow-inner:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 0 rgba(37, 48, 59, 0.04);
+
+  /* Spotlight color used by Card mouse-tracking */
+  --spotlight-rgb: 25, 114, 210;
+
+  /* Meta theme color for mobile status bar */
+  color-scheme: light;
+}
+
+[data-theme="dark"],
+.dark {
+  /* Canvas — Linear deep space */
+  --bg-deep: #020203;
+  --bg-base: #050506;
+  --bg-elevated: #0A0A0C;
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(255, 255, 255, 0.08);
+
+  /* Text */
+  --fg: #EDEDEF;
+  --fg-muted: #8A8F98;
+  --fg-subtle: rgba(255, 255, 255, 0.60);
+
+  /* Accent — IDFM (slightly brighter on dark) */
+  --accent: #2A82E1;
+  --accent-bright: #4A98E8;
+  --accent-glow: rgba(42, 130, 225, 0.30);
+
+  /* Borders */
+  --border-default: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.10);
+  --border-accent: rgba(42, 130, 225, 0.30);
+
+  /* Shadows — cinematic multi-layer */
+  --shadow-card:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 2px 20px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(0, 0, 0, 0.2);
+  --shadow-card-hover:
+    0 0 0 1px rgba(255, 255, 255, 0.10),
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(42, 130, 225, 0.10);
+  --shadow-button:
+    0 0 0 1px rgba(42, 130, 225, 0.5),
+    0 4px 12px rgba(42, 130, 225, 0.30),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+  --shadow-button-hover:
+    0 0 0 1px rgba(42, 130, 225, 0.65),
+    0 6px 20px rgba(42, 130, 225, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+  --shadow-inner:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
+
+  --spotlight-rgb: 42, 130, 225;
+
+  color-scheme: dark;
+}
