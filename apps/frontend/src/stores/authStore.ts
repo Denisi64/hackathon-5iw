@@ -1,6 +1,12 @@
 import { create } from 'zustand'
 import { api, clearTokens, getToken, setTokens } from '../services/api'
 
+export const readApiAccessToken = getToken
+export const clearApiTokens = clearTokens
+export function saveApiTokens(tokens: { access_token: string; refresh_token?: string }): void {
+  setTokens(tokens.access_token, tokens.refresh_token ?? '')
+}
+
 export interface UserAccount {
   id: string
   firstName: string
@@ -34,6 +40,7 @@ interface AuthState {
     lastName: string
     email: string
     password: string
+    language?: string
   }) => Promise<{ ok: true } | { ok: false; error: string }>
   login: (email: string, password: string) => Promise<{ ok: true } | { ok: false; error: string }>
   logout: () => void
@@ -57,13 +64,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 
-  register: async ({ firstName, lastName, email, password }) => {
+  register: async ({ firstName, lastName, email, password, language }) => {
     try {
       const { data } = await api.post<{ access_token: string; refresh_token: string }>('/auth/register', {
         firstName,
         lastName,
         email,
         password,
+        ...(language ? { language } : {}),
       })
       setTokens(data.access_token, data.refresh_token)
       const { data: me } = await api.get<UserAccount>('/auth/me')
@@ -96,3 +104,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ user: null, token: null })
   },
 }))
+
+export function getCurrentStoredUser(): (UserAccount & { password?: string }) | null {
+  return useAuthStore.getState().user
+}
