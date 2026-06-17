@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test": "vitest run",
+    "test:report": "mkdir -p reports && vitest run --reporter=default --reporter=junit --outputFile=reports/junit.xml",
+    "coverage": "vitest run --coverage --coverage.reporter=text --coverage.reporter=json --coverage.reporter=html",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
@@ -30,6 +32,7 @@
     "@testing-library/react": "^16.3.0",
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
+    "@vitest/coverage-v8": "^2.1.9",
     "jsdom": "^25.0.1",
     "tailwindcss": "^4.3.1",
     "typescript": "^5.5.3",
