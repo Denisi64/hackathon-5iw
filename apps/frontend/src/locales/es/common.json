@@ -210,7 +210,8 @@
       "passwordShort": "Contraseña demasiado corta (mínimo 8)",
       "passwordMismatch": "Las contraseñas no coinciden",
       "noAccount": "No se encontró ninguna cuenta con este email",
-      "badPassword": "Contraseña incorrecta"
+      "badPassword": "Contraseña incorrecta",
+      "network": "No se puede contactar con el servidor de autenticación"
     }
   },
   "forfaits": {
