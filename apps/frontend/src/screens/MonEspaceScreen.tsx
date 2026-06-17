@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Calendar, ChevronRight, LogOut, Sparkles } from 'lucide-react'
+import { Calendar, ChevronRight, LogOut, MapPin, Sparkles } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Badge } from '../components/ui/Badge'
@@ -21,7 +21,7 @@ export default function MonEspaceScreen() {
   }
 
   const sub = user.subscription
-  const startDateStr = sub?.startDate
+  const startDateStr = sub
     ? new Date(sub.startDate).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })
     : null
 
@@ -48,26 +48,19 @@ export default function MonEspaceScreen() {
             <div className="flex flex-col gap-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <Badge
-                    variant={sub.status === 'active' ? 'success' : sub.status === 'pending_payment' ? 'info' : 'neutral'}
-                    icon={<Sparkles className="h-3 w-3" aria-hidden="true" />}
-                  >
-                    {sub.status === 'active' ? t('monEspace.subscriptionActive')
-                      : sub.status === 'pending_payment' ? t('monEspace.subscriptionPendingPayment')
-                      : sub.status === 'pending_documents' ? t('monEspace.subscriptionPendingDocs')
-                      : t('monEspace.subscriptionDraft')}
-                  </Badge>
-                  <h2 className="mt-3 text-2xl font-semibold tracking-tight text-fg">{sub.offerName ?? sub.offerId}</h2>
+                  <Badge variant="success" icon={<Sparkles className="h-3 w-3" aria-hidden="true" />}>{t('monEspace.subscriptionActive')}</Badge>
+                  <h2 className="mt-3 text-2xl font-semibold tracking-tight text-fg">{sub.forfaitNom}</h2>
                 </div>
                 <div className="text-right">
                   <p className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('simulator.perYear')}</p>
                   <p className="text-2xl font-semibold tracking-tight text-fg tabular-nums">
-                    {sub.yearlyPrice !== null ? formatCurrency(sub.yearlyPrice, locale) : '—'}
+                    {sub.prixAn !== null ? formatCurrency(sub.prixAn, locale) : '—'}
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2">
                 <Stat icon={<Calendar className="h-3.5 w-3.5" aria-hidden="true" />} label={t('monEspace.startDate')} value={startDateStr ?? '—'} />
+                <Stat icon={<MapPin className="h-3.5 w-3.5" aria-hidden="true" />} label={t('monEspace.zones')} value={`1 – ${sub.zones}`} />
                 <Stat icon={<Sparkles className="h-3.5 w-3.5" aria-hidden="true" />} label={t('monEspace.status')} value={t('monEspace.statusValid')} />
               </div>
             </div>

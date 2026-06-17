@@ -170,8 +170,8 @@
       "email": "Email",
       "emailSent": "Un'email di conferma è stata inviata a {{email}}. Puoi chiudere questa finestra."
     },
-    "actions": { "back": "Indietro", "next": "Avanti", "confirm": "Conferma", "finish": "Torna alla home", "createAccount": "Crea Il mio spazio", "toAccount": "Apri Il mio spazio", "pay": "Paga ora" },
-    "errors": { "required": "Campo obbligatorio", "email": "Email non valida", "uploadFailed": "Caricamento documento fallito", "createFailed": "Impossibile creare la sottoscrizione", "paymentFailed": "Errore di pagamento" }
+    "actions": { "back": "Indietro", "next": "Avanti", "confirm": "Conferma", "finish": "Torna alla home", "createAccount": "Crea Il mio spazio", "toAccount": "Apri Il mio spazio" },
+    "errors": { "required": "Campo obbligatorio", "email": "Email non valida" }
   },
   "auth": {
     "login": {
@@ -244,9 +244,6 @@
     "subtitle": "Consulta il tuo abbonamento e gestisci il tuo account.",
     "logout": "Esci",
     "subscriptionActive": "Abbonamento attivo",
-    "subscriptionPendingPayment": "In attesa di pagamento",
-    "subscriptionPendingDocs": "Documenti in validazione",
-    "subscriptionDraft": "Pratica in corso",
     "startDate": "Data di inizio",
     "zones": "Zone",
     "status": "Stato",

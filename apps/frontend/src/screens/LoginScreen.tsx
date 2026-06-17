@@ -21,7 +21,7 @@ export default function LoginScreen() {
   const [error, setError] = useState<string | null>(null)
   const [emailError, setEmailError] = useState<string | null>(null)
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setError(null)
     setEmailError(null)
@@ -33,9 +33,9 @@ export default function LoginScreen() {
       setError(t('auth.errors.passwordRequired'))
       return
     }
-    const result = await login(email.trim(), password)
+    const result = login(email.trim(), password)
     if (!result.ok) {
-      setError(result.error)
+      setError(result.error === 'no_account' ? t('auth.errors.noAccount') : t('auth.errors.badPassword'))
       return
     }
     const from = (location.state as { from?: string } | null)?.from ?? '/mon-espace'

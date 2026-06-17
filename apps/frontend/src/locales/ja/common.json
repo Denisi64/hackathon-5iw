@@ -170,8 +170,8 @@
       "email": "メール",
       "emailSent": "確認メールを{{email}}に送信しました。このウィンドウを閉じても構いません。"
     },
-    "actions": { "back": "戻る", "next": "次へ", "confirm": "確認", "finish": "ホームに戻る", "createAccount": "マイページを作成", "toAccount": "マイページを開く", "pay": "支払う" },
-    "errors": { "required": "必須項目です", "email": "無効なメール", "uploadFailed": "書類のアップロードに失敗しました", "createFailed": "申込の作成に失敗しました", "paymentFailed": "支払いエラーが発生しました" }
+    "actions": { "back": "戻る", "next": "次へ", "confirm": "確認", "finish": "ホームに戻る", "createAccount": "マイページを作成", "toAccount": "マイページを開く" },
+    "errors": { "required": "必須項目です", "email": "無効なメール" }
   },
   "auth": {
     "login": {
@@ -244,9 +244,6 @@
     "subtitle": "ご契約内容を確認し、アカウントを管理します。",
     "logout": "ログアウト",
     "subscriptionActive": "有効な契約",
-    "subscriptionPendingPayment": "支払い待ち",
-    "subscriptionPendingDocs": "書類確認中",
-    "subscriptionDraft": "申込中",
     "startDate": "開始日",
     "zones": "ゾーン",
     "status": "ステータス",

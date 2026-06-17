@@ -22,7 +22,7 @@ export default function RegisterScreen() {
   const [showPass, setShowPass] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const next: Record<string, string> = {}
     if (!firstName.trim()) next.firstName = t('auth.errors.required')
@@ -35,9 +35,9 @@ export default function RegisterScreen() {
     setErrors(next)
     if (Object.keys(next).length > 0) return
 
-    const result = await register({ firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim(), password })
+    const result = register({ firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim(), password })
     if (!result.ok) {
-      setErrors({ email: result.error })
+      setErrors({ email: t('auth.errors.emailTaken') })
       return
     }
     navigate('/mon-espace', { replace: true })

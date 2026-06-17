@@ -175,8 +175,8 @@
       "email": "Email",
       "emailSent": "A confirmation email has been sent to {{email}}. You can close this window."
     },
-    "actions": { "back": "Back", "next": "Next", "confirm": "Confirm", "finish": "Back home", "createAccount": "Create My space", "toAccount": "Open My space", "pay": "Pay now" },
-    "errors": { "required": "Required", "email": "Invalid email", "uploadFailed": "Document upload failed", "createFailed": "Could not create subscription", "paymentFailed": "Payment error" }
+    "actions": { "back": "Back", "next": "Next", "confirm": "Confirm", "finish": "Back home", "createAccount": "Create My space", "toAccount": "Open My space" },
+    "errors": { "required": "Required", "email": "Invalid email" }
   },
   "auth": {
     "login": {
@@ -249,9 +249,6 @@
     "subtitle": "Find your subscription and manage your account.",
     "logout": "Sign out",
     "subscriptionActive": "Active subscription",
-    "subscriptionPendingPayment": "Awaiting payment",
-    "subscriptionPendingDocs": "Documents under review",
-    "subscriptionDraft": "Application in progress",
     "startDate": "Start date",
     "zones": "Zones",
     "status": "Status",
