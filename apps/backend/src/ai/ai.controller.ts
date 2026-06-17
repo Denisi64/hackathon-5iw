@@ -3,13 +3,14 @@ import type { Response } from 'express'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { AiService } from './ai.service'
 import { ChatDto } from './dto/chat.dto'
+import { RecommendDto } from './dto/recommend.dto'
 import { VerifyDocumentDto } from './dto/verify-document.dto'
 
-@UseGuards(JwtAuthGuard)
 @Controller('ai')
 export class AiController {
   constructor(private readonly aiService: AiService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('chat')
   async chat(@Body() dto: ChatDto, @Res() res: Response) {
     res.setHeader('Content-Type', 'text/event-stream')
@@ -27,8 +28,14 @@ export class AiController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('verify-document')
   verifyDocument(@Body() dto: VerifyDocumentDto) {
     return this.aiService.verifyDocument(dto.imageBase64, dto.mimeType)
+  }
+
+  @Post('recommend')
+  recommend(@Body() dto: RecommendDto) {
+    return this.aiService.recommend(dto)
   }
 }

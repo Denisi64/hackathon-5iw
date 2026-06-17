@@ -6,23 +6,23 @@ import type { CreateHolderDto } from './dto/create-holder.dto'
 
 @Injectable()
 export class HoldersService {
-  async create(payeurId: string, dto: CreateHolderDto) {
+  async create(payerId: string, dto: CreateHolderDto) {
     const [holder] = await db
       .insert(holders)
       .values({
-        payeurId,
-        holderId: dto.holderId ?? null,
-        nom: dto.nom,
-        prenom: dto.prenom,
-        ddn: dto.ddn,
+        payerId,
+        userId: dto.userId ?? null,
+        lastName: dto.lastName,
+        firstName: dto.firstName,
+        dateOfBirth: dto.dateOfBirth,
       })
       .returning()
 
     return holder
   }
 
-  async findAllByPayeur(payeurId: string) {
-    return db.select().from(holders).where(eq(holders.payeurId, payeurId))
+  async findAllByPayeur(payerId: string) {
+    return db.select().from(holders).where(eq(holders.payerId, payerId))
   }
 
   async findOne(id: string) {
@@ -33,12 +33,12 @@ export class HoldersService {
 
   async getReadonlyView(id: string, userId: string) {
     const holder = await this.findOne(id)
-    if (holder.holderId !== userId) throw new ForbiddenException()
+    if (holder.userId !== userId) throw new ForbiddenException()
 
     return {
-      nom: holder.nom,
-      prenom: holder.prenom,
-      ddn: holder.ddn,
+      lastName: holder.lastName,
+      firstName: holder.firstName,
+      dateOfBirth: holder.dateOfBirth,
       canSelfManage: holder.canSelfManage,
     }
   }

@@ -32,9 +32,9 @@ export class PaymentsService {
       line_items: [{
         price_data: {
           currency: 'eur',
-          unit_amount: offer.prixMois ?? 0,
+          unit_amount: offer.monthlyPrice ?? 0,
           product_data: {
-            name: offer.nom,
+            name: offer.name,
             description: offer.description ?? undefined,
           },
         },

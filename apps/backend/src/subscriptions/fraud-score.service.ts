@@ -12,7 +12,7 @@ export interface FraudSignal {
 
 export function computeFraudScore(signals: FraudSignal[]): number {
   const maxScore = signals.reduce((acc, s) => acc + s.weight * 100, 0)
-  const actualScore = signals.filter(s => s.triggered).reduce((acc, s) => acc + s.weight * 100, 0)
+  const actualScore = signals.filter((s) => s.triggered).reduce((acc, s) => acc + s.weight * 100, 0)
   return maxScore === 0 ? 0 : Math.round((actualScore / maxScore) * 100)
 }
 
@@ -26,57 +26,81 @@ const STUDENT_OFFERS = ['imagine_r_etudiant', 'imagine_r_scolaire', 'imagine_r_j
 const SENIOR_OFFERS = ['navigo_senior']
 const TST_OFFERS = ['tst_50', 'tst_75', 'tst_gratuite']
 
-function isProfileOfferMismatch(profil: string | null, offerId: string): boolean {
-  if (!profil) return false
-  if (STUDENT_OFFERS.includes(offerId) && !['etudiant', 'scolaire', 'scolaire_junior'].includes(profil)) return true
-  if (SENIOR_OFFERS.includes(offerId) && profil !== 'senior') return true
-  if (TST_OFFERS.includes(offerId) && profil !== 'tst') return true
+function isProfileMismatch(profile: string | null, offerId: string): boolean {
+  if (!profile) return false
+  if (STUDENT_OFFERS.includes(offerId) && !['student', 'school', 'junior_school'].includes(profile)) return true
+  if (SENIOR_OFFERS.includes(offerId) && profile !== 'senior') return true
+  if (TST_OFFERS.includes(offerId) && profile !== 'tst') return true
   return false
+}
+
+function extractLastName(aiExtractedData: string | null): string | null {
+  if (!aiExtractedData) return null
+  try {
+    const parsed = JSON.parse(aiExtractedData) as Record<string, unknown>
+    return (parsed.lastName as string) ?? null
+  } catch {
+    return null
+  }
 }
 
 @Injectable()
 export class FraudScoreService {
-  async compute(subscriptionId: string) {
+  async compute(subscriptionId: string): Promise<void> {
     const [sub] = await db.select().from(subscriptions).where(eq(subscriptions.id, subscriptionId)).limit(1)
-    if (!sub) return null
+    if (!sub) return
 
-    const [user] = sub.payeurId
-      ? await db.select().from(users).where(eq(users.id, sub.payeurId)).limit(1)
-      : [null]
+    const [user] = await db.select().from(users).where(eq(users.id, sub.payerId)).limit(1)
     const docs = await db.select().from(documents).where(eq(documents.subscriptionId, subscriptionId))
+
+    const docWithName = docs.find((d) => d.aiExtractedData !== null)
+    const docLastName = docWithName ? extractLastName(docWithName.aiExtractedData) : null
+    const userLastName = user?.lastName?.toLowerCase() ?? null
+    const nameInconsistent =
+      docLastName !== null && userLastName !== null && docLastName.toLowerCase() !== userLastName
+
+    const now = Date.now()
+    const hasExpiredDoc = docs.some((d) => d.expiresAt !== null && d.expiresAt.getTime() < now)
 
     const signals: FraudSignal[] = [
       {
+        name: 'ai_document_inconsistency',
+        weight: 3,
+        triggered: nameInconsistent,
+      },
+      {
+        name: 'document_expired',
+        weight: 3,
+        triggered: hasExpiredDoc,
+      },
+      {
+        name: 'fast_form_fill',
+        weight: 2,
+        triggered: false,
+      },
+      {
+        name: 'profile_mismatch',
+        weight: 2,
+        triggered: isProfileMismatch(user?.profile ?? null, sub.offerId),
+      },
+      {
         name: 'low_ocr_confidence',
         weight: 3,
-        triggered: docs.some(d => d.aiConfidence !== null && (d.aiConfidence ?? 100) < 50),
-        detail: 'Score OCR < 50 sur au moins un document',
+        triggered: docs.some((d) => d.aiConfidence !== null && (d.aiConfidence ?? 100) < 50),
       },
       {
-        name: 'rejected_document',
+        name: 'public_api_rights_unverified',
         weight: 3,
-        triggered: docs.some(d => d.status === 'rejected'),
-        detail: 'Document rejeté par l\'IA',
-      },
-      {
-        name: 'no_documents',
-        weight: 2,
-        triggered: docs.length === 0,
-        detail: 'Aucun document soumis',
-      },
-      {
-        name: 'profile_offer_mismatch',
-        weight: 2,
-        triggered: isProfileOfferMismatch(user?.profil ?? null, sub.offerId),
-        detail: 'Incohérence profil/forfait',
+        triggered: false,
       },
     ]
 
     const score = computeFraudScore(signals)
     const level = getFraudLevel(score)
 
-    await db.update(subscriptions).set({ fraudScore: score, updatedAt: new Date() }).where(eq(subscriptions.id, subscriptionId))
-
-    return { score, level, signals }
+    await db
+      .update(subscriptions)
+      .set({ fraudScore: score, fraudLevel: level, fraudSignals: signals, updatedAt: new Date() })
+      .where(eq(subscriptions.id, subscriptionId))
   }
 }

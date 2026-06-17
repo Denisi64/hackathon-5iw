@@ -1,10 +1,10 @@
-import { boolean, date, integer, pgEnum, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { boolean, date, integer, jsonb, pgEnum, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
-export const profilEnum = pgEnum('profil', [
-  'salarie',
-  'etudiant',
-  'scolaire_junior',
-  'scolaire',
+export const profileEnum = pgEnum('profile', [
+  'employee',
+  'student',
+  'junior_school',
+  'school',
   'senior',
   'tst',
   'amethyste',
@@ -33,34 +33,34 @@ export const users = pgTable('users', {
   firstName: varchar('first_name', { length: 100 }).notNull(),
   lastName: varchar('last_name', { length: 100 }).notNull(),
   dateOfBirth: timestamp('date_of_birth'),
-  profil: profilEnum('profil'),
+  profile: profileEnum('profile'),
   role: userRoleEnum('role').default('user').notNull(),
   language: varchar('language', { length: 5 }).default('fr'),
-  rgpdConsent: boolean('rgpd_consent').default(false),
-  rgpdConsentAt: timestamp('rgpd_consent_at'),
+  gdprConsent: boolean('gdpr_consent').default(false),
+  gdprConsentAt: timestamp('gdpr_consent_at'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 })
 
 export const offers = pgTable('offers', {
   id: varchar('id', { length: 50 }).primaryKey(),
-  nom: varchar('nom', { length: 100 }).notNull(),
+  name: varchar('name', { length: 100 }).notNull(),
   description: text('description'),
-  prixAn: integer('prix_an'),
-  prixMois: integer('prix_mois'),
-  renouvellement: varchar('renouvellement', { length: 20 }),
-  actif: boolean('actif').default(true),
+  yearlyPrice: integer('yearly_price'),
+  monthlyPrice: integer('monthly_price'),
+  renewal: varchar('renewal', { length: 20 }),
+  active: boolean('active').default(true),
 })
 
 export const subscriptions = pgTable('subscriptions', {
   id: uuid('id').defaultRandom().primaryKey(),
-  payeurId: uuid('payeur_id')
+  payerId: uuid('payer_id')
     .references(() => users.id)
     .notNull(),
-  porteurId: uuid('porteur_id').references(() => users.id),
-  porteurNom: varchar('porteur_nom', { length: 100 }),
-  porteurPrenom: varchar('porteur_prenom', { length: 100 }),
-  porteurDdn: timestamp('porteur_ddn'),
+  holderId: uuid('holder_id').references(() => users.id),
+  holderLastName: varchar('holder_last_name', { length: 100 }),
+  holderFirstName: varchar('holder_first_name', { length: 100 }),
+  holderDateOfBirth: timestamp('holder_date_of_birth'),
   offerId: varchar('offer_id', { length: 50 })
     .references(() => offers.id)
     .notNull(),
@@ -68,6 +68,8 @@ export const subscriptions = pgTable('subscriptions', {
   stripeSubscriptionId: varchar('stripe_subscription_id', { length: 255 }),
   stripeCustomerId: varchar('stripe_customer_id', { length: 255 }),
   fraudScore: integer('fraud_score'),
+  fraudLevel: varchar('fraud_level', { length: 10 }),
+  fraudSignals: jsonb('fraud_signals'),
   startDate: timestamp('start_date'),
   endDate: timestamp('end_date'),
   createdAt: timestamp('created_at').defaultNow(),
@@ -91,13 +93,13 @@ export const documents = pgTable('documents', {
 
 export const holders = pgTable('holders', {
   id: uuid('id').defaultRandom().primaryKey(),
-  payeurId: uuid('payeur_id')
+  payerId: uuid('payer_id')
     .references(() => users.id)
     .notNull(),
-  holderId: uuid('holder_id').references(() => users.id),
-  nom: varchar('nom', { length: 100 }).notNull(),
-  prenom: varchar('prenom', { length: 100 }).notNull(),
-  ddn: date('ddn').notNull(),
+  userId: uuid('user_id').references(() => users.id),
+  lastName: varchar('last_name', { length: 100 }).notNull(),
+  firstName: varchar('first_name', { length: 100 }).notNull(),
+  dateOfBirth: date('date_of_birth').notNull(),
   canSelfManage: boolean('can_self_manage').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow(),
 })

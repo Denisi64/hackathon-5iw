@@ -3,10 +3,24 @@ import { eq } from 'drizzle-orm'
 import { db } from '../db'
 import { offers } from '../db/schema'
 
+const PROFILE_OFFER_IDS: Record<string, string[]> = {
+  employee: ['navigo_annuel', 'navigo_mois', 'navigo_semaine', 'liberte_plus'],
+  student: ['imagine_r_etudiant'],
+  junior_school: ['imagine_r_junior'],
+  school: ['imagine_r_scolaire'],
+  senior: ['navigo_senior', 'navigo_annuel', 'navigo_mois'],
+  tst: ['tst_50', 'tst_75', 'tst_gratuite'],
+  amethyste: ['amethyste'],
+}
+
 @Injectable()
 export class OffersService {
-  findAll() {
-    return db.select().from(offers).where(eq(offers.actif, true))
+  async findAll(profile?: string) {
+    const all = await db.select().from(offers).where(eq(offers.active, true))
+    if (!profile) return all
+    const allowed = PROFILE_OFFER_IDS[profile]
+    if (!allowed) return all
+    return all.filter((o) => allowed.includes(o.id))
   }
 
   async findById(id: string) {

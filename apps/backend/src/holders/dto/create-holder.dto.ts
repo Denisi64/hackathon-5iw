@@ -2,15 +2,15 @@ import { IsDateString, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export class CreateHolderDto {
   @IsString()
-  nom!: string
+  lastName!: string
 
   @IsString()
-  prenom!: string
+  firstName!: string
 
   @IsDateString()
-  ddn!: string
+  dateOfBirth!: string
 
   @IsOptional()
   @IsUUID()
-  holderId?: string
+  userId?: string
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { computeTSTLevel } from './caf.service'
 
 @Injectable()
 export class ExternalApiService {
@@ -9,32 +10,29 @@ export class ExternalApiService {
     this.useMock = this.configService.get<string>('USE_MOCK_APIS') !== 'false'
   }
 
-  async verifyTSTEligibility(numeroAllocataire: string, codePostal: string) {
+  async verifyTSTEligibility(allocateeNumber: string, postalCode: string) {
     if (this.useMock) {
       await this.delay(800)
-      return { valid: true, source: 'mock', quotientFamilial: 580, niveauTST: 'tst_75', numeroAllocataire, codePostal }
+      const quotientFamilial = 580
+      return { valid: true, source: 'mock', quotientFamilial, tstLevel: computeTSTLevel(quotientFamilial), allocateeNumber, postalCode }
     }
-    // TODO prod: appel API Particulier CNAF
-    // https://particulier.api.gouv.fr/api/v2/composition-familiale
-    throw new Error('API CAF non configurée en production')
+    throw new Error('CAF API not configured for production')
   }
 
   async verifyStudentStatus(ine: string) {
     if (this.useMock) {
       await this.delay(600)
-      return { valid: true, source: 'mock', inscrit: true, etablissement: 'Université Paris Cité', annee: '2025-2026', ine }
+      return { valid: true, source: 'mock', enrolled: true, institution: 'Université Paris Cité', year: '2025-2026', ine }
     }
-    // TODO prod: appel API Statut Étudiant MESRI
-    throw new Error('API Statut Étudiant non configurée en production')
+    throw new Error('Student status API not configured for production')
   }
 
   async verifyScholarshipStatus(ine: string) {
     if (this.useMock) {
       await this.delay(500)
-      return { valid: true, source: 'mock', boursier: true, echelon: '4', ine }
+      return { valid: true, source: 'mock', scholar: true, level: '4', ine }
     }
-    // TODO prod: appel API Statut Boursier MESRI
-    throw new Error('API Statut Boursier non configurée en production')
+    throw new Error('Scholarship API not configured for production')
   }
 
   private delay = (ms: number) => new Promise((r) => setTimeout(r, ms))

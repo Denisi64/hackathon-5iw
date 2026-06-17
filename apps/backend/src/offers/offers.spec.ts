@@ -28,12 +28,12 @@ describe('OffersService', () => {
     })
   }
 
-  it('findAll retourne la liste des offres actives', async () => {
+  it('findAll returns active offers', async () => {
     const mockDb = db as unknown as Record<string, ReturnType<typeof vi.fn>>
     mockDb.select.mockReturnValue({
       from: vi.fn().mockReturnValue({
         where: vi.fn().mockResolvedValue([
-          { id: 'navigo_annuel', nom: 'Navigo Annuel', actif: true },
+          { id: 'navigo_annuel', name: 'Navigo Annuel', active: true },
         ]),
       }),
     })
@@ -42,13 +42,13 @@ describe('OffersService', () => {
     expect(result).toHaveLength(1)
   })
 
-  it('findById lève NotFoundException si offre inexistante', async () => {
+  it('findById throws NotFoundException if offer not found', async () => {
     mockSelect([])
-    await expect(offersService.findById('inexistant')).rejects.toThrow(NotFoundException)
+    await expect(offersService.findById('unknown')).rejects.toThrow(NotFoundException)
   })
 
-  it('findById retourne l\'offre si elle existe', async () => {
-    mockSelect([{ id: 'navigo_annuel', nom: 'Navigo Annuel' }])
+  it('findById returns the offer if it exists', async () => {
+    mockSelect([{ id: 'navigo_annuel', name: 'Navigo Annuel' }])
     const result = await offersService.findById('navigo_annuel')
     expect(result.id).toBe('navigo_annuel')
   })
