@@ -34,7 +34,7 @@ export class NotificationsCron {
     if (daysLeft === 30 || daysLeft === 7) {
       await this.notificationsService.createNotification(
         sub.payerId,
-        'renewal',
+        'subscription_renewal',
         `Votre abonnement expire dans ${daysLeft} jours — renouvelez en 1 clic`,
       )
     }

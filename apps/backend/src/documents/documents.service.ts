@@ -2,9 +2,18 @@ import { Injectable } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 import { randomUUID } from 'crypto'
 import { db } from '../db'
-import { documents } from '../db/schema'
+import { documents, documentTypeEnum } from '../db/schema'
 import { MinioService } from './minio.service'
 import { AiService } from '../ai/ai.service'
+
+type DocumentType = (typeof documentTypeEnum.enumValues)[number]
+
+const KNOWN_DOCUMENT_TYPES = new Set<string>(documentTypeEnum.enumValues)
+
+function toDocumentType(raw: unknown): DocumentType {
+  if (typeof raw === 'string' && KNOWN_DOCUMENT_TYPES.has(raw)) return raw as DocumentType
+  return 'inconnu'
+}
 
 @Injectable()
 export class DocumentsService {
@@ -13,7 +22,7 @@ export class DocumentsService {
     private readonly aiService: AiService,
   ) {}
 
-  async upload(subscriptionId: string, type: string, file: Express.Multer.File) {
+  async upload(subscriptionId: string, type: DocumentType, file: Express.Multer.File) {
     const key = `${subscriptionId}/${randomUUID()}-${file.originalname}`
     await this.minioService.upload(key, file.buffer, file.mimetype)
 
@@ -37,7 +46,7 @@ export class DocumentsService {
 
     const [doc] = await db.insert(documents).values({
       subscriptionId,
-      type: (aiResult.documentType as string) ?? 'inconnu',
+      type: toDocumentType(aiResult.documentType),
       minioKey: key,
       status: aiResult.valid ? 'valid' : 'rejected',
       aiConfidence: aiResult.confidence as number,

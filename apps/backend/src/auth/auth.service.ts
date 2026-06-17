@@ -20,7 +20,7 @@ export class AuthService {
     const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, dto.email)).limit(1)
     if (existing.length > 0) throw new ConflictException('Email déjà utilisé')
 
-    const passwordHash = await bcrypt.hash(dto.password, 10)
+    const passwordHash = dto.password ? await bcrypt.hash(dto.password, 10) : null
     const [user] = await db
       .insert(users)
       .values({
@@ -39,6 +39,8 @@ export class AuthService {
   async login(dto: LoginDto) {
     const [user] = await db.select().from(users).where(eq(users.email, dto.email)).limit(1)
     if (!user) throw new UnauthorizedException('Identifiants invalides')
+
+    if (!user.passwordHash) throw new UnauthorizedException('first_login')
 
     const valid = await bcrypt.compare(dto.password, user.passwordHash)
     if (!valid) throw new UnauthorizedException('Identifiants invalides')
