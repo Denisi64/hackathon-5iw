@@ -2,6 +2,8 @@ import { create } from 'zustand'
 
 const USERS_KEY = 'clay-users'
 const CURRENT_KEY = 'clay-current-user-email'
+const API_ACCESS_TOKEN_KEY = 'clay-api-access-token'
+const API_REFRESH_TOKEN_KEY = 'clay-api-refresh-token'
 
 export interface StoredUser {
   firstName: string
@@ -73,6 +75,30 @@ export function savePendingSubscription(sub: SubscriptionSummary): void {
   try { localStorage.setItem(PENDING_SUB_KEY, JSON.stringify(sub)) } catch {}
 }
 
+export function getCurrentStoredUser(): StoredUser | null {
+  const email = readCurrentEmail()
+  if (!email) return null
+  return readUsers().find((user) => user.email.toLowerCase() === email.toLowerCase()) ?? null
+}
+
+export function readApiAccessToken(): string | null {
+  try { return localStorage.getItem(API_ACCESS_TOKEN_KEY) } catch { return null }
+}
+
+export function saveApiTokens(tokens: { access_token: string; refresh_token?: string }): void {
+  try {
+    localStorage.setItem(API_ACCESS_TOKEN_KEY, tokens.access_token)
+    if (tokens.refresh_token) localStorage.setItem(API_REFRESH_TOKEN_KEY, tokens.refresh_token)
+  } catch {}
+}
+
+export function clearApiTokens(): void {
+  try {
+    localStorage.removeItem(API_ACCESS_TOKEN_KEY)
+    localStorage.removeItem(API_REFRESH_TOKEN_KEY)
+  } catch {}
+}
+
 function hydrate(): UserAccount | null {
   const email = readCurrentEmail()
   if (!email) return null
@@ -125,6 +151,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   logout: () => {
     writeCurrentEmail(null)
+    clearApiTokens()
     set({ user: null })
   },
 

@@ -1,7 +1,7 @@
 {
   "header": {
     "logoAriaLabel": "コミュティトル、ホーム",
-    "nav": { "simulator": "シミュレーター", "forfaits": "プラン一覧", "subscribe": "申し込む", "login": "ログイン", "account": "マイページ" },
+    "nav": { "simulator": "シミュレーター", "forfaits": "プラン一覧", "subscribe": "申し込む", "assistant": "アシスタント", "login": "ログイン", "account": "マイページ" },
     "menu": { "open": "メニューを開く", "close": "メニューを閉じる" }
   },
   "themeToggle": {
@@ -199,7 +199,7 @@
       "password": "パスワード",
       "passwordConfirm": "パスワードを確認"
     },
-    "passwordHint": "6文字以上。",
+    "passwordHint": "8文字以上。",
     "passwordShow": "パスワードを表示",
     "passwordHide": "パスワードを非表示",
     "errors": {
@@ -207,7 +207,7 @@
       "emailInvalid": "無効なメール",
       "emailTaken": "このメールのアカウントは既に存在します",
       "passwordRequired": "パスワードが必要です",
-      "passwordShort": "パスワードが短すぎます（最低6文字）",
+      "passwordShort": "パスワードが短すぎます（最低8文字）",
       "passwordMismatch": "パスワードが一致しません",
       "noAccount": "このメールのアカウントが見つかりません",
       "badPassword": "パスワードが正しくありません"
@@ -301,6 +301,47 @@
       "documents": { "piece_identite": "本人確認書類", "certificat_scolarite": "在学証明書", "attestation_bourse": "奨学金証明書", "livret_famille": "家族手帳", "attestation_caf": "CAF証明書", "avis_imposition": "税務通知", "carte_invalidite": "障害者カード", "notification_mdph": "MDPH通知" },
       "renewal": { "annuel": "年次更新", "mensuel": "月次更新", "trimestriel": "四半期更新", "hebdomadaire": "1週間有効", "usage": "利用ごとの支払い", "jour": "1日有効" },
       "benefits": { "zones": "ゾーン {{min}}〜{{max}}", "employerRefund": "雇用主から{{percent}}%払戻し", "noDocuments": "必要書類なし", "documentCheck": "書類確認をサポート", "solidarityCheck": "ソリダリティ権利確認", "schoolRhythm": "学校生活に合わせた設計", "payOnlyWhenTraveling": "移動した時だけ支払い" }
+    }
+  },
+  "chatbot": {
+    "kicker": "Navigoアシスタント",
+    "title": "Comutitresアシスタントに質問できます。",
+    "subtitle": "プラン、必要書類、申し込み手順をわかりやすく案内します。",
+    "welcomeMessage": "こんにちは。プラン選び、必要書類の準備、申し込み手順の確認をお手伝いできます。現在の状況を教えてください。",
+    "messagesAria": "アシスタントとの会話",
+    "inputLabel": "メッセージ",
+    "placeholder": "質問を入力...",
+    "emptyResponse": "完全な回答を受信できませんでした。質問を言い換えてください。",
+    "suggestions": {
+      "student": "学生です。どのプランを選べばよいですか？",
+      "worker": "週5日通勤しています",
+      "solidarity": "割引料金の対象になりますか？",
+      "documents": "どの書類を準備すればよいですか？"
+    },
+    "actions": {
+      "send": "送信",
+      "stop": "停止",
+      "reset": "新しい会話",
+      "viewForfait": "プランを見る",
+      "subscribe": "申し込む"
+    },
+    "side": {
+      "profileTitle": "安全なセッション",
+      "signedIn": "{{firstName}}としてログイン中です。メッセージは保護されたAPIを通ります。",
+      "signedOut": "アシスタントを使うにはログインしてください。",
+      "detected": "検出されたプラン",
+      "detectedHint": "アシスタントはこのプランをおすすめしているようです。詳細を確認するか、申し込みを開始できます。",
+      "scopeTitle": "アシスタントが手伝えること",
+      "scope1": "プロフィールに合ったプラン選び",
+      "scope2": "申し込みに必要な書類",
+      "scope3": "Comutitresの手順"
+    },
+    "errors": {
+      "not_authenticated": "アシスタントを使うにはログインしてください。",
+      "backend_auth_failed": "APIとのセッション同期に失敗しました。パスワードが8文字以上か確認するか、再ログインしてください。",
+      "network": "チャットボットは一時的に利用できません。バックエンドが起動しているか確認してください。",
+      "unauthorized": "APIセッションの期限が切れました。ログアウトしてから再度ログインしてください。",
+      "stream": "チャットボットの応答を読み取れませんでした。"
     }
   },
   "monEspace": {

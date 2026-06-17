@@ -5,6 +5,7 @@
       "simulator": "Simulateur",
       "forfaits": "Forfaits",
       "subscribe": "Souscrire",
+      "assistant": "Assistant",
       "login": "Se connecter",
       "account": "Mon espace"
     },
@@ -232,7 +233,7 @@
       "password": "Mot de passe",
       "passwordConfirm": "Confirmer le mot de passe"
     },
-    "passwordHint": "Minimum 6 caractères.",
+    "passwordHint": "Minimum 8 caractères.",
     "passwordShow": "Afficher le mot de passe",
     "passwordHide": "Masquer le mot de passe",
     "errors": {
@@ -240,7 +241,7 @@
       "emailInvalid": "Email invalide",
       "emailTaken": "Un compte existe déjà avec cet email",
       "passwordRequired": "Mot de passe requis",
-      "passwordShort": "Mot de passe trop court (6 minimum)",
+      "passwordShort": "Mot de passe trop court (8 minimum)",
       "passwordMismatch": "Les mots de passe ne correspondent pas",
       "noAccount": "Aucun compte trouvé avec cet email",
       "badPassword": "Mot de passe incorrect"
@@ -397,6 +398,47 @@
         "schoolRhythm": "Pensé pour le rythme scolaire",
         "payOnlyWhenTraveling": "Paiement uniquement quand vous voyagez"
       }
+    }
+  },
+  "chatbot": {
+    "kicker": "Assistant Navigo",
+    "title": "Posez votre question à l'assistant Comutitres.",
+    "subtitle": "Il vous aide à comprendre les forfaits, les justificatifs et les étapes de souscription.",
+    "welcomeMessage": "Bonjour ! Je peux vous aider à choisir un forfait, préparer vos justificatifs ou comprendre une étape de souscription. Quelle est votre situation ?",
+    "messagesAria": "Conversation avec l'assistant",
+    "inputLabel": "Votre message",
+    "placeholder": "Écrivez votre question...",
+    "emptyResponse": "Je n'ai pas reçu de réponse complète. Vous pouvez reformuler votre question ?",
+    "suggestions": {
+      "student": "Je suis étudiant, quel forfait choisir ?",
+      "worker": "Je travaille 5 jours par semaine",
+      "solidarity": "Ai-je droit à un tarif solidaire ?",
+      "documents": "Quels justificatifs dois-je préparer ?"
+    },
+    "actions": {
+      "send": "Envoyer",
+      "stop": "Arrêter",
+      "reset": "Nouvelle conversation",
+      "viewForfait": "Voir le forfait",
+      "subscribe": "Souscrire"
+    },
+    "side": {
+      "profileTitle": "Session sécurisée",
+      "signedIn": "Connecté en tant que {{firstName}}. Les échanges passent par l'API protégée.",
+      "signedOut": "Connectez-vous pour discuter avec l'assistant.",
+      "detected": "Forfait détecté",
+      "detectedHint": "L'assistant semble recommander ce forfait. Vous pouvez consulter le détail ou lancer la souscription.",
+      "scopeTitle": "L'assistant peut aider sur",
+      "scope1": "Le choix d'un forfait selon votre profil",
+      "scope2": "Les documents nécessaires à la souscription",
+      "scope3": "Les étapes du parcours Comutitres"
+    },
+    "errors": {
+      "not_authenticated": "Connectez-vous pour utiliser l'assistant.",
+      "backend_auth_failed": "Impossible de synchroniser votre session avec l'API. Vérifiez que votre mot de passe contient au moins 8 caractères ou reconnectez-vous.",
+      "network": "Le chatbot est momentanément indisponible. Vérifiez que le backend est lancé.",
+      "unauthorized": "Votre session API a expiré. Déconnectez-vous puis reconnectez-vous.",
+      "stream": "La réponse du chatbot n'a pas pu être lue."
     }
   },
   "monEspace": {
