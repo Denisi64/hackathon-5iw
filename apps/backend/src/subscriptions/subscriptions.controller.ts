@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import type { JwtPayload } from '../common/types/shared'
@@ -37,6 +37,7 @@ export class SubscriptionsController {
   }
 
   @Post(':id/compute-fraud-score')
+  @HttpCode(HttpStatus.NO_CONTENT)
   computeFraudScore(@CurrentUser() user: JwtPayload, @Param('id') id: string) {
     return this.subscriptionsService.computeFraudScore(id, user.sub)
   }

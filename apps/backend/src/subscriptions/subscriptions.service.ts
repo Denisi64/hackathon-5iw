@@ -25,7 +25,24 @@ export class SubscriptionsService {
   }
 
   async findById(id: string, userId: string) {
-    const [sub] = await db.select().from(subscriptions).where(eq(subscriptions.id, id)).limit(1)
+    const [sub] = await db
+      .select({
+        id: subscriptions.id,
+        payeurId: subscriptions.payeurId,
+        porteurId: subscriptions.porteurId,
+        porteurNom: subscriptions.porteurNom,
+        porteurPrenom: subscriptions.porteurPrenom,
+        porteurDdn: subscriptions.porteurDdn,
+        offerId: subscriptions.offerId,
+        status: subscriptions.status,
+        startDate: subscriptions.startDate,
+        endDate: subscriptions.endDate,
+        createdAt: subscriptions.createdAt,
+        updatedAt: subscriptions.updatedAt,
+      })
+      .from(subscriptions)
+      .where(eq(subscriptions.id, id))
+      .limit(1)
     if (!sub) throw new NotFoundException('Souscription introuvable')
     if (sub.payeurId !== userId) throw new ForbiddenException()
     return sub
@@ -70,8 +87,8 @@ export class SubscriptionsService {
     return renewed
   }
 
-  async computeFraudScore(id: string, userId: string) {
+  async computeFraudScore(id: string, userId: string): Promise<void> {
     await this.findById(id, userId)
-    return this.fraudScoreService.compute(id)
+    await this.fraudScoreService.compute(id)
   }
 }

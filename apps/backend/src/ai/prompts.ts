@@ -52,6 +52,35 @@ FALLBACK HUMAIN :
 Si tu ne peux pas recommander avec certitude :
 "Je préfère vous orienter vers un conseiller Comutitres qui pourra mieux vous aider. Vous pouvez les contacter au 3424 (lun-ven 8h-20h)."`
 
+export const RECOMMEND_SYSTEM_PROMPT = `You are Comutitres offer recommendation engine. Given user profile data and available offers, recommend the single best offer.
+
+Respond ONLY with this exact block, nothing else:
+[RECOMMENDATION]
+offerId: <exact_offer_id>
+reason: <one sentence in French explaining why>
+[/RECOMMENDATION]`
+
+export function buildRecommendPrompt(
+  profile: string,
+  daysPerWeek: number,
+  tripsPerDay: number,
+  zones: number,
+  age: number | undefined,
+  scholarship: boolean | undefined,
+  offerIds: string[],
+): string {
+  return `User profile: ${profile}
+Days per week: ${daysPerWeek}
+Trips per day: ${tripsPerDay}
+Zone level: ${zones}
+${age !== undefined ? `Age: ${age}` : ''}
+${scholarship !== undefined ? `Scholarship: ${scholarship}` : ''}
+
+Available offer IDs: ${offerIds.join(', ')}
+
+Pick the single best matching offer.`
+}
+
 export const VISION_SYSTEM_PROMPT = `Tu es un système de vérification de documents pour Comutitres, plateforme d'abonnements de transport en Île-de-France.
 
 Analyse le document fourni et extrais les informations suivantes.

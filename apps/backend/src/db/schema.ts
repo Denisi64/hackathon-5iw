@@ -1,4 +1,4 @@
-import { boolean, date, integer, pgEnum, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { boolean, date, integer, jsonb, pgEnum, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
 export const profilEnum = pgEnum('profil', [
   'salarie',
@@ -68,6 +68,8 @@ export const subscriptions = pgTable('subscriptions', {
   stripeSubscriptionId: varchar('stripe_subscription_id', { length: 255 }),
   stripeCustomerId: varchar('stripe_customer_id', { length: 255 }),
   fraudScore: integer('fraud_score'),
+  fraudLevel: varchar('fraud_level', { length: 10 }),
+  fraudSignals: jsonb('fraud_signals'),
   startDate: timestamp('start_date'),
   endDate: timestamp('end_date'),
   createdAt: timestamp('created_at').defaultNow(),
