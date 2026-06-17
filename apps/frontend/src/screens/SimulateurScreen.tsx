@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { Settings2 } from 'lucide-react'
 import { Card } from '../components/ui/Card'
 import { Slider } from '../components/ui/Slider'
@@ -11,7 +12,12 @@ import type { NiveauZone } from '../types/domain'
 
 export default function SimulateurScreen() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { params, update, results } = useSimulator()
+
+  function onSubscribe(forfaitId: string) {
+    navigate(`/souscrire?forfait=${forfaitId}&zones=${params.zones}`)
+  }
 
   return (
     <div className="flex flex-col gap-12 pb-10">
@@ -82,7 +88,7 @@ export default function SimulateurScreen() {
           </div>
           <ComparateurForfaits
             results={results}
-            onSelect={(id) => console.warn('subscribe', id)}
+            onSelect={onSubscribe}
           />
         </div>
       </div>

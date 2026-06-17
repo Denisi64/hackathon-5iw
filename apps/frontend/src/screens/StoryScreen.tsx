@@ -72,6 +72,7 @@ export default function StoryScreen() {
                 story.color === 'amber' && 'bg-gradient-to-br from-amber-300 to-amber-500',
                 story.color === 'green' && 'bg-gradient-to-br from-emerald-400 to-emerald-600',
                 story.color === 'pink' && 'bg-gradient-to-br from-pink-400 to-pink-600',
+                story.color === 'blue' && 'bg-gradient-to-br from-sky-400 to-sky-600',
               )}>
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>

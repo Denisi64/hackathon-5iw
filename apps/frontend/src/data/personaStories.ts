@@ -1,11 +1,12 @@
 import type { ComponentType, SVGProps } from 'react'
-import { Briefcase, GraduationCap, Leaf, Sparkles } from 'lucide-react'
+import { Briefcase, GraduationCap, Leaf, Smartphone, Sparkles } from 'lucide-react'
 import lucasPhoto from '../assets/images/personas/lucas.png'
+import thomasPhoto from '../assets/images/personas/thomas.png'
 import valeriePhoto from '../assets/images/personas/valerie.png'
 import jeanpierrePhoto from '../assets/images/personas/jeanpierre.png'
 import amiraPhoto from '../assets/images/personas/amira.png'
 
-export type PersonaSlug = 'lucas' | 'valerie' | 'jeanpierre' | 'amira'
+export type PersonaSlug = 'lucas' | 'thomas' | 'valerie' | 'jeanpierre' | 'amira'
 
 export interface EpisodeContent {
   /** Short narrative line shown inside the episode card body. */
@@ -17,7 +18,7 @@ export interface EpisodeContent {
 export interface PersonaStory {
   slug: PersonaSlug
   /** Couleur signature — utilisée pour orb, badge, accents. */
-  color: 'purple' | 'amber' | 'green' | 'pink'
+  color: 'purple' | 'amber' | 'green' | 'pink' | 'blue'
   /** Tailwind classes for color-tinted decorations (background tints, borders). */
   ringClass: string
   fromClass: string
@@ -67,6 +68,41 @@ export const PERSONA_STORIES: Record<PersonaSlug, PersonaStory> = {
       {
         narrative: "Quelques années plus tard, Lucas démarre son premier emploi. Un nouvel épisode commence.",
         items: ['Nouvelle situation détectée', 'Premier emploi', 'Bascule vers Navigo Annuel', 'Remboursement employeur 50%'],
+      },
+    ],
+  },
+  thomas: {
+    slug: 'thomas',
+    color: 'blue',
+    ringClass: 'ring-sky-500/30 hover:ring-sky-500/50',
+    fromClass: 'from-sky-500/20',
+    toClass: 'to-sky-500/0',
+    icon: Smartphone,
+    photo: thomasPhoto,
+    age: 29,
+    location: 'Paris (75)',
+    quote: "Je veux tout gérer depuis mon téléphone, sans jamais passer en agence.",
+    forfait: { nom: 'Navigo Annuel', prix: '1 089,60 €/an', subtitle: '50% remboursé par l’employeur' },
+    episodes: [
+      {
+        narrative: "Thomas vit et travaille à Paris : métro tous les jours, smartphone toujours en main.",
+        items: ['Âge : 29 ans', 'Statut : salarié', 'Paris (75)', 'Mobile-first & connecté'],
+      },
+      {
+        narrative: "On lui recommande l'abonnement le plus rentable pour un usage quotidien.",
+        items: ['Navigo Annuel', 'Usage quotidien détecté', '1 089,60 €/an', 'Tout réseau IDF inclus'],
+      },
+      {
+        narrative: "Son contrat de travail accélère la demande de remboursement employeur.",
+        items: ['Contrat de travail', 'Employeur détecté', 'Remboursement 50% activé', 'Confiance : 96%'],
+      },
+      {
+        narrative: "Son Navigo Annuel est activé, 100% depuis son téléphone.",
+        items: ['Navigo Annuel activé', '1 089,60 €/an', '50% pris en charge employeur', 'Carte dématérialisée mobile'],
+      },
+      {
+        narrative: "Plus tard, Thomas déménage en grande couronne : son trajet évolue, l'app s'adapte.",
+        items: ['Déménagement détecté', 'Nouvelles zones 1-5', 'Tarif recalculé automatiquement', 'Aucune coupure de service'],
       },
     ],
   },
@@ -177,4 +213,4 @@ export const PERSONA_STORIES: Record<PersonaSlug, PersonaStory> = {
   },
 }
 
-export const PERSONA_LIST: PersonaSlug[] = ['lucas', 'valerie', 'jeanpierre', 'amira']
+export const PERSONA_LIST: PersonaSlug[] = ['lucas', 'thomas', 'valerie', 'jeanpierre', 'amira']

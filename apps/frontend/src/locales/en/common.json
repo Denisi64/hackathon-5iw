@@ -1,7 +1,14 @@
 {
   "header": {
     "logoAriaLabel": "Comutitres, home",
-    "nav": { "simulator": "Simulator", "forfaits": "Plans", "subscribe": "Subscribe", "login": "Sign in", "account": "My space" }
+    "nav": {
+      "simulator": "Simulator",
+      "forfaits": "Plans",
+      "subscribe": "Subscribe",
+      "login": "Sign in",
+      "account": "My space",
+      "timeline": "Journey"
+    }
   },
   "themeToggle": {
     "toLight": "Switch to light mode",
@@ -27,17 +34,58 @@
     "title": "Every trip tells a story.",
     "subtitle": "Because a travel pass is never the destination — it's what keeps the story moving.",
     "personas": {
-      "lucas": { "name": "Lucas", "role": "Student", "tagline": "The first step into the future.", "episode": "Episode 1" },
-      "valerie": { "name": "Valérie", "role": "Working mum", "tagline": "Mission: simplify daily life.", "episode": "Episode 2" },
-      "jeanpierre": { "name": "Jean-Pierre", "role": "Senior", "tagline": "Time, found again.", "episode": "Episode 3" },
-      "amira": { "name": "Amira", "role": "New chapter", "tagline": "A fresh start.", "episode": "Episode 4" }
+      "lucas": {
+        "name": "Lucas",
+        "role": "Student",
+        "tagline": "The first step into the future.",
+        "episode": "Episode 1"
+      },
+      "thomas": {
+        "name": "Thomas",
+        "role": "Urban commuter",
+        "tagline": "Everyday life, on the move.",
+        "episode": "Episode 2"
+      },
+      "valerie": {
+        "name": "Valérie",
+        "role": "Working mum",
+        "tagline": "Mission: simplify daily life.",
+        "episode": "Episode 3"
+      },
+      "jeanpierre": {
+        "name": "Jean-Pierre",
+        "role": "Senior",
+        "tagline": "Time, found again.",
+        "episode": "Episode 4"
+      },
+      "amira": {
+        "name": "Amira",
+        "role": "New chapter",
+        "tagline": "A fresh start.",
+        "episode": "Episode 5"
+      }
     },
     "episodes": {
-      "e1": { "kicker": "Episode 1", "title": "I share my situation" },
-      "e2": { "kicker": "Episode 2", "title": "I discover my solution" },
-      "e3": { "kicker": "Episode 3", "title": "I simplify the paperwork" },
-      "e4": { "kicker": "Episode 4", "title": "I start my episode" },
-      "e5": { "kicker": "Episode 5", "title": "A new episode begins" }
+      "e1": {
+        "kicker": "Episode 1",
+        "title": "I share my situation"
+      },
+      "e2": {
+        "kicker": "Episode 2",
+        "title": "I discover my solution"
+      },
+      "e3": {
+        "kicker": "Episode 3",
+        "title": "I simplify the paperwork"
+      },
+      "e4": {
+        "kicker": "Episode 4",
+        "title": "I start my episode"
+      },
+      "e5": {
+        "kicker": "Episode 5",
+        "title": "A new episode begins"
+      }
     },
     "screen": {
       "back": "Back to stories",
@@ -82,9 +130,18 @@
     "yourProfile": "Your profile",
     "results": "Recommended plans",
     "slider": {
-      "days": { "label": "Days per week", "unit": "d/wk" },
-      "zones": { "label": "Zones", "unit": "zones" },
-      "trips": { "label": "Trips per day", "unit": "trips" }
+      "days": {
+        "label": "Days per week",
+        "unit": "d/wk"
+      },
+      "zones": {
+        "label": "Zones",
+        "unit": "zones"
+      },
+      "trips": {
+        "label": "Trips per day",
+        "unit": "trips"
+      }
     },
     "ageLabel": "Age",
     "scholarshipLabel": "Scholarship",
@@ -99,28 +156,79 @@
   },
   "footer": {
     "tagline": "An Île-de-France Mobilités company",
-    "links": { "rgpd": "GDPR", "legal": "Legal", "contact": "Contact" }
+    "links": {
+      "rgpd": "GDPR",
+      "legal": "Legal",
+      "contact": "Contact"
+    }
   },
-  "common": { "loading": "Loading…", "yes": "Yes", "no": "No" },
+  "common": {
+    "loading": "Loading…",
+    "yes": "Yes",
+    "no": "No"
+  },
   "subscription": {
     "kicker": "Step {{step}} / {{total}}",
     "steps": {
-      "s1": { "title": "What's your situation?", "description": "Pick the profile that fits you best. We adapt the journey accordingly." },
-      "s2": { "title": "Tell us a bit more", "description": "A few details to tailor the recommendation." },
-      "s3": { "title": "Our recommendation", "description": "Here is the plan we suggest for your profile." },
-      "s4": { "title": "Your documents", "description": "Drop your files or connect to official services. Automated verification." },
-      "s5": { "title": "Create your account", "description": "A few details to finalize your subscription securely." },
-      "s6": { "title": "Welcome aboard", "description": "Everything is verified. Time to start your journey." }
+      "s1": {
+        "title": "What's your situation?",
+        "description": "Pick the profile that fits you best. We adapt the journey accordingly."
+      },
+      "s2": {
+        "title": "Tell us a bit more",
+        "description": "A few details to tailor the recommendation."
+      },
+      "s3": {
+        "title": "Our recommendation",
+        "description": "Here is the plan we suggest for your profile."
+      },
+      "s4": {
+        "title": "Your documents",
+        "description": "Drop your files or connect to official services. Automated verification."
+      },
+      "s5": {
+        "title": "Create your account",
+        "description": "A few details to finalize your subscription securely."
+      },
+      "s6": {
+        "title": "Payment",
+        "description": "Pay for your subscription securely. Test mode — no money will actually be charged."
+      },
+      "s7": {
+        "title": "Welcome aboard",
+        "description": "Everything is verified. Time to start your journey."
+      }
     },
     "profiles": {
       "selected": "Selected",
-      "student": { "title": "Student", "description": "You're in higher education." },
-      "worker": { "title": "Employee", "description": "You have a job, your employer refunds 50%." },
-      "senior": { "title": "Senior 62+", "description": "Enjoy the Navigo Senior fare." },
-      "jobseeker": { "title": "Job seeker / TST", "description": "Solidarity transport pricing based on your rights." },
-      "parent": { "title": "Parent", "description": "Subscribing for your kids." },
-      "scholar": { "title": "Pupil 11-17", "description": "You study in Île-de-France." },
-      "amethyste": { "title": "Améthyste", "description": "Person with disability (MDPH) — fare based on your department." }
+      "student": {
+        "title": "Student",
+        "description": "You're in higher education."
+      },
+      "worker": {
+        "title": "Employee",
+        "description": "You have a job, your employer refunds 50%."
+      },
+      "senior": {
+        "title": "Senior 62+",
+        "description": "Enjoy the Navigo Senior fare."
+      },
+      "jobseeker": {
+        "title": "Job seeker / TST",
+        "description": "Solidarity transport pricing based on your rights."
+      },
+      "parent": {
+        "title": "Parent",
+        "description": "Subscribing for your kids."
+      },
+      "scholar": {
+        "title": "Pupil 11-17",
+        "description": "You study in Île-de-France."
+      },
+      "amethyste": {
+        "title": "Améthyste",
+        "description": "Person with disability (MDPH) — fare based on your department."
+      }
     },
     "questions": {
       "age": "Your age",
@@ -129,33 +237,105 @@
       "daysPerWeek": "Days of use per week",
       "employerRefund": "Does your employer refund 50%?",
       "cafBeneficiary": "Are you a CAF / CSS beneficiary?",
-      "childrenCount": "How many kids to subscribe?",
-      "childrenUnit": "kids",
-      "firstChildAge": "Age of the first kid"
+      "childFirstName": "Child's first name",
+      "childBirthDate": "Child's date of birth",
+      "childDetected": "Detected pass: {{forfait}} ({{age}} y.o.)"
     },
     "recommendation": {
-      "student":   { "summary": "Imagine R Student grants you the full Île-de-France network during the school year.", "reasons": ["Scholarship fare applied automatically", "All zones included", "Annual renewal, no action needed"] },
-      "worker":    { "summary": "Navigo Yearly remains the best deal for daily commuting.", "reasons": ["50% refunded by your employer", "Savings vs single tickets", "Full IDF network included"] },
-      "senior":    { "summary": "Senior fare brings a meaningful discount from age 62.", "reasons": ["Automatic age verification via ID", "Estimated savings €270/year", "Seamless switch, no service interruption"] },
-      "jobseeker": { "summary": "Solidarity Transport Pricing adapts the fare to your resources.", "reasons": ["Automated CAF rights check", "No documents to upload", "Easy quarterly renewal"] },
-      "parent":    { "summary": "One place to manage all your kids' subscriptions.", "reasons": ["Imagine R Pupil for each child", "A single family record covers all", "Automatic reminders before school year"] },
-      "scholar":   { "summary": "Imagine R Pupil covers the full school year for ages 11-25.", "reasons": ["Full IDF network included", "Discounted scholarship rate available", "Automatic renewal each year"] },
-      "amethyste": { "summary": "The Améthyste fare adapts to your department of residence and your MDPH status.", "reasons": ["Fare varies by department", "Automatic check via MDPH notification", "Annual renewal with no paperwork"] }
+      "student": {
+        "summary": "Imagine R Student grants you the full Île-de-France network during the school year.",
+        "reasons": [
+          "Scholarship fare applied automatically",
+          "All zones included",
+          "Annual renewal, no action needed"
+        ]
+      },
+      "worker": {
+        "summary": "Navigo Yearly remains the best deal for daily commuting.",
+        "reasons": [
+          "50% refunded by your employer",
+          "Savings vs single tickets",
+          "Full IDF network included"
+        ]
+      },
+      "senior": {
+        "summary": "Senior fare brings a meaningful discount from age 62.",
+        "reasons": [
+          "Automatic age verification via ID",
+          "Estimated savings €270/year",
+          "Seamless switch, no service interruption"
+        ]
+      },
+      "jobseeker": {
+        "summary": "Solidarity Transport Pricing adapts the fare to your resources.",
+        "reasons": [
+          "Automated CAF rights check",
+          "No documents to upload",
+          "Easy quarterly renewal"
+        ]
+      },
+      "parent": {
+        "summary": "One place to manage all your kids' subscriptions.",
+        "reasons": [
+          "Imagine R Pupil for each child",
+          "A single family record covers all",
+          "Automatic reminders before school year"
+        ]
+      },
+      "scholar": {
+        "summary": "Imagine R Pupil covers the full school year for ages 11-25.",
+        "reasons": [
+          "Full IDF network included",
+          "Discounted scholarship rate available",
+          "Automatic renewal each year"
+        ]
+      },
+      "amethyste": {
+        "summary": "The Améthyste fare adapts to your department of residence and your MDPH status.",
+        "reasons": [
+          "Fare varies by department",
+          "Automatic check via MDPH notification",
+          "Annual renewal with no paperwork"
+        ]
+      }
     },
     "documents": {
       "upload": "Choose a file",
-      "franceConnect": "Sign in with FranceConnect",
       "analyzing": "AI analysis in progress…",
       "validated": "Verified",
       "validatedHint": "Document checked automatically.",
-      "certificat_scolarite": { "label": "School certificate", "help": "Document issued by your school for the current year." },
-      "attestation_bourse":   { "label": "Scholarship proof", "help": "CROUS scholarship award letter." },
-      "contrat_travail":      { "label": "Employment contract", "help": "Optional — speeds up employer refund." },
-      "piece_identite":       { "label": "ID document", "help": "ID or passport to confirm your age." },
-      "france_connect":       { "label": "CAF verification via FranceConnect", "help": "Secure sign-in — no document to upload." },
-      "livret_famille":       { "label": "Family record book", "help": "One document covers all your kids." },
-      "carte_invalidite":     { "label": "Disability card", "help": "Inclusion Mobility Card (CMI) or legacy disability card." },
-      "notification_mdph":    { "label": "MDPH notification", "help": "Decision notification from the Departmental House for Disabled People." }
+      "certificat_scolarite": {
+        "label": "School certificate",
+        "help": "Document issued by your school for the current year."
+      },
+      "attestation_bourse": {
+        "label": "Scholarship proof",
+        "help": "CROUS scholarship award letter."
+      },
+      "contrat_travail": {
+        "label": "Employment contract",
+        "help": "Optional — speeds up employer refund."
+      },
+      "piece_identite": {
+        "label": "ID document",
+        "help": "ID or passport to confirm your age."
+      },
+      "france_connect": {
+        "label": "CAF verification via FranceConnect",
+        "help": "Secure sign-in — no document to upload."
+      },
+      "livret_famille": {
+        "label": "Family record book",
+        "help": "One document covers all your kids."
+      },
+      "carte_invalidite": {
+        "label": "Disability card",
+        "help": "Inclusion Mobility Card (CMI) or legacy disability card."
+      },
+      "notification_mdph": {
+        "label": "MDPH notification",
+        "help": "Decision notification from the Departmental House for Disabled People."
+      }
     },
     "account": {
       "firstName": "First name",
@@ -163,6 +343,27 @@
       "email": "Email",
       "phone": "Phone",
       "phoneHint": "Optional — for SMS reminders."
+    },
+    "payment": {
+      "method": "Payment method",
+      "card": "Credit card",
+      "sepa": "SEPA direct debit",
+      "cardName": "Name on card",
+      "cardNumber": "Card number",
+      "expiry": "Expiry (MM/YY)",
+      "cvc": "CVC",
+      "iban": "IBAN",
+      "ibanHint": "Monthly debit of {{amount}}.",
+      "testHint": "Test mode — card 4242 4242 4242 4242, any future date and CVC.",
+      "secure": "Secure payment · encrypted",
+      "total": "Total to pay",
+      "errors": {
+        "cardName": "Name required",
+        "cardNumber": "Invalid card number",
+        "expiry": "Invalid date",
+        "cvc": "Invalid CVC",
+        "iban": "Invalid IBAN"
+      }
     },
     "confirmation": {
       "welcome": "Welcome, {{firstName}}!",
@@ -175,8 +376,51 @@
       "email": "Email",
       "emailSent": "A confirmation email has been sent to {{email}}. You can close this window."
     },
-    "actions": { "back": "Back", "next": "Next", "confirm": "Confirm", "finish": "Back home", "createAccount": "Create My space", "toAccount": "Open My space" },
-    "errors": { "required": "Required", "email": "Invalid email" }
+    "actions": {
+      "back": "Back",
+      "next": "Next",
+      "confirm": "Confirm",
+      "finish": "Back home",
+      "createAccount": "Create My space",
+      "toAccount": "Open My space",
+      "pay": "Pay {{amount}}",
+      "paying": "Processing payment…"
+    },
+    "errors": {
+      "required": "Required",
+      "email": "Invalid email"
+    },
+    "verification": {
+      "cta": "Sign in with FranceConnect",
+      "modalTitle": "Sign in with FranceConnect",
+      "modalSubtitle": "Choose the account to sign in with. Your data is never stored.",
+      "connecting": "Securely connecting to {{provider}}…",
+      "secure": "Verified at the source · no document to upload",
+      "noUpload": {
+        "title": "No document to upload",
+        "description": "Your rights are checked directly with the official bodies through FranceConnect."
+      },
+      "intro": {
+        "caf": "Check your Solidarity Transport rights directly with the CAF.",
+        "scholarship": "Confirm your scholarship status with the CROUS.",
+        "identity": "Confirm your identity and age via FranceConnect."
+      },
+      "results": {
+        "caf": "TST rights confirmed · household quotient €6,800 · Solidarity 75% rate",
+        "scholarship": "Scholarship confirmed · level 5 · year 2025-2026",
+        "identity": "Identity confirmed · age verified for the Senior rate"
+      }
+    },
+    "beneficiary": {
+      "question": "Who are you subscribing for?",
+      "self": "For me",
+      "third": "For someone else",
+      "payerSection": "Payer",
+      "holderSection": "Cardholder",
+      "porteurFirstName": "Cardholder's first name",
+      "porteurLastName": "Cardholder's last name",
+      "note": "The payer pays for the pass, the cardholder uses it — they can be two different people."
+    }
   },
   "auth": {
     "login": {
@@ -220,14 +464,33 @@
     "kicker": "All plans",
     "title": "Find the Navigo plan that fits you.",
     "subtitle": "Official Île-de-France Mobilités 2026 fares. Filter by profile for personal recommendations.",
-    "filter": { "all": "All plans", "recommended": "Recommended", "solidaire": "Solidarity fare" },
+    "filter": {
+      "all": "All plans",
+      "recommended": "Recommended",
+      "solidaire": "Solidarity fare"
+    },
     "flagsKicker": "Your profile",
     "flagsHelp": "Tick what applies to you — recommendations adapt live.",
     "flagAge": "Age",
     "flagDays": "Days per week",
-    "flag": { "student": "Student", "alternant": "Apprentice", "worker": "Employee", "retired": "Retired", "rsa": "Income support (RSA)", "css": "CSS no copay", "ass": "ASS", "ame": "AME" },
+    "flag": {
+      "student": "Student",
+      "alternant": "Apprentice",
+      "worker": "Employee",
+      "retired": "Retired",
+      "rsa": "Income support (RSA)",
+      "css": "CSS no copay",
+      "ass": "ASS",
+      "ame": "AME"
+    },
     "recommended": "Recommended",
-    "type": { "jour": "Day", "hebdo": "Week", "mensuel": "Month", "annuel": "Yearly", "usage": "Pay-per-use" },
+    "type": {
+      "jour": "Day",
+      "hebdo": "Week",
+      "mensuel": "Month",
+      "annuel": "Yearly",
+      "usage": "Pay-per-use"
+    },
     "documents": "Required documents",
     "documentsHint": "document(s)",
     "employerRefund": "{{percent}}% refunded by your employer",
@@ -251,8 +514,6 @@
     "subscriptionActive": "Active subscription",
     "startDate": "Start date",
     "zones": "Zones",
-    "status": "Status",
-    "statusValid": "Verified",
     "account": "Account",
     "actions": "Quick actions",
     "action": {
@@ -265,6 +526,198 @@
       "title": "You haven't subscribed yet",
       "description": "Start the subscription flow to find your ideal plan and link it to your space.",
       "cta": "Start subscribing"
+    },
+    "dossier": {
+      "title": "Your application status",
+      "updated": "Updated in real time",
+      "submitted": "Submitted",
+      "processing": "In progress",
+      "validated": "Validated",
+      "cardSent": "Card sent"
+    },
+    "documents": {
+      "title": "Submitted documents",
+      "verified": "Verified"
+    },
+    "renewal": {
+      "title": "Renewal",
+      "expiresOn": "Expires on {{date}}",
+      "dueSoon": "Renewal due soon",
+      "expired": "Subscription expired",
+      "noExpiry": "No expiry",
+      "cta": "Renew in 1 click",
+      "renewed": "Subscription renewed"
+    },
+    "porteur": {
+      "title": "Cardholder",
+      "readOnly": "Read-only access — no payment information",
+      "age": "age {{age}}",
+      "expiry": "Expiry",
+      "transferTitle": "Transfer available",
+      "transferDescription": "{{name}} is now 16 and can manage their own pass. Offer them the transfer.",
+      "transferCta": "Offer transfer",
+      "transferDone": "Transfer offered to {{name}}"
     }
+  },
+  "glossary": {
+    "hint": "Useful terms:",
+    "porteur": {
+      "term": "cardholder",
+      "definition": "The person who will use the travel pass. They can be different from the person who pays."
+    },
+    "payeur": {
+      "term": "payer",
+      "definition": "The person who pays for the subscription — a parent, an association, an employer…"
+    },
+    "forfait": {
+      "term": "pass",
+      "definition": "A transport subscription, valid for a set period (month, year…)."
+    },
+    "tst": {
+      "term": "TST",
+      "definition": "Solidarity Transport Pricing: support that lowers the price based on your income."
+    },
+    "amethyste": {
+      "term": "Améthyste",
+      "definition": "A reduced-fare pass for people with a recognised disability (MDPH)."
+    },
+    "cgvu": {
+      "term": "T&Cs",
+      "definition": "General Terms of Sale and Use — the rules for using the service."
+    },
+    "zones": {
+      "term": "zones",
+      "definition": "The Paris region is split into 5 fare zones, from Paris (1) to the outer ring (5)."
+    },
+    "boursier": {
+      "term": "scholarship holder",
+      "definition": "A student receiving a grant (CROUS), eligible for a reduced fare."
+    },
+    "mdph": {
+      "term": "MDPH",
+      "definition": "The French departmental office that officially recognises a disability."
+    },
+    "franceConnect": {
+      "term": "FranceConnect",
+      "definition": "The official service to log in online using your government accounts (taxes, CAF…)."
+    }
+  },
+  "timeline": {
+    "kicker": "A lifetime of passes",
+    "title": "The right pass at every stage of life",
+    "subtitle": "From the first school card to retirement, your pass evolves with you. Click a stage to explore it.",
+    "close": "Close",
+    "cta": "Subscribe to this pass",
+    "zones": "Zones {{min}}–{{max}}",
+    "alternatives": {
+      "title": "Anytime, depending on your situation",
+      "subtitle": "These passes apply outside the usual journey."
+    },
+    "milestones": {
+      "junior": {
+        "title": "Imagine R Junior",
+        "age": "Ages 4 – 11",
+        "description": "A child's first travel pass. Taken out by a parent — the payer — at a heavily reduced price."
+      },
+      "scolaire": {
+        "title": "Imagine R Scolaire",
+        "age": "Ages 11 – 17",
+        "description": "Through secondary school, the pass covers the whole Paris region for the school year."
+      },
+      "payeur16": {
+        "title": "Age 16: the child becomes the payer",
+        "age": "At 16",
+        "description": "Teenagers can now manage and pay for their own pass. The cardholder and the payer can become the same person."
+      },
+      "etudiant": {
+        "title": "Imagine R Étudiant",
+        "age": "Ages 18 – 25",
+        "description": "During higher education, the student rate extends the Imagine R benefit, with a discount for scholarship holders."
+      },
+      "annuel": {
+        "title": "Navigo Annuel",
+        "age": "Working life",
+        "description": "Once employed, the annual Navigo becomes the go-to pass — and the employer reimburses half of it."
+      },
+      "senior": {
+        "title": "Navigo Senior",
+        "age": "From age 62",
+        "description": "In retirement, the Senior rate takes over and lowers the bill, with no break in service."
+      },
+      "tst": {
+        "title": "Solidarity Transport Pricing",
+        "age": "Based on your income",
+        "description": "At any age, if your income is low, TST sharply cuts the price — up to free depending on your rights."
+      },
+      "amethyste": {
+        "title": "Améthyste",
+        "age": "Disability",
+        "description": "For people with a recognised disability (MDPH), the Améthyste pass adapts to the department of residence."
+      }
+    }
+  },
+  "notifications": {
+    "ariaLabel": "Notifications",
+    "title": "Notifications",
+    "empty": "No notifications yet",
+    "dismiss": "Dismiss",
+    "items": {
+      "noSubscription": {
+        "title": "No subscription",
+        "message": "You don't have a subscription yet. Find your ideal pass in minutes.",
+        "cta": "Subscribe"
+      },
+      "renewalDue": {
+        "title": "Renewal coming up",
+        "message": "Your pass expires on {{date}} — renew in one click.",
+        "cta": "Renew"
+      },
+      "expired": {
+        "title": "Subscription expired",
+        "message": "Your pass expired on {{date}}. Renew to keep travelling.",
+        "cta": "Renew"
+      },
+      "cardSent": {
+        "title": "Card sent",
+        "message": "Your travel card has been shipped. It will arrive within a few days."
+      },
+      "dossierInProgress": {
+        "title": "Application in progress",
+        "message": "Your application is being reviewed. We'll keep you posted."
+      },
+      "child16": {
+        "title": "Your child is 16",
+        "message": "{{name}} can now manage their own pass. Offer them the transfer.",
+        "cta": "View"
+      }
+    }
+  },
+  "voice": {
+    "label": "Voice mode",
+    "start": "Enable voice mode",
+    "stop": "Stop listening",
+    "listening": "Listening…",
+    "hint": "Try saying: “simulator”, “subscribe”, “what is the TST?”",
+    "notUnderstood": "I didn't catch that. Try “open the simulator” or “what is the TST?”.",
+    "acting": {
+      "simulateur": "Opening the simulator.",
+      "souscrire": "Starting your subscription.",
+      "parcours": "Here's the lifetime journey of passes.",
+      "monEspace": "Opening your account.",
+      "accueil": "Back to home."
+    },
+    "commands": {
+      "simulateur": "simulator|simulation|fare|price|estimate",
+      "souscrire": "subscribe|subscription|sign up|enrol",
+      "parcours": "journey|timeline|life of passes|stages",
+      "monEspace": "my account|my space|account|dashboard",
+      "accueil": "home|home page|main page|start"
+    }
+  },
+  "campaign": {
+    "kicker": "The campaign",
+    "title": "One life, many episodes.",
+    "subtitle": "Our poster campaign: five faces, five life stages, one journey. Tap a poster.",
+    "tagline": "Support at every stage of life"
   }
 }

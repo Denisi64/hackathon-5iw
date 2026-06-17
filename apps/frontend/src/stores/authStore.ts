@@ -11,6 +11,13 @@ export interface StoredUser {
   password: string
 }
 
+export interface SubscriptionDocument {
+  /** Clé du justificatif — libellé via i18n subscription.documents.<key>.label. */
+  key: string
+  /** Horodatage de vérification. */
+  verifiedAt: string
+}
+
 export interface SubscriptionSummary {
   forfaitId: string
   forfaitNom: string
@@ -18,6 +25,12 @@ export interface SubscriptionSummary {
   prixMois: number | null
   startDate: string
   zones: number
+  /** Horodatage de soumission du dossier — pilote le stepper de statut. */
+  submittedAt?: string
+  /** Justificatifs transmis et vérifiés pendant la souscription. */
+  documents?: SubscriptionDocument[]
+  /** Porteur lorsqu'il diffère du payeur : enfant (avec `birthDate`) ou tiers (avec `lastName`). */
+  beneficiary?: { firstName: string; lastName?: string; birthDate?: string }
 }
 
 export interface UserAccount {

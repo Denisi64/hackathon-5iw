@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { LogIn, Menu, X } from 'lucide-react'
 import { ThemeToggle } from '../ui/ThemeToggle'
 import { LanguageSwitcher } from '../ui/LanguageSwitcher'
+import { NotificationBell } from '../domain/NotificationBell'
 import { useAuthStore } from '../../stores/authStore'
 // Logo couleur unique : sa palette IDFM (bleu pastel + anthracite) tient sur clair ET sombre.
 import logo from '../../assets/logos/comutitres-couleur.svg'
@@ -58,6 +59,17 @@ export function Header() {
           </li>
           <li>
             <NavLink
+              to="/parcours"
+              className={({ isActive }) => cn(
+                'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
+                isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+              )}
+            >
+              {t('header.nav.timeline')}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/souscrire"
               className={({ isActive }) => cn(
                 'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
@@ -70,6 +82,7 @@ export function Header() {
         </ul>
 
         <div className="flex items-center gap-2">
+          {user && <NotificationBell />}
           {user ? (
             <Link
               to="/mon-espace"
@@ -124,6 +137,15 @@ export function Header() {
             )}
           >
             {t('header.nav.simulator')}
+          </NavLink>
+          <NavLink
+            to="/parcours"
+            className={({ isActive }) => cn(
+              'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+              isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+            )}
+          >
+            {t('header.nav.timeline')}
           </NavLink>
           <NavLink
             to="/souscrire"

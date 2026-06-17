@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft, ArrowRight, Check, CheckCircle2, Loader2, Upload, Mail,
-  User as UserIcon, Lock,
+  User as UserIcon, Lock, CreditCard, Landmark, ShieldCheck,
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -12,13 +12,16 @@ import { Chip } from '../components/ui/Chip'
 import { Badge } from '../components/ui/Badge'
 import { Orb } from '../components/ui/Orb'
 import { Slider } from '../components/ui/Slider'
-import { PROFILES, PROFILE_BY_SLUG, type ProfileSlug } from '../data/subscriptionFlows'
+import { PROFILES, PROFILE_BY_SLUG, FORFAIT_TO_PROFILE, DOC_VERIFICATION, type ProfileSlug, type VerificationProvider } from '../data/subscriptionFlows'
+import { FranceConnectModal } from '../components/domain/FranceConnectModal'
+import { detectChildForfaitId, getAgeFromBirthDate } from '../utils/childForfait'
 import { FORFAITS } from '../utils/tarifsData'
 import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
 import { cn } from '../lib/cn'
 import type { Forfait } from '../types/domain'
 import { savePendingSubscription, useAuthStore } from '../stores/authStore'
+import { GlossaryTooltip } from '../components/domain/GlossaryTooltip'
 
 type Answers = {
   age?: number
@@ -27,8 +30,11 @@ type Answers = {
   daysPerWeek?: number
   employerRefund?: boolean
   cafBeneficiary?: boolean
-  childrenCount?: number
-  firstChildAge?: number
+  childFirstName?: string
+  childBirthDate?: string
+  forThirdParty?: boolean
+  porteurFirstName?: string
+  porteurLastName?: string
 }
 
 type Account = {
@@ -40,26 +46,78 @@ type Account = {
 
 type DocStatus = 'idle' | 'analyzing' | 'valid'
 
-const TOTAL_STEPS = 6
+type PayMethod = 'card' | 'sepa'
+type PayStatus = 'idle' | 'processing' | 'done'
+
+type Card = {
+  name: string
+  number: string
+  expiry: string
+  cvc: string
+}
+
+const TOTAL_STEPS = 7
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const EXPIRY_RE = /^(0[1-9]|1[0-2])\s*\/\s*\d{2}$/
 
 export default function SubscriptionScreen() {
   const { t } = useTranslation()
   const { locale } = useLocale()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
-  const [step, setStep] = useState(1)
-  const [profile, setProfile] = useState<ProfileSlug | null>(null)
-  const [answers, setAnswers] = useState<Answers>({ zones: 5 })
+  // Pré-remplissage depuis le simulateur : ?forfait=<id>&zones=<1-5>.
+  const presetForfaitId = searchParams.get('forfait')
+  const presetForfait =
+    presetForfaitId && FORFAITS.some((f) => f.id === presetForfaitId) && presetForfaitId in FORFAIT_TO_PROFILE
+      ? presetForfaitId
+      : null
+  const presetZones = Number(searchParams.get('zones'))
+  const initialZones = presetZones >= 1 && presetZones <= 5 ? presetZones : 5
+
+  const [step, setStep] = useState(presetForfait ? 3 : 1)
+  const [profile, setProfile] = useState<ProfileSlug | null>(presetForfait ? FORFAIT_TO_PROFILE[presetForfait] : null)
+  const [answers, setAnswers] = useState<Answers>({ zones: initialZones })
+  const [forcedForfaitId, setForcedForfaitId] = useState<string | null>(presetForfait)
   const [docStatuses, setDocStatuses] = useState<Record<string, DocStatus>>({})
   const [account, setAccount] = useState<Account>({ firstName: '', lastName: '', email: '', phone: '' })
   const [accountErrors, setAccountErrors] = useState<Partial<Record<keyof Account, string>>>({})
+  const [porteurErrors, setPorteurErrors] = useState<Partial<Record<'porteurFirstName' | 'porteurLastName', string>>>({})
+  const [payMethod, setPayMethod] = useState<PayMethod>('card')
+  const [card, setCard] = useState<Card>({ name: '', number: '', expiry: '', cvc: '' })
+  const [iban, setIban] = useState('')
+  const [payStatus, setPayStatus] = useState<PayStatus>('idle')
+  const [payErrors, setPayErrors] = useState<Partial<Record<keyof Card | 'iban', string>>>({})
 
   const profileDef = profile ? PROFILE_BY_SLUG[profile] : null
-  const forfait = useMemo(
-    () => (profileDef ? FORFAITS.find((f) => f.id === profileDef.recommendedForfaitId) : undefined),
-    [profileDef],
-  )
+  // Profil parent : le forfait suit l'âge de l'enfant (Junior < 11 ans, sinon Scolaire).
+  const childForfaitId = profile === 'parent' && answers.childBirthDate ? detectChildForfaitId(answers.childBirthDate) : null
+  const forfait = useMemo(() => {
+    if (forcedForfaitId) {
+      const forced = FORFAITS.find((f) => f.id === forcedForfaitId)
+      if (forced) return forced
+    }
+    if (childForfaitId) {
+      const child = FORFAITS.find((f) => f.id === childForfaitId)
+      if (child) return child
+    }
+    return profileDef ? FORFAITS.find((f) => f.id === profileDef.recommendedForfaitId) : undefined
+  }, [forcedForfaitId, childForfaitId, profileDef])
+  const amountAn = forfait?.prixAn ?? null
+
+  // Porteur (si différent du payeur) : enfant pour le profil parent, sinon tiers.
+  const beneficiary = useMemo(() => {
+    if (!profileDef) return undefined
+    if (profileDef.slug === 'parent') {
+      return answers.childFirstName && answers.childBirthDate
+        ? { firstName: answers.childFirstName, birthDate: answers.childBirthDate }
+        : undefined
+    }
+    if (answers.forThirdParty && answers.porteurFirstName && answers.porteurLastName) {
+      return { firstName: answers.porteurFirstName, lastName: answers.porteurLastName }
+    }
+    return undefined
+  }, [profileDef, answers.childFirstName, answers.childBirthDate, answers.forThirdParty, answers.porteurFirstName, answers.porteurLastName])
 
   // Reset doc statuses lorsque le profil change.
   useEffect(() => {
@@ -67,9 +125,10 @@ export default function SubscriptionScreen() {
   }, [profile])
 
   useEffect(() => {
-    if (step === 6 && profileDef && forfait) {
+    if (step === 7 && profileDef && forfait) {
       const startDate = new Date()
       startDate.setDate(startDate.getDate() + 7)
+      const verifiedAt = new Date().toISOString()
       const sub = {
         forfaitId: forfait.id,
         forfaitNom: forfait.nom,
@@ -77,6 +136,9 @@ export default function SubscriptionScreen() {
         prixMois: forfait.prixMois,
         startDate: startDate.toISOString(),
         zones: answers.zones,
+        submittedAt: verifiedAt,
+        documents: profileDef.documents.map((key) => ({ key, verifiedAt })),
+        beneficiary,
       }
       const user = useAuthStore.getState().user
       if (user) {
@@ -85,7 +147,7 @@ export default function SubscriptionScreen() {
         savePendingSubscription(sub)
       }
     }
-  }, [step, profileDef, forfait, answers.zones])
+  }, [step, profileDef, forfait, answers.zones, beneficiary])
 
   function validateStep(): boolean {
     if (step === 1) return profile !== null
@@ -102,6 +164,27 @@ export default function SubscriptionScreen() {
       if (!account.email.trim()) errs.email = t('subscription.errors.required')
       else if (!EMAIL_RE.test(account.email.trim())) errs.email = t('subscription.errors.email')
       setAccountErrors(errs)
+
+      const pErrs: Partial<Record<'porteurFirstName' | 'porteurLastName', string>> = {}
+      if (answers.forThirdParty) {
+        if (!answers.porteurFirstName?.trim()) pErrs.porteurFirstName = t('subscription.errors.required')
+        if (!answers.porteurLastName?.trim()) pErrs.porteurLastName = t('subscription.errors.required')
+      }
+      setPorteurErrors(pErrs)
+
+      return Object.keys(errs).length === 0 && Object.keys(pErrs).length === 0
+    }
+    if (step === 6) {
+      const errs: Partial<Record<keyof Card | 'iban', string>> = {}
+      if (payMethod === 'card') {
+        if (!card.name.trim()) errs.name = t('subscription.payment.errors.cardName')
+        if (card.number.replace(/\s/g, '').length < 16) errs.number = t('subscription.payment.errors.cardNumber')
+        if (!EXPIRY_RE.test(card.expiry)) errs.expiry = t('subscription.payment.errors.expiry')
+        if (card.cvc.trim().length < 3) errs.cvc = t('subscription.payment.errors.cvc')
+      } else {
+        if (iban.replace(/\s/g, '').length < 15) errs.iban = t('subscription.payment.errors.iban')
+      }
+      setPayErrors(errs)
       return Object.keys(errs).length === 0
     }
     return true
@@ -113,6 +196,22 @@ export default function SubscriptionScreen() {
   }
   function onBack() {
     setStep((s) => Math.max(1, s - 1))
+  }
+
+  // Sélection manuelle d'un profil : l'utilisateur reprend la main sur le forfait pré-rempli.
+  function selectProfile(p: ProfileSlug) {
+    setProfile(p)
+    setForcedForfaitId(null)
+  }
+
+  // Paiement mock (Stripe test mode) : validation → traitement → confirmation.
+  function onPay() {
+    if (!validateStep()) return
+    setPayStatus('processing')
+    setTimeout(() => {
+      setPayStatus('done')
+      setStep(7)
+    }, 1800)
   }
 
   function simulateUpload(docKey: string) {
@@ -127,22 +226,42 @@ export default function SubscriptionScreen() {
       <Header step={step} profileName={profile ? t(`subscription.profiles.${profile}.title`) : undefined} />
 
       <div key={step} className="animate-[fade-up_300ms_ease-out]">
-        {step === 1 && <Step1Profile profile={profile} setProfile={setProfile} />}
+        {step === 1 && <Step1Profile profile={profile} setProfile={selectProfile} />}
         {step === 2 && profileDef && <Step2Details profile={profileDef.slug} answers={answers} setAnswers={setAnswers} />}
         {step === 3 && profileDef && forfait && <Step3Recommendation profile={profileDef.slug} forfait={forfait} answers={answers} locale={locale} />}
-        {step === 4 && profileDef && <Step4Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} onUpload={simulateUpload} />}
-        {step === 5 && <Step5Account account={account} setAccount={setAccount} errors={accountErrors} />}
-        {step === 6 && profileDef && forfait && <Step6Confirmation firstName={account.firstName} email={account.email} forfait={forfait} answers={answers} locale={locale} />}
+        {step === 4 && profileDef && <Step4Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} onUpload={simulateUpload} onVerified={(key) => setDocStatuses((s) => ({ ...s, [key]: 'valid' }))} />}
+        {step === 5 && profileDef && <Step5Account profile={profileDef.slug} account={account} setAccount={setAccount} errors={accountErrors} answers={answers} setAnswers={setAnswers} porteurErrors={porteurErrors} />}
+        {step === 6 && forfait && (
+          <Step6Payment
+            method={payMethod} setMethod={setPayMethod}
+            card={card} setCard={setCard}
+            iban={iban} setIban={setIban}
+            errors={payErrors}
+            amount={amountAn} prixMois={forfait.prixMois} locale={locale}
+          />
+        )}
+        {step === 7 && profileDef && forfait && <Step7Confirmation firstName={account.firstName} email={account.email} forfait={forfait} beneficiary={beneficiary} locale={locale} />}
       </div>
 
       {/* Nav bar */}
       <NavBar
         step={step}
+        busy={payStatus === 'processing'}
         onBack={onBack}
-        onNext={step === TOTAL_STEPS ? () => navigate(useAuthStore.getState().user ? '/mon-espace' : '/register') : onNext}
-        labelNext={step === TOTAL_STEPS
-          ? (useAuthStore.getState().user ? t('subscription.actions.toAccount') : t('subscription.actions.createAccount'))
-          : step === 5 ? t('subscription.actions.confirm') : t('subscription.actions.next')}
+        onNext={
+          step === TOTAL_STEPS
+            ? () => navigate(useAuthStore.getState().user ? '/mon-espace' : '/register')
+            : step === 6 ? onPay : onNext
+        }
+        labelNext={
+          step === TOTAL_STEPS
+            ? (useAuthStore.getState().user ? t('subscription.actions.toAccount') : t('subscription.actions.createAccount'))
+            : step === 6
+              ? (payStatus === 'processing'
+                  ? t('subscription.actions.paying')
+                  : t('subscription.actions.pay', { amount: amountAn !== null ? formatCurrency(amountAn, locale) : '—' }))
+              : t('subscription.actions.next')
+        }
         onSecondary={step === TOTAL_STEPS ? () => navigate('/') : undefined}
         labelSecondary={step === TOTAL_STEPS ? t('subscription.actions.finish') : undefined}
       />
@@ -178,7 +297,7 @@ function Header({ step, profileName }: { step: number; profileName?: string }) {
       </h1>
       <p className="max-w-2xl text-fg-muted">{stepDesc}</p>
       {/* Progress bar */}
-      <div className="mt-2 grid grid-cols-6 gap-1.5">
+      <div className="mt-2 grid grid-cols-7 gap-1.5">
         {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map((n) => (
           <div
             key={n}
@@ -196,7 +315,8 @@ function Header({ step, profileName }: { step: number; profileName?: string }) {
 function Step1Profile({ profile, setProfile }: { profile: ProfileSlug | null; setProfile: (p: ProfileSlug) => void }) {
   const { t } = useTranslation()
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {PROFILES.map((p) => {
         const Icon = p.icon
         const isActive = profile === p.slug
@@ -225,6 +345,17 @@ function Step1Profile({ profile, setProfile }: { profile: ProfileSlug | null; se
           </button>
         )
       })}
+      </div>
+
+      {/* Glossaire — décode le jargon administratif pour les profils peu à l'aise. */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-fg-muted">
+        <span>{t('glossary.hint')}</span>
+        <GlossaryTooltip term="forfait" />
+        <GlossaryTooltip term="zones" />
+        <GlossaryTooltip term="porteur" />
+        <GlossaryTooltip term="payeur" />
+        <GlossaryTooltip term="tst" />
+      </div>
     </div>
   )
 }
@@ -286,20 +417,28 @@ function Step2Details({ profile, answers, setAnswers }: {
 
           {profile === 'parent' && (
             <>
-              <Slider
-                label={t('subscription.questions.childrenCount')}
-                min={1} max={4}
-                value={answers.childrenCount ?? 1}
-                unit={t('subscription.questions.childrenUnit')}
-                onChange={(v) => set('childrenCount', v)}
+              <Input
+                label={t('subscription.questions.childFirstName')}
+                value={answers.childFirstName ?? ''}
+                onChange={(e) => set('childFirstName', e.target.value)}
               />
               <Input
-                label={t('subscription.questions.firstChildAge')}
-                type="number"
-                inputMode="numeric"
-                value={answers.firstChildAge ?? ''}
-                onChange={(e) => set('firstChildAge', e.target.value ? Number(e.target.value) : undefined)}
+                label={t('subscription.questions.childBirthDate')}
+                type="date"
+                value={answers.childBirthDate ?? ''}
+                onChange={(e) => set('childBirthDate', e.target.value)}
               />
+              {(() => {
+                const detected = answers.childBirthDate ? detectChildForfaitId(answers.childBirthDate) : null
+                const age = answers.childBirthDate ? getAgeFromBirthDate(answers.childBirthDate) : null
+                const detectedForfait = detected ? FORFAITS.find((f) => f.id === detected) : undefined
+                if (!detectedForfait || age === null || age < 0) return null
+                return (
+                  <Badge variant="info">
+                    {t('subscription.questions.childDetected', { forfait: detectedForfait.nom, age })}
+                  </Badge>
+                )
+              })()}
             </>
           )}
 
@@ -377,19 +516,34 @@ function Step3Recommendation({ profile, forfait, answers, locale }: {
   )
 }
 
-function Step4Documents({ profile, docs, statuses, onUpload }: {
+function Step4Documents({ profile, docs, statuses, onUpload, onVerified }: {
   profile: ProfileSlug
   docs: string[]
   statuses: Record<string, DocStatus>
   onUpload: (key: string) => void
+  onVerified: (key: string) => void
 }) {
   const { t } = useTranslation()
   void profile
+  const [fcDoc, setFcDoc] = useState<string | null>(null)
+  // Profil entièrement vérifiable à la source → zéro upload.
+  const allVerifiable = docs.length > 0 && docs.every((d) => d in DOC_VERIFICATION)
+
   return (
     <div className="flex flex-col gap-4">
+      {allVerifiable && (
+        <div className="flex items-start gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+          <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+          <div>
+            <p className="text-sm font-semibold text-fg">{t('subscription.verification.noUpload.title')}</p>
+            <p className="mt-0.5 text-sm text-fg-muted">{t('subscription.verification.noUpload.description')}</p>
+          </div>
+        </div>
+      )}
+
       {docs.map((docKey) => {
         const status = statuses[docKey] ?? 'idle'
-        const isFranceConnect = docKey === 'france_connect'
+        const provider = DOC_VERIFICATION[docKey] as VerificationProvider | undefined
         return (
           <Card key={docKey}>
             <Card.Body>
@@ -399,7 +553,7 @@ function Step4Documents({ profile, docs, statuses, onUpload }: {
                     {t(`subscription.documents.${docKey}.label`)}
                   </h3>
                   <p className="mt-1 text-sm text-fg-muted">
-                    {t(`subscription.documents.${docKey}.help`)}
+                    {provider ? t(`subscription.verification.intro.${provider}`) : t(`subscription.documents.${docKey}.help`)}
                   </p>
                 </div>
                 {status === 'valid' && (
@@ -409,91 +563,295 @@ function Step4Documents({ profile, docs, statuses, onUpload }: {
                 )}
               </div>
               <div className="mt-4">
-                {status === 'idle' && (
-                  <Button
-                    variant={isFranceConnect ? 'primary' : 'secondary'}
-                    size="md"
-                    onClick={() => onUpload(docKey)}
-                    leftIcon={isFranceConnect ? <Lock className="h-4 w-4" aria-hidden="true" /> : <Upload className="h-4 w-4" aria-hidden="true" />}
-                  >
-                    {isFranceConnect ? t('subscription.documents.franceConnect') : t('subscription.documents.upload')}
+                {status === 'idle' && (provider ? (
+                  <Button variant="primary" size="md" onClick={() => setFcDoc(docKey)} leftIcon={<Lock className="h-4 w-4" aria-hidden="true" />}>
+                    {t('subscription.verification.cta')}
                   </Button>
-                )}
+                ) : (
+                  <Button variant="secondary" size="md" onClick={() => onUpload(docKey)} leftIcon={<Upload className="h-4 w-4" aria-hidden="true" />}>
+                    {t('subscription.documents.upload')}
+                  </Button>
+                ))}
                 {status === 'analyzing' && (
                   <div className="flex items-center gap-2 text-sm text-fg-muted">
                     <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
                     <span>{t('subscription.documents.analyzing')}</span>
                   </div>
                 )}
-                {status === 'valid' && (
+                {status === 'valid' && (provider ? (
+                  <p className="flex items-center gap-1.5 text-sm text-fg-muted">
+                    <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+                    {t(`subscription.verification.results.${provider}`)}
+                  </p>
+                ) : (
                   <p className="text-sm text-fg-muted">{t('subscription.documents.validatedHint')}</p>
-                )}
+                ))}
               </div>
             </Card.Body>
           </Card>
         )
       })}
+
+      <FranceConnectModal
+        open={fcDoc !== null}
+        provider={fcDoc ? (DOC_VERIFICATION[fcDoc] ?? 'identity') : 'identity'}
+        onClose={() => setFcDoc(null)}
+        onVerified={() => {
+          if (fcDoc) onVerified(fcDoc)
+          setFcDoc(null)
+        }}
+      />
     </div>
   )
 }
 
-function Step5Account({ account, setAccount, errors }: {
+function Step5Account({ profile, account, setAccount, errors, answers, setAnswers, porteurErrors }: {
+  profile: ProfileSlug
   account: Account
   setAccount: (a: Account) => void
   errors: Partial<Record<keyof Account, string>>
+  answers: Answers
+  setAnswers: (u: Answers) => void
+  porteurErrors: Partial<Record<'porteurFirstName' | 'porteurLastName', string>>
 }) {
   const { t } = useTranslation()
+  const set = <K extends keyof Answers>(k: K, v: Answers[K]) => setAnswers({ ...answers, [k]: v })
+  // Le profil parent gère déjà le porteur (l'enfant) à l'étape 2.
+  const allowThird = profile !== 'parent'
+  const third = allowThird && !!answers.forThirdParty
+
   return (
     <Card>
       <Card.Body>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Input
-            label={t('subscription.account.firstName')}
-            value={account.firstName}
-            onChange={(e) => setAccount({ ...account, firstName: e.target.value })}
-            leftAddon={<UserIcon className="h-4 w-4" aria-hidden="true" />}
-            error={errors.firstName}
-          />
-          <Input
-            label={t('subscription.account.lastName')}
-            value={account.lastName}
-            onChange={(e) => setAccount({ ...account, lastName: e.target.value })}
-            error={errors.lastName}
-          />
-          <Input
-            label={t('subscription.account.email')}
-            type="email"
-            inputMode="email"
-            value={account.email}
-            onChange={(e) => setAccount({ ...account, email: e.target.value })}
-            leftAddon={<Mail className="h-4 w-4" aria-hidden="true" />}
-            error={errors.email}
-            className="sm:col-span-2"
-          />
-          <Input
-            label={t('subscription.account.phone')}
-            type="tel"
-            inputMode="tel"
-            value={account.phone}
-            onChange={(e) => setAccount({ ...account, phone: e.target.value })}
-            helperText={t('subscription.account.phoneHint')}
-            className="sm:col-span-2"
-          />
+        <div className="flex flex-col gap-6">
+          {allowThird && (
+            <div className="flex flex-col gap-2">
+              <p className="text-xs font-medium tracking-wide text-fg-muted uppercase">{t('subscription.beneficiary.question')}</p>
+              <div className="flex gap-2">
+                <Chip active={!answers.forThirdParty} onClick={() => set('forThirdParty', false)}>{t('subscription.beneficiary.self')}</Chip>
+                <Chip active={!!answers.forThirdParty} onClick={() => set('forThirdParty', true)}>{t('subscription.beneficiary.third')}</Chip>
+              </div>
+              {third && (
+                <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-fg-muted">
+                  <GlossaryTooltip term="payeur" />
+                  <GlossaryTooltip term="porteur" />
+                  <span>{t('subscription.beneficiary.note')}</span>
+                </p>
+              )}
+            </div>
+          )}
+
+          {third && (
+            <div className="flex flex-col gap-3">
+              <p className="text-xs font-medium tracking-wide text-fg-muted uppercase">{t('subscription.beneficiary.holderSection')}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input
+                  label={t('subscription.beneficiary.porteurFirstName')}
+                  value={answers.porteurFirstName ?? ''}
+                  onChange={(e) => set('porteurFirstName', e.target.value)}
+                  leftAddon={<UserIcon className="h-4 w-4" aria-hidden="true" />}
+                  error={porteurErrors.porteurFirstName}
+                />
+                <Input
+                  label={t('subscription.beneficiary.porteurLastName')}
+                  value={answers.porteurLastName ?? ''}
+                  onChange={(e) => set('porteurLastName', e.target.value)}
+                  error={porteurErrors.porteurLastName}
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-col gap-3">
+            {third && <p className="text-xs font-medium tracking-wide text-fg-muted uppercase">{t('subscription.beneficiary.payerSection')}</p>}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Input
+                label={t('subscription.account.firstName')}
+                value={account.firstName}
+                onChange={(e) => setAccount({ ...account, firstName: e.target.value })}
+                leftAddon={<UserIcon className="h-4 w-4" aria-hidden="true" />}
+                error={errors.firstName}
+              />
+              <Input
+                label={t('subscription.account.lastName')}
+                value={account.lastName}
+                onChange={(e) => setAccount({ ...account, lastName: e.target.value })}
+                error={errors.lastName}
+              />
+              <Input
+                label={t('subscription.account.email')}
+                type="email"
+                inputMode="email"
+                value={account.email}
+                onChange={(e) => setAccount({ ...account, email: e.target.value })}
+                leftAddon={<Mail className="h-4 w-4" aria-hidden="true" />}
+                error={errors.email}
+                className="sm:col-span-2"
+              />
+              <Input
+                label={t('subscription.account.phone')}
+                type="tel"
+                inputMode="tel"
+                value={account.phone}
+                onChange={(e) => setAccount({ ...account, phone: e.target.value })}
+                helperText={t('subscription.account.phoneHint')}
+                className="sm:col-span-2"
+              />
+            </div>
+          </div>
         </div>
       </Card.Body>
     </Card>
   )
 }
 
-function Step6Confirmation({ firstName, email, forfait, answers, locale }: {
-  firstName: string
-  email: string
-  forfait: Forfait
-  answers: Answers
+function MethodTile({ active, icon, label, onClick }: {
+  active: boolean
+  icon: ReactNode
+  label: string
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      role="radio"
+      aria-checked={active}
+      onClick={onClick}
+      className={cn(
+        'flex items-center gap-3 rounded-xl border bg-bg-elevated px-4 py-3 text-left transition-all duration-200',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-base',
+        active ? 'border-accent shadow-button' : 'border-border-default hover:border-fg-subtle',
+      )}
+    >
+      <span className={cn('shrink-0', active ? 'text-accent' : 'text-fg-muted')}>{icon}</span>
+      <span className="text-sm font-medium text-fg">{label}</span>
+    </button>
+  )
+}
+
+function Step6Payment({ method, setMethod, card, setCard, iban, setIban, errors, amount, prixMois, locale }: {
+  method: PayMethod
+  setMethod: (m: PayMethod) => void
+  card: Card
+  setCard: (c: Card) => void
+  iban: string
+  setIban: (v: string) => void
+  errors: Partial<Record<keyof Card | 'iban', string>>
+  amount: number | null
+  prixMois: number | null
   locale: string
 }) {
   const { t } = useTranslation()
-  void answers
+
+  // Formatage live : groupes de 4 chiffres pour la carte, MM/AA pour l'expiration.
+  const formatCardNumber = (v: string) =>
+    v.replace(/\D/g, '').slice(0, 19).replace(/(.{4})/g, '$1 ').trim()
+  const formatExpiry = (v: string) => {
+    const d = v.replace(/\D/g, '').slice(0, 4)
+    return d.length >= 3 ? `${d.slice(0, 2)}/${d.slice(2)}` : d
+  }
+
+  return (
+    <Card>
+      <Card.Body>
+        <div className="flex flex-col gap-6">
+          {/* Récap montant + mention sécurité */}
+          <div className="flex items-center justify-between gap-4 rounded-xl bg-surface border border-border-default p-4">
+            <div className="flex items-center gap-2 text-fg-muted">
+              <ShieldCheck className="h-4 w-4 text-accent" aria-hidden="true" />
+              <span className="text-sm">{t('subscription.payment.secure')}</span>
+            </div>
+            <div className="text-right">
+              <p className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('subscription.payment.total')}</p>
+              <p className="text-2xl font-semibold tracking-tight text-fg tabular-nums">
+                {amount !== null ? formatCurrency(amount, locale) : '—'}
+                {amount !== null && <span className="text-sm font-normal text-fg-muted">{t('simulator.perYear')}</span>}
+              </p>
+            </div>
+          </div>
+
+          {/* Choix du mode de paiement */}
+          <div role="radiogroup" aria-label={t('subscription.payment.method')} className="grid grid-cols-2 gap-3">
+            <MethodTile active={method === 'card'} icon={<CreditCard className="h-5 w-5" aria-hidden="true" />} label={t('subscription.payment.card')} onClick={() => setMethod('card')} />
+            <MethodTile active={method === 'sepa'} icon={<Landmark className="h-5 w-5" aria-hidden="true" />} label={t('subscription.payment.sepa')} onClick={() => setMethod('sepa')} />
+          </div>
+
+          {method === 'card' ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Input
+                label={t('subscription.payment.cardName')}
+                value={card.name}
+                onChange={(e) => setCard({ ...card, name: e.target.value })}
+                leftAddon={<UserIcon className="h-4 w-4" aria-hidden="true" />}
+                error={errors.name}
+                className="sm:col-span-2"
+              />
+              <Input
+                label={t('subscription.payment.cardNumber')}
+                value={card.number}
+                onChange={(e) => setCard({ ...card, number: formatCardNumber(e.target.value) })}
+                placeholder="4242 4242 4242 4242"
+                inputMode="numeric"
+                autoComplete="cc-number"
+                leftAddon={<CreditCard className="h-4 w-4" aria-hidden="true" />}
+                error={errors.number}
+                className="sm:col-span-2"
+              />
+              <Input
+                label={t('subscription.payment.expiry')}
+                value={card.expiry}
+                onChange={(e) => setCard({ ...card, expiry: formatExpiry(e.target.value) })}
+                placeholder="12/28"
+                inputMode="numeric"
+                autoComplete="cc-exp"
+                error={errors.expiry}
+              />
+              <Input
+                label={t('subscription.payment.cvc')}
+                value={card.cvc}
+                onChange={(e) => setCard({ ...card, cvc: e.target.value.replace(/\D/g, '').slice(0, 4) })}
+                placeholder="123"
+                inputMode="numeric"
+                autoComplete="cc-csc"
+                error={errors.cvc}
+              />
+              <p className="sm:col-span-2 text-xs text-fg-muted">{t('subscription.payment.testHint')}</p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              <Input
+                label={t('subscription.payment.iban')}
+                value={iban}
+                onChange={(e) => setIban(e.target.value.toUpperCase())}
+                placeholder="FR76 3000 1000 0100 0000 0000 123"
+                leftAddon={<Landmark className="h-4 w-4" aria-hidden="true" />}
+                error={errors.iban}
+                helperText={prixMois !== null ? t('subscription.payment.ibanHint', { amount: formatCurrency(prixMois, locale) }) : undefined}
+              />
+            </div>
+          )}
+        </div>
+      </Card.Body>
+    </Card>
+  )
+}
+
+function Step7Confirmation({ firstName, email, forfait, beneficiary, locale }: {
+  firstName: string
+  email: string
+  forfait: Forfait
+  beneficiary?: { firstName: string; lastName?: string; birthDate?: string }
+  locale: string
+}) {
+  const { t } = useTranslation()
+  const beneficiaryLabel = (() => {
+    if (!beneficiary) return null
+    if (beneficiary.birthDate) {
+      const age = getAgeFromBirthDate(beneficiary.birthDate)
+      return age !== null && age >= 0 ? `${beneficiary.firstName} · ${t('monEspace.porteur.age', { age })}` : beneficiary.firstName
+    }
+    return beneficiary.lastName ? `${beneficiary.firstName} ${beneficiary.lastName}` : beneficiary.firstName
+  })()
   const startDate = new Date()
   startDate.setDate(startDate.getDate() + 7)
   const startDateStr = startDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })
@@ -541,6 +899,9 @@ function Step6Confirmation({ firstName, email, forfait, answers, locale }: {
             <p className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('subscription.confirmation.summary')}</p>
             <div className="mt-3 flex flex-col gap-2 text-sm">
               <Row label={t('subscription.confirmation.forfait')} value={forfait.nom} />
+              {beneficiaryLabel && (
+                <Row label={t('monEspace.porteur.title')} value={beneficiaryLabel} />
+              )}
               <Row label={t('subscription.confirmation.price')} value={forfait.prixAn !== null ? formatCurrency(forfait.prixAn, locale) + t('simulator.perYear') : '—'} />
               <Row label={t('subscription.confirmation.startDate')} value={startDateStr} />
               <Row label={t('subscription.confirmation.email')} value={email} />
@@ -565,8 +926,9 @@ function Row({ label, value }: { label: string; value: ReactNode }) {
   )
 }
 
-function NavBar({ step, onBack, onNext, labelNext, onSecondary, labelSecondary }: {
+function NavBar({ step, busy, onBack, onNext, labelNext, onSecondary, labelSecondary }: {
   step: number
+  busy?: boolean
   onBack: () => void
   onNext: () => void
   labelNext: string
@@ -578,7 +940,7 @@ function NavBar({ step, onBack, onNext, labelNext, onSecondary, labelSecondary }
     <div className="sticky bottom-3 z-30 mx-auto w-full">
       <div className="rounded-2xl bg-bg-elevated/90 backdrop-blur-xl border border-border-default shadow-card p-3 flex items-center justify-between gap-3">
         {step > 1 ? (
-          <Button variant="ghost" size="md" onClick={onBack} leftIcon={<ArrowLeft className="h-4 w-4" aria-hidden="true" />}>
+          <Button variant="ghost" size="md" onClick={onBack} disabled={busy} leftIcon={<ArrowLeft className="h-4 w-4" aria-hidden="true" />}>
             {t('subscription.actions.back')}
           </Button>
         ) : <span />}
@@ -586,8 +948,9 @@ function NavBar({ step, onBack, onNext, labelNext, onSecondary, labelSecondary }
           {onSecondary && labelSecondary && (
             <Button variant="ghost" size="md" onClick={onSecondary}>{labelSecondary}</Button>
           )}
-          <Button size="md" onClick={onNext}
-            rightIcon={step === TOTAL_STEPS ? undefined : <ArrowRight className="h-4 w-4" aria-hidden="true" />}>
+          <Button size="md" onClick={onNext} disabled={busy}
+            leftIcon={busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : undefined}
+            rightIcon={step === TOTAL_STEPS || step === 6 ? undefined : <ArrowRight className="h-4 w-4" aria-hidden="true" />}>
             {labelNext}
           </Button>
         </div>

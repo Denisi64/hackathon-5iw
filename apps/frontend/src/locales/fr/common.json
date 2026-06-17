@@ -6,7 +6,8 @@
       "forfaits": "Forfaits",
       "subscribe": "Souscrire",
       "login": "Se connecter",
-      "account": "Mon espace"
+      "account": "Mon espace",
+      "timeline": "Parcours"
     }
   },
   "themeToggle": {
@@ -33,17 +34,58 @@
     "title": "Chaque trajet raconte une histoire.",
     "subtitle": "Parce qu'un abonnement n'est jamais une finalité — c'est ce qui permet à l'histoire de continuer.",
     "personas": {
-      "lucas": { "name": "Lucas", "role": "Étudiant", "tagline": "Le premier pas vers l'avenir.", "episode": "Épisode 1" },
-      "valerie": { "name": "Valérie", "role": "Maman active", "tagline": "Mission : simplifier le quotidien.", "episode": "Épisode 2" },
-      "jeanpierre": { "name": "Jean-Pierre", "role": "Senior", "tagline": "Le temps retrouvé.", "episode": "Épisode 3" },
-      "amira": { "name": "Amira", "role": "Nouveau départ", "tagline": "Un nouveau départ.", "episode": "Épisode 4" }
+      "lucas": {
+        "name": "Lucas",
+        "role": "Étudiant",
+        "tagline": "Le premier pas vers l'avenir.",
+        "episode": "Épisode 1"
+      },
+      "thomas": {
+        "name": "Thomas",
+        "role": "Actif urbain",
+        "tagline": "Le quotidien, en mobilité.",
+        "episode": "Épisode 2"
+      },
+      "valerie": {
+        "name": "Valérie",
+        "role": "Maman active",
+        "tagline": "Mission : simplifier le quotidien.",
+        "episode": "Épisode 3"
+      },
+      "jeanpierre": {
+        "name": "Jean-Pierre",
+        "role": "Senior",
+        "tagline": "Le temps retrouvé.",
+        "episode": "Épisode 4"
+      },
+      "amira": {
+        "name": "Amira",
+        "role": "Nouveau départ",
+        "tagline": "Un nouveau départ.",
+        "episode": "Épisode 5"
+      }
     },
     "episodes": {
-      "e1": { "kicker": "Épisode 1", "title": "Je raconte ma situation" },
-      "e2": { "kicker": "Épisode 2", "title": "Je découvre ma solution" },
-      "e3": { "kicker": "Épisode 3", "title": "Je simplifie mes démarches" },
-      "e4": { "kicker": "Épisode 4", "title": "Je commence mon épisode" },
-      "e5": { "kicker": "Épisode 5", "title": "Un nouvel épisode commence" }
+      "e1": {
+        "kicker": "Épisode 1",
+        "title": "Je raconte ma situation"
+      },
+      "e2": {
+        "kicker": "Épisode 2",
+        "title": "Je découvre ma solution"
+      },
+      "e3": {
+        "kicker": "Épisode 3",
+        "title": "Je simplifie mes démarches"
+      },
+      "e4": {
+        "kicker": "Épisode 4",
+        "title": "Je commence mon épisode"
+      },
+      "e5": {
+        "kicker": "Épisode 5",
+        "title": "Un nouvel épisode commence"
+      }
     },
     "screen": {
       "back": "Retour aux histoires",
@@ -88,9 +130,18 @@
     "yourProfile": "Votre profil",
     "results": "Forfaits recommandés",
     "slider": {
-      "days": { "label": "Jours par semaine", "unit": "j/sem" },
-      "zones": { "label": "Zones", "unit": "zones" },
-      "trips": { "label": "Trajets par jour", "unit": "trajets" }
+      "days": {
+        "label": "Jours par semaine",
+        "unit": "j/sem"
+      },
+      "zones": {
+        "label": "Zones",
+        "unit": "zones"
+      },
+      "trips": {
+        "label": "Trajets par jour",
+        "unit": "trajets"
+      }
     },
     "ageLabel": "Âge",
     "scholarshipLabel": "Boursier",
@@ -119,22 +170,65 @@
   "subscription": {
     "kicker": "Étape {{step}} / {{total}}",
     "steps": {
-      "s1": { "title": "Quel est votre profil ?", "description": "Sélectionnez la situation qui vous correspond le mieux. Nous adaptons le parcours en conséquence." },
-      "s2": { "title": "Parlez-nous de vous", "description": "Quelques précisions pour personnaliser la recommandation." },
-      "s3": { "title": "Notre recommandation", "description": "Voici le forfait que nous vous suggérons en fonction de votre profil." },
-      "s4": { "title": "Vos justificatifs", "description": "Glissez vos documents ou connectez-vous aux services officiels. Vérification automatique." },
-      "s5": { "title": "Créez votre compte", "description": "Quelques informations pour finaliser votre souscription en toute sécurité." },
-      "s6": { "title": "Bienvenue à bord", "description": "Tout est validé. Préparez-vous à embarquer." }
+      "s1": {
+        "title": "Quel est votre profil ?",
+        "description": "Sélectionnez la situation qui vous correspond le mieux. Nous adaptons le parcours en conséquence."
+      },
+      "s2": {
+        "title": "Parlez-nous de vous",
+        "description": "Quelques précisions pour personnaliser la recommandation."
+      },
+      "s3": {
+        "title": "Notre recommandation",
+        "description": "Voici le forfait que nous vous suggérons en fonction de votre profil."
+      },
+      "s4": {
+        "title": "Vos justificatifs",
+        "description": "Glissez vos documents ou connectez-vous aux services officiels. Vérification automatique."
+      },
+      "s5": {
+        "title": "Créez votre compte",
+        "description": "Quelques informations pour finaliser votre souscription en toute sécurité."
+      },
+      "s6": {
+        "title": "Paiement",
+        "description": "Réglez votre abonnement en toute sécurité. Mode test — aucune somme ne sera réellement débitée."
+      },
+      "s7": {
+        "title": "Bienvenue à bord",
+        "description": "Tout est validé. Préparez-vous à embarquer."
+      }
     },
     "profiles": {
       "selected": "Sélectionné",
-      "student": { "title": "Étudiant", "description": "Vous êtes en études supérieures." },
-      "worker": { "title": "Salarié", "description": "Vous avez un emploi, votre employeur rembourse 50%." },
-      "senior": { "title": "Senior 62+", "description": "Bénéficiez du tarif Navigo Senior." },
-      "jobseeker": { "title": "Solidarité / RSA", "description": "Navigo Réduction, Solidarité 75% ou Gratuité selon vos droits CAF." },
-      "parent": { "title": "Parent", "description": "Vous souscrivez pour vos enfants." },
-      "scholar": { "title": "Scolaire 11-17", "description": "Collégien ou lycéen, vous étudiez en Île-de-France." },
-      "amethyste": { "title": "Améthyste", "description": "Personne en situation de handicap (MDPH) — tarif selon votre département." }
+      "student": {
+        "title": "Étudiant",
+        "description": "Vous êtes en études supérieures."
+      },
+      "worker": {
+        "title": "Salarié",
+        "description": "Vous avez un emploi, votre employeur rembourse 50%."
+      },
+      "senior": {
+        "title": "Senior 62+",
+        "description": "Bénéficiez du tarif Navigo Senior."
+      },
+      "jobseeker": {
+        "title": "Solidarité / RSA",
+        "description": "Navigo Réduction, Solidarité 75% ou Gratuité selon vos droits CAF."
+      },
+      "parent": {
+        "title": "Parent",
+        "description": "Vous souscrivez pour vos enfants."
+      },
+      "scholar": {
+        "title": "Scolaire 11-17",
+        "description": "Collégien ou lycéen, vous étudiez en Île-de-France."
+      },
+      "amethyste": {
+        "title": "Améthyste",
+        "description": "Personne en situation de handicap (MDPH) — tarif selon votre département."
+      }
     },
     "questions": {
       "age": "Votre âge",
@@ -143,33 +237,105 @@
       "daysPerWeek": "Jours d'utilisation par semaine",
       "employerRefund": "Votre employeur rembourse-t-il 50% ?",
       "cafBeneficiary": "Êtes-vous bénéficiaire CAF / CSS ?",
-      "childrenCount": "Combien d'enfants à abonner ?",
-      "childrenUnit": "enfants",
-      "firstChildAge": "Âge du premier enfant"
+      "childFirstName": "Prénom de l'enfant",
+      "childBirthDate": "Date de naissance de l'enfant",
+      "childDetected": "Forfait détecté : {{forfait}} ({{age}} ans)"
     },
     "recommendation": {
-      "student":   { "summary": "Le tarif étudiant Imagine R donne accès à toute l'Île-de-France pendant l'année scolaire.", "reasons": ["Tarif boursier appliqué automatiquement", "Toutes zones incluses", "Renouvellement annuel sans intervention"] },
-      "worker":    { "summary": "Le Navigo Annuel reste l'abonnement le plus avantageux pour un usage quotidien.", "reasons": ["50% remboursé par votre employeur", "Économies vs ticket à l'unité", "Tout réseau IDF inclus"] },
-      "senior":    { "summary": "Le tarif Senior offre une réduction significative à partir de 62 ans.", "reasons": ["Vérification d'âge automatique via pièce d'identité", "Économie estimée 270 €/an", "Bascule sans interruption de service"] },
-      "jobseeker": { "summary": "La Tarification Solidarité Transport adapte le prix à vos ressources.", "reasons": ["Vérification automatique des droits CAF", "Aucun justificatif à uploader", "Renouvellement trimestriel facilité"] },
-      "parent":    { "summary": "Un seul espace pour gérer tous les abonnements de vos enfants.", "reasons": ["Imagine R Scolaire pour chaque enfant", "Un seul livret de famille suffit", "Rappels automatiques avant la rentrée"] },
-      "scholar":   { "summary": "Imagine R Scolaire couvre toute l'année scolaire pour les 11-25 ans.", "reasons": ["Tout réseau IDF inclus", "Tarif réduit boursier disponible", "Renouvellement automatique chaque rentrée"] },
-      "amethyste": { "summary": "Le forfait Améthyste s'adapte à votre département de résidence et à votre statut MDPH.", "reasons": ["Tarif variable selon votre département", "Vérification automatique via la notification MDPH", "Renouvellement annuel sans démarche"] }
+      "student": {
+        "summary": "Le tarif étudiant Imagine R donne accès à toute l'Île-de-France pendant l'année scolaire.",
+        "reasons": [
+          "Tarif boursier appliqué automatiquement",
+          "Toutes zones incluses",
+          "Renouvellement annuel sans intervention"
+        ]
+      },
+      "worker": {
+        "summary": "Le Navigo Annuel reste l'abonnement le plus avantageux pour un usage quotidien.",
+        "reasons": [
+          "50% remboursé par votre employeur",
+          "Économies vs ticket à l'unité",
+          "Tout réseau IDF inclus"
+        ]
+      },
+      "senior": {
+        "summary": "Le tarif Senior offre une réduction significative à partir de 62 ans.",
+        "reasons": [
+          "Vérification d'âge automatique via pièce d'identité",
+          "Économie estimée 270 €/an",
+          "Bascule sans interruption de service"
+        ]
+      },
+      "jobseeker": {
+        "summary": "La Tarification Solidarité Transport adapte le prix à vos ressources.",
+        "reasons": [
+          "Vérification automatique des droits CAF",
+          "Aucun justificatif à uploader",
+          "Renouvellement trimestriel facilité"
+        ]
+      },
+      "parent": {
+        "summary": "Un seul espace pour gérer tous les abonnements de vos enfants.",
+        "reasons": [
+          "Imagine R Scolaire pour chaque enfant",
+          "Un seul livret de famille suffit",
+          "Rappels automatiques avant la rentrée"
+        ]
+      },
+      "scholar": {
+        "summary": "Imagine R Scolaire couvre toute l'année scolaire pour les 11-25 ans.",
+        "reasons": [
+          "Tout réseau IDF inclus",
+          "Tarif réduit boursier disponible",
+          "Renouvellement automatique chaque rentrée"
+        ]
+      },
+      "amethyste": {
+        "summary": "Le forfait Améthyste s'adapte à votre département de résidence et à votre statut MDPH.",
+        "reasons": [
+          "Tarif variable selon votre département",
+          "Vérification automatique via la notification MDPH",
+          "Renouvellement annuel sans démarche"
+        ]
+      }
     },
     "documents": {
       "upload": "Choisir un fichier",
-      "franceConnect": "Me connecter à FranceConnect",
       "analyzing": "Analyse IA en cours…",
       "validated": "Validé",
       "validatedHint": "Document vérifié automatiquement.",
-      "certificat_scolarite": { "label": "Certificat de scolarité", "help": "Document fourni par votre établissement pour l'année en cours." },
-      "attestation_bourse":   { "label": "Attestation de bourse", "help": "Justificatif d'attribution de bourse du CROUS." },
-      "contrat_travail":      { "label": "Contrat de travail", "help": "Facultatif — accélère la demande de remboursement employeur." },
-      "piece_identite":       { "label": "Pièce d'identité", "help": "CNI ou passeport pour confirmer votre âge." },
-      "france_connect":       { "label": "Vérification CAF via FranceConnect", "help": "Connexion sécurisée — aucun justificatif à uploader." },
-      "livret_famille":       { "label": "Livret de famille", "help": "Un seul document suffit pour tous vos enfants." },
-      "carte_invalidite":     { "label": "Carte d'invalidité", "help": "Carte mobilité inclusion (CMI) ou ancienne carte d'invalidité." },
-      "notification_mdph":    { "label": "Notification MDPH", "help": "Notification de décision de la Maison Départementale des Personnes Handicapées." }
+      "certificat_scolarite": {
+        "label": "Certificat de scolarité",
+        "help": "Document fourni par votre établissement pour l'année en cours."
+      },
+      "attestation_bourse": {
+        "label": "Attestation de bourse",
+        "help": "Justificatif d'attribution de bourse du CROUS."
+      },
+      "contrat_travail": {
+        "label": "Contrat de travail",
+        "help": "Facultatif — accélère la demande de remboursement employeur."
+      },
+      "piece_identite": {
+        "label": "Pièce d'identité",
+        "help": "CNI ou passeport pour confirmer votre âge."
+      },
+      "france_connect": {
+        "label": "Vérification CAF via FranceConnect",
+        "help": "Connexion sécurisée — aucun justificatif à uploader."
+      },
+      "livret_famille": {
+        "label": "Livret de famille",
+        "help": "Un seul document suffit pour tous vos enfants."
+      },
+      "carte_invalidite": {
+        "label": "Carte d'invalidité",
+        "help": "Carte mobilité inclusion (CMI) ou ancienne carte d'invalidité."
+      },
+      "notification_mdph": {
+        "label": "Notification MDPH",
+        "help": "Notification de décision de la Maison Départementale des Personnes Handicapées."
+      }
     },
     "account": {
       "firstName": "Prénom",
@@ -177,6 +343,27 @@
       "email": "Email",
       "phone": "Téléphone",
       "phoneHint": "Optionnel — pour les rappels par SMS."
+    },
+    "payment": {
+      "method": "Mode de paiement",
+      "card": "Carte bancaire",
+      "sepa": "Prélèvement SEPA",
+      "cardName": "Nom sur la carte",
+      "cardNumber": "Numéro de carte",
+      "expiry": "Expiration (MM/AA)",
+      "cvc": "CVC",
+      "iban": "IBAN",
+      "ibanHint": "Prélèvement mensuel de {{amount}}.",
+      "testHint": "Mode test — carte 4242 4242 4242 4242, n'importe quelle date future et CVC.",
+      "secure": "Paiement sécurisé · chiffré",
+      "total": "Total à payer",
+      "errors": {
+        "cardName": "Nom requis",
+        "cardNumber": "Numéro de carte invalide",
+        "expiry": "Date invalide",
+        "cvc": "CVC invalide",
+        "iban": "IBAN invalide"
+      }
     },
     "confirmation": {
       "welcome": "Bienvenue, {{firstName}} !",
@@ -195,11 +382,44 @@
       "confirm": "Confirmer",
       "finish": "Retour à l'accueil",
       "createAccount": "Créer Mon espace",
-      "toAccount": "Voir Mon espace"
+      "toAccount": "Voir Mon espace",
+      "pay": "Payer {{amount}}",
+      "paying": "Paiement en cours…"
     },
     "errors": {
       "required": "Champ requis",
       "email": "Email invalide"
+    },
+    "verification": {
+      "cta": "S'identifier avec FranceConnect",
+      "modalTitle": "S'identifier avec FranceConnect",
+      "modalSubtitle": "Choisissez le compte avec lequel vous identifier. Vos données ne sont jamais stockées.",
+      "connecting": "Connexion sécurisée à {{provider}}…",
+      "secure": "Vérification à la source · aucune pièce à uploader",
+      "noUpload": {
+        "title": "Aucun justificatif à uploader",
+        "description": "Vos droits sont vérifiés directement auprès des organismes officiels via FranceConnect."
+      },
+      "intro": {
+        "caf": "Vérifiez vos droits Solidarité Transport directement auprès de la CAF.",
+        "scholarship": "Confirmez votre statut de boursier auprès du CROUS.",
+        "identity": "Confirmez votre identité et votre âge via FranceConnect."
+      },
+      "results": {
+        "caf": "Droits TST confirmés · quotient familial 6 800 € · tarif Solidarité 75 %",
+        "scholarship": "Statut boursier confirmé · échelon 5 · année 2025-2026",
+        "identity": "Identité confirmée · âge vérifié pour le tarif Senior"
+      }
+    },
+    "beneficiary": {
+      "question": "Pour qui souscrivez-vous ?",
+      "self": "Pour moi",
+      "third": "Pour un proche",
+      "payerSection": "Le payeur",
+      "holderSection": "Le porteur",
+      "porteurFirstName": "Prénom du porteur",
+      "porteurLastName": "Nom du porteur",
+      "note": "Le payeur règle l'abonnement, le porteur l'utilise — ce peut être deux personnes différentes."
     }
   },
   "auth": {
@@ -294,8 +514,6 @@
     "subscriptionActive": "Abonnement actif",
     "startDate": "Date d'effet",
     "zones": "Zones",
-    "status": "Statut",
-    "statusValid": "Validé",
     "account": "Compte",
     "actions": "Actions rapides",
     "action": {
@@ -308,6 +526,198 @@
       "title": "Vous n'avez pas encore souscrit",
       "description": "Lancez le parcours de souscription pour trouver le forfait idéal et le rattacher à votre espace.",
       "cta": "Commencer la souscription"
+    },
+    "dossier": {
+      "title": "Statut de votre dossier",
+      "updated": "Mis à jour en temps réel",
+      "submitted": "Soumis",
+      "processing": "En cours",
+      "validated": "Validé",
+      "cardSent": "Carte envoyée"
+    },
+    "documents": {
+      "title": "Documents transmis",
+      "verified": "Vérifié"
+    },
+    "renewal": {
+      "title": "Renouvellement",
+      "expiresOn": "Expire le {{date}}",
+      "dueSoon": "Échéance proche",
+      "expired": "Abonnement expiré",
+      "noExpiry": "Sans échéance",
+      "cta": "Renouveler en 1 clic",
+      "renewed": "Abonnement renouvelé"
+    },
+    "porteur": {
+      "title": "Porteur",
+      "readOnly": "Accès lecture seule — sans informations de paiement",
+      "age": "{{age}} ans",
+      "expiry": "Échéance",
+      "transferTitle": "Transfert possible",
+      "transferDescription": "{{name}} a 16 ans et peut désormais gérer son abonnement. Proposez-lui le transfert.",
+      "transferCta": "Proposer le transfert",
+      "transferDone": "Transfert proposé à {{name}}"
     }
+  },
+  "glossary": {
+    "hint": "Termes utiles :",
+    "porteur": {
+      "term": "porteur",
+      "definition": "La personne qui utilisera le titre de transport. Elle peut être différente de celle qui paie."
+    },
+    "payeur": {
+      "term": "payeur",
+      "definition": "La personne qui paie l'abonnement — un parent, une association, un employeur…"
+    },
+    "forfait": {
+      "term": "forfait",
+      "definition": "Un abonnement aux transports, valable une durée donnée (mois, année…)."
+    },
+    "tst": {
+      "term": "TST",
+      "definition": "Tarification Solidarité Transport : une aide qui réduit le prix selon vos revenus."
+    },
+    "amethyste": {
+      "term": "Améthyste",
+      "definition": "Un abonnement à tarif réduit pour les personnes reconnues handicapées (MDPH)."
+    },
+    "cgvu": {
+      "term": "CGVU",
+      "definition": "Conditions Générales de Vente et d'Utilisation — les règles d'usage du service."
+    },
+    "zones": {
+      "term": "zones",
+      "definition": "L'Île-de-France est découpée en 5 zones tarifaires, de Paris (1) à la grande couronne (5)."
+    },
+    "boursier": {
+      "term": "boursier",
+      "definition": "Bénéficiaire d'une bourse étudiante (CROUS), donnant droit à un tarif réduit."
+    },
+    "mdph": {
+      "term": "MDPH",
+      "definition": "Maison Départementale des Personnes Handicapées — elle reconnaît officiellement un handicap."
+    },
+    "franceConnect": {
+      "term": "FranceConnect",
+      "definition": "Le service officiel pour s'identifier en ligne via vos comptes administratifs (impôts, CAF…)."
+    }
+  },
+  "timeline": {
+    "kicker": "Une vie de titres",
+    "title": "Le bon titre, à chaque étape de la vie",
+    "subtitle": "De la première carte scolaire à la retraite, votre abonnement évolue avec vous. Cliquez sur une étape pour la découvrir.",
+    "close": "Fermer",
+    "cta": "Souscrire ce forfait",
+    "zones": "Zones {{min}}–{{max}}",
+    "alternatives": {
+      "title": "À tout moment, selon votre situation",
+      "subtitle": "Ces forfaits s'appliquent en dehors du parcours classique."
+    },
+    "milestones": {
+      "junior": {
+        "title": "Imagine R Junior",
+        "age": "4 – 11 ans",
+        "description": "Le premier titre de transport de l'enfant. Souscrit par un parent — le payeur — à un tarif très réduit."
+      },
+      "scolaire": {
+        "title": "Imagine R Scolaire",
+        "age": "11 – 17 ans",
+        "description": "Au collège et au lycée, l'abonnement couvre toute l'Île-de-France pendant l'année scolaire."
+      },
+      "payeur16": {
+        "title": "16 ans : l'enfant devient payeur",
+        "age": "À 16 ans",
+        "description": "L'adolescent peut désormais gérer et payer son propre titre. Le porteur et le payeur peuvent devenir la même personne."
+      },
+      "etudiant": {
+        "title": "Imagine R Étudiant",
+        "age": "18 – 25 ans",
+        "description": "Pendant les études supérieures, le tarif étudiant prolonge l'avantage Imagine R, avec une réduction pour les boursiers."
+      },
+      "annuel": {
+        "title": "Navigo Annuel",
+        "age": "Vie active",
+        "description": "En emploi, le Navigo Annuel devient l'abonnement de référence — et l'employeur en rembourse la moitié."
+      },
+      "senior": {
+        "title": "Navigo Senior",
+        "age": "Dès 62 ans",
+        "description": "À la retraite, le tarif Senior prend le relais et allège la facture, sans interruption de service."
+      },
+      "tst": {
+        "title": "Tarification Solidarité Transport",
+        "age": "Selon vos ressources",
+        "description": "À tout âge, si vos revenus sont modestes, la TST réduit fortement le prix — jusqu'à la gratuité selon vos droits."
+      },
+      "amethyste": {
+        "title": "Améthyste",
+        "age": "Situation de handicap",
+        "description": "Pour les personnes reconnues handicapées (MDPH), le forfait Améthyste s'adapte au département de résidence."
+      }
+    }
+  },
+  "notifications": {
+    "ariaLabel": "Notifications",
+    "title": "Notifications",
+    "empty": "Aucune notification pour le moment",
+    "dismiss": "Ignorer",
+    "items": {
+      "noSubscription": {
+        "title": "Aucun abonnement",
+        "message": "Vous n'avez pas encore d'abonnement. Trouvez le forfait idéal en quelques minutes.",
+        "cta": "Souscrire"
+      },
+      "renewalDue": {
+        "title": "Renouvellement à venir",
+        "message": "Votre abonnement expire le {{date}} — renouvelez en 1 clic.",
+        "cta": "Renouveler"
+      },
+      "expired": {
+        "title": "Abonnement expiré",
+        "message": "Votre abonnement a expiré le {{date}}. Renouvelez pour continuer à voyager.",
+        "cta": "Renouveler"
+      },
+      "cardSent": {
+        "title": "Carte envoyée",
+        "message": "Votre carte de transport a été expédiée. Elle arrivera sous quelques jours."
+      },
+      "dossierInProgress": {
+        "title": "Dossier en cours",
+        "message": "Votre dossier est en cours de vérification. Nous vous tiendrons informé."
+      },
+      "child16": {
+        "title": "Votre enfant a 16 ans",
+        "message": "{{name}} peut maintenant gérer son propre abonnement. Proposez-lui le transfert.",
+        "cta": "Voir"
+      }
+    }
+  },
+  "voice": {
+    "label": "Mode vocal",
+    "start": "Activer le mode vocal",
+    "stop": "Arrêter l'écoute",
+    "listening": "Je vous écoute…",
+    "hint": "Dites par exemple : « simulateur », « souscrire », « qu'est-ce que le TST ? »",
+    "notUnderstood": "Je n'ai pas compris. Essayez « ouvrir le simulateur » ou « qu'est-ce que le TST ? ».",
+    "acting": {
+      "simulateur": "J'ouvre le simulateur.",
+      "souscrire": "Je lance la souscription.",
+      "parcours": "Voici le parcours de vie des titres.",
+      "monEspace": "J'ouvre votre espace.",
+      "accueil": "Retour à l'accueil."
+    },
+    "commands": {
+      "simulateur": "simulateur|simulation|tarif|prix|calcul",
+      "souscrire": "souscrire|souscription|abonner|abonnement|inscrire",
+      "parcours": "parcours|chronologie|vie des titres|étapes",
+      "monEspace": "mon espace|mon compte|espace client|tableau de bord",
+      "accueil": "accueil|page d'accueil|page principale|début"
+    }
+  },
+  "campaign": {
+    "kicker": "La campagne",
+    "title": "Une vie, des épisodes.",
+    "subtitle": "Notre campagne d'affichage : cinq visages, cinq étapes de vie, un même accompagnement. Cliquez sur une affiche.",
+    "tagline": "Accompagnement à chaque étape de la vie"
   }
 }

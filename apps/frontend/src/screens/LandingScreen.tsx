@@ -6,14 +6,16 @@ import { Badge } from '../components/ui/Badge'
 import { Card } from '../components/ui/Card'
 import { Orb } from '../components/ui/Orb'
 import { PERSONA_LIST, PERSONA_STORIES } from '../data/personaStories'
+import { CampaignPoster } from '../components/domain/CampaignPoster'
 import { cn } from '../lib/cn'
 
 // Couleur signature → gradient pour le badge icône en bas à droite de la photo.
-const ICON_BADGE_GRADIENTS: Record<'purple' | 'amber' | 'green' | 'pink', string> = {
+const ICON_BADGE_GRADIENTS: Record<'purple' | 'amber' | 'green' | 'pink' | 'blue', string> = {
   purple: 'bg-gradient-to-br from-purple-400 to-purple-600',
   amber: 'bg-gradient-to-br from-amber-300 to-amber-500',
   green: 'bg-gradient-to-br from-emerald-400 to-emerald-600',
   pink: 'bg-gradient-to-br from-pink-400 to-pink-600',
+  blue: 'bg-gradient-to-br from-sky-400 to-sky-600',
 }
 
 export default function LandingScreen() {
@@ -132,7 +134,7 @@ export default function LandingScreen() {
           <p className="max-w-2xl text-base text-fg-muted">{t('stories.subtitle')}</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {PERSONA_LIST.map((slug) => {
             const story = PERSONA_STORIES[slug]
             const Icon = story.icon
@@ -184,6 +186,34 @@ export default function LandingScreen() {
               </Link>
             )
           })}
+        </div>
+      </section>
+
+      {/* CAMPAGNE — mur d'affichage métro */}
+      <section id="campagne">
+        <div className="mb-10 flex flex-col items-center gap-3 text-center">
+          <p className="font-mono text-xs tracking-widest uppercase text-fg-muted">
+            04 — {t('campaign.kicker')}
+          </p>
+          <h2 className="max-w-3xl text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-fg">
+            {t('campaign.title')}
+          </h2>
+          <p className="max-w-2xl text-base text-fg-muted">{t('campaign.subtitle')}</p>
+        </div>
+
+        {/* Quai de métro : panneaux rétro-éclairés alignés sur un mur. */}
+        <div className="relative overflow-hidden rounded-3xl border border-border-default bg-gradient-to-b from-surface to-bg-elevated p-4 sm:p-8">
+          {/* Halo lumineux d'ambiance. */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-16 h-40 bg-accent/10 blur-3xl" />
+          <ul className="relative grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
+            {PERSONA_LIST.map((slug) => (
+              <li key={slug}>
+                <CampaignPoster slug={slug} />
+              </li>
+            ))}
+          </ul>
+          {/* Reflet sol — touche "station". */}
+          <div aria-hidden="true" className="pointer-events-none mt-2 h-6 rounded-b-3xl bg-gradient-to-b from-black/10 to-transparent dark:from-white/5" />
         </div>
       </section>
 

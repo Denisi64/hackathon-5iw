@@ -26,3 +26,36 @@ export const PROFILES: ProfileDef[] = [
 
 export const PROFILE_BY_SLUG: Record<ProfileSlug, ProfileDef> =
   Object.fromEntries(PROFILES.map((p) => [p.slug, p])) as Record<ProfileSlug, ProfileDef>
+
+/**
+ * Fournisseur de vérification à la source pour un justificatif donné.
+ * Les clés absentes de ce mapping restent en upload classique.
+ */
+export type VerificationProvider = 'caf' | 'scholarship' | 'identity'
+
+export const DOC_VERIFICATION: Record<string, VerificationProvider> = {
+  france_connect: 'caf', // droits TST via la CAF
+  attestation_bourse: 'scholarship', // statut boursier via le CROUS
+  piece_identite: 'identity', // identité + âge via FranceConnect
+}
+
+/**
+ * Forfait → profil de souscription le plus pertinent.
+ * Permet d'entrer dans le tunnel directement depuis le simulateur avec un
+ * forfait choisi, en pré-sélectionnant le profil (justificatifs cohérents).
+ */
+export const FORFAIT_TO_PROFILE: Record<string, ProfileSlug> = {
+  navigo_jour: 'worker',
+  navigo_semaine: 'worker',
+  navigo_mois: 'worker',
+  navigo_annuel: 'worker',
+  liberte_plus: 'worker',
+  navigo_senior: 'senior',
+  imagine_r_etudiant: 'student',
+  imagine_r_scolaire: 'scholar',
+  imagine_r_junior: 'scholar',
+  navigo_solidarite_75: 'jobseeker',
+  navigo_reduction_50: 'jobseeker',
+  navigo_gratuite: 'jobseeker',
+  amethyste: 'amethyste',
+}
