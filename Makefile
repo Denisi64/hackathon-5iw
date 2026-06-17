@@ -1,9 +1,10 @@
-.PHONY: help install start stop wait-api dev dev-front dev-back build test lint ci docker-build docker-up docker-up-bake docker-down db-migrate db-seed clean
+.PHONY: help install start stop refresh-deps wait-api dev dev-front dev-back build test lint ci docker-build docker-up docker-up-bake docker-down db-migrate db-seed clean
 
 help:
 	@echo "Commandes disponibles:"
 	@echo "  make start        Lancer le projet complet"
 	@echo "  make stop         Arreter le projet"
+	@echo "  make refresh-deps Recréer les node_modules Docker"
 	@echo "  make install      Installer les dependances"
 	@echo "  make dev          Lancer front + back en local"
 	@echo "  make dev-front    Lancer le frontend"
@@ -24,6 +25,7 @@ install:
 	pnpm install
 
 start:
+	$(MAKE) refresh-deps
 	docker compose up -d --build
 	$(MAKE) wait-api
 	docker compose exec -T backend pnpm db:migrate
@@ -32,10 +34,15 @@ start:
 	@echo "Projet lance:"
 	@echo "  Front: http://localhost:5173"
 	@echo "  API:   http://localhost:3000/api/health"
+	@echo "  Pgweb: http://localhost:8081"
 	@echo "  MinIO: http://localhost:9001"
 
 stop:
 	docker compose down
+
+refresh-deps:
+	docker compose rm -sf backend frontend
+	docker volume rm hackathon-5iw_backend_node_modules hackathon-5iw_frontend_node_modules 2>/dev/null || true
 
 wait-api:
 	@echo "Attente de l'API..."

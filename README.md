@@ -22,6 +22,8 @@ make start
 
 Ouvrir http://localhost:5173.
 
+BDD via Pgweb : http://localhost:8081.
+
 ```bash
 make stop
 ```
@@ -39,6 +41,7 @@ URLs :
 
 - Front : http://localhost:5173
 - API : http://localhost:3000/api/health
+- Pgweb : http://localhost:8081
 - MinIO console : http://localhost:9001
 - PostgreSQL : localhost:5432
 

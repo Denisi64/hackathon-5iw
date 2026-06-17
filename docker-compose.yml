@@ -57,6 +57,18 @@ services:
     networks:
       - comutitres
 
+  pgweb:
+    image: sosedoff/pgweb:0.16.2
+    ports:
+      - "8081:8081"
+    environment:
+      PGWEB_DATABASE_URL: postgres://comutitres:comutitres_dev@postgres:5432/comutitres?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - comutitres
+
   minio:
     image: minio/minio:latest
     command: server /data --console-address ":9001"
