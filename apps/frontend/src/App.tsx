@@ -6,6 +6,8 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute'
 
 const LandingScreen = lazy(() => import('./screens/LandingScreen'))
 const SimulateurScreen = lazy(() => import('./screens/SimulateurScreen'))
+const ForfaitsScreen = lazy(() => import('./screens/ForfaitsScreen'))
+const ForfaitDetailScreen = lazy(() => import('./screens/ForfaitDetailScreen'))
 const StoryScreen = lazy(() => import('./screens/StoryScreen'))
 const SubscriptionScreen = lazy(() => import('./screens/SubscriptionScreen'))
 const LoginScreen = lazy(() => import('./screens/LoginScreen'))
@@ -27,6 +29,8 @@ export function App() {
           <Routes>
             <Route path="/" element={<LandingScreen />} />
             <Route path="/simulateur" element={<SimulateurScreen />} />
+            <Route path="/forfaits" element={<ForfaitsScreen />} />
+            <Route path="/forfaits/:forfaitId" element={<ForfaitDetailScreen />} />
             <Route path="/histoires/:slug" element={<StoryScreen />} />
             <Route path="/souscrire" element={<SubscriptionScreen />} />
             <Route path="/login" element={<LoginScreen />} />
