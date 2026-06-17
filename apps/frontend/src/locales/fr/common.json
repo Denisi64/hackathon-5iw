@@ -1,0 +1,313 @@
+{
+  "header": {
+    "logoAriaLabel": "Comutitres, accueil",
+    "nav": {
+      "simulator": "Simulateur",
+      "forfaits": "Forfaits",
+      "subscribe": "Souscrire",
+      "login": "Se connecter",
+      "account": "Mon espace"
+    }
+  },
+  "themeToggle": {
+    "toLight": "Activer le mode clair",
+    "toDark": "Activer le mode sombre",
+    "toSystem": "Suivre le système"
+  },
+  "languageSwitcher": {
+    "label": "Changer de langue",
+    "current": "Langue actuelle : {{lang}}"
+  },
+  "hero": {
+    "badge": "Filiale Île-de-France Mobilités",
+    "title": "Votre titre de transport, ENFIN simple.",
+    "subtitle": "Trouvez le bon forfait Navigo en 2 minutes, souscrivez en 5 étapes, sans paperasse.",
+    "ctaPrimary": "Lancer le simulateur",
+    "ctaSecondary": "Voir les forfaits"
+  },
+  "narrative": {
+    "tagline": "Chaque trajet raconte une histoire."
+  },
+  "stories": {
+    "kicker": "Les histoires",
+    "title": "Chaque trajet raconte une histoire.",
+    "subtitle": "Parce qu'un abonnement n'est jamais une finalité — c'est ce qui permet à l'histoire de continuer.",
+    "personas": {
+      "lucas": { "name": "Lucas", "role": "Étudiant", "tagline": "Le premier pas vers l'avenir.", "episode": "Épisode 1" },
+      "valerie": { "name": "Valérie", "role": "Maman active", "tagline": "Mission : simplifier le quotidien.", "episode": "Épisode 2" },
+      "jeanpierre": { "name": "Jean-Pierre", "role": "Senior", "tagline": "Le temps retrouvé.", "episode": "Épisode 3" },
+      "amira": { "name": "Amira", "role": "Nouveau départ", "tagline": "Un nouveau départ.", "episode": "Épisode 4" }
+    },
+    "episodes": {
+      "e1": { "kicker": "Épisode 1", "title": "Je raconte ma situation" },
+      "e2": { "kicker": "Épisode 2", "title": "Je découvre ma solution" },
+      "e3": { "kicker": "Épisode 3", "title": "Je simplifie mes démarches" },
+      "e4": { "kicker": "Épisode 4", "title": "Je commence mon épisode" },
+      "e5": { "kicker": "Épisode 5", "title": "Un nouvel épisode commence" }
+    },
+    "screen": {
+      "back": "Retour aux histoires",
+      "ageBadge": "{{age}} ans",
+      "quote": "« {{text}} »",
+      "ctaSimulate": "Lancer le simulateur",
+      "otherStories": "D'autres histoires"
+    }
+  },
+  "stats": {
+    "annualPrice": "Navigo annuel",
+    "employerRefund": "remboursé employeur",
+    "subscribeTime": "souscription",
+    "profilesCovered": "profils couverts"
+  },
+  "features": {
+    "simulator": {
+      "title": "Simulateur tarif intelligent",
+      "body": "Comparez tous les forfaits en temps réel selon votre profil."
+    },
+    "tunnel": {
+      "title": "Tunnel 5 étapes",
+      "body": "Souscrivez en 5 étapes guidées, sans paperasse."
+    },
+    "aiCheck": {
+      "title": "Vérification IA",
+      "body": "Vos justificatifs vérifiés automatiquement par IA."
+    }
+  },
+  "profiles": {
+    "salarie": "Salarié",
+    "etudiant": "Étudiant",
+    "scolaire_junior": "Junior",
+    "scolaire": "Scolaire",
+    "senior": "Senior",
+    "tst": "TST",
+    "amethyste": "Améthyste"
+  },
+  "simulator": {
+    "title": "Trouvez votre forfait idéal",
+    "subtitle": "Ajustez les curseurs, on calcule en temps réel.",
+    "yourProfile": "Votre profil",
+    "results": "Forfaits recommandés",
+    "slider": {
+      "days": { "label": "Jours par semaine", "unit": "j/sem" },
+      "zones": { "label": "Zones", "unit": "zones" },
+      "trips": { "label": "Trajets par jour", "unit": "trajets" }
+    },
+    "ageLabel": "Âge",
+    "scholarshipLabel": "Boursier",
+    "empty": "Aucun forfait standard ne correspond. Contactez un conseiller.",
+    "showAll": "Voir tous les forfaits",
+    "tipEmployer": "💡 50 % remboursés par votre employeur",
+    "savingVsTickets": "Vous économisez {{amount}} vs tickets unité",
+    "recommended": "Recommandé pour vous",
+    "subscribe": "Souscrire",
+    "perYear": "/an",
+    "perMonth": "/mois"
+  },
+  "footer": {
+    "tagline": "Une filiale d'Île-de-France Mobilités",
+    "links": {
+      "rgpd": "RGPD",
+      "legal": "Mentions légales",
+      "contact": "Contact"
+    }
+  },
+  "common": {
+    "loading": "Chargement…",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "subscription": {
+    "kicker": "Étape {{step}} / {{total}}",
+    "steps": {
+      "s1": { "title": "Quel est votre profil ?", "description": "Sélectionnez la situation qui vous correspond le mieux. Nous adaptons le parcours en conséquence." },
+      "s2": { "title": "Parlez-nous de vous", "description": "Quelques précisions pour personnaliser la recommandation." },
+      "s3": { "title": "Notre recommandation", "description": "Voici le forfait que nous vous suggérons en fonction de votre profil." },
+      "s4": { "title": "Vos justificatifs", "description": "Glissez vos documents ou connectez-vous aux services officiels. Vérification automatique." },
+      "s5": { "title": "Créez votre compte", "description": "Quelques informations pour finaliser votre souscription en toute sécurité." },
+      "s6": { "title": "Bienvenue à bord", "description": "Tout est validé. Préparez-vous à embarquer." }
+    },
+    "profiles": {
+      "selected": "Sélectionné",
+      "student": { "title": "Étudiant", "description": "Vous êtes en études supérieures." },
+      "worker": { "title": "Salarié", "description": "Vous avez un emploi, votre employeur rembourse 50%." },
+      "senior": { "title": "Senior 62+", "description": "Bénéficiez du tarif Navigo Senior." },
+      "jobseeker": { "title": "Solidarité / RSA", "description": "Navigo Réduction, Solidarité 75% ou Gratuité selon vos droits CAF." },
+      "parent": { "title": "Parent", "description": "Vous souscrivez pour vos enfants." },
+      "scholar": { "title": "Scolaire 11-17", "description": "Collégien ou lycéen, vous étudiez en Île-de-France." },
+      "amethyste": { "title": "Améthyste", "description": "Personne en situation de handicap (MDPH) — tarif selon votre département." }
+    },
+    "questions": {
+      "age": "Votre âge",
+      "scholarship": "Êtes-vous boursier ?",
+      "zones": "Zones parcourues",
+      "daysPerWeek": "Jours d'utilisation par semaine",
+      "employerRefund": "Votre employeur rembourse-t-il 50% ?",
+      "cafBeneficiary": "Êtes-vous bénéficiaire CAF / CSS ?",
+      "childrenCount": "Combien d'enfants à abonner ?",
+      "childrenUnit": "enfants",
+      "firstChildAge": "Âge du premier enfant"
+    },
+    "recommendation": {
+      "student":   { "summary": "Le tarif étudiant Imagine R donne accès à toute l'Île-de-France pendant l'année scolaire.", "reasons": ["Tarif boursier appliqué automatiquement", "Toutes zones incluses", "Renouvellement annuel sans intervention"] },
+      "worker":    { "summary": "Le Navigo Annuel reste l'abonnement le plus avantageux pour un usage quotidien.", "reasons": ["50% remboursé par votre employeur", "Économies vs ticket à l'unité", "Tout réseau IDF inclus"] },
+      "senior":    { "summary": "Le tarif Senior offre une réduction significative à partir de 62 ans.", "reasons": ["Vérification d'âge automatique via pièce d'identité", "Économie estimée 270 €/an", "Bascule sans interruption de service"] },
+      "jobseeker": { "summary": "La Tarification Solidarité Transport adapte le prix à vos ressources.", "reasons": ["Vérification automatique des droits CAF", "Aucun justificatif à uploader", "Renouvellement trimestriel facilité"] },
+      "parent":    { "summary": "Un seul espace pour gérer tous les abonnements de vos enfants.", "reasons": ["Imagine R Scolaire pour chaque enfant", "Un seul livret de famille suffit", "Rappels automatiques avant la rentrée"] },
+      "scholar":   { "summary": "Imagine R Scolaire couvre toute l'année scolaire pour les 11-25 ans.", "reasons": ["Tout réseau IDF inclus", "Tarif réduit boursier disponible", "Renouvellement automatique chaque rentrée"] },
+      "amethyste": { "summary": "Le forfait Améthyste s'adapte à votre département de résidence et à votre statut MDPH.", "reasons": ["Tarif variable selon votre département", "Vérification automatique via la notification MDPH", "Renouvellement annuel sans démarche"] }
+    },
+    "documents": {
+      "upload": "Choisir un fichier",
+      "franceConnect": "Me connecter à FranceConnect",
+      "analyzing": "Analyse IA en cours…",
+      "validated": "Validé",
+      "validatedHint": "Document vérifié automatiquement.",
+      "certificat_scolarite": { "label": "Certificat de scolarité", "help": "Document fourni par votre établissement pour l'année en cours." },
+      "attestation_bourse":   { "label": "Attestation de bourse", "help": "Justificatif d'attribution de bourse du CROUS." },
+      "contrat_travail":      { "label": "Contrat de travail", "help": "Facultatif — accélère la demande de remboursement employeur." },
+      "piece_identite":       { "label": "Pièce d'identité", "help": "CNI ou passeport pour confirmer votre âge." },
+      "france_connect":       { "label": "Vérification CAF via FranceConnect", "help": "Connexion sécurisée — aucun justificatif à uploader." },
+      "livret_famille":       { "label": "Livret de famille", "help": "Un seul document suffit pour tous vos enfants." },
+      "carte_invalidite":     { "label": "Carte d'invalidité", "help": "Carte mobilité inclusion (CMI) ou ancienne carte d'invalidité." },
+      "notification_mdph":    { "label": "Notification MDPH", "help": "Notification de décision de la Maison Départementale des Personnes Handicapées." }
+    },
+    "account": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "phoneHint": "Optionnel — pour les rappels par SMS."
+    },
+    "confirmation": {
+      "welcome": "Bienvenue, {{firstName}} !",
+      "you": "vous",
+      "subtitle": "Votre abonnement est prêt. Tout est validé.",
+      "summary": "Récapitulatif",
+      "forfait": "Forfait",
+      "price": "Prix",
+      "startDate": "Date d'effet",
+      "email": "Email",
+      "emailSent": "Un email de confirmation a été envoyé à {{email}}. Vous pouvez fermer cette fenêtre."
+    },
+    "actions": {
+      "back": "Retour",
+      "next": "Suivant",
+      "confirm": "Confirmer",
+      "finish": "Retour à l'accueil",
+      "createAccount": "Créer Mon espace",
+      "toAccount": "Voir Mon espace"
+    },
+    "errors": {
+      "required": "Champ requis",
+      "email": "Email invalide"
+    }
+  },
+  "auth": {
+    "login": {
+      "kicker": "Bienvenue",
+      "title": "Se connecter",
+      "subtitle": "Accédez à votre espace Comutitres.",
+      "cta": "Me connecter",
+      "noAccount": "Pas encore de compte ?",
+      "toRegister": "Créer un compte"
+    },
+    "register": {
+      "kicker": "Rejoignez-nous",
+      "title": "Créer un compte",
+      "subtitle": "Quelques secondes suffisent pour démarrer votre espace.",
+      "cta": "Créer mon compte",
+      "hasAccount": "Déjà un compte ?",
+      "toLogin": "Se connecter"
+    },
+    "fields": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "password": "Mot de passe",
+      "passwordConfirm": "Confirmer le mot de passe"
+    },
+    "passwordHint": "Minimum 6 caractères.",
+    "passwordShow": "Afficher le mot de passe",
+    "passwordHide": "Masquer le mot de passe",
+    "errors": {
+      "required": "Champ requis",
+      "emailInvalid": "Email invalide",
+      "emailTaken": "Un compte existe déjà avec cet email",
+      "passwordRequired": "Mot de passe requis",
+      "passwordShort": "Mot de passe trop court (6 minimum)",
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "noAccount": "Aucun compte trouvé avec cet email",
+      "badPassword": "Mot de passe incorrect"
+    }
+  },
+  "forfaits": {
+    "kicker": "Tous les forfaits",
+    "title": "Trouvez le forfait Navigo qui vous ressemble.",
+    "subtitle": "Tarifs officiels Île-de-France Mobilités 2026. Filtrez par profil pour voir nos recommandations.",
+    "filter": {
+      "all": "Tous les forfaits",
+      "recommended": "Recommandés pour moi",
+      "solidaire": "Tarif solidaire"
+    },
+    "flagsKicker": "Votre profil",
+    "flagsHelp": "Cochez ce qui vous correspond — les recommandations s'adaptent en direct.",
+    "flagAge": "Âge",
+    "flagDays": "Jours / semaine",
+    "flag": {
+      "student": "Étudiant",
+      "alternant": "Apprenti / alternant",
+      "worker": "Salarié",
+      "retired": "Retraité",
+      "rsa": "RSA",
+      "css": "CSS sans participation",
+      "ass": "ASS",
+      "ame": "AME"
+    },
+    "recommended": "Recommandé",
+    "type": {
+      "jour": "Jour",
+      "hebdo": "Semaine",
+      "mensuel": "Mois",
+      "annuel": "Annuel",
+      "usage": "Usage"
+    },
+    "documents": "Justificatifs requis",
+    "documentsHint": "document(s)",
+    "employerRefund": "Remboursé {{percent}}% par votre employeur",
+    "officialSource": "Source officielle",
+    "free": "Gratuit",
+    "priceVariable": "Tarif variable selon le département",
+    "pricePerTrip": "dès {{price}} / trajet",
+    "employerBadge": "employeur",
+    "perDay": "par jour",
+    "perWeek": "par semaine",
+    "perMonth": "par mois",
+    "perYear": "par an",
+    "perTrip": "par trajet",
+    "source": "Source :"
+  },
+  "monEspace": {
+    "kicker": "Mon espace",
+    "welcome": "Bonjour, {{firstName}}",
+    "subtitle": "Retrouvez votre abonnement et gérez votre compte.",
+    "logout": "Se déconnecter",
+    "subscriptionActive": "Abonnement actif",
+    "startDate": "Date d'effet",
+    "zones": "Zones",
+    "status": "Statut",
+    "statusValid": "Validé",
+    "account": "Compte",
+    "actions": "Actions rapides",
+    "action": {
+      "simulate": "Lancer le simulateur",
+      "stories": "Voir les histoires",
+      "newSubscription": "Nouvelle souscription"
+    },
+    "empty": {
+      "kicker": "Aucun abonnement",
+      "title": "Vous n'avez pas encore souscrit",
+      "description": "Lancez le parcours de souscription pour trouver le forfait idéal et le rattacher à votre espace.",
+      "cta": "Commencer la souscription"
+    }
+  }
+}

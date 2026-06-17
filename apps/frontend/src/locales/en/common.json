@@ -1,0 +1,270 @@
+{
+  "header": {
+    "logoAriaLabel": "Comutitres, home",
+    "nav": { "simulator": "Simulator", "forfaits": "Plans", "subscribe": "Subscribe", "login": "Sign in", "account": "My space" }
+  },
+  "themeToggle": {
+    "toLight": "Switch to light mode",
+    "toDark": "Switch to dark mode",
+    "toSystem": "Follow system"
+  },
+  "languageSwitcher": {
+    "label": "Change language",
+    "current": "Current language: {{lang}}"
+  },
+  "hero": {
+    "badge": "An Île-de-France Mobilités company",
+    "title": "Your travel pass, finally simple.",
+    "subtitle": "Find the right Navigo plan in 2 minutes, subscribe in 5 steps, no paperwork.",
+    "ctaPrimary": "Launch the simulator",
+    "ctaSecondary": "See the plans"
+  },
+  "narrative": {
+    "tagline": "Every trip tells a story."
+  },
+  "stories": {
+    "kicker": "Stories",
+    "title": "Every trip tells a story.",
+    "subtitle": "Because a travel pass is never the destination — it's what keeps the story moving.",
+    "personas": {
+      "lucas": { "name": "Lucas", "role": "Student", "tagline": "The first step into the future.", "episode": "Episode 1" },
+      "valerie": { "name": "Valérie", "role": "Working mum", "tagline": "Mission: simplify daily life.", "episode": "Episode 2" },
+      "jeanpierre": { "name": "Jean-Pierre", "role": "Senior", "tagline": "Time, found again.", "episode": "Episode 3" },
+      "amira": { "name": "Amira", "role": "New chapter", "tagline": "A fresh start.", "episode": "Episode 4" }
+    },
+    "episodes": {
+      "e1": { "kicker": "Episode 1", "title": "I share my situation" },
+      "e2": { "kicker": "Episode 2", "title": "I discover my solution" },
+      "e3": { "kicker": "Episode 3", "title": "I simplify the paperwork" },
+      "e4": { "kicker": "Episode 4", "title": "I start my episode" },
+      "e5": { "kicker": "Episode 5", "title": "A new episode begins" }
+    },
+    "screen": {
+      "back": "Back to stories",
+      "ageBadge": "{{age}} years old",
+      "quote": "“{{text}}”",
+      "ctaSimulate": "Launch the simulator",
+      "otherStories": "Other stories"
+    }
+  },
+  "stats": {
+    "annualPrice": "Navigo yearly",
+    "employerRefund": "employer refund",
+    "subscribeTime": "to subscribe",
+    "profilesCovered": "profiles covered"
+  },
+  "features": {
+    "simulator": {
+      "title": "Smart fare simulator",
+      "body": "Compare every plan in real time based on your profile."
+    },
+    "tunnel": {
+      "title": "5-step tunnel",
+      "body": "Subscribe in 5 guided steps, no paperwork."
+    },
+    "aiCheck": {
+      "title": "AI document check",
+      "body": "Your supporting documents verified automatically by AI."
+    }
+  },
+  "profiles": {
+    "salarie": "Employee",
+    "etudiant": "Student",
+    "scolaire_junior": "Junior",
+    "scolaire": "Pupil",
+    "senior": "Senior",
+    "tst": "TST",
+    "amethyste": "Améthyste"
+  },
+  "simulator": {
+    "title": "Find your ideal plan",
+    "subtitle": "Adjust the sliders, we compute in real time.",
+    "yourProfile": "Your profile",
+    "results": "Recommended plans",
+    "slider": {
+      "days": { "label": "Days per week", "unit": "d/wk" },
+      "zones": { "label": "Zones", "unit": "zones" },
+      "trips": { "label": "Trips per day", "unit": "trips" }
+    },
+    "ageLabel": "Age",
+    "scholarshipLabel": "Scholarship",
+    "empty": "No standard plan matches. Please contact an advisor.",
+    "showAll": "See all plans",
+    "tipEmployer": "💡 50% refunded by your employer",
+    "savingVsTickets": "You save {{amount}} vs single tickets",
+    "recommended": "Recommended for you",
+    "subscribe": "Subscribe",
+    "perYear": "/yr",
+    "perMonth": "/mo"
+  },
+  "footer": {
+    "tagline": "An Île-de-France Mobilités company",
+    "links": { "rgpd": "GDPR", "legal": "Legal", "contact": "Contact" }
+  },
+  "common": { "loading": "Loading…", "yes": "Yes", "no": "No" },
+  "subscription": {
+    "kicker": "Step {{step}} / {{total}}",
+    "steps": {
+      "s1": { "title": "What's your situation?", "description": "Pick the profile that fits you best. We adapt the journey accordingly." },
+      "s2": { "title": "Tell us a bit more", "description": "A few details to tailor the recommendation." },
+      "s3": { "title": "Our recommendation", "description": "Here is the plan we suggest for your profile." },
+      "s4": { "title": "Your documents", "description": "Drop your files or connect to official services. Automated verification." },
+      "s5": { "title": "Create your account", "description": "A few details to finalize your subscription securely." },
+      "s6": { "title": "Welcome aboard", "description": "Everything is verified. Time to start your journey." }
+    },
+    "profiles": {
+      "selected": "Selected",
+      "student": { "title": "Student", "description": "You're in higher education." },
+      "worker": { "title": "Employee", "description": "You have a job, your employer refunds 50%." },
+      "senior": { "title": "Senior 62+", "description": "Enjoy the Navigo Senior fare." },
+      "jobseeker": { "title": "Job seeker / TST", "description": "Solidarity transport pricing based on your rights." },
+      "parent": { "title": "Parent", "description": "Subscribing for your kids." },
+      "scholar": { "title": "Pupil 11-17", "description": "You study in Île-de-France." },
+      "amethyste": { "title": "Améthyste", "description": "Person with disability (MDPH) — fare based on your department." }
+    },
+    "questions": {
+      "age": "Your age",
+      "scholarship": "Do you have a scholarship?",
+      "zones": "Zones travelled",
+      "daysPerWeek": "Days of use per week",
+      "employerRefund": "Does your employer refund 50%?",
+      "cafBeneficiary": "Are you a CAF / CSS beneficiary?",
+      "childrenCount": "How many kids to subscribe?",
+      "childrenUnit": "kids",
+      "firstChildAge": "Age of the first kid"
+    },
+    "recommendation": {
+      "student":   { "summary": "Imagine R Student grants you the full Île-de-France network during the school year.", "reasons": ["Scholarship fare applied automatically", "All zones included", "Annual renewal, no action needed"] },
+      "worker":    { "summary": "Navigo Yearly remains the best deal for daily commuting.", "reasons": ["50% refunded by your employer", "Savings vs single tickets", "Full IDF network included"] },
+      "senior":    { "summary": "Senior fare brings a meaningful discount from age 62.", "reasons": ["Automatic age verification via ID", "Estimated savings €270/year", "Seamless switch, no service interruption"] },
+      "jobseeker": { "summary": "Solidarity Transport Pricing adapts the fare to your resources.", "reasons": ["Automated CAF rights check", "No documents to upload", "Easy quarterly renewal"] },
+      "parent":    { "summary": "One place to manage all your kids' subscriptions.", "reasons": ["Imagine R Pupil for each child", "A single family record covers all", "Automatic reminders before school year"] },
+      "scholar":   { "summary": "Imagine R Pupil covers the full school year for ages 11-25.", "reasons": ["Full IDF network included", "Discounted scholarship rate available", "Automatic renewal each year"] },
+      "amethyste": { "summary": "The Améthyste fare adapts to your department of residence and your MDPH status.", "reasons": ["Fare varies by department", "Automatic check via MDPH notification", "Annual renewal with no paperwork"] }
+    },
+    "documents": {
+      "upload": "Choose a file",
+      "franceConnect": "Sign in with FranceConnect",
+      "analyzing": "AI analysis in progress…",
+      "validated": "Verified",
+      "validatedHint": "Document checked automatically.",
+      "certificat_scolarite": { "label": "School certificate", "help": "Document issued by your school for the current year." },
+      "attestation_bourse":   { "label": "Scholarship proof", "help": "CROUS scholarship award letter." },
+      "contrat_travail":      { "label": "Employment contract", "help": "Optional — speeds up employer refund." },
+      "piece_identite":       { "label": "ID document", "help": "ID or passport to confirm your age." },
+      "france_connect":       { "label": "CAF verification via FranceConnect", "help": "Secure sign-in — no document to upload." },
+      "livret_famille":       { "label": "Family record book", "help": "One document covers all your kids." },
+      "carte_invalidite":     { "label": "Disability card", "help": "Inclusion Mobility Card (CMI) or legacy disability card." },
+      "notification_mdph":    { "label": "MDPH notification", "help": "Decision notification from the Departmental House for Disabled People." }
+    },
+    "account": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "phoneHint": "Optional — for SMS reminders."
+    },
+    "confirmation": {
+      "welcome": "Welcome, {{firstName}}!",
+      "you": "there",
+      "subtitle": "Your subscription is ready. Everything is verified.",
+      "summary": "Summary",
+      "forfait": "Plan",
+      "price": "Price",
+      "startDate": "Start date",
+      "email": "Email",
+      "emailSent": "A confirmation email has been sent to {{email}}. You can close this window."
+    },
+    "actions": { "back": "Back", "next": "Next", "confirm": "Confirm", "finish": "Back home", "createAccount": "Create My space", "toAccount": "Open My space" },
+    "errors": { "required": "Required", "email": "Invalid email" }
+  },
+  "auth": {
+    "login": {
+      "kicker": "Welcome back",
+      "title": "Sign in",
+      "subtitle": "Access your Comutitres space.",
+      "cta": "Sign in",
+      "noAccount": "No account yet?",
+      "toRegister": "Create an account"
+    },
+    "register": {
+      "kicker": "Join us",
+      "title": "Create an account",
+      "subtitle": "It takes only a few seconds to start your space.",
+      "cta": "Create my account",
+      "hasAccount": "Already have an account?",
+      "toLogin": "Sign in"
+    },
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "passwordConfirm": "Confirm password"
+    },
+    "passwordHint": "Minimum 6 characters.",
+    "passwordShow": "Show password",
+    "passwordHide": "Hide password",
+    "errors": {
+      "required": "Required",
+      "emailInvalid": "Invalid email",
+      "emailTaken": "An account already exists for this email",
+      "passwordRequired": "Password required",
+      "passwordShort": "Password too short (6 min)",
+      "passwordMismatch": "Passwords don't match",
+      "noAccount": "No account found for this email",
+      "badPassword": "Incorrect password"
+    }
+  },
+  "forfaits": {
+    "kicker": "All plans",
+    "title": "Find the Navigo plan that fits you.",
+    "subtitle": "Official Île-de-France Mobilités 2026 fares. Filter by profile for personal recommendations.",
+    "filter": { "all": "All plans", "recommended": "Recommended", "solidaire": "Solidarity fare" },
+    "flagsKicker": "Your profile",
+    "flagsHelp": "Tick what applies to you — recommendations adapt live.",
+    "flagAge": "Age",
+    "flagDays": "Days per week",
+    "flag": { "student": "Student", "alternant": "Apprentice", "worker": "Employee", "retired": "Retired", "rsa": "Income support (RSA)", "css": "CSS no copay", "ass": "ASS", "ame": "AME" },
+    "recommended": "Recommended",
+    "type": { "jour": "Day", "hebdo": "Week", "mensuel": "Month", "annuel": "Yearly", "usage": "Pay-per-use" },
+    "documents": "Required documents",
+    "documentsHint": "document(s)",
+    "employerRefund": "{{percent}}% refunded by your employer",
+    "officialSource": "Official source",
+    "free": "Free",
+    "priceVariable": "Fare varies by department",
+    "pricePerTrip": "from {{price}} / trip",
+    "employerBadge": "employer",
+    "perDay": "per day",
+    "perWeek": "per week",
+    "perMonth": "per month",
+    "perYear": "per year",
+    "perTrip": "per trip",
+    "source": "Source:"
+  },
+  "monEspace": {
+    "kicker": "My space",
+    "welcome": "Hi, {{firstName}}",
+    "subtitle": "Find your subscription and manage your account.",
+    "logout": "Sign out",
+    "subscriptionActive": "Active subscription",
+    "startDate": "Start date",
+    "zones": "Zones",
+    "status": "Status",
+    "statusValid": "Verified",
+    "account": "Account",
+    "actions": "Quick actions",
+    "action": {
+      "simulate": "Open the simulator",
+      "stories": "Read the stories",
+      "newSubscription": "New subscription"
+    },
+    "empty": {
+      "kicker": "No subscription",
+      "title": "You haven't subscribed yet",
+      "description": "Start the subscription flow to find your ideal plan and link it to your space.",
+      "cta": "Start subscribing"
+    }
+  }
+}

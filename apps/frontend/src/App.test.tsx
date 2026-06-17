@@ -1,32 +1,29 @@
+import { describe, it, expect, beforeAll, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import i18n from './lib/i18n'
 import { App } from './App'
 
 describe('App', () => {
-  afterEach(() => {
-    vi.unstubAllGlobals()
+  beforeAll(async () => {
+    // jsdom n'implémente pas matchMedia, requis par useTheme
+    vi.spyOn(window, 'matchMedia').mockImplementation((q) => ({
+      matches: false,
+      media: q,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }))
+    // Force la locale FR pour un snapshot déterministe
+    await i18n.changeLanguage('fr')
   })
 
-  it('renders the Comutitres bootstrap screen', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(() =>
-        Promise.resolve({
-          ok: true,
-          json: () =>
-            Promise.resolve({
-              status: 'ok',
-              service: 'comutitres-backend',
-              timestamp: new Date().toISOString(),
-            }),
-        }),
-      ),
-    )
-
+  it('renders the landing CTA after route resolves', async () => {
     render(<App />)
-
-    expect(screen.getByText('Comutitres')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /socle hackathon/i })).toBeInTheDocument()
-    expect(await screen.findByText('Dernier healthcheck:', { exact: false })).toBeInTheDocument()
+    // Suspense fallback first, then content lazy-loads
+    const ctas = await screen.findAllByText('Lancer le simulateur')
+    expect(ctas.length).toBeGreaterThan(0)
   })
 })
