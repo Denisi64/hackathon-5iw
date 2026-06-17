@@ -12,6 +12,7 @@ yarn-error.log*
 /.pnp
 .pnp.js
 .pnpm-store
+.vite
 
 .vscode/*
 .env
