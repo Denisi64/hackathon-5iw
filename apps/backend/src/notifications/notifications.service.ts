@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 import { db } from '../db'
-import { notifications } from '../db/schema'
+import { notifications, notificationTypeEnum } from '../db/schema'
+
+type NotificationType = (typeof notificationTypeEnum.enumValues)[number]
 
 @Injectable()
 export class NotificationsService {
-  async createNotification(userId: string, type: string, message: string) {
+  async createNotification(userId: string, type: NotificationType, message: string) {
     const [notification] = await db.insert(notifications).values({ userId, type, message }).returning()
     return notification
   }

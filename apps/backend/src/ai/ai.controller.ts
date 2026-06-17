@@ -34,6 +34,7 @@ export class AiController {
     return this.aiService.verifyDocument(dto.imageBase64, dto.mimeType)
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('recommend')
   recommend(@Body() dto: RecommendDto) {
     return this.aiService.recommend(dto)
