@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
 
 const TOKEN_KEY = 'comutitres-access-token'
 const REFRESH_KEY = 'comutitres-refresh-token'
@@ -29,7 +29,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (r) => r,
   async (error) => {
-    const original = error.config as axios.InternalAxiosRequestConfig & { _retry?: boolean }
+    const original = error.config as InternalAxiosRequestConfig & { _retry?: boolean }
     if (error.response?.status === 401 && !original._retry) {
       const refresh = getRefreshToken()
       if (refresh) {
