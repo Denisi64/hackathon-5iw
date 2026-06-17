@@ -1,0 +1,5 @@
+# TypeScript incremental build artifacts — never commit
+*.tsbuildinfo
+
+# Compiled twin of vite.config.ts — source of truth is the .ts file
+vite.config.js

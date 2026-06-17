@@ -3,10 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1972D2" />
-    <title>Comutitres Hackathon</title>
+    <meta name="theme-color" content="#F4F8FE" id="meta-theme-color" />
+    <title>Comutitres</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
   </head>
   <body>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('clay-theme');
+          var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          var resolved = saved === 'system' || !saved ? system : saved;
+          var html = document.documentElement;
+          html.setAttribute('data-theme', resolved);
+          if (resolved === 'dark') html.classList.add('dark');
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) meta.setAttribute('content', resolved === 'dark' ? '#050506' : '#F4F8FE');
+        } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('clay-lang');
+          var supported = ['fr','en','es','it','ja','pt'];
+          var browser = (navigator.language || 'fr').slice(0, 2).toLowerCase();
+          var resolved = saved && supported.indexOf(saved) !== -1
+            ? saved
+            : supported.indexOf(browser) !== -1 ? browser : 'fr';
+          document.documentElement.lang = resolved;
+        } catch (e) {}
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
