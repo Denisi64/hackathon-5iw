@@ -1,7 +1,8 @@
 {
   "header": {
     "logoAriaLabel": "コミュティトル、ホーム",
-    "nav": { "simulator": "シミュレーター", "forfaits": "プラン一覧", "subscribe": "申し込む", "login": "ログイン", "account": "マイページ" }
+    "nav": { "simulator": "シミュレーター", "forfaits": "プラン一覧", "subscribe": "申し込む", "login": "ログイン", "account": "マイページ" },
+    "menu": { "open": "メニューを開く", "close": "メニューを閉じる" }
   },
   "themeToggle": {
     "toLight": "ライトモードに切替",
@@ -44,7 +45,8 @@
       "ageBadge": "{{age}}歳",
       "quote": "「{{text}}」",
       "ctaSimulate": "シミュレーターを開く",
-      "otherStories": "その他のストーリー"
+      "otherStories": "その他のストーリー",
+      "recommendedForfait": "おすすめプラン"
     }
   },
   "stats": {
@@ -96,7 +98,7 @@
     "tagline": "イル・ド・フランス・モビリテ系列会社",
     "links": { "rgpd": "GDPR", "legal": "法的事項", "contact": "お問い合わせ" }
   },
-  "common": { "loading": "読み込み中…", "yes": "はい", "no": "いいえ" },
+  "common": { "loading": "読み込み中…", "back": "戻る", "yes": "はい", "no": "いいえ" },
   "subscription": {
     "kicker": "ステップ {{step}} / {{total}}",
     "steps": {
@@ -236,7 +238,70 @@
     "perMonth": "/月",
     "perYear": "/年",
     "perTrip": "/1回",
-    "source": "出典："
+    "source": "出典：",
+    "catalog": {
+      "navigo_jour": { "name": "Navigo 1日", "description": "1日中、乗り放題で利用できます。" },
+      "navigo_semaine": { "name": "Navigo 週間", "description": "1週間、乗り放題で利用できます。" },
+      "navigo_mois": { "name": "Navigo 月額", "description": "年間契約なしで1か月乗り放題。" },
+      "navigo_annuel": { "name": "Navigo 年間", "description": "1年中利用でき、12か月目が含まれます。" },
+      "navigo_senior": { "name": "Navigo シニア", "description": "62歳以上向けの優遇料金です。" },
+      "imagine_r_etudiant": { "name": "Imagine R 学生", "description": "Île-de-France の学生向け必須プランです。" },
+      "imagine_r_scolaire": { "name": "Imagine R スクール", "description": "児童・生徒・見習い向けの年間プランです。" },
+      "imagine_r_junior": { "name": "Imagine R Junior", "description": "11歳未満向けの低価格 Imagine R です。" },
+      "liberte_plus": { "name": "Navigo Liberté+", "description": "全ゾーンで1回1.64€から、利用ごとに支払います。" },
+      "navigo_solidarite_75": { "name": "Solidarity 75%", "description": "CSS自己負担なし、またはASS受給者向けの75%割引です。" },
+      "navigo_reduction_50": { "name": "50%割引", "description": "AME受給者向けの50%割引です。" },
+      "navigo_gratuite": { "name": "無料交通", "description": "対象RSA受給者、またはASS + CSS自己負担なし向けの無料交通です。" },
+      "amethyste": { "name": "Améthyste", "description": "障害のある方向けのプランで、県により条件が異なります。" }
+    },
+    "list": {
+      "kicker": "プランカタログ",
+      "title": "次の移動に合うプランを見つけましょう。",
+      "subtitle": "Navigo、Imagine R、Solidarity、Améthyste のプラン一覧。シミュレーターと申込フローに連動しています。",
+      "recommendationTitle": "おすすめが必要ですか？",
+      "recommendationBody": "シミュレーターがプロフィール、年齢、利用習慣に合わせてプランを並べ替えます。",
+      "openSimulator": "シミュレーターを開く",
+      "filterAria": "プランを絞り込む",
+      "resultsAria": "プラン一覧",
+      "yearlyEquivalent": "年間換算：{{amount}}",
+      "viewDetail": "詳細を見る",
+      "filters": { "all": "すべて", "salarie": "会社員", "etudiant": "学生", "scolaire": "児童・生徒", "senior": "シニア", "tst": "ソリダリティ", "amethyste": "Améthyste" }
+    },
+    "detail": {
+      "notFoundBadge": "プランが見つかりません",
+      "notFoundTitle": "このプランはカタログにありません。",
+      "notFoundBody": "一覧に戻って利用可能なプランを選んでください。",
+      "viewAll": "すべてのプランを見る",
+      "viewAllShort": "すべて見る",
+      "badge": "プラン詳細",
+      "employerRefundBadge": "雇用主の払戻し",
+      "subscribe": "このプランを申し込む",
+      "resimulate": "もう一度シミュレーション",
+      "indicativePrice": "参考価格",
+      "forWhom": "対象者",
+      "eligibleProfiles": "対象プロフィール",
+      "documentsKicker": "書類",
+      "documentsTitle": "必要書類",
+      "noDocuments": "開始に必要な書類はありません。",
+      "sourceKicker": "出典",
+      "officialFare": "公式料金",
+      "sourceLink": "出典を見る",
+      "benefitsAria": "プランの強み",
+      "relatedAria": "関連プラン",
+      "alternatives": "代替案",
+      "relatedTitle": "関連プラン",
+      "metric": { "price": "価格", "rhythm": "周期", "zones": "ゾーン" }
+    },
+    "display": {
+      "pricePerMonth": "{{price}} / 月",
+      "pricePerYear": "{{price}} / 年",
+      "priceOnFile": "書類に応じた料金",
+      "payAsYouGo": "利用ごとの請求",
+      "profiles": { "salarie": "会社員", "etudiant": "学生", "scolaire_junior": "子ども", "scolaire": "児童・生徒", "senior": "シニア", "tst": "ソリダリティ", "amethyste": "障害" },
+      "documents": { "piece_identite": "本人確認書類", "certificat_scolarite": "在学証明書", "attestation_bourse": "奨学金証明書", "livret_famille": "家族手帳", "attestation_caf": "CAF証明書", "avis_imposition": "税務通知", "carte_invalidite": "障害者カード", "notification_mdph": "MDPH通知" },
+      "renewal": { "annuel": "年次更新", "mensuel": "月次更新", "trimestriel": "四半期更新", "hebdomadaire": "1週間有効", "usage": "利用ごとの支払い", "jour": "1日有効" },
+      "benefits": { "zones": "ゾーン {{min}}〜{{max}}", "employerRefund": "雇用主から{{percent}}%払戻し", "noDocuments": "必要書類なし", "documentCheck": "書類確認をサポート", "solidarityCheck": "ソリダリティ権利確認", "schoolRhythm": "学校生活に合わせた設計", "payOnlyWhenTraveling": "移動した時だけ支払い" }
+    }
   },
   "monEspace": {
     "kicker": "マイページ",

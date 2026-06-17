@@ -1,7 +1,8 @@
 {
   "header": {
     "logoAriaLabel": "Comutitres, home",
-    "nav": { "simulator": "Simulator", "forfaits": "Plans", "subscribe": "Subscribe", "login": "Sign in", "account": "My space" }
+    "nav": { "simulator": "Simulator", "forfaits": "Plans", "subscribe": "Subscribe", "login": "Sign in", "account": "My space" },
+    "menu": { "open": "Open menu", "close": "Close menu" }
   },
   "themeToggle": {
     "toLight": "Switch to light mode",
@@ -44,7 +45,8 @@
       "ageBadge": "{{age}} years old",
       "quote": "“{{text}}”",
       "ctaSimulate": "Launch the simulator",
-      "otherStories": "Other stories"
+      "otherStories": "Other stories",
+      "recommendedForfait": "Recommended plan"
     }
   },
   "stats": {
@@ -101,7 +103,7 @@
     "tagline": "An Île-de-France Mobilités company",
     "links": { "rgpd": "GDPR", "legal": "Legal", "contact": "Contact" }
   },
-  "common": { "loading": "Loading…", "yes": "Yes", "no": "No" },
+  "common": { "loading": "Loading…", "back": "Back", "yes": "Yes", "no": "No" },
   "subscription": {
     "kicker": "Step {{step}} / {{total}}",
     "steps": {
@@ -241,7 +243,70 @@
     "perMonth": "per month",
     "perYear": "per year",
     "perTrip": "per trip",
-    "source": "Source:"
+    "source": "Source:",
+    "catalog": {
+      "navigo_jour": { "name": "Navigo Day", "description": "Unlimited travel for one full day." },
+      "navigo_semaine": { "name": "Navigo Week", "description": "Unlimited travel for the whole week." },
+      "navigo_mois": { "name": "Navigo Month", "description": "Unlimited travel for the month, with no annual commitment." },
+      "navigo_annuel": { "name": "Navigo Annual", "description": "Travel all year, with the 12th month included." },
+      "navigo_senior": { "name": "Navigo Senior", "description": "Preferential fare for people aged 62 and over." },
+      "imagine_r_etudiant": { "name": "Imagine R Student", "description": "The essential plan for students in Île-de-France." },
+      "imagine_r_scolaire": { "name": "Imagine R School", "description": "The annual plan for pupils, secondary students and apprentices." },
+      "imagine_r_junior": { "name": "Imagine R Junior", "description": "Imagine R at a very low price for children under 11." },
+      "liberte_plus": { "name": "Navigo Liberté+", "description": "Pay per trip, from €1.64 per journey, all zones." },
+      "navigo_solidarite_75": { "name": "Solidarity 75%", "description": "75% discount for CSS without contribution or ASS beneficiaries." },
+      "navigo_reduction_50": { "name": "50% Discount", "description": "50% discount for AME beneficiaries." },
+      "navigo_gratuite": { "name": "Free Transport", "description": "Free transport for eligible RSA beneficiaries or ASS + CSS without contribution." },
+      "amethyste": { "name": "Améthyste", "description": "Plan for people with disabilities, depending on department." }
+    },
+    "list": {
+      "kicker": "Plan catalog",
+      "title": "Find the plan that fits your next journey.",
+      "subtitle": "A global list of Navigo, Imagine R, Solidarity and Améthyste plans, aligned with the simulator and subscription flow.",
+      "recommendationTitle": "Need a recommendation?",
+      "recommendationBody": "The simulator sorts these plans according to your profile, age and travel habits.",
+      "openSimulator": "Open the simulator",
+      "filterAria": "Filter plans",
+      "resultsAria": "Plan list",
+      "yearlyEquivalent": "Yearly equivalent: {{amount}}",
+      "viewDetail": "View details",
+      "filters": { "all": "All", "salarie": "Employee", "etudiant": "Student", "scolaire": "School", "senior": "Senior", "tst": "Solidarity", "amethyste": "Améthyste" }
+    },
+    "detail": {
+      "notFoundBadge": "Plan not found",
+      "notFoundTitle": "This plan does not exist in the catalog.",
+      "notFoundBody": "Go back to the global list to choose an available offer.",
+      "viewAll": "View all plans",
+      "viewAllShort": "View all",
+      "badge": "Plan details",
+      "employerRefundBadge": "Employer reimbursement",
+      "subscribe": "Subscribe to this plan",
+      "resimulate": "Run another simulation",
+      "indicativePrice": "Indicative price",
+      "forWhom": "For whom?",
+      "eligibleProfiles": "Eligible profiles",
+      "documentsKicker": "Documents",
+      "documentsTitle": "Supporting documents",
+      "noDocuments": "No supporting document required to start.",
+      "sourceKicker": "Source",
+      "officialFare": "Official fare",
+      "sourceLink": "View source",
+      "benefitsAria": "Plan strengths",
+      "relatedAria": "Related plans",
+      "alternatives": "Alternatives",
+      "relatedTitle": "Related plans",
+      "metric": { "price": "Price", "rhythm": "Rhythm", "zones": "Zones" }
+    },
+    "display": {
+      "pricePerMonth": "{{price}} / month",
+      "pricePerYear": "{{price}} / year",
+      "priceOnFile": "Fare based on file",
+      "payAsYouGo": "Pay-as-you-go billing",
+      "profiles": { "salarie": "Employees", "etudiant": "Students", "scolaire_junior": "Children", "scolaire": "School pupils", "senior": "Seniors", "tst": "Solidarity", "amethyste": "Disability" },
+      "documents": { "piece_identite": "Identity document", "certificat_scolarite": "School certificate", "attestation_bourse": "Scholarship certificate", "livret_famille": "Family record book", "attestation_caf": "CAF certificate", "avis_imposition": "Tax notice", "carte_invalidite": "Disability card", "notification_mdph": "MDPH notice" },
+      "renewal": { "annuel": "Annual renewal", "mensuel": "Monthly renewal", "trimestriel": "Quarterly renewal", "hebdomadaire": "Valid for one week", "usage": "Pay as you go", "jour": "Valid for one day" },
+      "benefits": { "zones": "Zones {{min}} to {{max}}", "employerRefund": "{{percent}}% employer reimbursement", "noDocuments": "No supporting document required", "documentCheck": "Guided document verification", "solidarityCheck": "Solidarity rights verification", "schoolRhythm": "Designed for the school year", "payOnlyWhenTraveling": "Pay only when you travel" }
+    }
   },
   "monEspace": {
     "kicker": "My space",

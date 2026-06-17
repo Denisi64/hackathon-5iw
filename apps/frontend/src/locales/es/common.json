@@ -1,7 +1,8 @@
 {
   "header": {
     "logoAriaLabel": "Comutitres, inicio",
-    "nav": { "simulator": "Simulador", "forfaits": "Planes", "subscribe": "Suscribirse", "login": "Iniciar sesión", "account": "Mi espacio" }
+    "nav": { "simulator": "Simulador", "forfaits": "Planes", "subscribe": "Suscribirse", "login": "Iniciar sesión", "account": "Mi espacio" },
+    "menu": { "open": "Abrir menú", "close": "Cerrar menú" }
   },
   "themeToggle": {
     "toLight": "Activar modo claro",
@@ -44,7 +45,8 @@
       "ageBadge": "{{age}} años",
       "quote": "« {{text}} »",
       "ctaSimulate": "Lanzar el simulador",
-      "otherStories": "Otras historias"
+      "otherStories": "Otras historias",
+      "recommendedForfait": "Plan recomendado"
     }
   },
   "stats": {
@@ -96,7 +98,7 @@
     "tagline": "Filial de Île-de-France Mobilités",
     "links": { "rgpd": "RGPD", "legal": "Aviso legal", "contact": "Contacto" }
   },
-  "common": { "loading": "Cargando…", "yes": "Sí", "no": "No" },
+  "common": { "loading": "Cargando…", "back": "Volver", "yes": "Sí", "no": "No" },
   "subscription": {
     "kicker": "Paso {{step}} / {{total}}",
     "steps": {
@@ -236,7 +238,70 @@
     "perMonth": "por mes",
     "perYear": "por año",
     "perTrip": "por viaje",
-    "source": "Fuente:"
+    "source": "Fuente:",
+    "catalog": {
+      "navigo_jour": { "name": "Navigo Día", "description": "Viajes ilimitados durante un día completo." },
+      "navigo_semaine": { "name": "Navigo Semana", "description": "Viajes ilimitados durante toda la semana." },
+      "navigo_mois": { "name": "Navigo Mes", "description": "Viajes ilimitados durante todo el mes, sin compromiso anual." },
+      "navigo_annuel": { "name": "Navigo Anual", "description": "Viaja todo el año, con el 12.º mes incluido." },
+      "navigo_senior": { "name": "Navigo Senior", "description": "Tarifa preferente para personas de 62 años o más." },
+      "imagine_r_etudiant": { "name": "Imagine R Estudiante", "description": "El plan indispensable para estudiantes en Île-de-France." },
+      "imagine_r_scolaire": { "name": "Imagine R Escolar", "description": "El plan anual para escolares, secundaria y aprendices." },
+      "imagine_r_junior": { "name": "Imagine R Junior", "description": "Imagine R a precio muy reducido para menores de 11 años." },
+      "liberte_plus": { "name": "Navigo Liberté+", "description": "Paga por trayecto, desde 1,64 € por viaje, todas las zonas." },
+      "navigo_solidarite_75": { "name": "Solidaridad 75 %", "description": "Descuento del 75 % para beneficiarios CSS sin participación o ASS." },
+      "navigo_reduction_50": { "name": "Reducción 50 %", "description": "Descuento del 50 % para beneficiarios AME." },
+      "navigo_gratuite": { "name": "Transporte gratuito", "description": "Transporte gratuito para beneficiarios RSA elegibles o ASS + CSS sin participación." },
+      "amethyste": { "name": "Améthyste", "description": "Plan para personas con discapacidad, según el departamento." }
+    },
+    "list": {
+      "kicker": "Catálogo de planes",
+      "title": "Encuentra el plan que acompaña tu próximo trayecto.",
+      "subtitle": "Una lista global de planes Navigo, Imagine R, Solidaridad y Améthyste, alineada con el simulador y el flujo de suscripción.",
+      "recommendationTitle": "¿Necesitas una recomendación?",
+      "recommendationBody": "El simulador ordena estos planes según tu perfil, edad y hábitos de viaje.",
+      "openSimulator": "Abrir el simulador",
+      "filterAria": "Filtrar planes",
+      "resultsAria": "Lista de planes",
+      "yearlyEquivalent": "Equivalente anual: {{amount}}",
+      "viewDetail": "Ver detalle",
+      "filters": { "all": "Todos", "salarie": "Empleado", "etudiant": "Estudiante", "scolaire": "Escolar", "senior": "Senior", "tst": "Solidaridad", "amethyste": "Améthyste" }
+    },
+    "detail": {
+      "notFoundBadge": "Plan no encontrado",
+      "notFoundTitle": "Este plan no existe en el catálogo.",
+      "notFoundBody": "Vuelve a la lista global para elegir una oferta disponible.",
+      "viewAll": "Ver todos los planes",
+      "viewAllShort": "Ver todo",
+      "badge": "Detalle del plan",
+      "employerRefundBadge": "Reembolso empleador",
+      "subscribe": "Suscribirme a este plan",
+      "resimulate": "Hacer otra simulación",
+      "indicativePrice": "Precio indicativo",
+      "forWhom": "¿Para quién?",
+      "eligibleProfiles": "Perfiles elegibles",
+      "documentsKicker": "Documentos",
+      "documentsTitle": "Justificantes",
+      "noDocuments": "No se requiere justificante para empezar.",
+      "sourceKicker": "Fuente",
+      "officialFare": "Tarifa oficial",
+      "sourceLink": "Consultar la fuente",
+      "benefitsAria": "Puntos fuertes del plan",
+      "relatedAria": "Planes relacionados",
+      "alternatives": "Alternativas",
+      "relatedTitle": "Planes relacionados",
+      "metric": { "price": "Precio", "rhythm": "Ritmo", "zones": "Zonas" }
+    },
+    "display": {
+      "pricePerMonth": "{{price}} / mes",
+      "pricePerYear": "{{price}} / año",
+      "priceOnFile": "Tarifa según expediente",
+      "payAsYouGo": "Facturación por uso",
+      "profiles": { "salarie": "Empleados", "etudiant": "Estudiantes", "scolaire_junior": "Niños", "scolaire": "Escolares", "senior": "Seniors", "tst": "Solidaridad", "amethyste": "Discapacidad" },
+      "documents": { "piece_identite": "Documento de identidad", "certificat_scolarite": "Certificado escolar", "attestation_bourse": "Certificado de beca", "livret_famille": "Libro de familia", "attestation_caf": "Certificado CAF", "avis_imposition": "Aviso fiscal", "carte_invalidite": "Tarjeta de discapacidad", "notification_mdph": "Notificación MDPH" },
+      "renewal": { "annuel": "Renovación anual", "mensuel": "Renovación mensual", "trimestriel": "Renovación trimestral", "hebdomadaire": "Válido una semana", "usage": "Pago por uso", "jour": "Válido un día" },
+      "benefits": { "zones": "Zonas {{min}} a {{max}}", "employerRefund": "{{percent}}% reembolso empleador", "noDocuments": "No se requiere justificante", "documentCheck": "Verificación guiada de justificantes", "solidarityCheck": "Verificación de derechos solidarios", "schoolRhythm": "Pensado para el ritmo escolar", "payOnlyWhenTraveling": "Paga solo cuando viajas" }
+    }
   },
   "monEspace": {
     "kicker": "Mi espacio",
