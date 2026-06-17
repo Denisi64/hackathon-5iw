@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -18,7 +18,10 @@ import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
 import { cn } from '../lib/cn'
 import type { Forfait } from '../types/domain'
-import { savePendingSubscription, useAuthStore } from '../stores/authStore'
+import { subscriptionsService } from '../services/subscriptions'
+import { documentsService } from '../services/documents'
+import { paymentsService } from '../services/payments'
+import { useAuthStore } from '../stores/authStore'
 import { getForfaitName } from '../utils/forfaitDisplay'
 
 type Answers = {
@@ -53,8 +56,12 @@ export default function SubscriptionScreen() {
   const [profile, setProfile] = useState<ProfileSlug | null>(null)
   const [answers, setAnswers] = useState<Answers>({ zones: 5 })
   const [docStatuses, setDocStatuses] = useState<Record<string, DocStatus>>({})
+  const [docConfidence, setDocConfidence] = useState<Record<string, number | null>>({})
   const [account, setAccount] = useState<Account>({ firstName: '', lastName: '', email: '', phone: '' })
   const [accountErrors, setAccountErrors] = useState<Partial<Record<keyof Account, string>>>({})
+  const [subscriptionId, setSubscriptionId] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [apiError, setApiError] = useState<string | null>(null)
 
   const profileDef = profile ? PROFILE_BY_SLUG[profile] : null
   const forfait = useMemo(
@@ -79,12 +86,7 @@ export default function SubscriptionScreen() {
         startDate: startDate.toISOString(),
         zones: answers.zones,
       }
-      const user = useAuthStore.getState().user
-      if (user) {
-        useAuthStore.getState().setSubscription(sub)
-      } else {
-        savePendingSubscription(sub)
-      }
+      void sub
     }
   }, [step, profileDef, forfait, answers.zones])
 
@@ -108,19 +110,66 @@ export default function SubscriptionScreen() {
     return true
   }
 
-  function onNext() {
+  async function onNext() {
     if (!validateStep()) return
+    setApiError(null)
+
+    if (step === 3 && forfait) {
+      const user = useAuthStore.getState().user
+      if (user && !subscriptionId) {
+        setIsLoading(true)
+        try {
+          const sub = await subscriptionsService.create({ offerId: forfait.id })
+          setSubscriptionId(sub.id)
+        } catch {
+          setApiError(t('subscription.errors.createFailed'))
+          setIsLoading(false)
+          return
+        }
+        setIsLoading(false)
+      }
+    }
+
+    if (step === TOTAL_STEPS) {
+      const user = useAuthStore.getState().user
+      if (user && subscriptionId) {
+        setIsLoading(true)
+        try {
+          await subscriptionsService.confirm(subscriptionId)
+          await paymentsService.redirectToCheckout(subscriptionId)
+        } catch {
+          setApiError(t('subscription.errors.paymentFailed'))
+          setIsLoading(false)
+        }
+        return
+      }
+      navigate(user ? '/mon-espace' : '/register')
+      return
+    }
+
     setStep((s) => Math.min(TOTAL_STEPS, s + 1))
   }
   function onBack() {
     setStep((s) => Math.max(1, s - 1))
   }
 
-  function simulateUpload(docKey: string) {
+  async function handleUpload(docKey: string, file?: File) {
     setDocStatuses((s) => ({ ...s, [docKey]: 'analyzing' }))
-    setTimeout(() => {
-      setDocStatuses((s) => ({ ...s, [docKey]: 'valid' }))
-    }, 1500)
+    setApiError(null)
+    if (file && subscriptionId) {
+      try {
+        const result = await documentsService.verify(subscriptionId, file)
+        setDocConfidence((s) => ({ ...s, [docKey]: result.aiConfidence }))
+        setDocStatuses((s) => ({ ...s, [docKey]: result.status === 'rejected' ? 'idle' : 'valid' }))
+      } catch {
+        setDocStatuses((s) => ({ ...s, [docKey]: 'idle' }))
+        setApiError(t('subscription.errors.uploadFailed'))
+      }
+    } else {
+      setTimeout(() => {
+        setDocStatuses((s) => ({ ...s, [docKey]: 'valid' }))
+      }, 1500)
+    }
   }
 
   return (
@@ -131,18 +180,23 @@ export default function SubscriptionScreen() {
         {step === 1 && <Step1Profile profile={profile} setProfile={setProfile} />}
         {step === 2 && profileDef && <Step2Details profile={profileDef.slug} answers={answers} setAnswers={setAnswers} />}
         {step === 3 && profileDef && forfait && <Step3Recommendation profile={profileDef.slug} forfait={forfait} answers={answers} locale={locale} />}
-        {step === 4 && profileDef && <Step4Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} onUpload={simulateUpload} />}
+        {step === 4 && profileDef && <Step4Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
         {step === 5 && <Step5Account account={account} setAccount={setAccount} errors={accountErrors} />}
         {step === 6 && profileDef && forfait && <Step6Confirmation firstName={account.firstName} email={account.email} forfait={forfait} answers={answers} locale={locale} />}
       </div>
 
+      {apiError && (
+        <p role="alert" className="text-sm font-medium text-rose-500 text-center">{apiError}</p>
+      )}
+
       {/* Nav bar */}
       <NavBar
         step={step}
+        isLoading={isLoading}
         onBack={onBack}
-        onNext={step === TOTAL_STEPS ? () => navigate(useAuthStore.getState().user ? '/mon-espace' : '/register') : onNext}
+        onNext={() => { void onNext() }}
         labelNext={step === TOTAL_STEPS
-          ? (useAuthStore.getState().user ? t('subscription.actions.toAccount') : t('subscription.actions.createAccount'))
+          ? (useAuthStore.getState().user && subscriptionId ? t('subscription.actions.pay') : useAuthStore.getState().user ? t('subscription.actions.toAccount') : t('subscription.actions.createAccount'))
           : step === 5 ? t('subscription.actions.confirm') : t('subscription.actions.next')}
         onSecondary={step === TOTAL_STEPS ? () => navigate('/') : undefined}
         labelSecondary={step === TOTAL_STEPS ? t('subscription.actions.finish') : undefined}
@@ -378,19 +432,22 @@ function Step3Recommendation({ profile, forfait, answers, locale }: {
   )
 }
 
-function Step4Documents({ profile, docs, statuses, onUpload }: {
+function Step4Documents({ profile, docs, statuses, confidence, onUpload }: {
   profile: ProfileSlug
   docs: string[]
   statuses: Record<string, DocStatus>
-  onUpload: (key: string) => void
+  confidence: Record<string, number | null>
+  onUpload: (key: string, file?: File) => void
 }) {
   const { t } = useTranslation()
+  const fileRefs = useRef<Record<string, HTMLInputElement | null>>({})
   void profile
   return (
     <div className="flex flex-col gap-4">
       {docs.map((docKey) => {
         const status = statuses[docKey] ?? 'idle'
         const isFranceConnect = docKey === 'france_connect'
+        const score = confidence[docKey]
         return (
           <Card key={docKey}>
             <Card.Body>
@@ -406,15 +463,29 @@ function Step4Documents({ profile, docs, statuses, onUpload }: {
                 {status === 'valid' && (
                   <Badge variant="success">
                     <Check className="h-3 w-3" aria-hidden="true" /> {t('subscription.documents.validated')}
+                    {score !== null && score !== undefined && <span className="ml-1 opacity-70">{score}%</span>}
                   </Badge>
                 )}
               </div>
               <div className="mt-4">
+                {!isFranceConnect && (
+                  <input
+                    type="file"
+                    accept="image/*,.pdf"
+                    className="hidden"
+                    ref={(el) => { fileRefs.current[docKey] = el }}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) onUpload(docKey, file)
+                      e.target.value = ''
+                    }}
+                  />
+                )}
                 {status === 'idle' && (
                   <Button
                     variant={isFranceConnect ? 'primary' : 'secondary'}
                     size="md"
-                    onClick={() => onUpload(docKey)}
+                    onClick={() => isFranceConnect ? onUpload(docKey) : fileRefs.current[docKey]?.click()}
                     leftIcon={isFranceConnect ? <Lock className="h-4 w-4" aria-hidden="true" /> : <Upload className="h-4 w-4" aria-hidden="true" />}
                   >
                     {isFranceConnect ? t('subscription.documents.franceConnect') : t('subscription.documents.upload')}
@@ -566,8 +637,9 @@ function Row({ label, value }: { label: string; value: ReactNode }) {
   )
 }
 
-function NavBar({ step, onBack, onNext, labelNext, onSecondary, labelSecondary }: {
+function NavBar({ step, isLoading, onBack, onNext, labelNext, onSecondary, labelSecondary }: {
   step: number
+  isLoading?: boolean
   onBack: () => void
   onNext: () => void
   labelNext: string
@@ -587,8 +659,9 @@ function NavBar({ step, onBack, onNext, labelNext, onSecondary, labelSecondary }
           {onSecondary && labelSecondary && (
             <Button variant="ghost" size="md" onClick={onSecondary}>{labelSecondary}</Button>
           )}
-          <Button size="md" onClick={onNext}
-            rightIcon={step === TOTAL_STEPS ? undefined : <ArrowRight className="h-4 w-4" aria-hidden="true" />}>
+          <Button size="md" onClick={onNext} disabled={isLoading}
+            leftIcon={isLoading ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : undefined}
+            rightIcon={!isLoading && step !== TOTAL_STEPS ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : undefined}>
             {labelNext}
           </Button>
         </div>

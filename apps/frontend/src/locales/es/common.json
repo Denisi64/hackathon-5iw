@@ -172,8 +172,8 @@
       "email": "Email",
       "emailSent": "Se ha enviado un email de confirmación a {{email}}. Puedes cerrar esta ventana."
     },
-    "actions": { "back": "Atrás", "next": "Siguiente", "confirm": "Confirmar", "finish": "Volver al inicio", "createAccount": "Crear Mi espacio", "toAccount": "Ver Mi espacio" },
-    "errors": { "required": "Campo requerido", "email": "Email no válido" }
+    "actions": { "back": "Atrás", "next": "Siguiente", "confirm": "Confirmar", "finish": "Volver al inicio", "createAccount": "Crear Mi espacio", "toAccount": "Ver Mi espacio", "pay": "Pagar" },
+    "errors": { "required": "Campo requerido", "email": "Email no válido", "uploadFailed": "Error al subir el documento", "createFailed": "No se pudo crear la suscripción", "paymentFailed": "Error en el pago" }
   },
   "auth": {
     "login": {
@@ -351,6 +351,9 @@
     "subtitle": "Consulta tu suscripción y gestiona tu cuenta.",
     "logout": "Cerrar sesión",
     "subscriptionActive": "Suscripción activa",
+    "subscriptionPendingPayment": "Pago pendiente",
+    "subscriptionPendingDocs": "Documentos en validación",
+    "subscriptionDraft": "Expediente en curso",
     "startDate": "Fecha de inicio",
     "zones": "Zonas",
     "status": "Estado",
