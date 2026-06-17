@@ -195,11 +195,15 @@
       "confirm": "Confirmer",
       "finish": "Retour à l'accueil",
       "createAccount": "Créer Mon espace",
-      "toAccount": "Voir Mon espace"
+      "toAccount": "Voir Mon espace",
+      "pay": "Payer"
     },
     "errors": {
       "required": "Champ requis",
-      "email": "Email invalide"
+      "email": "Email invalide",
+      "uploadFailed": "Échec de l'envoi du document",
+      "createFailed": "Impossible de créer la souscription",
+      "paymentFailed": "Erreur lors du paiement"
     }
   },
   "auth": {
@@ -292,6 +296,9 @@
     "subtitle": "Retrouvez votre abonnement et gérez votre compte.",
     "logout": "Se déconnecter",
     "subscriptionActive": "Abonnement actif",
+    "subscriptionPendingPayment": "En attente de paiement",
+    "subscriptionPendingDocs": "Documents en cours de validation",
+    "subscriptionDraft": "Dossier en cours",
     "startDate": "Date d'effet",
     "zones": "Zones",
     "status": "Statut",
