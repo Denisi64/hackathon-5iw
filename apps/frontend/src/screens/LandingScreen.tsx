@@ -8,7 +8,7 @@ import { Orb } from '../components/ui/Orb'
 import { PERSONA_LIST, PERSONA_STORIES } from '../data/personaStories'
 import { cn } from '../lib/cn'
 
-// Couleur signature → gradient pour le badge icône en bas à droite de la photo.
+// Signature color used by the gradient badge over each persona image.
 const ICON_BADGE_GRADIENTS: Record<'purple' | 'amber' | 'green' | 'pink', string> = {
   purple: 'bg-gradient-to-br from-purple-400 to-purple-600',
   amber: 'bg-gradient-to-br from-amber-300 to-amber-500',
@@ -147,7 +147,7 @@ export default function LandingScreen() {
                   spotlight
                   className="group transition-colors duration-300 h-full !p-0"
                 >
-                  {/* Photo header — bord à bord. */}
+                  {/* Edge-to-edge photo header. */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-2xl">
                     <img
                       src={story.photo}

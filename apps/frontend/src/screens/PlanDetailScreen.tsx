@@ -20,43 +20,43 @@ import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { useLocale } from '../hooks/useLocale'
-import { FORFAITS } from '../utils/tarifsData'
+import { PLANS } from '../utils/faresData'
 import {
   getDocumentLabels,
-  getForfaitDescription,
-  getForfaitBenefits,
-  getForfaitName,
-  getForfaitPriceLabel,
-  getForfaitYearlyLabel,
+  getPlanDescription,
+  getPlanBenefits,
+  getPlanName,
+  getPlanPriceLabel,
+  getPlanYearlyLabel,
   getProfileLabel,
   getRenewalLabel,
-} from '../utils/forfaitDisplay'
+} from '../utils/planDisplay'
 
-export default function ForfaitDetailScreen() {
+export default function PlanDetailScreen() {
   const { t } = useTranslation()
-  const { forfaitId } = useParams()
+  const { planId } = useParams()
   const navigate = useNavigate()
   const { locale } = useLocale()
 
-  const forfait = useMemo(() => FORFAITS.find((item) => item.id === forfaitId), [forfaitId])
-  const relatedForfaits = useMemo(() => {
-    if (!forfait) return []
-    return FORFAITS.filter((item) => item.id !== forfait.id && item.profils.some((profile) => forfait.profils.includes(profile)))
+  const plan = useMemo(() => PLANS.find((item) => item.id === planId), [planId])
+  const relatedPlans = useMemo(() => {
+    if (!plan) return []
+    return PLANS.filter((item) => item.id !== plan.id && item.profiles.some((profile) => plan.profiles.includes(profile)))
       .slice(0, 3)
-  }, [forfait])
+  }, [plan])
 
-  if (!forfait) {
+  if (!plan) {
     return (
       <div className="mx-auto max-w-2xl pb-16">
         <Card className="text-center">
           <Card.Body>
-            <Badge variant="warning">{t('forfaits.detail.notFoundBadge')}</Badge>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-fg">{t('forfaits.detail.notFoundTitle')}</h1>
+            <Badge variant="warning">{t('plans.detail.notFoundBadge')}</Badge>
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-fg">{t('plans.detail.notFoundTitle')}</h1>
             <p className="mt-3 text-fg-muted">
-              {t('forfaits.detail.notFoundBody')}
+              {t('plans.detail.notFoundBody')}
             </p>
             <Button className="mt-6" onClick={() => navigate('/forfaits')}>
-              {t('forfaits.detail.viewAll')}
+              {t('plans.detail.viewAll')}
             </Button>
           </Card.Body>
         </Card>
@@ -64,8 +64,8 @@ export default function ForfaitDetailScreen() {
     )
   }
 
-  const documents = getDocumentLabels(forfait, t)
-  const benefits = getForfaitBenefits(forfait, t)
+  const documents = getDocumentLabels(plan, t)
+  const benefits = getPlanBenefits(plan, t)
 
   return (
     <div className="flex flex-col gap-8 pb-12">
@@ -84,48 +84,48 @@ export default function ForfaitDetailScreen() {
             <div className="flex flex-col items-start">
               <div className="flex flex-wrap gap-2">
                 <Badge variant="recommended" icon={<Sparkles className="h-3 w-3" aria-hidden="true" />}>
-                  {t('forfaits.detail.badge')}
+                  {t('plans.detail.badge')}
                 </Badge>
-                <Badge variant="info">{t(`forfaits.type.${forfait.type}`)}</Badge>
-                {forfait.remboursementEmployeur && <Badge variant="success">{t('forfaits.detail.employerRefundBadge')}</Badge>}
+                <Badge variant="info">{t(`plans.type.${plan.type}`)}</Badge>
+                {plan.employerRefund && <Badge variant="success">{t('plans.detail.employerRefundBadge')}</Badge>}
               </div>
 
               <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-fg sm:text-5xl">
-                {getForfaitName(forfait, t)}
+                {getPlanName(plan, t)}
               </h1>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-fg-muted">{getForfaitDescription(forfait, t)}</p>
+              <p className="mt-4 max-w-2xl text-lg leading-8 text-fg-muted">{getPlanDescription(plan, t)}</p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                <Metric icon={<WalletCards className="h-4 w-4" aria-hidden="true" />} label={t('forfaits.detail.metric.price')} value={getForfaitPriceLabel(forfait, locale, t)} />
-                <Metric icon={<CalendarClock className="h-4 w-4" aria-hidden="true" />} label={t('forfaits.detail.metric.rhythm')} value={getRenewalLabel(forfait.renouvellement, t)} />
-                <Metric icon={<Ticket className="h-4 w-4" aria-hidden="true" />} label={t('forfaits.detail.metric.zones')} value={t('forfaits.display.benefits.zones', { min: forfait.zones.min, max: forfait.zones.max })} />
+                <Metric icon={<WalletCards className="h-4 w-4" aria-hidden="true" />} label={t('plans.detail.metric.price')} value={getPlanPriceLabel(plan, locale, t)} />
+                <Metric icon={<CalendarClock className="h-4 w-4" aria-hidden="true" />} label={t('plans.detail.metric.rhythm')} value={getRenewalLabel(plan.renewal, t)} />
+                <Metric icon={<Ticket className="h-4 w-4" aria-hidden="true" />} label={t('plans.detail.metric.zones')} value={t('plans.display.benefits.zones', { min: plan.zones.min, max: plan.zones.max })} />
               </div>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
                   size="lg"
                   rightIcon={<ArrowRight className="h-4 w-4" aria-hidden="true" />}
-                  onClick={() => navigate(`/souscrire?forfait=${forfait.id}`)}
+                  onClick={() => navigate(`/souscrire?plan=${plan.id}`)}
                 >
-                  {t('forfaits.detail.subscribe')}
+                  {t('plans.detail.subscribe')}
                 </Button>
                 <Button size="lg" variant="secondary" onClick={() => navigate('/simulateur')}>
-                  {t('forfaits.detail.resimulate')}
+                  {t('plans.detail.resimulate')}
                 </Button>
               </div>
             </div>
 
             <div className="relative min-h-[320px] overflow-hidden rounded-2xl border border-border-default bg-gradient-to-br from-accent/14 via-surface to-bg-elevated">
-              {forfait.image ? (
-                <img src={forfait.image} alt="" className="h-full w-full object-cover" aria-hidden="true" />
+              {plan.image ? (
+                <img src={plan.image} alt="" className="h-full w-full object-cover" aria-hidden="true" />
               ) : (
                 <div className="grid h-full place-items-center text-accent">
                   <Ticket className="h-28 w-28" aria-hidden="true" />
                 </div>
               )}
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg-elevated via-bg-elevated/80 to-transparent p-5 pt-16">
-                <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('forfaits.detail.indicativePrice')}</p>
-                <p className="mt-1 text-2xl font-semibold tracking-tight text-fg">{getForfaitYearlyLabel(forfait, locale, t)}</p>
+                <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('plans.detail.indicativePrice')}</p>
+                <p className="mt-1 text-2xl font-semibold tracking-tight text-fg">{getPlanYearlyLabel(plan, locale, t)}</p>
               </div>
             </div>
           </div>
@@ -135,14 +135,14 @@ export default function ForfaitDetailScreen() {
           <Card>
             <Card.Header>
               <div>
-                <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('forfaits.detail.forWhom')}</p>
-                <h2 className="mt-1 text-xl font-semibold tracking-tight text-fg">{t('forfaits.detail.eligibleProfiles')}</h2>
+                <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('plans.detail.forWhom')}</p>
+                <h2 className="mt-1 text-xl font-semibold tracking-tight text-fg">{t('plans.detail.eligibleProfiles')}</h2>
               </div>
               <Users className="h-5 w-5 text-accent" aria-hidden="true" />
             </Card.Header>
             <Card.Body>
               <div className="flex flex-wrap gap-2">
-                {forfait.profils.map((profile) => (
+                {plan.profiles.map((profile) => (
                   <Badge key={profile} variant="neutral">
                     {getProfileLabel(profile, t)}
                   </Badge>
@@ -154,14 +154,14 @@ export default function ForfaitDetailScreen() {
           <Card>
             <Card.Header>
               <div>
-                <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('forfaits.detail.documentsKicker')}</p>
-                <h2 className="mt-1 text-xl font-semibold tracking-tight text-fg">{t('forfaits.detail.documentsTitle')}</h2>
+                <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('plans.detail.documentsKicker')}</p>
+                <h2 className="mt-1 text-xl font-semibold tracking-tight text-fg">{t('plans.detail.documentsTitle')}</h2>
               </div>
               <FileText className="h-5 w-5 text-accent" aria-hidden="true" />
             </Card.Header>
             <Card.Body>
               {documents.length === 0 ? (
-                <p className="text-sm text-fg-muted">{t('forfaits.detail.noDocuments')}</p>
+                <p className="text-sm text-fg-muted">{t('plans.detail.noDocuments')}</p>
               ) : (
                 <ul className="flex flex-col gap-2">
                   {documents.map((document) => (
@@ -178,19 +178,19 @@ export default function ForfaitDetailScreen() {
           <Card>
             <Card.Header>
               <div>
-                <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('forfaits.detail.sourceKicker')}</p>
-                <h2 className="mt-1 text-xl font-semibold tracking-tight text-fg">{t('forfaits.detail.officialFare')}</h2>
+                <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('plans.detail.sourceKicker')}</p>
+                <h2 className="mt-1 text-xl font-semibold tracking-tight text-fg">{t('plans.detail.officialFare')}</h2>
               </div>
               <ShieldCheck className="h-5 w-5 text-accent" aria-hidden="true" />
             </Card.Header>
             <Card.Body>
               <a
                 className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent-bright"
-                href={forfait.sourceUrl}
+                href={plan.sourceUrl}
                 target="_blank"
                 rel="noreferrer"
               >
-                {t('forfaits.detail.sourceLink')}
+                {t('plans.detail.sourceLink')}
                 <ExternalLink className="h-4 w-4" aria-hidden="true" />
               </a>
             </Card.Body>
@@ -198,7 +198,7 @@ export default function ForfaitDetailScreen() {
         </aside>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-3" aria-label={t('forfaits.detail.benefitsAria')}>
+      <section className="grid gap-4 md:grid-cols-3" aria-label={t('plans.detail.benefitsAria')}>
         {benefits.map((benefit) => (
           <Card key={benefit} className="p-5">
             <div className="flex items-start gap-3">
@@ -211,28 +211,28 @@ export default function ForfaitDetailScreen() {
         ))}
       </section>
 
-      {relatedForfaits.length > 0 && (
-        <section className="flex flex-col gap-4" aria-label={t('forfaits.detail.relatedAria')}>
+      {relatedPlans.length > 0 && (
+        <section className="flex flex-col gap-4" aria-label={t('plans.detail.relatedAria')}>
           <div className="flex items-end justify-between gap-3">
             <div>
-              <Badge variant="neutral">{t('forfaits.detail.alternatives')}</Badge>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-fg">{t('forfaits.detail.relatedTitle')}</h2>
+              <Badge variant="neutral">{t('plans.detail.alternatives')}</Badge>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-fg">{t('plans.detail.relatedTitle')}</h2>
             </div>
             <Button variant="ghost" onClick={() => navigate('/forfaits')}>
-              {t('forfaits.detail.viewAllShort')}
+              {t('plans.detail.viewAllShort')}
             </Button>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            {relatedForfaits.map((item) => (
+            {relatedPlans.map((item) => (
               <Card key={item.id} hover className="p-5">
                 <Card.Body>
-                  <h3 className="text-lg font-semibold tracking-tight text-fg">{getForfaitName(item, t)}</h3>
-                  <p className="mt-2 min-h-12 text-sm text-fg-muted">{getForfaitDescription(item, t)}</p>
-                  <p className="mt-4 text-xl font-semibold tracking-tight text-fg">{getForfaitPriceLabel(item, locale, t)}</p>
+                  <h3 className="text-lg font-semibold tracking-tight text-fg">{getPlanName(item, t)}</h3>
+                  <p className="mt-2 min-h-12 text-sm text-fg-muted">{getPlanDescription(item, t)}</p>
+                  <p className="mt-4 text-xl font-semibold tracking-tight text-fg">{getPlanPriceLabel(item, locale, t)}</p>
                 </Card.Body>
                 <Card.Footer>
                   <Button fullWidth variant="secondary" onClick={() => navigate(`/forfaits/${item.id}`)}>
-                    {t('forfaits.list.viewDetail')}
+                    {t('plans.list.viewDetail')}
                   </Button>
                 </Card.Footer>
               </Card>

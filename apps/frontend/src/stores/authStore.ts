@@ -12,7 +12,7 @@ export interface UserAccount {
   firstName: string
   lastName: string
   email: string
-  profil: string | null
+  profile: string | null
   role: string
   subscription?: SubscriptionSummary | null
 }

@@ -46,7 +46,7 @@ export default function StoryScreen() {
           )}
         />
         <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-center">
-          {/* Portrait — encadré avec ring couleur signature + icon badge. */}
+          {/* Portrait with signature-color ring and icon badge. */}
           <div className="shrink-0 relative w-44 sm:w-56 md:w-64">
             <div className={cn(
               'absolute -inset-4 rounded-3xl blur-2xl opacity-50 bg-gradient-to-br',
@@ -63,9 +63,9 @@ export default function StoryScreen() {
                 className="absolute inset-0 h-full w-full object-cover"
                 draggable={false}
               />
-              {/* Léger fondu en bas pour transition vers la card. */}
+              {/* Subtle bottom fade into the card. */}
               <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-bg-base/40 to-transparent" />
-              {/* Icon badge en bas à droite. */}
+              {/* Bottom-right icon badge. */}
               <span className={cn(
                 'absolute bottom-3 right-3 grid place-items-center h-10 w-10 rounded-full text-white shadow-card ring-2 ring-bg-base',
                 story.color === 'purple' && 'bg-gradient-to-br from-purple-400 to-purple-600',
@@ -137,21 +137,21 @@ export default function StoryScreen() {
         </div>
       </section>
 
-      {/* Forfait highlight + CTA */}
+      {/* Plan highlight + CTA */}
       <section>
         <Card variant="feature" spotlight>
           <Card.Body>
             <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
               <div>
                 <span className="font-mono text-xs tracking-widest uppercase text-fg-muted">
-                  {t('stories.screen.recommendedForfait')}
+                  {t('stories.screen.recommendedPlan')}
                 </span>
                 <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-fg">
-                  {story.forfait.nom}
+                  {story.plan.name}
                 </h2>
-                <p className="mt-1 text-fg-muted">{story.forfait.subtitle}</p>
+                <p className="mt-1 text-fg-muted">{story.plan.subtitle}</p>
                 <p className="mt-3 text-3xl font-semibold tracking-tight text-fg tabular-nums">
-                  {story.forfait.prix}
+                  {story.plan.price}
                 </p>
               </div>
               <Button
