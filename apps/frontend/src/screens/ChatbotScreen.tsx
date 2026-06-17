@@ -9,8 +9,8 @@ import { useLocale } from '../hooks/useLocale'
 import { cn } from '../lib/cn'
 import { streamChatResponse, type ChatMessagePayload, ChatbotApiError } from '../services/chatbotApi'
 import { useAuthStore } from '../stores/authStore'
-import { FORFAITS } from '../utils/tarifsData'
-import { getForfaitName } from '../utils/forfaitDisplay'
+import { PLANS } from '../utils/faresData'
+import { getPlanName } from '../utils/planDisplay'
 
 type ChatMessage = ChatMessagePayload & {
   id: string
@@ -56,14 +56,14 @@ export default function ChatbotScreen() {
     [messages],
   )
 
-  const recommendedForfait = useMemo(() => {
+  const recommendedPlan = useMemo(() => {
     const content = latestAssistantMessage?.content.toLowerCase() ?? ''
     if (!content) return null
 
-    return FORFAITS.find((forfait) => {
-      const translatedName = getForfaitName(forfait, t).toLowerCase()
-      const fallbackName = forfait.nom.toLowerCase()
-      return content.includes(forfait.id.toLowerCase()) || content.includes(translatedName) || content.includes(fallbackName)
+    return PLANS.find((plan) => {
+      const translatedName = getPlanName(plan, t).toLowerCase()
+      const fallbackName = plan.name.toLowerCase()
+      return content.includes(plan.id.toLowerCase()) || content.includes(translatedName) || content.includes(fallbackName)
     }) ?? null
   }, [latestAssistantMessage, t])
 
@@ -306,28 +306,28 @@ export default function ChatbotScreen() {
           )}
         </Card>
 
-        {recommendedForfait && (
+        {recommendedPlan && (
           <Card className="p-5">
             <Badge variant="success" icon={<Ticket className="h-3 w-3" aria-hidden="true" />}>
               {t('chatbot.side.detected')}
             </Badge>
             <h2 className="mt-3 text-xl font-semibold tracking-tight text-fg">
-              {getForfaitName(recommendedForfait, t)}
+              {getPlanName(recommendedPlan, t)}
             </h2>
             <p className="mt-2 text-sm text-fg-muted">{t('chatbot.side.detectedHint')}</p>
             <div className="mt-4 grid gap-2">
               <Button
                 type="button"
                 size="sm"
-                onClick={() => navigate(`/forfaits/${recommendedForfait.id}`)}
+                onClick={() => navigate(`/forfaits/${recommendedPlan.id}`)}
               >
-                {t('chatbot.actions.viewForfait')}
+                {t('chatbot.actions.viewPlan')}
               </Button>
               <Button
                 type="button"
                 size="sm"
                 variant="outline"
-                onClick={() => navigate(`/souscrire?forfait=${recommendedForfait.id}`)}
+                onClick={() => navigate(`/souscrire?plan=${recommendedPlan.id}`)}
               >
                 {t('chatbot.actions.subscribe')}
               </Button>

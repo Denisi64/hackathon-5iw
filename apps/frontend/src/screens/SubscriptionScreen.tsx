@@ -13,16 +13,16 @@ import { Badge } from '../components/ui/Badge'
 import { Orb } from '../components/ui/Orb'
 import { Slider } from '../components/ui/Slider'
 import { PROFILES, PROFILE_BY_SLUG, type ProfileSlug } from '../data/subscriptionFlows'
-import { FORFAITS } from '../utils/tarifsData'
+import { PLANS } from '../utils/faresData'
 import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
 import { cn } from '../lib/cn'
-import type { Forfait } from '../types/domain'
+import type { Plan } from '../types/domain'
 import { subscriptionsService } from '../services/subscriptions'
 import { documentsService } from '../services/documents'
 import { paymentsService } from '../services/payments'
 import { useAuthStore } from '../stores/authStore'
-import { getForfaitName } from '../utils/forfaitDisplay'
+import { getPlanName } from '../utils/planDisplay'
 
 type Answers = {
   age?: number
@@ -64,36 +64,36 @@ export default function SubscriptionScreen() {
   const [apiError, setApiError] = useState<string | null>(null)
 
   const profileDef = profile ? PROFILE_BY_SLUG[profile] : null
-  const forfait = useMemo(
-    () => (profileDef ? FORFAITS.find((f) => f.id === profileDef.recommendedForfaitId) : undefined),
+  const plan = useMemo(
+    () => (profileDef ? PLANS.find((f) => f.id === profileDef.recommendedPlanId) : undefined),
     [profileDef],
   )
 
-  // Reset doc statuses lorsque le profil change.
+  // Reset document statuses when the profile changes.
   useEffect(() => {
     setDocStatuses({})
   }, [profile])
 
   useEffect(() => {
-    if (step === 6 && profileDef && forfait) {
+    if (step === 6 && profileDef && plan) {
       const startDate = new Date()
       startDate.setDate(startDate.getDate() + 7)
       const sub = {
-        forfaitId: forfait.id,
-        forfaitNom: forfait.nom,
-        prixAn: forfait.prixAn,
-        prixMois: forfait.prixMois,
+        planId: plan.id,
+        planNom: plan.name,
+        yearlyPrice: plan.yearlyPrice,
+        monthlyPrice: plan.monthlyPrice,
         startDate: startDate.toISOString(),
         zones: answers.zones,
       }
       void sub
     }
-  }, [step, profileDef, forfait, answers.zones])
+  }, [step, profileDef, plan, answers.zones])
 
   function validateStep(): boolean {
     if (step === 1) return profile !== null
     if (step === 2) return true
-    if (step === 3) return forfait !== undefined
+    if (step === 3) return plan !== undefined
     if (step === 4) {
       if (!profileDef) return false
       const optional = new Set(profileDef.optionalDocuments ?? [])
@@ -115,12 +115,12 @@ export default function SubscriptionScreen() {
     if (!validateStep()) return
     setApiError(null)
 
-    if (step === 3 && forfait) {
+    if (step === 3 && plan) {
       const user = useAuthStore.getState().user
       if (user && !subscriptionId) {
         setIsLoading(true)
         try {
-          const sub = await subscriptionsService.create({ offerId: forfait.id })
+          const sub = await subscriptionsService.create({ offerId: plan.id })
           setSubscriptionId(sub.id)
         } catch {
           setApiError(t('subscription.errors.createFailed'))
@@ -180,10 +180,10 @@ export default function SubscriptionScreen() {
       <div key={step} className="animate-[fade-up_300ms_ease-out]">
         {step === 1 && <Step1Profile profile={profile} setProfile={setProfile} />}
         {step === 2 && profileDef && <Step2Details profile={profileDef.slug} answers={answers} setAnswers={setAnswers} />}
-        {step === 3 && profileDef && forfait && <Step3Recommendation profile={profileDef.slug} forfait={forfait} answers={answers} locale={locale} />}
-        {step === 4 && profileDef && <Step4Documents profile={profileDef.slug} docs={profileDef.documents} optionalDocs={profileDef.optionalDocuments} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
+        {step === 3 && profileDef && plan && <Step3Recommendation profile={profileDef.slug} plan={plan} answers={answers} locale={locale} />}
+        {step === 4 && profileDef && <Step4Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
         {step === 5 && <Step5Account account={account} setAccount={setAccount} errors={accountErrors} />}
-        {step === 6 && profileDef && forfait && <Step6Confirmation firstName={account.firstName} email={account.email} forfait={forfait} answers={answers} locale={locale} />}
+        {step === 6 && profileDef && plan && <Step6Confirmation firstName={account.firstName} email={account.email} plan={plan} answers={answers} locale={locale} />}
       </div>
 
       {apiError && (
@@ -385,9 +385,9 @@ function YesNoRow({ label, value, onChange }: { label: string; value?: boolean; 
   )
 }
 
-function Step3Recommendation({ profile, forfait, answers, locale }: {
+function Step3Recommendation({ profile, plan, answers, locale }: {
   profile: ProfileSlug
-  forfait: Forfait
+  plan: Plan
   answers: Answers
   locale: string
 }) {
@@ -403,7 +403,7 @@ function Step3Recommendation({ profile, forfait, answers, locale }: {
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-start">
           <div>
             <Badge variant="recommended">{t('simulator.recommended')}</Badge>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-fg">{getForfaitName(forfait, t)}</h2>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-fg">{getPlanName(plan, t)}</h2>
             <p className="mt-1 text-fg-muted">{t(`subscription.recommendation.${profile}.summary`)}</p>
             <ul className="mt-5 flex flex-col gap-2">
               {reasonsList.map((r, i) => (
@@ -419,11 +419,11 @@ function Step3Recommendation({ profile, forfait, answers, locale }: {
               {t('simulator.perYear')}
             </p>
             <p className="mt-1 text-3xl font-semibold tracking-tight text-fg tabular-nums">
-              {forfait.prixAn !== null ? formatCurrency(forfait.prixAn, locale) : '—'}
+              {plan.yearlyPrice !== null ? formatCurrency(plan.yearlyPrice, locale) : '—'}
             </p>
-            {forfait.prixMois !== null && (
+            {plan.monthlyPrice !== null && (
               <p className="mt-1 text-sm text-fg-muted">
-                {formatCurrency(forfait.prixMois, locale)}{t('simulator.perMonth')}
+                {formatCurrency(plan.monthlyPrice, locale)}{t('simulator.perMonth')}
               </p>
             )}
           </div>
@@ -564,10 +564,10 @@ function Step5Account({ account, setAccount, errors }: {
   )
 }
 
-function Step6Confirmation({ firstName, email, forfait, answers, locale }: {
+function Step6Confirmation({ firstName, email, plan, answers, locale }: {
   firstName: string
   email: string
-  forfait: Forfait
+  plan: Plan
   answers: Answers
   locale: string
 }) {
@@ -619,8 +619,8 @@ function Step6Confirmation({ firstName, email, forfait, answers, locale }: {
           <div className="w-full max-w-md rounded-xl bg-surface border border-border-default p-5 text-left">
             <p className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('subscription.confirmation.summary')}</p>
             <div className="mt-3 flex flex-col gap-2 text-sm">
-              <Row label={t('subscription.confirmation.forfait')} value={getForfaitName(forfait, t)} />
-              <Row label={t('subscription.confirmation.price')} value={forfait.prixAn !== null ? formatCurrency(forfait.prixAn, locale) + t('simulator.perYear') : '—'} />
+              <Row label={t('subscription.confirmation.plan')} value={getPlanName(plan, t)} />
+              <Row label={t('subscription.confirmation.price')} value={plan.yearlyPrice !== null ? formatCurrency(plan.yearlyPrice, locale) + t('simulator.perYear') : '—'} />
               <Row label={t('subscription.confirmation.startDate')} value={startDateStr} />
               <Row label={t('subscription.confirmation.email')} value={email} />
             </div>

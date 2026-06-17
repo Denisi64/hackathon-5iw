@@ -5,7 +5,7 @@ import { App } from './App'
 
 describe('App', () => {
   beforeAll(async () => {
-    // jsdom n'implémente pas matchMedia, requis par useTheme
+    // jsdom does not implement matchMedia, which useTheme requires.
     vi.spyOn(window, 'matchMedia').mockImplementation((q) => ({
       matches: false,
       media: q,
@@ -16,14 +16,14 @@ describe('App', () => {
       removeEventListener: vi.fn(),
       dispatchEvent: vi.fn(),
     }))
-    // Force la locale FR pour un snapshot déterministe
+    // Force French for deterministic rendered text.
     await i18n.changeLanguage('fr')
   })
 
   it('renders the landing CTA after route resolves', async () => {
     render(<App />)
     // Suspense fallback first, then content lazy-loads
-    const ctas = await screen.findAllByText('Lancer le simulateur')
+    const ctas = await screen.findAllByText(i18n.t('hero.ctaPrimary'))
     expect(ctas.length).toBeGreaterThan(0)
   })
 })

@@ -3,7 +3,7 @@
     "logoAriaLabel": "Comutitres, accueil",
     "nav": {
       "simulator": "Simulateur",
-      "forfaits": "Forfaits",
+      "plans": "Forfaits",
       "subscribe": "Souscrire",
       "assistant": "Assistant",
       "login": "Se connecter",
@@ -56,7 +56,7 @@
       "quote": "« {{text}} »",
       "ctaSimulate": "Lancer le simulateur",
       "otherStories": "D'autres histoires",
-      "recommendedForfait": "Forfait recommandé"
+      "recommendedPlan": "Forfait recommandé"
     }
   },
   "stats": {
@@ -80,13 +80,13 @@
     }
   },
   "profiles": {
-    "salarie": "Salarié",
-    "etudiant": "Étudiant",
-    "scolaire_junior": "Junior",
-    "scolaire": "Scolaire",
+    "employee": "Salarié",
+    "student": "Étudiant",
+    "junior_school": "Junior",
+    "school": "Scolaire",
     "senior": "Senior",
-    "tst": "TST",
-    "amethyste": "Améthyste"
+    "solidarity": "TST",
+    "amethyst": "Améthyste"
   },
   "simulator": {
     "title": "Trouvez votre forfait idéal",
@@ -141,7 +141,7 @@
       "jobseeker": { "title": "Solidarité / RSA", "description": "Navigo Réduction, Solidarité 75% ou Gratuité selon vos droits CAF." },
       "parent": { "title": "Parent", "description": "Vous souscrivez pour vos enfants." },
       "scholar": { "title": "Scolaire 11-17", "description": "Collégien ou lycéen, vous étudiez en Île-de-France." },
-      "amethyste": { "title": "Améthyste", "description": "Personne en situation de handicap (MDPH) — tarif selon votre département." }
+      "amethyst": { "title": "Améthyste", "description": "Personne en situation de handicap (MDPH) — tarif selon votre département." }
     },
     "questions": {
       "age": "Votre âge",
@@ -155,13 +155,13 @@
       "firstChildAge": "Âge du premier enfant"
     },
     "recommendation": {
-      "student":   { "summary": "Le tarif étudiant Imagine R donne accès à toute l'Île-de-France pendant l'année scolaire.", "reasons": ["Tarif boursier appliqué automatiquement", "Toutes zones incluses", "Renouvellement annuel sans intervention"] },
-      "worker":    { "summary": "Le Navigo Annuel reste l'abonnement le plus avantageux pour un usage quotidien.", "reasons": ["50% remboursé par votre employeur", "Économies vs ticket à l'unité", "Tout réseau IDF inclus"] },
-      "senior":    { "summary": "Le tarif Senior offre une réduction significative à partir de 62 ans.", "reasons": ["Vérification d'âge automatique via pièce d'identité", "Économie estimée 270 €/an", "Bascule sans interruption de service"] },
+      "student": { "summary": "Le tarif étudiant Imagine R donne accès à toute l'Île-de-France pendant l'année school.", "reasons": ["Tarif boursier appliqué automatiquement", "Toutes zones incluses", "Renouvellement annuel sans intervention"] },
+      "worker": { "summary": "Le Navigo Annuel reste l'abonnement le plus avantageux pour un usage quotidien.", "reasons": ["50% remboursé par votre employeur", "Économies vs ticket à l'unité", "Tout réseau IDF inclus"] },
+      "senior": { "summary": "Le tarif Senior offre une réduction significative à partir de 62 ans.", "reasons": ["Vérification d'âge automatique via pièce d'identité", "Économie estimée 270 €/an", "Bascule sans interruption de service"] },
       "jobseeker": { "summary": "La Tarification Solidarité Transport adapte le prix à vos ressources.", "reasons": ["Vérification automatique des droits CAF", "Aucun justificatif à uploader", "Renouvellement trimestriel facilité"] },
-      "parent":    { "summary": "Un seul espace pour gérer tous les abonnements de vos enfants.", "reasons": ["Imagine R Scolaire pour chaque enfant", "Un seul livret de famille suffit", "Rappels automatiques avant la rentrée"] },
-      "scholar":   { "summary": "Imagine R Scolaire couvre toute l'année scolaire pour les 11-25 ans.", "reasons": ["Tout réseau IDF inclus", "Tarif réduit boursier disponible", "Renouvellement automatique chaque rentrée"] },
-      "amethyste": { "summary": "Le forfait Améthyste s'adapte à votre département de résidence et à votre statut MDPH.", "reasons": ["Tarif variable selon votre département", "Vérification automatique via la notification MDPH", "Renouvellement annuel sans démarche"] }
+      "parent": { "summary": "Un seul espace pour gérer tous les abonnements de vos enfants.", "reasons": ["Imagine R Scolaire pour chaque enfant", "Un seul livret de famille suffit", "Rappels automatiques avant la rentrée"] },
+      "scholar": { "summary": "Imagine R Scolaire couvre toute l'année school pour les 11-25 ans.", "reasons": ["Tout réseau IDF inclus", "Tarif réduit boursier disponible", "Renouvellement automatique chaque rentrée"] },
+      "amethyst": { "summary": "Le forfait Améthyste s'adapte à votre département de résidence et à votre statut MDPH.", "reasons": ["Tarif variable selon votre département", "Vérification automatique via la notification MDPH", "Renouvellement annuel sans démarche"] }
     },
     "documents": {
       "upload": "Choisir un fichier",
@@ -170,14 +170,14 @@
       "validated": "Validé",
       "optional": "Facultatif",
       "validatedHint": "Document vérifié automatiquement.",
-      "certificat_scolarite": { "label": "Certificat de scolarité", "help": "Document fourni par votre établissement pour l'année en cours." },
-      "attestation_bourse":   { "label": "Attestation de bourse", "help": "Justificatif d'attribution de bourse du CROUS." },
-      "contrat_travail":      { "label": "Contrat de travail", "help": "Facultatif — accélère la demande de remboursement employeur." },
-      "piece_identite":       { "label": "Pièce d'identité", "help": "CNI ou passeport pour confirmer votre âge." },
-      "france_connect":       { "label": "Vérification CAF via FranceConnect", "help": "Connexion sécurisée — aucun justificatif à uploader." },
-      "livret_famille":       { "label": "Livret de famille", "help": "Un seul document suffit pour tous vos enfants." },
-      "carte_invalidite":     { "label": "Carte d'invalidité", "help": "Carte mobilité inclusion (CMI) ou ancienne carte d'invalidité." },
-      "notification_mdph":    { "label": "Notification MDPH", "help": "Notification de décision de la Maison Départementale des Personnes Handicapées." }
+      "school_certificate": { "label": "Certificat de scolarité", "help": "Document fourni par votre établissement pour l'année en cours." },
+      "scholarship_certificate": { "label": "Attestation de bourse", "help": "Justificatif d'attribution de bourse du CROUS." },
+      "employment_contract": { "label": "Contrat de travail", "help": "Facultatif — accélère la demande de remboursement employeur." },
+      "identity_document": { "label": "Pièce d'identité", "help": "CNI ou passeport pour confirmer votre âge." },
+      "france_connect": { "label": "Vérification CAF via FranceConnect", "help": "Connexion sécurisée — aucun justificatif à uploader." },
+      "family_record_book": { "label": "Livret de famille", "help": "Un seul document suffit pour tous vos enfants." },
+      "disability_card": { "label": "Carte d'invalidité", "help": "Carte mobilité inclusion (CMI) ou ancienne carte d'invalidité." },
+      "mdph_notice": { "label": "Notification MDPH", "help": "Notification de décision de la Maison Départementale des Personnes Handicapées." }
     },
     "account": {
       "firstName": "Prénom",
@@ -191,7 +191,7 @@
       "you": "vous",
       "subtitle": "Votre abonnement est prêt. Tout est validé.",
       "summary": "Récapitulatif",
-      "forfait": "Forfait",
+      "plan": "Forfait",
       "price": "Prix",
       "startDate": "Date d'effet",
       "email": "Email",
@@ -253,7 +253,7 @@
       "network": "Impossible de joindre le serveur d'authentification"
     }
   },
-  "forfaits": {
+  "plans": {
     "kicker": "Tous les forfaits",
     "title": "Trouvez le forfait Navigo qui vous ressemble.",
     "subtitle": "Tarifs officiels Île-de-France Mobilités 2026. Filtrez par profil pour voir nos recommandations.",
@@ -278,10 +278,10 @@
     },
     "recommended": "Recommandé",
     "type": {
-      "jour": "Jour",
-      "hebdo": "Semaine",
-      "mensuel": "Mois",
-      "annuel": "Annuel",
+      "day": "Jour",
+      "weekly": "Semaine",
+      "monthly": "Mois",
+      "yearly": "Annuel",
       "usage": "Usage"
     },
     "documents": "Justificatifs requis",
@@ -299,19 +299,19 @@
     "perTrip": "par trajet",
     "source": "Source :",
     "catalog": {
-      "navigo_jour": { "name": "Navigo Jour", "description": "Voyager en illimité pendant une journée entière." },
-      "navigo_semaine": { "name": "Navigo Semaine", "description": "Voyager en illimité toute la semaine." },
-      "navigo_mois": { "name": "Navigo Mois", "description": "Voyager en illimité tout le mois, sans engagement." },
-      "navigo_annuel": { "name": "Navigo Annuel", "description": "Voyager toute l'année, avec le 12e mois offert." },
+      "navigo_day": { "name": "Navigo Jour", "description": "Voyager en illimité pendant une journée entière." },
+      "navigo_week": { "name": "Navigo Semaine", "description": "Voyager en illimité toute la semaine." },
+      "navigo_month": { "name": "Navigo Mois", "description": "Voyager en illimité tout le mois, sans engagement." },
+      "navigo_yearly": { "name": "Navigo Annuel", "description": "Voyager toute l'année, avec le 12e mois offert." },
       "navigo_senior": { "name": "Navigo Senior", "description": "Tarif préférentiel pour les 62 ans et plus." },
-      "imagine_r_etudiant": { "name": "Imagine R Étudiant", "description": "Le forfait indispensable des étudiants en Île-de-France." },
-      "imagine_r_scolaire": { "name": "Imagine R Scolaire", "description": "Le forfait annuel des jeunes du primaire, secondaire et apprentis." },
+      "imagine_r_student": { "name": "Imagine R Étudiant", "description": "Le forfait indispensable des étudiants en Île-de-France." },
+      "imagine_r_school": { "name": "Imagine R Scolaire", "description": "Le forfait annuel des jeunes du primaire, secondaire et apprentis." },
       "imagine_r_junior": { "name": "Imagine R Junior", "description": "Imagine R à un prix imbattable pour les moins de 11 ans." },
-      "liberte_plus": { "name": "Navigo Liberté+", "description": "Payez vos trajets à l'unité, dès 1,64 € par trajet, toutes zones." },
-      "navigo_solidarite_75": { "name": "Solidarité 75 %", "description": "Réduction de 75 % pour les bénéficiaires CSS sans participation ou ASS." },
-      "navigo_reduction_50": { "name": "Réduction 50 %", "description": "Réduction de 50 % pour les bénéficiaires AME." },
-      "navigo_gratuite": { "name": "Gratuité Transport", "description": "Transport gratuit pour les bénéficiaires RSA sous conditions ou ASS + CSS sans participation." },
-      "amethyste": { "name": "Améthyste", "description": "Forfait pour les personnes en situation de handicap, selon département." }
+      "liberty_plus": { "name": "Navigo Liberté+", "description": "Payez vos trajets à l'unité, dès 1,64 € par trajet, toutes zones." },
+      "navigo_solidarity_75": { "name": "Solidarité 75 %", "description": "Réduction de 75 % pour les bénéficiaires CSS sans participation ou ASS." },
+      "navigo_discount_50": { "name": "Réduction 50 %", "description": "Réduction de 50 % pour les bénéficiaires AME." },
+      "navigo_free": { "name": "Gratuité Transport", "description": "Transport gratuit pour les bénéficiaires RSA sous conditions ou ASS + CSS sans participation." },
+      "amethyst": { "name": "Améthyste", "description": "Forfait pour les personnes en situation de handicap, selon département." }
     },
     "list": {
       "kicker": "Catalogue des forfaits",
@@ -326,12 +326,12 @@
       "viewDetail": "Voir le détail",
       "filters": {
         "all": "Tous",
-        "salarie": "Salarié",
-        "etudiant": "Étudiant",
-        "scolaire": "Scolaire",
+        "employee": "Salarié",
+        "student": "Étudiant",
+        "school": "Scolaire",
         "senior": "Senior",
-        "tst": "Solidarité",
-        "amethyste": "Améthyste"
+        "solidarity": "Solidarité",
+        "amethyst": "Améthyste"
       }
     },
     "detail": {
@@ -369,31 +369,31 @@
       "priceOnFile": "Tarif selon dossier",
       "payAsYouGo": "Facturation à l'usage",
       "profiles": {
-        "salarie": "Salariés",
-        "etudiant": "Étudiants",
-        "scolaire_junior": "Enfants",
-        "scolaire": "Scolaires",
+        "employee": "Salariés",
+        "student": "Étudiants",
+        "junior_school": "Enfants",
+        "school": "Scolaires",
         "senior": "Seniors",
-        "tst": "Solidarité",
-        "amethyste": "Handicap"
+        "solidarity": "Solidarité",
+        "amethyst": "Handicap"
       },
       "documents": {
-        "piece_identite": "Pièce d'identité",
-        "certificat_scolarite": "Certificat de scolarité",
-        "attestation_bourse": "Attestation de bourse",
-        "livret_famille": "Livret de famille",
-        "attestation_caf": "Attestation CAF",
-        "avis_imposition": "Avis d'imposition",
-        "carte_invalidite": "Carte d'invalidité",
-        "notification_mdph": "Notification MDPH"
+        "identity_document": "Pièce d'identité",
+        "school_certificate": "Certificat de scolarité",
+        "scholarship_certificate": "Attestation de bourse",
+        "family_record_book": "Livret de famille",
+        "caf_certificate": "Attestation CAF",
+        "tax_notice": "Avis d'imposition",
+        "disability_card": "Carte d'invalidité",
+        "mdph_notice": "Notification MDPH"
       },
       "renewal": {
-        "annuel": "Renouvellement annuel",
-        "mensuel": "Renouvellement mensuel",
-        "trimestriel": "Renouvellement trimestriel",
-        "hebdomadaire": "Valable une semaine",
+        "yearly": "Renouvellement annuel",
+        "monthly": "Renouvellement mensuel",
+        "quarterly": "Renouvellement trimestriel",
+        "weekly": "Valable une semaine",
         "usage": "Paiement à l'usage",
-        "jour": "Valable une journée"
+        "day": "Valable une journée"
       },
       "benefits": {
         "zones": "Zones {{min}} à {{max}}",
@@ -401,7 +401,7 @@
         "noDocuments": "Aucun justificatif requis",
         "documentCheck": "Vérification des justificatifs accompagnée",
         "solidarityCheck": "Vérification des droits solidaire",
-        "schoolRhythm": "Pensé pour le rythme scolaire",
+        "schoolRhythm": "Pensé pour le rythme school",
         "payOnlyWhenTraveling": "Paiement uniquement quand vous voyagez"
       }
     }
@@ -425,7 +425,7 @@
       "send": "Envoyer",
       "stop": "Arrêter",
       "reset": "Nouvelle conversation",
-      "viewForfait": "Voir le forfait",
+      "viewPlan": "Voir le forfait",
       "subscribe": "Souscrire"
     },
     "side": {
@@ -447,7 +447,7 @@
       "stream": "La réponse du chatbot n'a pas pu être lue."
     }
   },
-  "monEspace": {
+  "account": {
     "kicker": "Mon espace",
     "welcome": "Bonjour, {{firstName}}",
     "subtitle": "Retrouvez votre abonnement et gérez votre compte.",
