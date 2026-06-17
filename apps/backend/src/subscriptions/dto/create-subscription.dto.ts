@@ -6,17 +6,17 @@ export class CreateSubscriptionDto {
 
   @IsOptional()
   @IsUUID()
-  porteurId?: string
+  holderId?: string
 
   @IsOptional()
   @IsString()
-  porteurNom?: string
+  holderLastName?: string
 
   @IsOptional()
   @IsString()
-  porteurPrenom?: string
+  holderFirstName?: string
 
   @IsOptional()
   @IsString()
-  porteurDdn?: string
+  holderDateOfBirth?: string
 }

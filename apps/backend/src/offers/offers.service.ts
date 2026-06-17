@@ -4,10 +4,10 @@ import { db } from '../db'
 import { offers } from '../db/schema'
 
 const PROFILE_OFFER_IDS: Record<string, string[]> = {
-  salarie: ['navigo_annuel', 'navigo_mois', 'navigo_semaine', 'liberte_plus'],
-  etudiant: ['imagine_r_etudiant'],
-  scolaire_junior: ['imagine_r_junior'],
-  scolaire: ['imagine_r_scolaire'],
+  employee: ['navigo_annuel', 'navigo_mois', 'navigo_semaine', 'liberte_plus'],
+  student: ['imagine_r_etudiant'],
+  junior_school: ['imagine_r_junior'],
+  school: ['imagine_r_scolaire'],
   senior: ['navigo_senior', 'navigo_annuel', 'navigo_mois'],
   tst: ['tst_50', 'tst_75', 'tst_gratuite'],
   amethyste: ['amethyste'],
@@ -16,7 +16,7 @@ const PROFILE_OFFER_IDS: Record<string, string[]> = {
 @Injectable()
 export class OffersService {
   async findAll(profile?: string) {
-    const all = await db.select().from(offers).where(eq(offers.actif, true))
+    const all = await db.select().from(offers).where(eq(offers.active, true))
     if (!profile) return all
     const allowed = PROFILE_OFFER_IDS[profile]
     if (!allowed) return all

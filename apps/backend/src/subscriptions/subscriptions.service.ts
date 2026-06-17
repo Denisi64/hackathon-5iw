@@ -10,16 +10,19 @@ import type { UpdateSubscriptionDto } from './dto/update-subscription.dto'
 export class SubscriptionsService {
   constructor(private readonly fraudScoreService: FraudScoreService) {}
 
-  async create(payeurId: string, dto: CreateSubscriptionDto) {
-    const [sub] = await db.insert(subscriptions).values({
-      payeurId,
-      offerId: dto.offerId,
-      porteurId: dto.porteurId ?? null,
-      porteurNom: dto.porteurNom ?? null,
-      porteurPrenom: dto.porteurPrenom ?? null,
-      porteurDdn: dto.porteurDdn ? new Date(dto.porteurDdn) : null,
-      status: 'draft',
-    }).returning()
+  async create(payerId: string, dto: CreateSubscriptionDto) {
+    const [sub] = await db
+      .insert(subscriptions)
+      .values({
+        payerId,
+        offerId: dto.offerId,
+        holderId: dto.holderId ?? null,
+        holderLastName: dto.holderLastName ?? null,
+        holderFirstName: dto.holderFirstName ?? null,
+        holderDateOfBirth: dto.holderDateOfBirth ? new Date(dto.holderDateOfBirth) : null,
+        status: 'draft',
+      })
+      .returning()
 
     return sub
   }
@@ -28,11 +31,11 @@ export class SubscriptionsService {
     const [sub] = await db
       .select({
         id: subscriptions.id,
-        payeurId: subscriptions.payeurId,
-        porteurId: subscriptions.porteurId,
-        porteurNom: subscriptions.porteurNom,
-        porteurPrenom: subscriptions.porteurPrenom,
-        porteurDdn: subscriptions.porteurDdn,
+        payerId: subscriptions.payerId,
+        holderId: subscriptions.holderId,
+        holderLastName: subscriptions.holderLastName,
+        holderFirstName: subscriptions.holderFirstName,
+        holderDateOfBirth: subscriptions.holderDateOfBirth,
         offerId: subscriptions.offerId,
         status: subscriptions.status,
         startDate: subscriptions.startDate,
@@ -44,19 +47,23 @@ export class SubscriptionsService {
       .where(eq(subscriptions.id, id))
       .limit(1)
     if (!sub) throw new NotFoundException('Souscription introuvable')
-    if (sub.payeurId !== userId) throw new ForbiddenException()
+    if (sub.payerId !== userId) throw new ForbiddenException()
     return sub
   }
 
   async update(id: string, userId: string, dto: UpdateSubscriptionDto) {
     await this.findById(id, userId)
 
-    const [updated] = await db.update(subscriptions).set({
-      ...(dto.status && { status: dto.status as typeof subscriptions.$inferInsert['status'] }),
-      ...(dto.stripeSubscriptionId && { stripeSubscriptionId: dto.stripeSubscriptionId }),
-      ...(dto.stripeCustomerId && { stripeCustomerId: dto.stripeCustomerId }),
-      updatedAt: new Date(),
-    }).where(eq(subscriptions.id, id)).returning()
+    const [updated] = await db
+      .update(subscriptions)
+      .set({
+        ...(dto.status && { status: dto.status as typeof subscriptions.$inferInsert['status'] }),
+        ...(dto.stripeSubscriptionId && { stripeSubscriptionId: dto.stripeSubscriptionId }),
+        ...(dto.stripeCustomerId && { stripeCustomerId: dto.stripeCustomerId }),
+        updatedAt: new Date(),
+      })
+      .where(eq(subscriptions.id, id))
+      .returning()
 
     return updated
   }
@@ -64,10 +71,11 @@ export class SubscriptionsService {
   async confirm(id: string, userId: string) {
     await this.findById(id, userId)
 
-    const [updated] = await db.update(subscriptions).set({
-      status: 'pending_payment',
-      updatedAt: new Date(),
-    }).where(eq(subscriptions.id, id)).returning()
+    const [updated] = await db
+      .update(subscriptions)
+      .set({ status: 'pending_payment', updatedAt: new Date() })
+      .where(eq(subscriptions.id, id))
+      .returning()
 
     await this.fraudScoreService.compute(id)
 
@@ -77,12 +85,15 @@ export class SubscriptionsService {
   async renew(id: string, userId: string) {
     const sub = await this.findById(id, userId)
 
-    const [renewed] = await db.insert(subscriptions).values({
-      payeurId: sub.payeurId,
-      porteurId: sub.porteurId,
-      offerId: sub.offerId,
-      status: 'draft',
-    }).returning()
+    const [renewed] = await db
+      .insert(subscriptions)
+      .values({
+        payerId: sub.payerId,
+        holderId: sub.holderId,
+        offerId: sub.offerId,
+        status: 'draft',
+      })
+      .returning()
 
     return renewed
   }

@@ -36,7 +36,7 @@ export class AiService {
   }
 
   async recommend(dto: RecommendDto): Promise<{ offerId: string; reason: string }> {
-    const activeOffers = await db.select({ id: offers.id }).from(offers).where(eq(offers.actif, true))
+    const activeOffers = await db.select({ id: offers.id }).from(offers).where(eq(offers.active, true))
     const offerIds = activeOffers.map((o) => o.id)
 
     const userPrompt = buildRecommendPrompt(

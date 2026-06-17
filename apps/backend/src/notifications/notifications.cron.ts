@@ -33,7 +33,7 @@ export class NotificationsCron {
 
     if (daysLeft === 30 || daysLeft === 7) {
       await this.notificationsService.createNotification(
-        sub.payeurId,
+        sub.payerId,
         'renewal',
         `Votre abonnement expire dans ${daysLeft} jours — renouvelez en 1 clic`,
       )
@@ -47,7 +47,7 @@ export class NotificationsCron {
 
     if (daysLeft === 15 || daysLeft === 5) {
       await this.notificationsService.createNotification(
-        sub.payeurId,
+        sub.payerId,
         'tst_expiry',
         `Vos droits TST expirent dans ${daysLeft} jours — pensez à votre attestation CAF`,
       )

@@ -26,11 +26,11 @@ const STUDENT_OFFERS = ['imagine_r_etudiant', 'imagine_r_scolaire', 'imagine_r_j
 const SENIOR_OFFERS = ['navigo_senior']
 const TST_OFFERS = ['tst_50', 'tst_75', 'tst_gratuite']
 
-function isProfileMismatch(profil: string | null, offerId: string): boolean {
-  if (!profil) return false
-  if (STUDENT_OFFERS.includes(offerId) && !['etudiant', 'scolaire', 'scolaire_junior'].includes(profil)) return true
-  if (SENIOR_OFFERS.includes(offerId) && profil !== 'senior') return true
-  if (TST_OFFERS.includes(offerId) && profil !== 'tst') return true
+function isProfileMismatch(profile: string | null, offerId: string): boolean {
+  if (!profile) return false
+  if (STUDENT_OFFERS.includes(offerId) && !['student', 'school', 'junior_school'].includes(profile)) return true
+  if (SENIOR_OFFERS.includes(offerId) && profile !== 'senior') return true
+  if (TST_OFFERS.includes(offerId) && profile !== 'tst') return true
   return false
 }
 
@@ -50,7 +50,7 @@ export class FraudScoreService {
     const [sub] = await db.select().from(subscriptions).where(eq(subscriptions.id, subscriptionId)).limit(1)
     if (!sub) return
 
-    const [user] = await db.select().from(users).where(eq(users.id, sub.payeurId)).limit(1)
+    const [user] = await db.select().from(users).where(eq(users.id, sub.payerId)).limit(1)
     const docs = await db.select().from(documents).where(eq(documents.subscriptionId, subscriptionId))
 
     const docWithName = docs.find((d) => d.aiExtractedData !== null)
@@ -81,7 +81,7 @@ export class FraudScoreService {
       {
         name: 'profile_mismatch',
         weight: 2,
-        triggered: isProfileMismatch(user?.profil ?? null, sub.offerId),
+        triggered: isProfileMismatch(user?.profile ?? null, sub.offerId),
       },
       {
         name: 'low_ocr_confidence',
