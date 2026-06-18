@@ -174,12 +174,12 @@
         "description": "Lucas añade su justificante en unos pocos clics."
       },
       "s4": {
-        "title": "Nuestra recomendación",
-        "description": "Aquí está el abono que le sugerimos según su perfil."
+        "title": "Empiezo mi temporada",
+        "description": "¡Todo está validado! Lucas puede disfrutar de su abono."
       },
       "s5": {
-        "title": "Sus justificantes",
-        "description": "Suba sus documentos o conéctese a servicios oficiales. Verificación automática."
+        "title": "Comienza una nueva temporada",
+        "description": "Unos años después, su situación evoluciona. Comienza una nueva temporada."
       },
       "s6": {
         "title": "Cree su cuenta",
@@ -220,71 +220,7 @@
         "description": "Persona en situación de discapacidad (MDPH) — tarifa según su departamento."
       }
     },
-    "recommendation": {
-      "student": {
-        "summary": "La tarifa Imagine R Estudiante te da acceso a toda Île-de-France durante el curso escolar.",
-        "reasons": [
-          "Tarifa becario aplicada automáticamente",
-          "Todas las zonas incluidas",
-          "Renovación anual sin intervención"
-        ]
-      },
-      "worker": {
-        "summary": "El Navigo Anual sigue siendo el abono más ventajoso para uso diario.",
-        "reasons": [
-          "50% reembolsado por tu empresa",
-          "Ahorro frente a billetes sueltos",
-          "Toda la red IDF incluida"
-        ]
-      },
-      "senior": {
-        "summary": "La tarifa Senior aporta un descuento significativo a partir de los 62 años.",
-        "reasons": [
-          "Verificación de edad automática mediante DNI",
-          "Ahorro estimado 270 €/año",
-          "Cambio sin interrupción del servicio"
-        ]
-      },
-      "jobseeker": {
-        "summary": "La Tarifa Solidaria de Transporte adapta el precio a tus recursos.",
-        "reasons": [
-          "Verificación automática de derechos CAF",
-          "Sin documentos que subir",
-          "Renovación trimestral facilitada"
-        ]
-      },
-      "parent": {
-        "summary": "Un solo espacio para gestionar todos los abonos de tus hijos.",
-        "reasons": [
-          "Imagine R Escolar para cada hijo",
-          "Un solo libro de familia basta",
-          "Recordatorios automáticos antes del curso"
-        ]
-      },
-      "scholar": {
-        "summary": "Imagine R Escolar cubre todo el curso para 11-25 años.",
-        "reasons": [
-          "Toda la red IDF incluida",
-          "Tarifa reducida para becarios disponible",
-          "Renovación automática cada curso"
-        ]
-      },
-      "amethyst": {
-        "summary": "El abono Améthyste se adapta a su departamento de residencia y a su estatus MDPH.",
-        "reasons": [
-          "Tarifa variable según su departamento",
-          "Verificación automática mediante notificación MDPH",
-          "Renovación anual sin gestiones"
-        ]
-      }
-    },
     "documents": {
-      "upload": "Elegir un archivo",
-      "franceConnect": "Conectar con FranceConnect",
-      "analyzing": "Análisis IA en curso…",
-      "validated": "Validado",
-      "optional": "Opcional",
-      "validatedHint": "Documento verificado automáticamente.",
       "school_certificate": {
         "label": "Certificado escolar",
         "help": "Documento emitido por tu centro para el curso actual."
@@ -387,6 +323,23 @@
       "formats": "Formatos aceptados: .pdf, .jpg, .png",
       "security": "Sus datos están seguros y son confidenciales.",
       "continue": "Continuar"
+    },
+    "validatedIntro": {
+      "episodeProgress": "Episodio 4 de 5",
+      "goodNews": "¡Buenas noticias, Lucas!",
+      "phoneTitle": "Tu abono está validado.",
+      "validFrom": "Válido a partir del {{date}}",
+      "continue": "Ver mi suscripción"
+    },
+    "seasonIntro": {
+      "episodeProgress": "Episodio 5 de 5",
+      "greeting": "Hola Lucas 👋",
+      "observation": "Hemos notado que tu situación ha cambiado.",
+      "newSeason": "Comienza una nueva temporada:",
+      "seasonName": "Primer empleo",
+      "description": "Descubre las soluciones adaptadas a esta nueva etapa de tu vida.",
+      "continue": "Descubrir mis nuevas soluciones",
+      "skip": "Saltar este paso"
     }
   },
   "auth": {
