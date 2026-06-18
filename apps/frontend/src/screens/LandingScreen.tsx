@@ -4,7 +4,6 @@ import { ArrowRight, Sparkles } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Badge } from '../components/ui/Badge'
 import { Card } from '../components/ui/Card'
-import { Orb } from '../components/ui/Orb'
 import { PERSONA_LIST, PERSONA_STORIES } from '../data/personaStories'
 import { cn } from '../lib/cn'
 
@@ -38,9 +37,9 @@ export default function LandingScreen() {
           {t('hero.subtitle')}
         </p>
 
-        {/* Tagline narrative — shimmer accent */}
+        {/* Tagline narrative — shimmer accent, accordée au titre */}
         <p
-          className="mt-2 font-mono text-xs tracking-[0.25em] uppercase
+          className="mt-1 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight
                      bg-[linear-gradient(110deg,var(--accent),var(--accent-bright),var(--accent))]
                      bg-[length:200%_100%] bg-clip-text text-transparent
                      animate-shimmer"
@@ -56,16 +55,10 @@ export default function LandingScreen() {
           >
             {t('hero.ctaPrimary')}
           </Button>
-          <Button variant="outline" size="lg">{t('hero.ctaSecondary')}</Button>
+          <Button variant="outline" size="lg" onClick={() => navigate('/forfaits')}>
+            {t('hero.ctaSecondary')}
+          </Button>
         </div>
-      </section>
-
-      {/* STATS BAND */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <Orb value="902€" label={t('stats.annualPrice')} color="primary" />
-        <Orb value="−50%" label={t('stats.employerRefund')} color="green" />
-        <Orb value="5 min" label={t('stats.subscribeTime')} color="pink" />
-        <Orb value="7" label={t('stats.profilesCovered')} color="purple" />
       </section>
 
       {/* FEATURES BENTO */}
@@ -73,7 +66,7 @@ export default function LandingScreen() {
         <div className="mb-8 flex items-end justify-between gap-6">
           <div>
             <p className="font-mono text-xs tracking-widest uppercase text-fg-muted">02 — Plateforme</p>
-            <h2 className="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight text-fg">
+            <h2 className="mt-2 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-fg">
               {t('features.simulator.title')}
             </h2>
           </div>
@@ -83,7 +76,6 @@ export default function LandingScreen() {
           <Card variant="feature" hover spotlight className="md:col-span-4 md:row-span-2 flex">
             <Card.Body>
               <div className="flex h-full flex-col justify-between gap-6">
-                <Badge variant="info">{t('features.simulator.title')}</Badge>
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-fg">
                     {t('features.simulator.title')}
