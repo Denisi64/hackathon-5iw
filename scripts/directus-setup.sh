@@ -30,6 +30,8 @@ TOKEN=$(curl -sS -X POST "${DIRECTUS_URL}/auth/login" \
 echo "Authentifie."
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
+PATCH_ERRORS=0
+
 patch_field() {
   local collection="$1" field="$2" meta="$3"
   local code
@@ -42,6 +44,7 @@ patch_field() {
     echo "  [ok] ${collection}.${field}"
   else
     echo "  [err ${code}] ${collection}.${field} — $(grep -o '"message":"[^"]*"' /tmp/dp_out.json 2>/dev/null | head -1)" >&2
+    PATCH_ERRORS=1
   fi
 }
 
@@ -169,6 +172,12 @@ patch_field "consents" "accepted_at" '{"readonly":true}'
 # ── holders ───────────────────────────────────────────────────────────────────
 echo; echo "=== holders ==="
 patch_field "holders" "created_at" '{"readonly":true}'
+
+if [ "$PATCH_ERRORS" -ne 0 ]; then
+  echo
+  echo "Directus partiellement configure: certains champs ont echoue." >&2
+  exit 1
+fi
 
 echo
 echo "Directus configure — http://localhost:8055/admin"
