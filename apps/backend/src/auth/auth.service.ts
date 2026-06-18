@@ -105,6 +105,7 @@ export class AuthService {
       accessToken,
       refreshToken,
       access_token: accessToken,
+      refresh_token: refreshToken,
       user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, profile: user.profile },
     }
   }

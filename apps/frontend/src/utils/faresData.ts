@@ -83,7 +83,7 @@ export const PLANS: Plan[] = [
     priority: 40,
     sourceUrl: IDFM_FARES_URL,
     profiles: ['employee', 'student', 'senior'],
-    yearlyPrice: null,
+    yearlyPrice: 90.80 * 12,
     monthlyPrice: 90.80,
     zones: { min: 1, max: 5 },
     renewal: 'monthly',
