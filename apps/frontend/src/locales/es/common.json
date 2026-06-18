@@ -178,8 +178,8 @@
         "description": "¡Todo está validado! Lucas puede disfrutar de su abono."
       },
       "s5": {
-        "title": "Sus justificantes",
-        "description": "Suba sus documentos o conéctese a servicios oficiales. Verificación automática."
+        "title": "Comienza una nueva temporada",
+        "description": "Unos años después, su situación evoluciona. Comienza una nueva temporada."
       },
       "s6": {
         "title": "Cree su cuenta",
@@ -221,12 +221,6 @@
       }
     },
     "documents": {
-      "upload": "Elegir un archivo",
-      "franceConnect": "Conectar con FranceConnect",
-      "analyzing": "Análisis IA en curso…",
-      "validated": "Validado",
-      "optional": "Opcional",
-      "validatedHint": "Documento verificado automáticamente.",
       "school_certificate": {
         "label": "Certificado escolar",
         "help": "Documento emitido por tu centro para el curso actual."
@@ -336,6 +330,16 @@
       "phoneTitle": "Tu abono está validado.",
       "validFrom": "Válido a partir del {{date}}",
       "continue": "Ver mi suscripción"
+    },
+    "seasonIntro": {
+      "episodeProgress": "Episodio 5 de 5",
+      "greeting": "Hola Lucas 👋",
+      "observation": "Hemos notado que tu situación ha cambiado.",
+      "newSeason": "Comienza una nueva temporada:",
+      "seasonName": "Primer empleo",
+      "description": "Descubre las soluciones adaptadas a esta nueva etapa de tu vida.",
+      "continue": "Descubrir mis nuevas soluciones",
+      "skip": "Saltar este paso"
     }
   },
   "auth": {

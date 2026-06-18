@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNod
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
-  ArrowLeft, ArrowRight, Check, CheckCircle2, Loader2, Upload, Mail,
+  ArrowLeft, ArrowRight, Briefcase, Check, CheckCircle2, Loader2, Mail,
   User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, WalletCards, CloudUpload,
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
@@ -56,7 +56,6 @@ export default function SubscriptionScreen() {
   const [profile, setProfile] = useState<ProfileSlug | null>(null)
   const [answers, setAnswers] = useState<Answers>({})
   const [docStatuses, setDocStatuses] = useState<Record<string, DocStatus>>({})
-  const [docConfidence, setDocConfidence] = useState<Record<string, number | null>>({})
   const [account, setAccount] = useState<Account>({ firstName: '', lastName: '', email: '', phone: '' })
   const [accountErrors, setAccountErrors] = useState<Partial<Record<keyof Account, string>>>({})
   const [subscriptionId, setSubscriptionId] = useState<string | null>(null)
@@ -80,11 +79,7 @@ export default function SubscriptionScreen() {
     if (step === 2) return profile !== null
     if (step === 3) return true
     if (step === 4) return plan !== undefined
-    if (step === 5) {
-      if (!profileDef) return false
-      const optional = new Set(profileDef.optionalDocuments ?? [])
-      return profileDef.documents.every((d) => optional.has(d) || docStatuses[d] === 'valid')
-    }
+    if (step === 5) return true
     if (step === 6) {
       const errs: Partial<Record<keyof Account, string>> = {}
       if (!account.firstName.trim()) errs.firstName = t('subscription.errors.required')
@@ -147,7 +142,6 @@ export default function SubscriptionScreen() {
     if (file && subscriptionId) {
       try {
         const result = await documentsService.verify(subscriptionId, file)
-        setDocConfidence((s) => ({ ...s, [docKey]: result.aiConfidence }))
         setDocStatuses((s) => ({ ...s, [docKey]: result.status === 'rejected' ? 'idle' : 'valid' }))
       } catch {
         setDocStatuses((s) => ({ ...s, [docKey]: 'idle' }))
@@ -183,7 +177,7 @@ export default function SubscriptionScreen() {
           />
         )}
         {step === 4 && plan && <Step4Validated plan={plan} locale={locale} onContinue={() => { void onNext() }} />}
-        {step === 5 && profileDef && <Step5Documents docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
+        {step === 5 && <Step5NewSeason onContinue={() => { void onNext() }} onSkip={() => setStep(6)} />}
         {step === 6 && <Step6Account account={account} setAccount={setAccount} errors={accountErrors} />}
         {step === 7 && profileDef && plan && <Step7Confirmation firstName={account.firstName} email={account.email} plan={plan} locale={locale} />}
       </div>
@@ -193,7 +187,7 @@ export default function SubscriptionScreen() {
       )}
 
       {/* Nav bar */}
-      {step > 4 && (
+      {step > 5 && (
         <NavBar
           step={step}
           isLoading={isLoading}
@@ -660,84 +654,65 @@ function Step4Validated({ plan, locale, onContinue }: {
   )
 }
 
-function Step5Documents({ docs, optionalDocs, statuses, confidence, onUpload }: {
-  docs: string[]
-  optionalDocs?: string[]
-  statuses: Record<string, DocStatus>
-  confidence: Record<string, number | null>
-  onUpload: (key: string, file?: File) => void
+function Step5NewSeason({ onContinue, onSkip }: {
+  onContinue: () => void
+  onSkip: () => void
 }) {
   const { t } = useTranslation()
-  const fileRefs = useRef<Record<string, HTMLInputElement | null>>({})
-  const optionalSet = new Set(optionalDocs ?? [])
+
   return (
-    <div className="flex flex-col gap-4">
-      {docs.map((docKey) => {
-        const status = statuses[docKey] ?? 'idle'
-        const isFranceConnect = docKey === 'france_connect'
-        const isOptional = optionalSet.has(docKey)
-        const score = confidence[docKey]
-        return (
-          <Card key={docKey}>
-            <Card.Body>
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-base font-semibold tracking-tight text-fg">
-                      {t(`subscription.documents.${docKey}.label`)}
-                    </h3>
-                    {isOptional && <Badge variant="neutral">{t('subscription.documents.optional')}</Badge>}
-                  </div>
-                  <p className="mt-1 text-sm text-fg-muted">
-                    {t(`subscription.documents.${docKey}.help`)}
-                  </p>
-                </div>
-                {status === 'valid' && (
-                  <Badge variant="success">
-                    <Check className="h-3 w-3" aria-hidden="true" /> {t('subscription.documents.validated')}
-                    {score !== null && score !== undefined && <span className="ml-1 opacity-70">{score}%</span>}
-                  </Badge>
-                )}
-              </div>
-              <div className="mt-4">
-                {!isFranceConnect && (
-                  <input
-                    type="file"
-                    accept="image/*,.pdf"
-                    className="hidden"
-                    ref={(el) => { fileRefs.current[docKey] = el }}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) onUpload(docKey, file)
-                      e.target.value = ''
-                    }}
-                  />
-                )}
-                {status === 'idle' && (
-                  <Button
-                    variant={isFranceConnect ? 'primary' : 'secondary'}
-                    size="md"
-                    onClick={() => isFranceConnect ? onUpload(docKey) : fileRefs.current[docKey]?.click()}
-                    leftIcon={isFranceConnect ? <Lock className="h-4 w-4" aria-hidden="true" /> : <Upload className="h-4 w-4" aria-hidden="true" />}
-                  >
-                    {isFranceConnect ? t('subscription.documents.franceConnect') : t('subscription.documents.upload')}
-                  </Button>
-                )}
-                {status === 'analyzing' && (
-                  <div className="flex items-center gap-2 text-sm text-fg-muted">
-                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                    <span>{t('subscription.documents.analyzing')}</span>
-                  </div>
-                )}
-                {status === 'valid' && (
-                  <p className="text-sm text-fg-muted">{t('subscription.documents.validatedHint')}</p>
-                )}
-              </div>
-            </Card.Body>
-          </Card>
-        )
-      })}
-    </div>
+    <EpisodeFrame>
+      <EpisodeProgress
+        label={t('subscription.seasonIntro.episodeProgress')}
+        episode={5}
+        total={5}
+        barClassName="lg:w-56 xl:w-64"
+      />
+
+      <div className="mt-10 lg:mt-8">
+        <h2 className="text-2xl font-black leading-tight tracking-normal sm:text-3xl lg:text-2xl xl:text-3xl">
+          {t('subscription.seasonIntro.greeting')}
+        </h2>
+        <p className="mt-4 text-base font-black leading-snug sm:text-lg lg:text-base xl:text-lg">
+          {t('subscription.seasonIntro.observation')}
+        </p>
+      </div>
+
+      <div className="relative mx-auto mt-10 flex h-36 w-full max-w-[340px] items-center justify-center sm:h-40 lg:mt-8 lg:h-32 xl:h-36" aria-hidden="true">
+        <div className="absolute inset-x-8 bottom-7 h-16 rounded-full bg-[#096AF3]/8 sm:bottom-8 lg:bottom-6" />
+        <span className="absolute left-[12%] top-[38%] h-3 w-3 rounded-full bg-[#096AF3]" />
+        <span className="absolute left-[18%] top-[16%] h-3 w-3 rotate-45 rounded-[2px] bg-[#F10AA0]" />
+        <span className="absolute right-[16%] top-[18%] h-3 w-3 rounded-full bg-[#10B981]" />
+        <span className="absolute right-[10%] top-[47%] h-3 w-3 rotate-45 rounded-[2px] bg-[#F5B700]" />
+        <div className="relative grid h-24 w-32 place-items-center rounded-2xl border-4 border-[#096AF3] bg-[#096AF3]/18 text-[#096AF3] shadow-[0_18px_44px_rgba(9,106,243,0.14)] sm:h-28 sm:w-40 lg:h-24 lg:w-32 xl:h-28 xl:w-40">
+          <div className="absolute -top-7 h-9 w-16 rounded-t-2xl border-4 border-[#096AF3] border-b-0 sm:w-20 lg:w-16 xl:w-20" />
+          <Briefcase className="h-16 w-16 sm:h-20 sm:w-20 lg:h-16 lg:w-16 xl:h-20 xl:w-20" strokeWidth={1.8} />
+        </div>
+      </div>
+
+      <div className="mt-10 lg:mt-8">
+        <p className="text-lg font-black leading-tight sm:text-xl lg:text-lg xl:text-xl">
+          {t('subscription.seasonIntro.newSeason')}
+        </p>
+        <h3 className="mt-3 text-3xl font-black leading-tight tracking-normal sm:text-4xl lg:text-3xl xl:text-4xl">
+          {t('subscription.seasonIntro.seasonName')}
+        </h3>
+        <p className="mt-5 text-base font-black leading-snug sm:text-lg lg:text-base xl:text-lg">
+          {t('subscription.seasonIntro.description')}
+        </p>
+      </div>
+
+      <EpisodePrimaryButton onClick={onContinue} className="lg:mt-7 xl:mt-8">
+        {t('subscription.seasonIntro.continue')}
+      </EpisodePrimaryButton>
+      <button
+        type="button"
+        onClick={onSkip}
+        className="mt-4 flex h-14 w-full items-center justify-center rounded-xl border-2 border-[#096AF3] bg-white px-5 text-lg font-extrabold text-[#096AF3] transition hover:bg-[#096AF3]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#096AF3] focus-visible:ring-offset-2 sm:h-16 sm:text-xl lg:h-12 lg:text-base xl:h-14 xl:text-lg"
+      >
+        {t('subscription.seasonIntro.skip')}
+      </button>
+    </EpisodeFrame>
   )
 }
 

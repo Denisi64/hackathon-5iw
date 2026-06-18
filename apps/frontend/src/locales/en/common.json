@@ -178,8 +178,8 @@
         "description": "Everything is approved! Lucas can enjoy his pass."
       },
       "s5": {
-        "title": "Your documents",
-        "description": "Upload your documents or connect to official services. Automatic verification."
+        "title": "A new season begins",
+        "description": "A few years later, his situation changes. A new season begins."
       },
       "s6": {
         "title": "Create your account",
@@ -221,12 +221,6 @@
       }
     },
     "documents": {
-      "upload": "Choose a file",
-      "franceConnect": "Sign in with FranceConnect",
-      "analyzing": "AI analysis in progress…",
-      "validated": "Verified",
-      "optional": "Optional",
-      "validatedHint": "Document checked automatically.",
       "school_certificate": {
         "label": "School certificate",
         "help": "Document issued by your school for the current year."
@@ -336,6 +330,16 @@
       "phoneTitle": "Your pass is approved.",
       "validFrom": "Valid from {{date}}",
       "continue": "View my subscription"
+    },
+    "seasonIntro": {
+      "episodeProgress": "Episode 5 of 5",
+      "greeting": "Hello Lucas 👋",
+      "observation": "We noticed that your situation has changed.",
+      "newSeason": "A new season begins:",
+      "seasonName": "First job",
+      "description": "Discover solutions adapted to this new stage of your life.",
+      "continue": "Discover my new solutions",
+      "skip": "Skip this step"
     }
   },
   "auth": {

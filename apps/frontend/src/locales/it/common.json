@@ -178,8 +178,8 @@
         "description": "Tutto è convalidato! Lucas può godersi il suo abbonamento."
       },
       "s5": {
-        "title": "I tuoi documenti",
-        "description": "Carica i documenti o connettiti ai servizi ufficiali. Verifica automatica."
+        "title": "Inizia una nuova stagione",
+        "description": "Qualche anno dopo, la sua situazione cambia. Inizia una nuova stagione."
       },
       "s6": {
         "title": "Crea il tuo account",
@@ -221,12 +221,6 @@
       }
     },
     "documents": {
-      "upload": "Scegli un file",
-      "franceConnect": "Accedi con FranceConnect",
-      "analyzing": "Analisi IA in corso…",
-      "validated": "Convalidato",
-      "optional": "Facoltativo",
-      "validatedHint": "Documento verificato automaticamente.",
       "school_certificate": {
         "label": "Certificato scolastico",
         "help": "Documento rilasciato dalla tua scuola per l'anno corrente."
@@ -336,6 +330,16 @@
       "phoneTitle": "Il tuo abbonamento è convalidato.",
       "validFrom": "Valido dal {{date}}",
       "continue": "Vedi il mio abbonamento"
+    },
+    "seasonIntro": {
+      "episodeProgress": "Episodio 5 di 5",
+      "greeting": "Ciao Lucas 👋",
+      "observation": "Abbiamo notato che la tua situazione è cambiata.",
+      "newSeason": "Inizia una nuova stagione:",
+      "seasonName": "Primo lavoro",
+      "description": "Scopri le soluzioni adatte a questa nuova fase della tua vita.",
+      "continue": "Scopri le mie nuove soluzioni",
+      "skip": "Salta questo passaggio"
     }
   },
   "auth": {
