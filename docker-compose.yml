@@ -29,7 +29,7 @@ services:
       - .env.example
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    command: sh -c "pnpm db:migrate && pnpm db:seed && pnpm dev"
+    command: sh -c "pnpm db:push && pnpm db:seed && pnpm dev"
     volumes:
       - ./apps/backend:/app
       - backend_node_modules:/app/node_modules
@@ -71,6 +71,20 @@ services:
     networks:
       - comutitres
 
+  directus-db:
+    image: postgres:16-alpine
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD:-comutitres_dev}
+    command: >
+      sh -c "until pg_isready -h postgres -U ${POSTGRES_USER:-comutitres} -d ${POSTGRES_DB:-comutitres}; do sleep 1; done;
+      psql -h postgres -U ${POSTGRES_USER:-comutitres} -d ${POSTGRES_DB:-comutitres}
+      -c \"CREATE SCHEMA IF NOT EXISTS directus AUTHORIZATION ${POSTGRES_USER:-comutitres}\""
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - comutitres
+
   directus:
     image: directus/directus:11
     ports:
@@ -83,6 +97,7 @@ services:
       DB_HOST: postgres
       DB_PORT: "5432"
       DB_DATABASE: comutitres
+      DB_SEARCH_PATH: directus,public
       DB_USER: comutitres
       DB_PASSWORD: comutitres_dev
       WEBSOCKETS_ENABLED: "false"
@@ -95,8 +110,8 @@ services:
     volumes:
       - directus_uploads:/directus/uploads
     depends_on:
-      postgres:
-        condition: service_healthy
+      directus-db:
+        condition: service_completed_successfully
     networks:
       - comutitres
 

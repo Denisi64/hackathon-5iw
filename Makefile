@@ -36,8 +36,6 @@ start:
 	$(MAKE) refresh-deps
 	docker compose up -d --build
 	$(MAKE) wait-api
-	docker compose exec -T backend pnpm db:migrate
-	docker compose exec -T backend pnpm db:seed
 	$(MAKE) directus-setup
 	@echo ""
 	@echo "Projet lance:"
@@ -53,8 +51,6 @@ start-llm:
 	$(MAKE) wait-ollama
 	$(MAKE) ollama-pull
 	$(MAKE) wait-api
-	docker compose exec -T backend pnpm db:migrate
-	docker compose exec -T backend pnpm db:seed
 	@echo ""
 	@echo "Projet lance avec TinyLlama:"
 	@echo "  Front: http://localhost:5173"
