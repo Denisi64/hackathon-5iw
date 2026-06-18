@@ -1,8 +1,9 @@
-.PHONY: help install start stop refresh-deps wait-api dev dev-front dev-back build test test-report coverage lint ci docker-build docker-up docker-up-bake docker-down db-migrate db-seed clean
+.PHONY: help install start start-llm stop refresh-deps wait-api wait-ollama ollama-pull dev dev-front dev-back build test test-report coverage lint ci docker-build docker-up docker-up-bake docker-down db-migrate db-seed test-chatbot clean
 
 help:
 	@echo "Commandes disponibles:"
 	@echo "  make start        Lancer le projet complet"
+	@echo "  make start-llm    Lancer le projet avec TinyLlama local"
 	@echo "  make stop         Arreter le projet"
 	@echo "  make refresh-deps Recréer les node_modules Docker"
 	@echo "  make install      Installer les dependances"
@@ -21,6 +22,7 @@ help:
 	@echo "  make docker-down  Arreter Docker"
 	@echo "  make db-migrate   Appliquer le schema BDD"
 	@echo "  make db-seed      Ajouter les donnees de test"
+	@echo "  make test-chatbot Tester le endpoint IA chat"
 	@echo "  make clean        Supprimer dist et coverage"
 
 install:
@@ -38,6 +40,23 @@ start:
 	@echo "  API:   http://localhost:3000/api/health"
 	@echo "  Pgweb: http://localhost:8081"
 	@echo "  MinIO: http://localhost:9001"
+
+start-llm:
+	$(MAKE) refresh-deps
+	docker compose --profile llm up -d --build
+	$(MAKE) wait-ollama
+	$(MAKE) ollama-pull
+	$(MAKE) wait-api
+	docker compose exec -T backend pnpm db:migrate
+	docker compose exec -T backend pnpm db:seed
+	@echo ""
+	@echo "Projet lance avec TinyLlama:"
+	@echo "  Front: http://localhost:5173"
+	@echo "  Assistant: http://localhost:5173/assistant"
+	@echo "  API:   http://localhost:3000/api/health"
+	@echo "  Pgweb: http://localhost:8081"
+	@echo "  MinIO: http://localhost:9001"
+	@echo "  Ollama: http://localhost:11434"
 
 stop:
 	docker compose down
@@ -57,6 +76,21 @@ wait-api:
 	done; \
 	docker compose logs backend; \
 	exit 1
+
+wait-ollama:
+	@echo "Attente d'Ollama..."
+	@for i in $$(seq 1 60); do \
+		if curl -fsS http://localhost:11434/api/tags >/dev/null; then \
+			echo "Ollama pret"; \
+			exit 0; \
+		fi; \
+		sleep 2; \
+	done; \
+	docker compose --profile llm logs ollama; \
+	exit 1
+
+ollama-pull:
+	docker compose --profile llm exec -T ollama ollama pull tinyllama
 
 dev:
 	pnpm dev
@@ -106,6 +140,20 @@ db-migrate:
 
 db-seed:
 	pnpm --filter @comutitres/backend db:seed
+
+test-chatbot:
+	@echo "Test du chatbot..."
+	@curl -fsS -X POST http://localhost:3000/api/auth/register \
+		-H "Content-Type: application/json" \
+		-d '{"email":"chatbot@test.com","password":"password123","firstName":"Chat","lastName":"Bot","language":"fr"}' >/dev/null 2>/dev/null || true
+	@TOKEN=$$(curl -fsS -X POST http://localhost:3000/api/auth/login \
+		-H "Content-Type: application/json" \
+		-d '{"email":"chatbot@test.com","password":"password123"}' \
+		| node -pe "JSON.parse(require('node:fs').readFileSync(0, 'utf8')).access_token"); \
+	curl -fsS -N -X POST http://localhost:3000/api/ai/chat \
+		-H "Authorization: Bearer $$TOKEN" \
+		-H "Content-Type: application/json" \
+		-d '{"messages":[{"role":"user","content":"Bonjour, je suis etudiant, quel abonnement choisir ?"}]}'
 
 clean:
 	rm -rf apps/frontend/dist apps/backend/dist apps/frontend/coverage apps/backend/coverage apps/frontend/reports apps/backend/reports
