@@ -26,12 +26,6 @@ type Answers = {
   age?: number
   student?: boolean
   scholarship?: boolean
-  zones: number
-  daysPerWeek?: number
-  employerRefund?: boolean
-  cafBeneficiary?: boolean
-  childrenCount?: number
-  firstChildAge?: number
   mainLocation?: string
 }
 
@@ -60,7 +54,7 @@ export default function SubscriptionScreen() {
 
   const [step, setStep] = useState(1)
   const [profile, setProfile] = useState<ProfileSlug | null>(null)
-  const [answers, setAnswers] = useState<Answers>({ zones: 5 })
+  const [answers, setAnswers] = useState<Answers>({})
   const [docStatuses, setDocStatuses] = useState<Record<string, DocStatus>>({})
   const [docConfidence, setDocConfidence] = useState<Record<string, number | null>>({})
   const [account, setAccount] = useState<Account>({ firstName: '', lastName: '', email: '', phone: '' })
@@ -80,22 +74,6 @@ export default function SubscriptionScreen() {
   useEffect(() => {
     setDocStatuses({})
   }, [profile])
-
-  useEffect(() => {
-    if (step === 7 && profileDef && plan) {
-      const startDate = new Date()
-      startDate.setDate(startDate.getDate() + 7)
-      const sub = {
-        planId: plan.id,
-        planNom: plan.name,
-        yearlyPrice: plan.yearlyPrice,
-        monthlyPrice: plan.monthlyPrice,
-        startDate: startDate.toISOString(),
-        zones: answers.zones,
-      }
-      void sub
-    }
-  }, [step, profileDef, plan, answers.zones])
 
   function validateStep(): boolean {
     if (step === 1) return true
@@ -204,10 +182,10 @@ export default function SubscriptionScreen() {
             onContinue={() => { void onNext() }}
           />
         )}
-        {step === 4 && profileDef && plan && <Step4Recommendation profile={profileDef.slug} plan={plan} answers={answers} locale={locale} />}
-        {step === 5 && profileDef && <Step5Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
+        {step === 4 && profileDef && plan && <Step4Recommendation profile={profileDef.slug} plan={plan} locale={locale} />}
+        {step === 5 && profileDef && <Step5Documents docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
         {step === 6 && <Step6Account account={account} setAccount={setAccount} errors={accountErrors} />}
-        {step === 7 && profileDef && plan && <Step7Confirmation firstName={account.firstName} email={account.email} plan={plan} answers={answers} locale={locale} />}
+        {step === 7 && profileDef && plan && <Step7Confirmation firstName={account.firstName} email={account.email} plan={plan} locale={locale} />}
       </div>
 
       {apiError && (
@@ -283,23 +261,6 @@ function EpisodeFrame({ children }: { children: ReactNode }) {
   )
 }
 
-function PhoneStatusBar() {
-  return (
-    <div className="flex items-center justify-between text-xs font-extrabold sm:text-sm lg:text-sm">
-      <span>9:41</span>
-      <span className="flex items-center gap-1.5" aria-hidden="true">
-        <span className="flex h-4 items-end gap-0.5">
-          <span className="h-1.5 w-1 rounded-sm bg-current" />
-          <span className="h-2.5 w-1 rounded-sm bg-current" />
-          <span className="h-3.5 w-1 rounded-sm bg-current" />
-        </span>
-        <span className="h-3 w-4 rounded-t-full border-2 border-current border-b-0" />
-        <span className="h-3.5 w-6 rounded border-2 border-current" />
-      </span>
-    </div>
-  )
-}
-
 function EpisodeProgress({ label, episode, total, className, barClassName }: {
   label: string
   episode: number
@@ -368,7 +329,6 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
 
   return (
     <EpisodeFrame>
-      <PhoneStatusBar />
       <EpisodeProgress
         label={t('subscription.situationIntro.episodeProgress')}
         episode={1}
@@ -487,7 +447,6 @@ function Step2Solution({ plan, answers, locale, onContinue }: {
 
   return (
     <EpisodeFrame>
-      <PhoneStatusBar />
       <EpisodeProgress
         label={t('subscription.solutionIntro.episodeProgress')}
         episode={2}
@@ -550,7 +509,6 @@ function Step3DocumentUpload({ documentLabel, status, onUpload, onContinue }: {
 
   return (
     <EpisodeFrame>
-      <PhoneStatusBar />
       <EpisodeProgress
         label={t('subscription.documentIntro.episodeProgress')}
         episode={3}
@@ -624,14 +582,12 @@ function Step3DocumentUpload({ documentLabel, status, onUpload, onContinue }: {
   )
 }
 
-function Step4Recommendation({ profile, plan, answers, locale }: {
+function Step4Recommendation({ profile, plan, locale }: {
   profile: ProfileSlug
   plan: Plan
-  answers: Answers
   locale: string
 }) {
   const { t } = useTranslation()
-  void answers
   const reasonsKey = `subscription.recommendation.${profile}.reasons`
   const reasons = t(reasonsKey, { returnObjects: true }) as unknown as string[]
   const reasonsList = Array.isArray(reasons) ? reasons : []
@@ -672,8 +628,7 @@ function Step4Recommendation({ profile, plan, answers, locale }: {
   )
 }
 
-function Step5Documents({ profile, docs, optionalDocs, statuses, confidence, onUpload }: {
-  profile: ProfileSlug
+function Step5Documents({ docs, optionalDocs, statuses, confidence, onUpload }: {
   docs: string[]
   optionalDocs?: string[]
   statuses: Record<string, DocStatus>
@@ -682,7 +637,6 @@ function Step5Documents({ profile, docs, optionalDocs, statuses, confidence, onU
 }) {
   const { t } = useTranslation()
   const fileRefs = useRef<Record<string, HTMLInputElement | null>>({})
-  void profile
   const optionalSet = new Set(optionalDocs ?? [])
   return (
     <div className="flex flex-col gap-4">
@@ -803,15 +757,13 @@ function Step6Account({ account, setAccount, errors }: {
   )
 }
 
-function Step7Confirmation({ firstName, email, plan, answers, locale }: {
+function Step7Confirmation({ firstName, email, plan, locale }: {
   firstName: string
   email: string
   plan: Plan
-  answers: Answers
   locale: string
 }) {
   const { t } = useTranslation()
-  void answers
   const startDate = new Date()
   startDate.setDate(startDate.getDate() + 7)
   const startDateStr = startDate.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })
