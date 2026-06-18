@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Modal, TextInput, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
+import { useLocalSearchParams } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import { tripsService, type LogTripDto, type TripItem } from '../../services/api'
 import { useAuthStore } from '../../stores/auth'
@@ -46,11 +47,11 @@ const STATIONS: Record<string, string[]> = {
   '3B': ['Gambetta','Saint-Fargeau','Pelleport','Porte des Lilas'],
   '7B': ['Jaurès','Louis Blanc','Bolivar','Botzaris','Buttes Chaumont','Danube','Place des Fêtes','Pré-Saint-Gervais'],
   // ── RER ──
-  'A': ['Saint-Germain-en-Laye','Le Vésinet - Centre','Le Vésinet - Le Pecq','Chatou - Croissy','Rueil-Malmaison','Nanterre Ville','Nanterre Université','Nanterre Préfecture','La Défense','Charles de Gaulle - Étoile','Auber','Châtelet - Les Halles','Gare de Lyon','Nation','Vincennes','Fontenay-sous-Bois','Val de Fontenay','Champigny','Sucy - Bonneuil','Boissy-Saint-Léger','Nogent-sur-Marne','Neuilly-Plaisance','Neuville Université','Cergy Saint-Christophe','Cergy Préfecture','Cergy le Haut','Maisons-Laffitte','Sartrouville','Houilles - Carrières-sur-Seine','Poissy','Achères Ville','Achères Grand Cormier','Conflans Fin d\'Oise','Marne-la-Vallée Chessy','Val d\'Europe','Bussy-Saint-Georges','Lognes','Torcy','Noisiel','Noisy-le-Grand - Mont d\'Est','Noisy - Champs'],
-  'B': ['Saint-Rémy-lès-Chevreuse','Courcelle-sur-Yvette','Bures-sur-Yvette','Orsay Ville','Le Guichet','Lozère','Gif-sur-Yvette','La Hacquinière','Massy - Verrières','Massy - Palaiseau','Palaiseau','Palaiseau - Villebon','Les Baconnets','Antony','La Croix de Berny','Fontenay-aux-Roses','Robinson','Parc de Sceaux','Sceaux','Bagneux','Arcueil - Cachan','Gentilly','Cité Universitaire','Port Royal','Luxembourg','Saint-Michel Notre-Dame','Châtelet - Les Halles','Gare du Nord','La Plaine Stade de France','Stade de France Saint-Denis','Saint-Denis','La Courneuve - Aubervilliers','Le Bourget','Drancy','Le Blanc-Mesnil','Sevran - Beaudottes','Villepinte','Parc des Expositions','Sevran - Livry','Vert-Galant','Villeparisis - Mitry-le-Neuf','Mitry - Claye','Aéroport CDG 1 (Terminal 3) - RER','Aéroport Charles de Gaulle 2 (Terminal 2)'],
-  'C': ['Versailles Château Rive Gauche','Porchefontaine','Viroflay Rive Gauche','Chaville - Vélizy','Meudon Val Fleury','Issy','Javel','Champ de Mars Tour Eiffel','Pont du Garigliano - Hôpital Européen G. Pompidou','Pont de l\'Alma','Avenue Henri Martin','Avenue du Président Kennedy Maison de Radio France','Boulainvilliers','Avenue Foch','Porte de Clichy','Neuilly - Porte Maillot','Épinay-sur-Seine','Saint-Ouen','Gennevilliers','Saint-Ouen-l\'Aumône','Saint-Gratien','Pontoise','Gare d\'Austerlitz','Bibliothèque François Mitterrand','Vitry-sur-Seine','Les Ardoines','Ivry-sur-Seine','Choisy-le-Roi','Orly Ville','Pont de Rungis Aéroport d\'Orly','Musée d\'Orsay','Invalides','Saint-Michel Notre-Dame','Versailles Chantiers','Massy - Verrières','Massy - Palaiseau','Juvisy','Savigny-sur-Orge','Épinay-sur-Orge','Brétigny','Étampes','Dourdan'],
+  'A': ['Saint-Germain-en-Laye','Le Vésinet - Centre','Le Vésinet - Le Pecq','Chatou - Croissy','Rueil-Malmaison','Cergy le Haut','Cergy Préfecture','Cergy Saint-Christophe','Neuville Université','Conflans Fin d\'Oise','Achères Grand Cormier','Poissy','Achères Ville','Maisons-Laffitte','Sartrouville','Houilles - Carrières-sur-Seine','Nanterre Ville','Nanterre Université','Nanterre Préfecture','La Défense','Charles de Gaulle - Étoile','Auber','Châtelet - Les Halles','Gare de Lyon','Nation','Vincennes','Fontenay-sous-Bois','Val de Fontenay','Champigny','Sucy - Bonneuil','La Varenne - Chennevières','Boissy-Saint-Léger','Nogent-sur-Marne','Neuilly-Plaisance','Noisy - Champs','Noisy-le-Grand - Mont d\'Est','Noisiel','Lognes','Torcy','Bussy-Saint-Georges','Val d\'Europe','Marne-la-Vallée Chessy'],
+  'B': ['Saint-Rémy-lès-Chevreuse','Courcelle-sur-Yvette','Bures-sur-Yvette','Orsay Ville','Le Guichet','Lozère','Gif-sur-Yvette','La Hacquinière','Massy - Verrières','Massy - Palaiseau','Palaiseau','Palaiseau - Villebon','Les Baconnets','Antony','La Croix de Berny','Fontenay-aux-Roses','Robinson','Parc de Sceaux','Sceaux','Bagneux','Arcueil - Cachan','Gentilly','Cité Universitaire','Port Royal','Luxembourg','Saint-Michel Notre-Dame','Châtelet - Les Halles','Gare du Nord','La Plaine Stade de France','Stade de France Saint-Denis','Saint-Denis','La Courneuve - Aubervilliers','Le Bourget','Drancy','Le Blanc-Mesnil','Villepinte','Parc des Expositions','Aéroport CDG 1 (Terminal 3) - RER','Aéroport Charles de Gaulle 2 (Terminal 2)'],
+  'C': ['Versailles Château Rive Gauche','Porchefontaine','Viroflay Rive Gauche','Chaville - Vélizy','Meudon Val Fleury','Issy','Javel','Champ de Mars Tour Eiffel','Pont du Garigliano - Hôpital Européen G. Pompidou','Pont de l\'Alma','Avenue Henri Martin','Avenue du Président Kennedy Maison de Radio France','Boulainvilliers','Avenue Foch','Porte de Clichy','Neuilly - Porte Maillot','Musée d\'Orsay','Invalides','Saint-Michel Notre-Dame','Gare d\'Austerlitz','Bibliothèque François Mitterrand','Vitry-sur-Seine','Les Ardoines','Ivry-sur-Seine','Choisy-le-Roi','Orly Ville','Pont de Rungis Aéroport d\'Orly','Juvisy','Savigny-sur-Orge','Épinay-sur-Orge','Brétigny','Étampes','Dourdan','Saint-Martin-d\'Étampes','Versailles Chantiers','Saint-Quentin-en-Yvelines','Massy - Verrières','Massy - Palaiseau','Épinay-sur-Seine','Saint-Ouen','Gennevilliers','Saint-Ouen-l\'Aumône','Saint-Gratien','Franconville - le Plessis','Ermont - Eaubonne','Pontoise'],
   'D': ['Orry-la-Ville - Coye','Chantilly - Gouvieux','Creil','Survilliers - Fosses','Louvres','Villiers-le-Bel - Gonesse - Arnouville','Garges - Sarcelles','Saint-Denis','Stade de France Saint-Denis','Gare du Nord','Châtelet - Les Halles','Gare de Lyon','Maisons-Alfort - Alfortville','Villeneuve-Saint-Georges','Juvisy','Grigny Centre','Évry - Courcouronnes','Corbeil-Essonnes','Melun'],
-  'E': ['Neuilly - Porte Maillot','La Défense','Nanterre-La-Folie','Haussmann Saint-Lazare','Magenta','Gare de l\'Est','Rosa Parks','Pantin','Noisy-le-Sec','Rosny Bois Perrier','Rosny-sous-Bois','Val de Fontenay','Villiers-sur-Marne - Le Plessis-Trévise','Le Chénay Gagny','Gagny','Chelles - Gournay','Vaires - Torcy','Bondy','Les Yvris Noisy-le-Grand','Émerainville - Pontault-Combault','Roissy-en-Brie','Ozoir-la-Ferrière','Gretz-Armainvilliers','Tournan'],
+  'E': ['Neuilly - Porte Maillot','La Défense','Nanterre-La-Folie','Haussmann Saint-Lazare','Magenta','Gare de l\'Est','Rosa Parks','Pantin','Noisy-le-Sec'],
   // ── Tramway ──
   'T1': ['Asnières - Gennevilliers Les Courtilles','La Courneuve - Six Routes','Hôtel de ville de la Courneuve','Marché de Saint-Denis','Gare de Saint-Denis','Basilique de Saint-Denis','Cimetière de Saint-Denis','Hôpital Avicenne','Cosmonautes','Danton','Bobigny - Pablo Picasso','Hôtel de Ville de Bobigny','Libération','Gaston Roulaud','Drancy - Avenir','La Ferme','Stade Géo André','Escadrille Normandie-Niemen','Maurice Lachâtre','Hôpital Delafontaine','La Courneuve - 8 Mai 1945','Théâtre Gérard Philipe'],
   'T2': ['La Défense (Grande Arche)','Faubourg de l\'Arche','Les Fauvelles','Puteaux','Parc Pierre Lagravère','Jacques-Henri Lartigue','Jacqueline Auriol','Henri Farman','Suresnes - Longchamp','Belvédère','Brimborion','Meudon-sur-Seine','Musée de Sèvres','Parc de Saint-Cloud','Pont de Bezons','Victor Basch','Issy - Val de Seine','Porte d\'Issy','Les Moulineaux','Les Milons','Les Coteaux','Charlebourg','Suzanne Lenglen','Porte de Versailles'],
@@ -102,42 +103,45 @@ const M7_TRUNK = ["Place d'Italie",'Les Gobelins','Censier - Daubenton','Place M
 // Tronc commun M13 (de Châtillon jusqu'à la bifurcation La Fourche)
 const M13_TRUNK = ['Châtillon - Montrouge','Malakoff - Rue Étienne Dolet','Malakoff - Plateau de Vanves','Porte de Vanves','Plaisance','Pernety','Gaîté','Montparnasse Bienvenue','Duroc','Saint-François-Xavier','Varenne','Invalides','Champs-Élysées - Clemenceau','Miromesnil','Saint-Lazare','Liège','Place de Clichy','La Fourche']
 
+// Tronc commun RER A (bifurcations ouest à Nanterre, est à Nation/Val de Fontenay)
+const A_TRUNK = ['Maisons-Laffitte','Sartrouville','Houilles - Carrières-sur-Seine','Nanterre Ville','Nanterre Université','Nanterre Préfecture','La Défense','Charles de Gaulle - Étoile','Auber','Châtelet - Les Halles','Gare de Lyon','Nation','Vincennes','Fontenay-sous-Bois','Val de Fontenay']
+
 const LINE_BRANCHES: Record<string, BranchTab[]> = {
+  // RER A — 5 branches (3 à l'ouest + 2 à l'est)
+  'A': [
+    { label: 'Saint-Germain-en-Laye', buildStations: _ => ['Saint-Germain-en-Laye','Le Vésinet - Centre','Le Vésinet - Le Pecq','Chatou - Croissy','Rueil-Malmaison',...A_TRUNK] },
+    { label: 'Cergy-le-Haut',         buildStations: _ => ['Cergy le Haut','Cergy Préfecture','Cergy Saint-Christophe','Neuville Université','Conflans Fin d\'Oise','Achères Grand Cormier',...A_TRUNK] },
+    { label: 'Poissy',                buildStations: _ => ['Poissy','Achères Ville',...A_TRUNK] },
+    { label: 'Marne-la-Vallée',       buildStations: _ => [...A_TRUNK,'Nogent-sur-Marne','Neuilly-Plaisance','Noisy - Champs','Noisy-le-Grand - Mont d\'Est','Noisiel','Lognes','Torcy','Bussy-Saint-Georges','Val d\'Europe','Marne-la-Vallée Chessy'] },
+    { label: 'Boissy-Saint-Léger',    buildStations: _ => [...A_TRUNK,'Champigny','Sucy - Bonneuil','La Varenne - Chennevières','Boissy-Saint-Léger'] },
+  ],
   // M7 — deux branches égales au sud, tronc commun au nord (bifurcation à Place d'Italie)
   'M7': [
     { label: 'vers Villejuif', buildStations: _ => ['Villejuif - Louis Aragon','Villejuif - Paul Vaillant-Couturier','Villejuif - Léo Lagrange','Le Kremlin-Bicêtre','Maison Blanche','Tolbiac',...M7_TRUNK] },
-    { label: "vers Mairie d'Ivry", buildStations: _ => ["Mairie d'Ivry",'Pierre et Marie Curie',"Porte d'Ivry",'Porte de Choisy',"Porte d'Italie",...M7_TRUNK] },
+    { label: "vers Mairie d'Ivry", buildStations: _ => ["Mairie d'Ivry",'Pierre et Marie Curie',"Porte d'Ivry",'Porte de Choisy',"Porte d'Italie",'Maison Blanche','Tolbiac',...M7_TRUNK] },
   ],
   // M13 — deux branches égales au nord, tronc commun au sud (bifurcation à La Fourche)
   'M13': [
     { label: 'vers Saint-Denis', buildStations: _ => [...M13_TRUNK,'Guy Môquet','Porte de Saint-Ouen','Garibaldi','Saint-Denis - Porte de Paris','Mairie de Saint-Ouen','Saint-Denis - Université','Carrefour Pleyel','Basilique de Saint-Denis'] },
     { label: 'vers Asnières', buildStations: _ => [...M13_TRUNK,'Brochant','Porte de Clichy','Mairie de Clichy','Gabriel Péri','Les Agnettes','Asnières - Gennevilliers - Les Courtilles'] },
   ],
-  // RER A — 4 branches (2 à l'est, 2 à l'ouest)
-  'A': [
-    { label: 'Marne-la-Vallée', buildStations: s => s },
-    { label: 'Boissy-Saint-Léger', buildStations: s => {
-      const i = s.indexOf('Nation'); return i < 0 ? s : [...s.slice(0, i+1),'Sucy - Bonneuil','La Varenne - Chennevières','Boissy-Saint-Léger']
-    }},
-    { label: 'Cergy-le-Haut', buildStations: s => {
-      const i = s.indexOf('Nanterre - Préfecture'); return i < 0 ? s : [...s.slice(0, i+1),'Nanterre - Ville','Houilles - Carrières-sur-Seine','Sartrouville','Maisons-Laffitte','Achères-Grand Cormier','Conflans-Sainte-Honorine','Neuville-Université','Cergy - Saint-Christophe','Cergy - Préfecture','Cergy-le-Haut']
-    }},
-    { label: 'Poissy', buildStations: s => {
-      const i = s.indexOf('Nanterre - Préfecture'); return i < 0 ? s : [...s.slice(0, i+1),'Nanterre - Ville','Houilles - Carrières-sur-Seine','Sartrouville','Maisons-Laffitte','Achères - Ville','Poissy']
-    }},
-  ],
   // RER B — branche nord Mitry-Claye vs CDG
   'B': [
     { label: 'CDG / Robinson', buildStations: s => s },
     { label: 'Mitry-Claye', buildStations: s => {
-      const i = s.indexOf('Gare du Nord'); return i < 0 ? s : [...s.slice(0, i+1),'Aulnay-sous-Bois','Sevran - Beaudottes','Sevran - Livry','Villeparisis - Mitry-le-Neuf','Mitry - Claye']
+      const i = s.indexOf('Gare du Nord'); return i < 0 ? s : [...s.slice(0, i+1),'Aulnay-sous-Bois','Sevran - Beaudottes','Sevran - Livry','Vert-Galant','Villeparisis - Mitry-le-Neuf','Mitry - Claye']
     }},
+  ],
+  // RER E — branche est Chelles-Gournay vs Tournan (bifurcation à Noisy-le-Sec)
+  'E': [
+    { label: 'vers Chelles-Gournay', buildStations: s => [...s,'Rosny Bois Perrier','Rosny-sous-Bois','Val de Fontenay','Villiers-sur-Marne - Le Plessis-Trévise','Le Chénay Gagny','Gagny','Chelles - Gournay'] },
+    { label: 'vers Tournan', buildStations: s => [...s,'Bondy','Les Yvris Noisy-le-Grand','Vaires - Torcy','Émerainville - Pontault-Combault','Roissy-en-Brie','Ozoir-la-Ferrière','Gretz-Armainvilliers','Tournan'] },
   ],
   // RER D — branche sud Melun vs Corbeil
   'D': [
     { label: 'vers Melun', buildStations: s => s },
     { label: 'vers Corbeil', buildStations: s => {
-      const i = s.indexOf('Villeneuve-Saint-Georges'); return i < 0 ? s : [...s.slice(0, i+1),'Vigneux-sur-Seine','Ris-Orangis','Évry-Courcouronnes','Corbeil-Essonnes']
+      const i = s.indexOf('Villeneuve-Saint-Georges'); return i < 0 ? s : [...s.slice(0, i+1),'Vigneux-sur-Seine','Ris-Orangis','Évry - Courcouronnes','Corbeil-Essonnes']
     }},
   ],
 }
@@ -147,7 +151,7 @@ const LINE_BRANCHES: Record<string, BranchTab[]> = {
 type IoniconName = React.ComponentProps<typeof Ionicons>['name']
 
 const NETWORK: { mode: string; icon: IoniconName; lineType: LogTripDto['lineType']; lines: string[] }[] = [
-  { mode: 'Métro',     icon: 'train-outline',      lineType: 'metro',      lines: ['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12','M13','M14'] },
+  { mode: 'Métro',     icon: 'train-outline',      lineType: 'metro',      lines: ['M1','M2','M3','3B','M4','M5','M6','M7','7B','M8','M9','M10','M11','M12','M13','M14'] },
   { mode: 'RER',       icon: 'git-branch-outline',  lineType: 'rer',        lines: ['A','B','C','D','E'] },
   { mode: 'Tram',      icon: 'swap-horizontal-outline', lineType: 'tram',   lines: ['T1','T2','T3a','T3b','T4','T5','T6','T7','T8','T9','T10','T11','T12','T13','T14'] },
   { mode: 'Transilien',icon: 'business-outline',    lineType: 'transilien', lines: ['H','J','K','L','N','P','R','U','V'] },
@@ -217,8 +221,37 @@ const HUBS: Record<string, string>[] = [
   { B:'Massy - Palaiseau', T12:'Massy - Palaiseau', V:'Massy - Palaiseau', C:'Massy - Verrières' },
   // Versailles Chantiers
   { N:'Versailles Chantiers', C:'Versailles Château Rive Gauche', U:'Versailles Chantiers' },
-  // Bercy ← M6 + M14 (noms identiques, même station)
+  // Bercy ← M6 + M14
   { M6:'Bercy', M14:'Bercy' },
+  // Place de Clichy ← M2 + M12 + M13
+  { M2:'Place de Clichy', M12:'Place de Clichy', M13:'Place de Clichy' },
+  // Sèvres - Babylone ← M9 + M12
+  { M9:'Sèvres - Babylone', M12:'Sèvres - Babylone' },
+  // Grands Boulevards ← M8 + M9
+  { M8:'Grands Boulevards', M9:'Grands Boulevards' },
+  // Richelieu - Drouot ← M8 + M9
+  { M8:'Richelieu - Drouot', M9:'Richelieu - Drouot' },
+  // La Motte-Picquet - Grenelle ← M6 + M8 + M10
+  { M6:'La Motte-Picquet - Grenelle', M8:'La Motte-Picquet - Grenelle', M10:'La Motte-Picquet - Grenelle' },
+  // Réaumur - Sébastopol ← M3 + M4
+  { M3:'Réaumur - Sébastopol', M4:'Réaumur - Sébastopol' },
+  // Gare d'Austerlitz ← M5 + M10 + RER C
+  { M5:"Gare d'Austerlitz", M10:"Gare d'Austerlitz", C:"Gare d'Austerlitz" },
+  // Châtelet (M3B) ← M11
+  { M11:'Châtelet', '3B':'Porte des Lilas', _walk: 'true' } as Record<string, string>,
+  // Jussieu ← M7 + M10
+  { M7:'Jussieu', M10:'Jussieu' },
+  // Duroc ← M10 + M13
+  { M10:'Duroc', M13:'Duroc' },
+  // Vaneau ← M10 + M12 (stations proches, correspondance à pied ~300m)
+  // Voltaire ← M9 (pas de correspondance directe)
+  // Pigalle ← M2 + M12
+  { M2:'Pigalle', M12:'Pigalle' },
+  // Abbesses (M12) ↔ Pigalle (M2) — différents niveaux, même quartier
+  // Saint-Michel ← M4 + RER B + RER C
+  { M4:'Saint-Michel', B:'Saint-Michel Notre-Dame', C:'Saint-Michel Notre-Dame' },
+  // Daumesnil ← M6 + M8
+  { M6:'Daumesnil', M8:'Daumesnil' },
   // Saint-Lazare → Saint-Augustin (M9) : ~450m à pied
   // M14, M3, M12, M13 passent à Saint-Lazare ; M9 la plus proche est Saint-Augustin
   { M14:'Saint-Lazare', M3:'Saint-Lazare', M12:'Saint-Lazare', M13:'Saint-Lazare', M9:'Saint-Augustin', _walk: 'true' } as Record<string, string>,
@@ -253,14 +286,32 @@ function bestWagon(line: string, from: string, transferStation: string): 'avant'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+function getRouteStations(line: string, from: string, to: string): string[] {
+  const base = STATIONS[line] ?? []
+  const branches = LINE_BRANCHES[line]
+  if (!branches) return base
+  for (const branch of branches) {
+    const s = branch.buildStations(base)
+    if (s.indexOf(from) >= 0 && s.indexOf(to) >= 0) return s
+  }
+  const seen = new Set<string>()
+  const all: string[] = []
+  for (const branch of branches) {
+    for (const st of branch.buildStations(base)) {
+      if (!seen.has(st)) { seen.add(st); all.push(st) }
+    }
+  }
+  return all
+}
+
 function stopsBetween(line: string, from: string, to: string): number {
-  const s = STATIONS[line] ?? []
+  const s = getRouteStations(line, from, to)
   const fi = s.indexOf(from), ti = s.indexOf(to)
   return fi >= 0 && ti >= 0 ? Math.abs(ti - fi) : 5
 }
 
 function intermediateStops(line: string, from: string, to: string): string[] {
-  const s = STATIONS[line] ?? []
+  const s = getRouteStations(line, from, to)
   const fi = s.indexOf(from), ti = s.indexOf(to)
   if (fi < 0 || ti < 0 || fi === ti) return []
   const [lo, hi] = fi < ti ? [fi, ti] : [ti, fi]
@@ -348,11 +399,14 @@ function findItinerary(fromLine: string, fromStation: string, toLine: string, to
     }
   }
 
-  // Fallback
+  // Fallback — aucun itinéraire trouvé en ≤2 correspondances
+  // On affiche un trajet direct estimé sur la ligne de départ
   if (!best) {
-    const leg1 = makeLeg(fromLine, fromStation, fromStation)
-    const leg2 = makeLeg(toLine, toStation, toStation)
-    best = { legs: [leg1, leg2], transfers: [{ fromStation, toStation, isWalk: true }], duration: 40 }
+    best = {
+      legs: [{ line: fromLine, from: fromStation, to: toStation, stops: 8, intermediate: [] }],
+      transfers: [],
+      duration: 40,
+    }
   }
 
   return best
@@ -400,9 +454,8 @@ type Step = 'from-line' | 'from-station' | 'to-line' | 'to-station' | 'confirm'
 
 export default function TripsScreen() {
   const { token } = useAuthStore()
-  const [today, setToday] = useState<{ totalTrips: number; totalCo2Saved: number; trips: TripItem[] } | null>(null)
   const [week, setWeek] = useState<{ weekTrips: number; weekCo2Saved: number; weekKm: number; streak: number } | null>(null)
-  const [step, setStep] = useState<Step | null>(null)
+  const [step, setStep] = useState<Step>('from-line')
   const [fromLine, setFromLine] = useState<string | null>(null)
   const [fromStation, setFromStation] = useState<string | null>(null)
   const [toLine, setToLine] = useState<string | null>(null)
@@ -413,14 +466,11 @@ export default function TripsScreen() {
 
   const fetchData = () => {
     if (!token) return
-    Promise.all([
-      tripsService.getToday(token).then(setToday).catch(() => null),
-      tripsService.getWeek(token).then(setWeek).catch(() => null),
-    ])
+    tripsService.getWeek(token).then(setWeek).catch(() => null)
   }
   useEffect(() => { fetchData() }, [token])
 
-  const reset = () => { setStep(null); setFromLine(null); setFromStation(null); setToLine(null); setToStation(null); setSearch('') }
+  const reset = () => { setStep('from-line'); setFromLine(null); setFromStation(null); setToLine(null); setToStation(null); setSearch('') }
 
   const openModal = (preselectedLine?: string) => {
     reset()
@@ -430,9 +480,23 @@ export default function TripsScreen() {
 
   const activeStations = useMemo(() => {
     const line = step === 'from-station' ? fromLine : toLine
-    const base = line ? (STATIONS[line] ?? []) : []
-    if (!search.trim()) return base
-    return base.filter(s => s.toLowerCase().includes(search.toLowerCase()))
+    if (!line) return []
+    const base = STATIONS[line] ?? []
+    const branches = LINE_BRANCHES[line]
+    let all: string[]
+    if (branches) {
+      const seen = new Set<string>()
+      all = []
+      for (const branch of branches) {
+        for (const s of branch.buildStations(base)) {
+          if (!seen.has(s)) { seen.add(s); all.push(s) }
+        }
+      }
+    } else {
+      all = base
+    }
+    if (!search.trim()) return all
+    return all.filter(s => s.toLowerCase().includes(search.toLowerCase()))
   }, [step, fromLine, toLine, search])
 
   const itinerary = useMemo<Itinerary | null>(() => {
@@ -440,7 +504,7 @@ export default function TripsScreen() {
     return findItinerary(fromLine, fromStation, toLine, toStation)
   }, [fromLine, fromStation, toLine, toStation])
 
-  const modalAccent = step?.startsWith('to') && toLine ? lineColor(toLine) : fromLine ? lineColor(fromLine) : '#1A73E8'
+  const modalAccent = step.startsWith('to') && toLine ? lineColor(toLine) : fromLine ? lineColor(fromLine) : '#1A73E8'
 
   const handleConfirm = async () => {
     if (!token || !fromLine || !fromStation || !toLine || !toStation || !itinerary) return
@@ -449,7 +513,9 @@ export default function TripsScreen() {
     const arr = new Date(Date.now() + itinerary.duration * 60000).toTimeString().slice(0, 5)
     try {
       await tripsService.log(token, { line: fromLine, toLine: toLine, lineType: LINE_TYPE[fromLine] ?? 'metro', from: fromStation, to: toStation, departureTime: now, arrivalTime: arr, duration: itinerary.duration, zones: [1], itineraryData: itinerary, co2Saved: itinerary.legs.reduce((a, l) => a + l.stops * 150, 0) })
-      setLastLogged(`${fromLine}→${toLine} · ${fromStation} ➔ ${toStation} · +15 pts`)
+      const kmRate: Record<string, number> = { metro:0.8, rer:1.2, transilien:1.0, bus:0.4, tram:0.5 }
+      const earnedPts = 10 + Math.floor(itinerary.duration * (kmRate[LINE_TYPE[fromLine] ?? 'metro'] ?? 0.8)) * 2
+      setLastLogged(`${fromLine}→${toLine} · ${fromStation} ➔ ${toStation} · +${earnedPts} pts`)
       setHistory(null) // force reload au prochain switch d'onglet
       reset()
       fetchData()
@@ -466,14 +532,30 @@ export default function TripsScreen() {
     if (activeTab === 1 && token && !history) {
       tripsService.getHistory(token).then(setHistory).catch(() => setHistory([]))
     }
-    if (activeTab === 0 && step === null) setStep('from-line')
-  }, [activeTab, token, step])
+  }, [activeTab, token])
 
   const [planLine, setPlanLine] = useState<string | null>(null)
-  const [planBranchTab, setPlanBranchTab] = useState(0)
   const [selectedTrip, setSelectedTrip] = useState<TripItem | null>(null)
 
-  const openPlanLine = (line: string) => { setPlanLine(line); setPlanBranchTab(0) }
+  const { tab: tabParam, tripId: tripIdParam } = useLocalSearchParams<{ tab?: string; tripId?: string }>()
+  const handledParams = useRef<string | null>(null)
+  useEffect(() => {
+    const key = `${tabParam}-${tripIdParam}`
+    if (!tabParam || handledParams.current === key) return
+    handledParams.current = key
+    if (tabParam === '1') {
+      setActiveTab(1)
+      if (tripIdParam && token) {
+        tripsService.getHistory(token).then((h) => {
+          setHistory(h)
+          const found = h.find((t) => t.id === tripIdParam)
+          if (found) setSelectedTrip(found)
+        }).catch(() => null)
+      }
+    }
+  }, [tabParam, tripIdParam, token])
+
+  const openPlanLine = (line: string) => { setPlanLine(line) }
 
   // Recharge l'historique après un nouveau log
   const reloadHistory = () => {
@@ -527,7 +609,7 @@ export default function TripsScreen() {
       {/* Stats semaine */}
       {week && (
         <View className="flex-row gap-2 px-6 mt-3">
-          {[{v:`${week.weekTrips}`,label:'trajets',color:'#1A73E8'},{v:`${week.weekKm}km`,label:'parcourus',color:'#0D47A1'},{v:`${week.weekCo2Saved}g`,label:'CO₂',color:'#2E7D32'},{v:`${week.streak}`,label:'streak',color:'#E65100'}].map(s=>(
+          {[{v:`${week.weekTrips}`,label:'trajets',color:'#1A73E8'},{v:`${week.weekKm}km`,label:'parcourus',color:'#0D47A1'},{v:`${week.weekCo2Saved}kg`,label:'CO₂ éco.',color:'#2E7D32'},{v:`🔥${week.streak}`,label:'streak',color:'#E65100'}].map(s=>(
             <View key={s.label} className="flex-1 bg-white border border-border rounded-2xl py-2.5 items-center">
               <Text style={{color:s.color}} className="text-sm font-black">{s.v}</Text>
               <Text className="text-[10px] text-muted">{s.label}</Text>
@@ -548,8 +630,7 @@ export default function TripsScreen() {
       {/* ── TAB 0 : Trajet ── */}
       {activeTab === 0 && (
         <View style={{ flex:1 }}>
-          {step !== null && (
-            <View style={{ flex:1, backgroundColor:'#fff' }}>
+          <View style={{ flex:1, backgroundColor:'#fff' }}>
               {/* Header */}
               <View style={{ paddingHorizontal:24, paddingTop:18, paddingBottom:12 }}>
                 <View style={{ flexDirection:'row', alignItems:'center', marginBottom:14 }}>
@@ -567,7 +648,9 @@ export default function TripsScreen() {
                         : 'Vérifiez votre trajet'}
                     </Text>
                   </View>
-                  <TouchableOpacity onPress={reset}><Text style={{ fontSize:22, color:'#94A3B8' }}>✕</Text></TouchableOpacity>
+                  {step !== 'from-line' && (
+                    <TouchableOpacity onPress={reset}><Ionicons name="close-outline" size={24} color="#94A3B8" /></TouchableOpacity>
+                  )}
                 </View>
 
                 {/* Barre de progression */}
@@ -578,7 +661,10 @@ export default function TripsScreen() {
                       <View key={s.key} style={{ flexDirection:'row', alignItems:'center', flex: i<2?1:0 }}>
                         <View style={{ flexDirection:'row', alignItems:'center', gap:5 }}>
                           <View style={{ width:26, height:26, borderRadius:13, backgroundColor: done?'#22C55E': active?modalAccent:'#E2E8F0', alignItems:'center', justifyContent:'center' }}>
-                            <Text style={{ fontSize:11, fontWeight:'800', color: done||active?'#fff':'#94A3B8' }}>{done?'✓':i+1}</Text>
+                            {done
+                              ? <Ionicons name="checkmark" size={13} color="#fff" />
+                              : <Text style={{ fontSize:11, fontWeight:'800', color: active?'#fff':'#94A3B8' }}>{i+1}</Text>
+                            }
                           </View>
                           <Text style={{ fontSize:11, fontWeight: active?'700':'500', color: active?'#1A2340':'#94A3B8' }}>{s.label}</Text>
                         </View>
@@ -587,6 +673,15 @@ export default function TripsScreen() {
                     )
                   })}
                 </View>
+
+                {/* Bannière succès */}
+                {lastLogged && step === 'from-line' && (
+                  <View style={{ flexDirection:'row', alignItems:'center', gap:8, backgroundColor:'#F0FFF4', borderWidth:1, borderColor:'#86EFAC', borderRadius:12, paddingHorizontal:12, paddingVertical:10, marginBottom:8 }}>
+                    <Ionicons name="checkmark-circle" size={18} color="#15803D" />
+                    <Text style={{ color:'#15803D', fontSize:12, fontWeight:'600', flex:1 }}>{lastLogged}</Text>
+                    <TouchableOpacity onPress={() => setLastLogged(null)}><Ionicons name="close" size={16} color="#86EFAC" /></TouchableOpacity>
+                  </View>
+                )}
 
                 {/* Recap départ/arrivée */}
                 {(fromStation || toStation) && step !== 'confirm' && (
@@ -641,7 +736,7 @@ export default function TripsScreen() {
                               <View style={{ backgroundColor:c+'18', paddingHorizontal:8, paddingVertical:3, borderRadius:8 }}>
                                 <Text style={{ fontSize:10, fontWeight:'700', color:c }}>{stations.length} st.</Text>
                               </View>
-                              <Text style={{ fontSize:16, color:'#CBD5E1' }}>›</Text>
+                              <Ionicons name="chevron-forward" size={16} color="#CBD5E1" />
                             </View>
                           </TouchableOpacity>
                         )
@@ -658,10 +753,11 @@ export default function TripsScreen() {
                     <View style={{ flexDirection:'row', alignItems:'center', gap:8, backgroundColor:'#F1F4FA', borderRadius:14, paddingHorizontal:14, paddingVertical:10 }}>
                       <Ionicons name="search-outline" size={16} color="#94A3B8" />
                       <TextInput value={search} onChangeText={setSearch} placeholder="Rechercher une station…" placeholderTextColor="#94A3B8" style={{ flex:1, fontSize:14, color:'#1A2340' }} autoFocus />
-                      {search.length>0 && <TouchableOpacity onPress={() => setSearch('')}><Text style={{ color:'#94A3B8' }}>✕</Text></TouchableOpacity>}
+                      {search.length>0 && <TouchableOpacity onPress={() => setSearch('')}><Ionicons name="close-circle" size={18} color="#94A3B8" /></TouchableOpacity>}
                     </View>
-                    <TouchableOpacity onPress={() => { setSearch(''); if (step==='from-station') setStep('from-line'); else setStep('to-line') }} style={{ marginTop:8 }}>
-                      <Text style={{ fontSize:12, color:'#6B7A99' }}>← Changer de ligne</Text>
+                    <TouchableOpacity onPress={() => { setSearch(''); if (step==='from-station') setStep('from-line'); else setStep('to-line') }} style={{ marginTop:8, flexDirection:'row', alignItems:'center', gap:4 }}>
+                      <Ionicons name="arrow-back-outline" size={14} color="#6B7A99" />
+                      <Text style={{ fontSize:12, color:'#6B7A99' }}>Changer de ligne</Text>
                     </TouchableOpacity>
                   </View>
                   <ScrollView keyboardShouldPersistTaps="handled">
@@ -673,7 +769,7 @@ export default function TripsScreen() {
                           style={{ flexDirection:'row', alignItems:'center', gap:12, paddingHorizontal:24, paddingVertical:13, borderBottomWidth:1, borderBottomColor:'#F1F4FA' }}>
                           <View style={{ width:8, height:8, borderRadius:4, backgroundColor:c }} />
                           <Text style={{ fontSize:14, color:'#1A2340', flex:1 }}>{station}</Text>
-                          <Text style={{ color:'#CBD5E1', fontSize:18 }}>›</Text>
+                          <Ionicons name="chevron-forward" size={18} color="#CBD5E1" />
                         </TouchableOpacity>
                       )
                     })}
@@ -687,11 +783,16 @@ export default function TripsScreen() {
                 <ScrollView showsVerticalScrollIndicator={false}>
                   <View style={{ paddingHorizontal:24, paddingBottom:48 }}>
                     <View style={{ flexDirection:'row', gap:8, marginBottom:16 }}>
-                      {[
+                      {(() => {
+                      const kmRate: Record<string, number> = { metro:0.8, rer:1.2, transilien:1.0, bus:0.4, tram:0.5 }
+                      const lt = LINE_TYPE[fromLine] ?? 'metro'
+                      const estPts = 10 + Math.floor(itinerary.duration * (kmRate[lt] ?? 0.8)) * 2
+                      return [
                         { v: itinerary.transfers.length===0 ? 'Direct' : `${itinerary.transfers.length} corresp.`, label:'Trajet', color: itinerary.transfers.length===0?'#22C55E':'#F59E0B' },
                         { v:`~${itinerary.duration} min`, label:'Durée', color:'#1A73E8' },
-                        { v:'+15 pts', label:'Points', color:'#640082' },
-                      ].map(s => (
+                        { v:`+${estPts} pts`, label:'Points', color:'#640082' },
+                      ]
+                    })().map(s => (
                         <View key={s.label} style={{ flex:1, backgroundColor:'#F8FAFC', borderRadius:14, paddingVertical:12, alignItems:'center', borderWidth:1, borderColor:'#E2E8F0' }}>
                           <Text style={{ fontSize:13, fontWeight:'800', color:s.color }}>{s.v}</Text>
                           <Text style={{ fontSize:9, color:'#94A3B8', marginTop:2 }}>{s.label}</Text>
@@ -794,17 +895,12 @@ export default function TripsScreen() {
                       </Text>
                       <View style={{ flexDirection:'row', alignItems:'center', gap:4 }}>
                         <Ionicons name="leaf-outline" size={12} color="#22C55E" />
-                        <Text style={{ fontSize:12, color:'#22C55E', fontWeight:'700' }}>{itinerary.legs.reduce((a,l)=>a+l.stops,0)*150}g CO₂</Text>
+                        <Text style={{ fontSize:12, color:'#22C55E', fontWeight:'700' }}>{(() => { const g = itinerary.legs.reduce((a,l)=>a+l.stops,0)*150; return g>=1000?`${(g/1000).toFixed(1)}kg`:`${g}g` })()} CO₂</Text>
                       </View>
                     </View>
-                    {lastLogged && (
-                      <View style={{ marginTop:14, backgroundColor:'#F0FFF4', borderWidth:1, borderColor:'#86EFAC', borderRadius:14, padding:12, flexDirection:'row', alignItems:'center', justifyContent:'center', gap:6 }}>
-                        <Ionicons name="checkmark-circle" size={16} color="#15803D" />
-                        <Text style={{ color:'#15803D', fontSize:12, fontWeight:'600', textAlign:'center' }}>{lastLogged}</Text>
-                      </View>
-                    )}
-                    <TouchableOpacity onPress={() => setStep('from-line')} style={{ alignSelf:'center', marginTop:14, marginBottom:12 }}>
-                      <Text style={{ fontSize:13, color:'#6B7A99', textDecorationLine:'underline' }}>Modifier le trajet</Text>
+                    <TouchableOpacity onPress={() => setStep('from-line')} style={{ alignSelf:'center', marginTop:14, marginBottom:12, flexDirection:'row', alignItems:'center', gap:4 }}>
+                      <Ionicons name="create-outline" size={14} color="#6B7A99" />
+                      <Text style={{ fontSize:13, color:'#6B7A99' }}>Modifier le trajet</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleConfirm} disabled={logging}
                       style={{ backgroundColor:'#1A73E8', borderRadius:18, paddingVertical:16, alignItems:'center', flexDirection:'row', justifyContent:'center', gap:8 }}>
@@ -814,7 +910,6 @@ export default function TripsScreen() {
                 </ScrollView>
               )}
             </View>
-          )}
         </View>
       )}
 
@@ -909,7 +1004,6 @@ export default function TripsScreen() {
             {selectedTrip && (() => {
               const trip = selectedTrip
               const c = lineColor(trip.line)
-              const lineLabel = /^M\d/.test(trip.line) ? trip.line.slice(1) : trip.line
               const itData = trip.itineraryData ?? findItinerary(trip.line, trip.from, trip.toLine ?? trip.line, trip.to)
               return (
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -923,7 +1017,7 @@ export default function TripsScreen() {
                         <Text style={{ color:'#fff', fontSize:16, fontWeight:'900', marginTop:1 }} numberOfLines={1}>{trip.from} → {trip.to}</Text>
                       </View>
                       <TouchableOpacity onPress={() => setSelectedTrip(null)}>
-                        <Text style={{ color:'rgba(255,255,255,0.7)', fontSize:22 }}>✕</Text>
+                        <Ionicons name="close-outline" size={24} color="rgba(255,255,255,0.7)" />
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -1039,7 +1133,33 @@ export default function TripsScreen() {
               const line = planLine
               const c = lineColor(line)
               const lineLabel = /^M\d/.test(line) ? line.slice(1) : line
-              const stations = STATIONS[line] ?? []
+              const base = STATIONS[line] ?? []
+              const branches = LINE_BRANCHES[line]
+
+              // Build sections: for branched lines, split into per-branch unique stations + common trunk
+              type PlanSection = { label: string | null; stations: string[] }
+              let sections: PlanSection[]
+              let totalCount: number
+
+              if (branches) {
+                const allLists = branches.map(b => b.buildStations(base))
+                // trunk = stations present in every branch
+                const trunkSet = allLists.reduce((acc, bs) => {
+                  const bSet = new Set(bs)
+                  return new Set([...acc].filter(s => bSet.has(s)))
+                }, new Set(allLists[0] ?? []))
+                const branchSections = branches.map((tab, i) => ({
+                  label: tab.label,
+                  stations: allLists[i].filter(s => !trunkSet.has(s)),
+                })).filter(s => s.stations.length > 0)
+                const trunk = (allLists[0] ?? []).filter(s => trunkSet.has(s))
+                sections = [...branchSections, { label: 'Tronc commun', stations: trunk }]
+                totalCount = branchSections.reduce((a, s) => a + s.stations.length, 0) + trunk.length
+              } else {
+                sections = [{ label: null, stations: base }]
+                totalCount = base.length
+              }
+
               return (
                 <>
                   {/* Header */}
@@ -1051,44 +1171,33 @@ export default function TripsScreen() {
                       </View>
                       <View style={{ flex:1 }}>
                         <Text style={{ color:'rgba(255,255,255,0.75)', fontSize:11 }}>Toutes les stations</Text>
-                        <Text style={{ color:'#fff', fontWeight:'900', fontSize:15 }}>{stations[0]} → {stations[stations.length-1]}</Text>
+                        <Text style={{ color:'#fff', fontWeight:'900', fontSize:15 }} numberOfLines={1}>{base[0]} → {base[base.length-1]}</Text>
                       </View>
                       <View style={{ backgroundColor:'rgba(255,255,255,0.2)', paddingHorizontal:10, paddingVertical:4, borderRadius:10 }}>
-                        <Text style={{ color:'#fff', fontWeight:'800', fontSize:12 }}>{stations.length} st.</Text>
+                        <Text style={{ color:'#fff', fontWeight:'800', fontSize:12 }}>{totalCount} st.</Text>
                       </View>
                       <TouchableOpacity onPress={() => setPlanLine(null)} style={{ marginLeft:4 }}>
-                        <Text style={{ color:'rgba(255,255,255,0.7)', fontSize:22 }}>✕</Text>
+                        <Ionicons name="close-outline" size={24} color="rgba(255,255,255,0.7)" />
                       </TouchableOpacity>
                     </View>
                   </View>
 
-                  {/* Onglets branches si nécessaire */}
-                  {(() => {
-                    const branchTabs = LINE_BRANCHES[line]
-                    if (!branchTabs) return null
-                    return (
-                      <View style={{ flexDirection:'row', borderBottomWidth:1, borderBottomColor:'#E2E8F0', backgroundColor:'#fff' }}>
-                        {branchTabs.map((tab, ti) => (
-                          <TouchableOpacity key={ti} onPress={() => setPlanBranchTab(ti)}
-                            style={{ flex:1, paddingVertical:10, paddingHorizontal:4, alignItems:'center', borderBottomWidth:2, borderBottomColor: planBranchTab===ti ? c : 'transparent' }}>
-                            <Text style={{ fontSize:10, fontWeight:'700', color: planBranchTab===ti ? c : '#94A3B8', textAlign:'center' }} numberOfLines={2}>{tab.label}</Text>
-                          </TouchableOpacity>
+                  {/* Liste des stations par sections */}
+                  <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingVertical:12 }}>
+                    {sections.map((section, si) => (
+                      <View key={si}>
+                        {section.label && (
+                          <View style={{ flexDirection:'row', alignItems:'center', gap:8, paddingHorizontal:24, paddingTop: si===0?4:16, paddingBottom:6 }}>
+                            <View style={{ flex:1, height:1, backgroundColor:'#E2E8F0' }} />
+                            <Text style={{ fontSize:10, fontWeight:'800', color: section.label==='Tronc commun'?'#94A3B8':c, textTransform:'uppercase', letterSpacing:0.8 }}>{section.label}</Text>
+                            <View style={{ flex:1, height:1, backgroundColor:'#E2E8F0' }} />
+                          </View>
+                        )}
+                        {section.stations.map((station, idx) => (
+                          <StationRow key={`${si}-${idx}`} station={station} idx={idx} total={section.stations.length} c={section.label==='Tronc commun'?'#94A3B8':c} connections={lineTransfers.get(station) ?? []} />
                         ))}
                       </View>
-                    )
-                  })()}
-
-                  {/* Liste des stations */}
-                  <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingVertical:12 }}>
-                    {(() => {
-                      const branchTabs = LINE_BRANCHES[line]
-                      const displayStations = branchTabs
-                        ? branchTabs[planBranchTab]?.buildStations(stations) ?? stations
-                        : stations
-                      return displayStations.map((station, idx) => (
-                        <StationRow key={`${planBranchTab}-${idx}`} station={station} idx={idx} total={displayStations.length} c={c} connections={lineTransfers.get(station) ?? []} />
-                      ))
-                    })()}
+                    ))}
                     <View style={{ height:32 }} />
                   </ScrollView>
                 </>

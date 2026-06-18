@@ -1,8 +1,10 @@
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import { offersService, BackendOffer } from '../../services/api'
+import { useSimulatorStore } from '../../stores/simulator'
 
 type IoniconName = React.ComponentProps<typeof Ionicons>['name']
 type SimProfile = { id: string; label: string; icon: IoniconName }
@@ -38,6 +40,8 @@ export function SimulatorContent() {
   const [daysPerWeek, setDaysPerWeek] = useState(5)
   const [offers, setOffers] = useState<BackendOffer[]>([])
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const setHandoff = useSimulatorStore((s) => s.setHandoff)
 
   useEffect(() => {
     setLoading(true)
@@ -103,7 +107,15 @@ export function SimulatorContent() {
             </View>
           ) : (
             offers.map((offer, i) => (
-              <View key={offer.id} className={`bg-card border rounded-2xl p-4 mb-3 ${i === 0 ? 'border-primary' : 'border-border'}`}>
+              <TouchableOpacity
+                key={offer.id}
+                className={`bg-card border rounded-2xl p-4 mb-3 ${i === 0 ? 'border-primary' : 'border-border'}`}
+                activeOpacity={0.75}
+                onPress={() => {
+                  setHandoff(offer.id, profile.id)
+                  router.push('/(tabs)/subscribe')
+                }}
+              >
                 {i === 0 && (
                   <View className="bg-primary self-start px-2 py-0.5 rounded-full mb-2">
                     <Text className="text-white text-xs font-bold">Recommandé</Text>
@@ -125,7 +137,11 @@ export function SimulatorContent() {
                     <Text className="text-xs text-green-600">50% remboursé par votre employeur</Text>
                   </View>
                 )}
-              </View>
+                <View className="flex-row items-center justify-end mt-2 gap-1">
+                  <Text className="text-xs text-primary font-semibold">Souscrire</Text>
+                  <Ionicons name="arrow-forward" size={12} color="#1A73E8" />
+                </View>
+              </TouchableOpacity>
             ))
           )}
         </View>

@@ -2,10 +2,13 @@ import { View, Text, TouchableOpacity, ScrollView, TextInput, ActivityIndicator,
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import * as DocumentPicker from 'expo-document-picker'
+import * as ImagePicker from 'expo-image-picker'
 import { Ionicons } from '@expo/vector-icons'
 import { useLocalSearchParams, useRouter } from 'expo-router'
+import { useFocusEffect } from '@react-navigation/native'
 import { useAuthStore } from '../../stores/auth'
-import { subscriptionsService, offersService, documentsService, BackendOffer } from '../../services/api'
+import { useSimulatorStore } from '../../stores/simulator'
+import { subscriptionsService, offersService, documentsService, usersService, BackendOffer } from '../../services/api'
 import { SimulatorContent } from './simulator'
 import { AssistantContent } from './assistant'
 
@@ -27,51 +30,51 @@ type OfferMeta = { icon: React.ComponentProps<typeof Ionicons>['name']; color: s
 const OFFER_META: Record<string, OfferMeta> = {
   imagine_r_etudiant: {
     icon: 'school-outline', color: '#1A73E8',
-    advantages: ['Accès tous transports IDF', 'Zones 1 à 5 incluses', 'Renouvellement automatique'],
+    advantages: ['Moins de 26 ans, enseignement supérieur', 'Résidence en Île-de-France requise', 'Toutes zones 1→5 incluses'],
   },
   navigo_annuel: {
     icon: 'briefcase-outline', color: '#0D47A1',
-    advantages: ['50% remboursé par l\'employeur', 'Accès tous transports IDF', 'Abonnement annuel'],
+    advantages: ['50% remboursé par l\'employeur', '12e mois offert', 'Tout le réseau IDF inclus'],
   },
   navigo_mois: {
     icon: 'calendar-outline', color: '#1565C0',
-    advantages: ['Sans engagement annuel', 'Accès tous transports IDF'],
+    advantages: ['Sans engagement, résiliable à tout moment', 'Tout le réseau IDF inclus', 'Valable du 1er au dernier jour du mois'],
   },
   navigo_semaine: {
     icon: 'calendar-outline', color: '#1976D2',
-    advantages: ['Idéal pour trajets ponctuels', 'Accès tous transports IDF'],
+    advantages: ['Valable du lundi au dimanche', 'Tout le réseau IDF inclus', 'Idéal pour les semaines ponctuelles'],
   },
   navigo_senior: {
     icon: 'leaf-outline', color: '#2E7D32',
-    advantages: ['Tarif réduit dès 62 ans', 'Sans condition de ressources', 'Valable 12 mois'],
+    advantages: ['Dès 62 ans, sans condition de ressources', 'Moitié prix vs Navigo Annuel standard', 'Tout le réseau IDF inclus'],
   },
   imagine_r_junior: {
     icon: 'happy-outline', color: '#E91E63',
-    advantages: ['Pour moins de 11 ans', 'Zones 1 à 5 incluses', 'Renouvellement automatique'],
+    advantages: ['Moins de 11 ans au 31 décembre', 'Résidence en Île-de-France requise', 'Toutes zones 1→5 — seulement 25,20 €/an'],
   },
   imagine_r_scolaire: {
     icon: 'book-outline', color: '#9C27B0',
-    advantages: ['Pour les 11-25 ans', 'Zones 1 à 5 incluses', 'Renouvellement automatique'],
+    advantages: ['Élèves primaire, collège, lycée et apprentis', 'Résidence en Île-de-France requise', 'Toutes zones 1→5 incluses'],
   },
   tst_gratuite: {
     icon: 'hand-left-outline', color: '#F57C00',
-    advantages: ['Transport 100% gratuit', 'Sous conditions de ressources (QF ≤ 400 €)', 'Renouvellement trimestriel'],
+    advantages: ['Transport 100% gratuit (RSA, ASS+CSS)', 'Renouvellement trimestriel automatique', 'Tout le réseau IDF inclus'],
   },
   tst_75: {
     icon: 'hand-left-outline', color: '#E65100',
-    advantages: ['Réduction 75%', 'CSS sans participation ou ASS', 'Accès tous transports IDF'],
+    advantages: ['75% de réduction (CMU-C, CSS, ASS)', 'Renouvellement trimestriel', 'Tout le réseau IDF inclus'],
   },
   tst_50: {
     icon: 'hand-left-outline', color: '#BF360C',
-    advantages: ['Réduction 50%', 'Bénéficiaires AME', 'Accès tous transports IDF'],
+    advantages: ['50% de réduction pour les bénéficiaires AME', 'Renouvellement trimestriel', 'Tout le réseau IDF inclus'],
   },
   amethyste: {
     icon: 'accessibility-outline', color: '#7B1FA2',
-    advantages: ['Transport gratuit sur dossier MDPH', 'Accompagnant inclus', 'Zones 1 à 5'],
+    advantages: ['Personnes reconnues handicapées (MDPH)', 'Accompagnant voyageant gratuitement', 'Toutes zones 1→5 incluses'],
   },
   liberte_plus: {
     icon: 'ticket-outline', color: '#00838F',
-    advantages: ['Paiement à l\'usage', '1,64 € par trajet', 'Toutes zones incluses'],
+    advantages: ['1,64 € par trajet, zéro abonnement', 'Aucun engagement, rechargeable à tout moment', 'Tout le réseau IDF inclus'],
   },
 }
 
@@ -123,13 +126,13 @@ const fmt = (cents: number | null | undefined) =>
 
 // ─── Composants communs ───────────────────────────────────────────────────────
 
-function EpisodePill({ n, label }: { n: number; label: string }) {
+
+function EpisodePill({ n }: { n: number }) {
   return (
-    <View className="flex-row items-center gap-2 mb-4">
-      <View className="bg-primary px-3 py-1 rounded-full">
+    <View className="mb-4">
+      <View className="bg-primary self-start px-3 py-1 rounded-full">
         <Text className="text-white text-xs font-black">ÉPISODE {n}</Text>
       </View>
-      <Text className="text-xs font-semibold text-muted uppercase tracking-wide">{label}</Text>
     </View>
   )
 }
@@ -172,7 +175,7 @@ function Ep1Situation({ profile, loading, onSelect, onNext }: {
 }) {
   return (
     <View className="flex-1">
-      <EpisodePill n={1} label="JE RACONTE MA SITUATION" />
+      <EpisodePill n={1} />
       <BotBubble title="Parlez-nous un peu de vous." subtitle="Nous trouverons la solution la plus adaptée à votre situation." />
 
       <Text className="text-xs font-semibold text-muted uppercase tracking-wide mb-3">Votre situation</Text>
@@ -222,7 +225,7 @@ function Ep2Decouverte({ offers, selectedOffer, onSelectOffer, onNext, loading }
 }) {
   return (
     <View className="flex-1">
-      <EpisodePill n={2} label="JE DÉCOUVRE MA SOLUTION" />
+      <EpisodePill n={2} />
       <BotBubble
         title="Nous avons analysé votre situation."
         subtitle={offers.length > 1 ? `${offers.length} offres correspondent à votre profil. Choisissez la plus adaptée.` : 'Voici la solution la plus adaptée.'}
@@ -312,15 +315,28 @@ function DocSlot({ label, subscriptionId, token, onDone }: {
 }) {
   const [status, setStatus] = useState<DocStatus>({ state: 'idle' })
   const [aiModal, setAiModal] = useState(false)
+  const [sourceModal, setSourceModal] = useState(false)
+  const [pendingAction, setPendingAction] = useState<'library' | 'files' | null>(null)
   const [pendingFile, setPendingFile] = useState<{ uri: string; name: string; mimeType: string } | null>(null)
 
-  const pick = async () => {
-    const result = await DocumentPicker.getDocumentAsync({ type: ['image/*'], copyToCacheDirectory: true })
-    if (result.canceled || !result.assets?.[0]) return
-    const asset = result.assets[0]
-    const file = { uri: asset.uri, name: asset.name, mimeType: asset.mimeType ?? 'application/octet-stream' }
-    setPendingFile(file)
-    setAiModal(true)
+  const pick = () => setSourceModal(true)
+
+  const onSourceModalDismiss = async () => {
+    if (pendingAction === 'library') {
+      setPendingAction(null)
+      const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 0.8, allowsEditing: false })
+      if (result.canceled || !result.assets?.[0]) return
+      const asset = result.assets[0]
+      setPendingFile({ uri: asset.uri, name: asset.fileName ?? `photo_${Date.now()}.jpg`, mimeType: asset.mimeType ?? 'image/jpeg' })
+      setAiModal(true)
+    } else if (pendingAction === 'files') {
+      setPendingAction(null)
+      const result = await DocumentPicker.getDocumentAsync({ type: ['image/*', 'application/pdf'], copyToCacheDirectory: true })
+      if (result.canceled || !result.assets?.[0]) return
+      const asset = result.assets[0]
+      setPendingFile({ uri: asset.uri, name: asset.name, mimeType: asset.mimeType ?? 'application/octet-stream' })
+      setAiModal(true)
+    }
   }
 
   const handleAiVerify = async () => {
@@ -335,8 +351,9 @@ function DocSlot({ label, subscriptionId, token, onDone }: {
       } else {
         setStatus({ state: 'ai_issues', confidence: res.confidence, issues: res.issues ?? [] })
       }
-    } catch {
-      Alert.alert('Erreur IA', 'La vérification a échoué. Vous pouvez envoyer le document pour examen manuel.')
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e)
+      Alert.alert('Erreur IA', msg)
       setStatus({ state: 'idle' })
     }
   }
@@ -419,6 +436,26 @@ function DocSlot({ label, subscriptionId, token, onDone }: {
         </View>
       )}
 
+      {/* Modal choix source */}
+      <Modal visible={sourceModal} transparent animationType="slide" onDismiss={onSourceModalDismiss}>
+        <View className="flex-1 bg-black/50 items-center justify-end">
+          <View className="bg-white rounded-t-3xl p-6 w-full">
+            <Text className="text-base font-black text-fg mb-4">Ajouter un document</Text>
+            <TouchableOpacity onPress={() => { setPendingAction('library'); setSourceModal(false) }} className="flex-row items-center gap-3 py-4 border-b border-border">
+              <Ionicons name="images-outline" size={22} color="#1A73E8" />
+              <Text className="text-fg font-semibold">Photothèque</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { setPendingAction('files'); setSourceModal(false) }} className="flex-row items-center gap-3 py-4 border-b border-border">
+              <Ionicons name="folder-outline" size={22} color="#1A73E8" />
+              <Text className="text-fg font-semibold">Fichiers</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSourceModal(false)} className="py-4 items-center">
+              <Text className="text-muted font-semibold">Annuler</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       {/* Modal choix IA / Manuel */}
       <Modal visible={aiModal} transparent animationType="fade">
         <View className="flex-1 bg-black/50 items-center justify-center px-6">
@@ -461,7 +498,7 @@ function Ep3Documents({ profile, subscriptionId, token, onNext }: {
 
   return (
     <View className="flex-1">
-      <EpisodePill n={3} label="JE SIMPLIFIE MES DÉMARCHES" />
+      <EpisodePill n={3} />
       <BotBubble title="Ajoutez vos justificatifs." subtitle="JPG, PNG ou PDF · Max 5 Mo par fichier" />
 
       <View className="gap-3 mb-6">
@@ -535,7 +572,7 @@ function Ep4Paiement({ offer, subscriptionId, onSuccess, onError }: {
 
   return (
     <View className="flex-1">
-      <EpisodePill n={4} label="JE COMMENCE MA SAISON" />
+      <EpisodePill n={4} />
 
       <View className="bg-primary/5 border border-primary/20 rounded-2xl p-4 mb-5 flex-row items-center gap-3">
         <View className="w-10 h-10 rounded-xl items-center justify-center" style={{ backgroundColor: meta.color + '20' }}>
@@ -621,7 +658,7 @@ function Ep5Confirmation({ offer, onRestart }: { offer: BackendOffer; onRestart:
 
   return (
     <View className="flex-1 items-center">
-      <EpisodePill n={5} label="UNE NOUVELLE SAISON COMMENCE" />
+      <EpisodePill n={5} />
 
       <View className="w-full bg-primary rounded-3xl p-6 mb-6 items-center">
         <View className="w-20 h-20 bg-white/20 rounded-full items-center justify-center mb-4">
@@ -664,9 +701,6 @@ function Ep5Confirmation({ offer, onRestart }: { offer: BackendOffer; onRestart:
         "Chaque trajet raconte une histoire.{'\n'}La vôtre commence maintenant."
       </Text>
 
-      <TouchableOpacity className="border border-border py-3 px-6 rounded-2xl" onPress={onRestart}>
-        <Text className="text-muted text-sm">Faire une nouvelle souscription</Text>
-      </TouchableOpacity>
     </View>
   )
 }
@@ -683,9 +717,16 @@ function SubscribeFlow() {
   const [loadingOffers, setLoadingOffers] = useState(false)
   const [subscriptionId, setSubscriptionId] = useState<string | null>(null)
   const [startingSubscription, setStartingSubscription] = useState(false)
+  const [activeSub, setActiveSub] = useState<{ status: string } | null>(null)
   const { token } = useAuthStore()
   const router = useRouter()
+
+  useFocusEffect(useCallback(() => {
+    if (!token) return
+    usersService.getSubscription(token).then((s) => setActiveSub(s)).catch(() => null)
+  }, [token]))
   const { resumeSubId, resumeOfferId } = useLocalSearchParams<{ resumeSubId?: string; resumeOfferId?: string }>()
+  const { offerId: handoffOfferId, profile: handoffProfile, clearHandoff } = useSimulatorStore()
   const resumeHandled = useRef(false)
   const scrollRef = useRef<ScrollView>(null)
 
@@ -701,6 +742,20 @@ function SubscribeFlow() {
       }
     }).catch(() => null)
   }, [resumeSubId, resumeOfferId])
+
+  useEffect(() => {
+    if (!handoffOfferId || !handoffProfile) return
+    clearHandoff()
+    const backendProfile = PROFILE_TO_BACKEND[handoffProfile] ?? handoffProfile
+    setProfile(handoffProfile)
+    setLoadingOffers(true)
+    offersService.getByProfile(backendProfile).then((offers) => {
+      setBackendOffers(offers)
+      const match = offers.find((o) => o.id === handoffOfferId)
+      setSelectedOffer(match ?? offers[0] ?? null)
+      setEpisode(1)
+    }).catch(() => null).finally(() => setLoadingOffers(false))
+  }, [handoffOfferId, handoffProfile, clearHandoff])
 
   const confirmProfile = async () => {
     if (!profile) return
@@ -749,6 +804,26 @@ function SubscribeFlow() {
     restart()
     router.replace('/(tabs)/account')
   }, [router, token, subscriptionId, restart])
+
+  if (activeSub?.status === 'active' && episode < 4) {
+    return (
+      <View className="flex-1 bg-white items-center justify-center px-8">
+        <View className="w-20 h-20 bg-green-100 rounded-full items-center justify-center mb-4">
+          <Ionicons name="checkmark-circle" size={44} color="#16A34A" />
+        </View>
+        <Text className="text-xl font-black text-fg text-center mb-2">Abonnement actif</Text>
+        <Text className="text-sm text-muted text-center mb-8">
+          Vous avez déjà un abonnement Navigo en cours. Rendez-vous sur l'onglet Mon Navigo pour le consulter.
+        </Text>
+        <TouchableOpacity
+          className="bg-primary px-8 py-3 rounded-2xl"
+          onPress={() => router.push('/(tabs)/navigo')}
+        >
+          <Text className="text-white font-bold">Voir mon Navigo</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -826,6 +901,11 @@ function SubscribeFlow() {
 
 export default function SubscribeScreen() {
   const [innerTab, setInnerTab] = useState(1)
+  const handoffOfferId = useSimulatorStore((s) => s.offerId)
+
+  useEffect(() => {
+    if (handoffOfferId) setInnerTab(1)
+  }, [handoffOfferId])
 
   return (
     <SafeAreaView className="flex-1 bg-white">
