@@ -378,7 +378,13 @@
       "passwordMismatch": "パスワードが一致しません",
       "noAccount": "このメールのアカウントが見つかりません",
       "badPassword": "パスワードが正しくありません",
-      "network": "認証サーバーに接続できません"
+      "network": "認証サーバーに接続できません",
+      "franceConnect": "FranceConnectログインは利用できません"
+    },
+    "franceConnect": {
+      "login": "FranceConnectでログイン",
+      "register": "FranceConnectでアカウント作成",
+      "or": "または"
     }
   },
   "plans": {

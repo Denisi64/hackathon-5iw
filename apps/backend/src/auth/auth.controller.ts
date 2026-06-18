@@ -21,6 +21,11 @@ export class AuthController {
     return this.authService.login(dto)
   }
 
+  @Post('franceconnect/mock')
+  franceConnectMock() {
+    return this.authService.franceConnectMock()
+  }
+
   @Post('refresh')
   refresh(@Body() dto: RefreshDto) {
     // In production, verify the refresh token signature here

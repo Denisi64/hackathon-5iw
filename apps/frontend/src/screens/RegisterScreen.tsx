@@ -15,6 +15,7 @@ export default function RegisterScreen() {
   const { locale } = useLocale()
   const navigate = useNavigate()
   const register = useAuthStore((s) => s.register)
+  const loginWithFranceConnect = useAuthStore((s) => s.loginWithFranceConnect)
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -24,6 +25,7 @@ export default function RegisterScreen() {
   const [showPass, setShowPass] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isFranceConnectSubmitting, setIsFranceConnectSubmitting] = useState(false)
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -49,6 +51,19 @@ export default function RegisterScreen() {
     navigate('/centres-interet', { replace: true })
   }
 
+  async function onFranceConnect() {
+    setErrors({})
+    setIsFranceConnectSubmitting(true)
+    const result = await loginWithFranceConnect()
+    setIsFranceConnectSubmitting(false)
+
+    if (!result.ok) {
+      setErrors({ root: t('auth.errors.franceConnect') })
+      return
+    }
+    navigate('/centres-interet', { replace: true })
+  }
+
   return (
     <div className="mx-auto max-w-md flex flex-col gap-8 py-12">
       <header className="flex flex-col gap-3 text-center">
@@ -63,6 +78,25 @@ export default function RegisterScreen() {
 
       <Card>
         <Card.Body>
+          <Button
+            type="button"
+            variant="outline"
+            size="md"
+            fullWidth
+            loading={isFranceConnectSubmitting}
+            onClick={onFranceConnect}
+            leftIcon={<ShieldCheck className="h-4 w-4 text-[#000091]" aria-hidden="true" />}
+            className="mb-4 border-[#000091]/30 text-[#000091] hover:border-[#000091] hover:bg-[#000091]/5"
+          >
+            {t('auth.franceConnect.register')}
+          </Button>
+
+          <div className="mb-4 flex items-center gap-3 text-xs font-medium uppercase tracking-normal text-fg-muted">
+            <span className="h-px flex-1 bg-border-default" />
+            {t('auth.franceConnect.or')}
+            <span className="h-px flex-1 bg-border-default" />
+          </div>
+
           <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <Input
@@ -120,6 +154,10 @@ export default function RegisterScreen() {
               leftAddon={<ShieldCheck className="h-4 w-4" aria-hidden="true" />}
               error={errors.confirm}
             />
+
+            {errors.root && (
+              <p role="alert" className="text-sm font-medium text-rose-500">{errors.root}</p>
+            )}
 
             <Button type="submit" size="md" fullWidth loading={isSubmitting}>
               {t('auth.register.cta')}

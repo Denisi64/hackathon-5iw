@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft, ArrowRight, Briefcase, Check, CheckCircle2, Loader2, Mail,
-  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, WalletCards, CloudUpload,
+  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, ShieldCheck, WalletCards, CloudUpload,
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -51,6 +51,7 @@ export default function SubscriptionScreen() {
   const { t } = useTranslation()
   const { locale } = useLocale()
   const navigate = useNavigate()
+  const loginWithFranceConnect = useAuthStore((s) => s.loginWithFranceConnect)
 
   const [step, setStep] = useState(1)
   const [profile, setProfile] = useState<ProfileSlug | null>(null)
@@ -60,6 +61,7 @@ export default function SubscriptionScreen() {
   const [accountErrors, setAccountErrors] = useState<Partial<Record<keyof Account, string>>>({})
   const [subscriptionId, setSubscriptionId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isFranceConnectLoading, setIsFranceConnectLoading] = useState(false)
   const [apiError, setApiError] = useState<string | null>(null)
 
   const profileDef = profile ? PROFILE_BY_SLUG[profile] : null
@@ -96,7 +98,7 @@ export default function SubscriptionScreen() {
     if (!validateStep()) return
     setApiError(null)
 
-    if (step === 4 && plan) {
+    if ((step === 4 || step === 6) && plan) {
       const user = useAuthStore.getState().user
       if (user && !subscriptionId) {
         setIsLoading(true)
@@ -154,6 +156,29 @@ export default function SubscriptionScreen() {
     }
   }
 
+  async function handleFranceConnectAccount() {
+    setApiError(null)
+    setIsFranceConnectLoading(true)
+    const result = await loginWithFranceConnect()
+    setIsFranceConnectLoading(false)
+
+    if (!result.ok) {
+      setApiError(t('auth.errors.franceConnect'))
+      return
+    }
+
+    const user = useAuthStore.getState().user
+    if (user) {
+      setAccount((current) => ({
+        ...current,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      }))
+      setAccountErrors({})
+    }
+  }
+
   return (
     <div className="flex flex-col gap-8 pb-10">
       <Header step={step} profileName={profile ? t(`subscription.profiles.${profile}.title`) : undefined} />
@@ -178,7 +203,15 @@ export default function SubscriptionScreen() {
         )}
         {step === 4 && plan && <Step4Validated plan={plan} locale={locale} onContinue={() => { void onNext() }} />}
         {step === 5 && <Step5NewSeason onContinue={() => { void onNext() }} onSkip={() => setStep(6)} />}
-        {step === 6 && <Step6Account account={account} setAccount={setAccount} errors={accountErrors} />}
+        {step === 6 && (
+          <Step6Account
+            account={account}
+            setAccount={setAccount}
+            errors={accountErrors}
+            onFranceConnect={handleFranceConnectAccount}
+            isFranceConnectLoading={isFranceConnectLoading}
+          />
+        )}
         {step === 7 && profileDef && plan && <Step7Confirmation firstName={account.firstName} email={account.email} plan={plan} locale={locale} />}
       </div>
 
@@ -716,15 +749,36 @@ function Step5NewSeason({ onContinue, onSkip }: {
   )
 }
 
-function Step6Account({ account, setAccount, errors }: {
+function Step6Account({ account, setAccount, errors, onFranceConnect, isFranceConnectLoading }: {
   account: Account
   setAccount: (a: Account) => void
   errors: Partial<Record<keyof Account, string>>
+  onFranceConnect: () => void
+  isFranceConnectLoading?: boolean
 }) {
   const { t } = useTranslation()
   return (
     <Card>
       <Card.Body>
+        <Button
+          type="button"
+          variant="outline"
+          size="md"
+          fullWidth
+          loading={isFranceConnectLoading}
+          onClick={onFranceConnect}
+          leftIcon={<ShieldCheck className="h-4 w-4 text-[#000091]" aria-hidden="true" />}
+          className="mb-4 border-[#000091]/30 text-[#000091] hover:border-[#000091] hover:bg-[#000091]/5"
+        >
+          {t('auth.franceConnect.login')}
+        </Button>
+
+        <div className="mb-4 flex items-center gap-3 text-xs font-medium uppercase tracking-normal text-fg-muted">
+          <span className="h-px flex-1 bg-border-default" />
+          {t('auth.franceConnect.or')}
+          <span className="h-px flex-1 bg-border-default" />
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input
             label={t('subscription.account.firstName')}
