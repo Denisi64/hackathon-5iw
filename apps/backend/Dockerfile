@@ -1,4 +1,4 @@
-FROM node:20-alpine AS development
+FROM node:22-alpine AS development
 WORKDIR /app
 RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 COPY package.json pnpm-lock.yaml* ./
@@ -10,7 +10,7 @@ CMD ["pnpm", "dev"]
 FROM development AS build
 RUN pnpm build
 
-FROM node:20-alpine AS production
+FROM node:22-alpine AS production
 WORKDIR /app
 ENV NODE_ENV=production
 RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
