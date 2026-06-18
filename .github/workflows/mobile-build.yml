@@ -58,22 +58,22 @@ jobs:
       - name: Generate Android native project
         run: pnpm --filter @comutitres/mobile prebuild:android
 
-      - name: Build debug APK
+      - name: Build release APK
         working-directory: apps/mobile/android
         env:
           NODE_ENV: production
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleRelease --no-daemon
 
       - name: Collect APK
         run: |
           mkdir -p reports/mobile/android
-          cp apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk reports/mobile/android/comutitres-debug.apk
+          cp apps/mobile/android/app/build/outputs/apk/release/app-release.apk reports/mobile/android/comutitres-release-test.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v6
         with:
-          name: comutitres-android-apk
-          path: reports/mobile/android/comutitres-debug.apk
+          name: comutitres-android-release-test-apk
+          path: reports/mobile/android/comutitres-release-test.apk
           if-no-files-found: error
           retention-days: 14
 
@@ -82,9 +82,9 @@ jobs:
           {
             echo "## Android APK"
             echo ""
-            echo "Artifact: \`comutitres-android-apk\`"
+            echo "Artifact: \`comutitres-android-release-test-apk\`"
             echo ""
-            echo "This is a debug APK for testing, not a Play Store release build."
+            echo "This is a release-mode APK signed with the generated debug keystore for testing, not a Play Store release build."
           } >> "$GITHUB_STEP_SUMMARY"
 
   ios:
