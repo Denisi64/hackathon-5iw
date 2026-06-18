@@ -168,8 +168,8 @@
         "description": "Analisamos a sua situação e propomos a solução mais adequada."
       },
       "s3": {
-        "title": "Conte-nos sobre você",
-        "description": "Alguns detalhes para personalizar a recomendação."
+        "title": "Simplifico os meus procedimentos",
+        "description": "Lucas adiciona o seu comprovativo em poucos cliques."
       },
       "s4": {
         "title": "Nossa recomendação",
@@ -217,17 +217,6 @@
         "title": "Pessoa com deficiência",
         "description": "Pessoa em situação de deficiência (MDPH) — tarifa conforme o departamento."
       }
-    },
-    "questions": {
-      "age": "A sua idade",
-      "scholarship": "É bolseiro?",
-      "zones": "Zonas percorridas",
-      "daysPerWeek": "Dias de utilização por semana",
-      "employerRefund": "O seu empregador reembolsa 50%?",
-      "cafBeneficiary": "É beneficiário CAF / CSS?",
-      "childrenCount": "Quantos filhos a subscrever?",
-      "childrenUnit": "filhos",
-      "firstChildAge": "Idade do primeiro filho"
     },
     "recommendation": {
       "student": {
@@ -386,6 +375,17 @@
       "price": "40€/mês",
       "learnMore": "Saber mais",
       "continue": "Começar este episódio"
+    },
+    "documentIntro": {
+      "episodeProgress": "Episódio 3 de 5",
+      "phoneTitle": "Adicione o seu comprovativo de matrícula ou cartão de estudante.",
+      "drop": "Solte o seu ficheiro aqui",
+      "browse": "ou procure",
+      "analyzing": "A analisar o ficheiro...",
+      "uploaded": "Ficheiro adicionado",
+      "formats": "Formatos aceites: .pdf, .jpg, .png",
+      "security": "Os seus dados estão seguros e confidenciais.",
+      "continue": "Continuar"
     }
   },
   "auth": {

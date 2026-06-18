@@ -168,8 +168,8 @@
         "description": "Analizamos su situación y le proponemos la solución más adecuada."
       },
       "s3": {
-        "title": "Cuéntenos sobre usted",
-        "description": "Algunos detalles para personalizar la recomendación."
+        "title": "Simplifico mis trámites",
+        "description": "Lucas añade su justificante en unos pocos clics."
       },
       "s4": {
         "title": "Nuestra recomendación",
@@ -217,17 +217,6 @@
         "title": "Persona con discapacidad",
         "description": "Persona en situación de discapacidad (MDPH) — tarifa según su departamento."
       }
-    },
-    "questions": {
-      "age": "Tu edad",
-      "scholarship": "¿Eres becario?",
-      "zones": "Zonas recorridas",
-      "daysPerWeek": "Días de uso por semana",
-      "employerRefund": "¿Tu empresa reembolsa el 50%?",
-      "cafBeneficiary": "¿Eres beneficiario CAF / CSS?",
-      "childrenCount": "¿Cuántos hijos a abonar?",
-      "childrenUnit": "hijos",
-      "firstChildAge": "Edad del primer hijo"
     },
     "recommendation": {
       "student": {
@@ -386,6 +375,17 @@
       "price": "40€/mes",
       "learnMore": "Más información",
       "continue": "Empezar este episodio"
+    },
+    "documentIntro": {
+      "episodeProgress": "Episodio 3 de 5",
+      "phoneTitle": "Añada su certificado de escolaridad o su carnet de estudiante.",
+      "drop": "Suelte su archivo aquí",
+      "browse": "o examine",
+      "analyzing": "Analizando el archivo...",
+      "uploaded": "Archivo añadido",
+      "formats": "Formatos aceptados: .pdf, .jpg, .png",
+      "security": "Sus datos están seguros y son confidenciales.",
+      "continue": "Continuar"
     }
   },
   "auth": {

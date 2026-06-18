@@ -168,8 +168,8 @@
         "description": "We analyze his situation and offer him the most suitable solution."
       },
       "s3": {
-        "title": "Tell us about yourself",
-        "description": "A few details to personalize the recommendation."
+        "title": "I simplify my paperwork",
+        "description": "Lucas adds his supporting document in a few clicks."
       },
       "s4": {
         "title": "Our recommendation",
@@ -217,17 +217,6 @@
         "title": "Person with a disability",
         "description": "Person with disability (MDPH) — fare based on your department."
       }
-    },
-    "questions": {
-      "age": "Your age",
-      "scholarship": "Do you have a scholarship?",
-      "zones": "Zones travelled",
-      "daysPerWeek": "Days of use per week",
-      "employerRefund": "Does your employer refund 50%?",
-      "cafBeneficiary": "Are you a CAF / CSS beneficiary?",
-      "childrenCount": "How many kids to subscribe?",
-      "childrenUnit": "kids",
-      "firstChildAge": "Age of the first kid"
     },
     "recommendation": {
       "student": {
@@ -386,6 +375,17 @@
       "price": "€40/month",
       "learnMore": "Learn more",
       "continue": "Start this episode"
+    },
+    "documentIntro": {
+      "episodeProgress": "Episode 3 of 5",
+      "phoneTitle": "Add your enrollment certificate or your student card.",
+      "drop": "Drop your file here",
+      "browse": "or browse",
+      "analyzing": "Analyzing file...",
+      "uploaded": "File added",
+      "formats": "Accepted formats: .pdf, .jpg, .png",
+      "security": "Your data is secure and confidential.",
+      "continue": "Continue"
     }
   },
   "auth": {

@@ -3,14 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft, ArrowRight, Check, CheckCircle2, Loader2, Upload, Mail,
-  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, WalletCards,
+  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, WalletCards, CloudUpload,
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
-import { Chip } from '../components/ui/Chip'
 import { Badge } from '../components/ui/Badge'
-import { Slider } from '../components/ui/Slider'
 import { PROFILE_BY_SLUG, type ProfileSlug } from '../data/subscriptionFlows'
 import { PLANS, PLAN_ID_TO_OFFER_ID } from '../utils/faresData'
 import { formatCurrency } from '../lib/formatters'
@@ -190,7 +188,13 @@ export default function SubscriptionScreen() {
           />
         )}
         {step === 2 && plan && <Step2Solution plan={plan} onContinue={() => { void onNext() }} />}
-        {step === 3 && profileDef && <Step3Details profile={profileDef.slug} answers={answers} setAnswers={setAnswers} />}
+        {step === 3 && (
+          <Step3DocumentUpload
+            status={docStatuses.school_certificate ?? 'idle'}
+            onUpload={(file) => handleUpload('school_certificate', file)}
+            onContinue={() => { void onNext() }}
+          />
+        )}
         {step === 4 && profileDef && plan && <Step4Recommendation profile={profileDef.slug} plan={plan} answers={answers} locale={locale} />}
         {step === 5 && profileDef && <Step5Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
         {step === 6 && <Step6Account account={account} setAccount={setAccount} errors={accountErrors} />}
@@ -504,103 +508,91 @@ function Step2Solution({ plan, onContinue }: { plan: Plan; onContinue: () => voi
   )
 }
 
-function Step3Details({ profile, answers, setAnswers }: {
-  profile: ProfileSlug
-  answers: Answers
-  setAnswers: (u: Answers) => void
+function Step3DocumentUpload({ status, onUpload, onContinue }: {
+  status: DocStatus
+  onUpload: (file: File) => void
+  onContinue: () => void
 }) {
   const { t } = useTranslation()
-  const set = <K extends keyof Answers>(k: K, v: Answers[K]) => setAnswers({ ...answers, [k]: v })
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  function handleFile(file?: File) {
+    if (file) onUpload(file)
+  }
 
   return (
-    <Card>
-      <Card.Body>
-        <div className="flex flex-col gap-8">
-          {(profile === 'student' || profile === 'scholar' || profile === 'senior') && (
-            <Input
-              label={t('subscription.questions.age')}
-              type="number"
-              inputMode="numeric"
-              value={answers.age ?? ''}
-              onChange={(e) => set('age', e.target.value ? Number(e.target.value) : undefined)}
-            />
-          )}
+    <EpisodeFrame>
+      <PhoneStatusBar />
+      <EpisodeProgress
+        label={t('subscription.documentIntro.episodeProgress')}
+        episode={3}
+        total={5}
+        barClassName="lg:w-56 xl:w-64"
+      />
 
-          {(profile === 'student' || profile === 'scholar') && (
-            <YesNoRow
-              label={t('subscription.questions.scholarship')}
-              value={answers.scholarship}
-              onChange={(v) => set('scholarship', v)}
-            />
-          )}
+      <h2 className="mt-10 text-2xl font-black leading-tight tracking-normal sm:text-3xl lg:mt-8 lg:text-2xl xl:text-3xl">
+        {t('subscription.documentIntro.phoneTitle')}
+      </h2>
 
-          {profile === 'worker' && (
-            <>
-              <Slider
-                label={t('subscription.questions.daysPerWeek')}
-                min={1} max={7}
-                value={answers.daysPerWeek ?? 5}
-                unit={t('simulator.slider.days.unit')}
-                onChange={(v) => set('daysPerWeek', v)}
-              />
-              <YesNoRow
-                label={t('subscription.questions.employerRefund')}
-                value={answers.employerRefund}
-                onChange={(v) => set('employerRefund', v)}
-              />
-            </>
-          )}
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".pdf,.jpg,.jpeg,.png"
+        className="hidden"
+        onChange={(event) => {
+          handleFile(event.target.files?.[0])
+          event.target.value = ''
+        }}
+      />
 
-          {profile === 'jobseeker' && (
-            <YesNoRow
-              label={t('subscription.questions.cafBeneficiary')}
-              value={answers.cafBeneficiary}
-              onChange={(v) => set('cafBeneficiary', v)}
-            />
-          )}
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        onDragOver={(event) => event.preventDefault()}
+        onDrop={(event) => {
+          event.preventDefault()
+          handleFile(event.dataTransfer.files?.[0])
+        }}
+        className="mt-8 flex w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#096AF3]/75 px-5 py-10 text-center transition hover:bg-[#096AF3]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#096AF3] focus-visible:ring-offset-2 sm:py-12 lg:mt-7 lg:py-9 xl:py-11"
+      >
+        {status === 'analyzing' ? (
+          <Loader2 className="h-14 w-14 animate-spin text-[#096AF3] sm:h-16 sm:w-16 lg:h-14 lg:w-14" aria-hidden="true" />
+        ) : status === 'valid' ? (
+          <CheckCircle2 className="h-14 w-14 text-[#096AF3] sm:h-16 sm:w-16 lg:h-14 lg:w-14" aria-hidden="true" />
+        ) : (
+          <CloudUpload className="h-16 w-16 text-[#096AF3] sm:h-20 sm:w-20 lg:h-16 lg:w-16" strokeWidth={2.1} aria-hidden="true" />
+        )}
+        <span className="mt-6 text-base font-black leading-tight text-[#070525] sm:text-lg lg:text-base xl:text-lg">
+          {status === 'analyzing'
+            ? t('subscription.documentIntro.analyzing')
+            : status === 'valid'
+              ? t('subscription.documentIntro.uploaded')
+              : t('subscription.documentIntro.drop')}
+        </span>
+        {status === 'idle' && (
+          <span className="mt-1 text-base font-black text-[#096AF3] sm:text-lg lg:text-base xl:text-lg">
+            {t('subscription.documentIntro.browse')}
+          </span>
+        )}
+      </button>
 
-          {profile === 'parent' && (
-            <>
-              <Slider
-                label={t('subscription.questions.childrenCount')}
-                min={1} max={4}
-                value={answers.childrenCount ?? 1}
-                unit={t('subscription.questions.childrenUnit')}
-                onChange={(v) => set('childrenCount', v)}
-              />
-              <Input
-                label={t('subscription.questions.firstChildAge')}
-                type="number"
-                inputMode="numeric"
-                value={answers.firstChildAge ?? ''}
-                onChange={(e) => set('firstChildAge', e.target.value ? Number(e.target.value) : undefined)}
-              />
-            </>
-          )}
+      <p className="mt-5 text-center text-sm font-extrabold text-slate-400 sm:text-base lg:text-sm xl:text-base">
+        {t('subscription.documentIntro.formats')}
+      </p>
 
-          <Slider
-            label={t('subscription.questions.zones')}
-            min={1} max={5}
-            value={answers.zones}
-            unit={t('simulator.slider.zones.unit')}
-            onChange={(v) => set('zones', v)}
-          />
-        </div>
-      </Card.Body>
-    </Card>
-  )
-}
-
-function YesNoRow({ label, value, onChange }: { label: string; value?: boolean; onChange: (v: boolean) => void }) {
-  const { t } = useTranslation()
-  return (
-    <div className="flex flex-col gap-2">
-      <p className="text-xs font-medium tracking-wide text-fg-muted uppercase">{label}</p>
-      <div className="flex gap-2">
-        <Chip active={value === true} onClick={() => onChange(true)}>{t('common.yes')}</Chip>
-        <Chip active={value === false} onClick={() => onChange(false)}>{t('common.no')}</Chip>
+      <div className="mt-9 flex items-center gap-5 text-[#070525] lg:mt-8">
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border-2 border-[#070525] sm:h-14 sm:w-14 lg:h-12 lg:w-12">
+          <Lock className="h-6 w-6 sm:h-7 sm:w-7 lg:h-6 lg:w-6" aria-hidden="true" />
+        </span>
+        <p className="text-base font-black leading-snug sm:text-lg lg:text-base xl:text-lg">
+          {t('subscription.documentIntro.security')}
+        </p>
       </div>
-    </div>
+
+      <EpisodePrimaryButton onClick={onContinue} className="lg:mt-8 xl:mt-9">
+        {t('subscription.documentIntro.continue')}
+      </EpisodePrimaryButton>
+    </EpisodeFrame>
   )
 }
 

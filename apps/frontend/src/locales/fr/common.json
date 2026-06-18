@@ -168,8 +168,8 @@
         "description": "Nous analysons sa situation et lui proposons la solution la plus adaptée."
       },
       "s3": {
-        "title": "Parlez-nous de vous",
-        "description": "Quelques précisions pour personnaliser la recommandation."
+        "title": "Je simplifie mes démarches",
+        "description": "Lucas ajoute son justificatif en quelques clics."
       },
       "s4": {
         "title": "Notre recommandation",
@@ -217,17 +217,6 @@
         "title": "Personne en situation de handicap",
         "description": "Personne en situation de handicap (MDPH) — tarif selon votre département."
       }
-    },
-    "questions": {
-      "age": "Votre âge",
-      "scholarship": "Êtes-vous boursier ?",
-      "zones": "Zones parcourues",
-      "daysPerWeek": "Jours d'utilisation par semaine",
-      "employerRefund": "Votre employeur rembourse-t-il 50% ?",
-      "cafBeneficiary": "Êtes-vous bénéficiaire CAF / CSS ?",
-      "childrenCount": "Combien d'enfants à abonner ?",
-      "childrenUnit": "enfants",
-      "firstChildAge": "Âge du premier enfant"
     },
     "recommendation": {
       "student": {
@@ -386,6 +375,17 @@
       "price": "40€/mois",
       "learnMore": "En savoir plus",
       "continue": "Commencer cet épisode"
+    },
+    "documentIntro": {
+      "episodeProgress": "Épisode 3 sur 5",
+      "phoneTitle": "Ajoutez votre justificatif de scolarité ou votre carte d’étudiant.",
+      "drop": "Déposez votre fichier ici",
+      "browse": "ou parcourez",
+      "analyzing": "Analyse du fichier en cours...",
+      "uploaded": "Fichier ajouté",
+      "formats": "Formats acceptés : .pdf, .jpg, .png",
+      "security": "Vos données sont sécurisées et confidentielles.",
+      "continue": "Continuer"
     }
   },
   "auth": {

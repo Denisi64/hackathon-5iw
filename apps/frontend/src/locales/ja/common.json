@@ -168,8 +168,8 @@
         "description": "状況を分析し、最適な解決策を提案します。"
       },
       "s3": {
-        "title": "あなたについて教えてください",
-        "description": "おすすめを最適化するための簡単な質問です。"
+        "title": "手続きを簡単にする",
+        "description": "ルーカスは数クリックで証明書類を追加します。"
       },
       "s4": {
         "title": "おすすめ",
@@ -217,17 +217,6 @@
         "title": "障害のある方",
         "description": "障害をお持ちの方（MDPH）— 県によって料金が変わります。"
       }
-    },
-    "questions": {
-      "age": "年齢",
-      "scholarship": "奨学生ですか？",
-      "zones": "利用ゾーン",
-      "daysPerWeek": "週あたり利用日数",
-      "employerRefund": "雇用主は50%を払戻しますか？",
-      "cafBeneficiary": "CAF / CSS受給者ですか？",
-      "childrenCount": "申込み対象のお子様の人数は？",
-      "childrenUnit": "人",
-      "firstChildAge": "第一子の年齢"
     },
     "recommendation": {
       "student": {
@@ -386,6 +375,17 @@
       "price": "40€/月",
       "learnMore": "詳しく見る",
       "continue": "このエピソードを始める"
+    },
+    "documentIntro": {
+      "episodeProgress": "エピソード 3/5",
+      "phoneTitle": "在学証明書または学生証を追加してください。",
+      "drop": "ここにファイルをドロップ",
+      "browse": "または参照",
+      "analyzing": "ファイルを分析中...",
+      "uploaded": "ファイルを追加しました",
+      "formats": "対応形式：.pdf, .jpg, .png",
+      "security": "データは安全かつ機密に保護されます。",
+      "continue": "続ける"
     }
   },
   "auth": {

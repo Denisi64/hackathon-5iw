@@ -168,8 +168,8 @@
         "description": "Analizziamo la sua situazione e gli proponiamo la soluzione più adatta."
       },
       "s3": {
-        "title": "Raccontaci di te",
-        "description": "Alcuni dettagli per personalizzare la raccomandazione."
+        "title": "Semplifico le mie pratiche",
+        "description": "Lucas aggiunge il suo documento in pochi clic."
       },
       "s4": {
         "title": "La nostra raccomandazione",
@@ -217,17 +217,6 @@
         "title": "Persona con disabilità",
         "description": "Persona con disabilità (MDPH) — tariffa secondo il dipartimento."
       }
-    },
-    "questions": {
-      "age": "La tua età",
-      "scholarship": "Sei borsista?",
-      "zones": "Zone percorse",
-      "daysPerWeek": "Giorni di utilizzo a settimana",
-      "employerRefund": "Il datore rimborsa il 50%?",
-      "cafBeneficiary": "Sei beneficiario CAF / CSS?",
-      "childrenCount": "Quanti figli da abbonare?",
-      "childrenUnit": "figli",
-      "firstChildAge": "Età del primo figlio"
     },
     "recommendation": {
       "student": {
@@ -386,6 +375,17 @@
       "price": "40€/mese",
       "learnMore": "Scopri di più",
       "continue": "Inizia questo episodio"
+    },
+    "documentIntro": {
+      "episodeProgress": "Episodio 3 di 5",
+      "phoneTitle": "Aggiungi il certificato di iscrizione o la tessera studente.",
+      "drop": "Trascina qui il file",
+      "browse": "o sfoglia",
+      "analyzing": "Analisi del file in corso...",
+      "uploaded": "File aggiunto",
+      "formats": "Formati accettati: .pdf, .jpg, .png",
+      "security": "I tuoi dati sono protetti e riservati.",
+      "continue": "Continua"
     }
   },
   "auth": {
