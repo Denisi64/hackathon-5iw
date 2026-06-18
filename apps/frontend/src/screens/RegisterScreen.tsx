@@ -46,7 +46,7 @@ export default function RegisterScreen() {
       setErrors({ email: result.error === 'email_taken' ? t('auth.errors.emailTaken') : t('auth.errors.network') })
       return
     }
-    navigate('/mon-espace', { replace: true })
+    navigate('/centres-interet', { replace: true })
   }
 
   return (

@@ -14,6 +14,9 @@ const ChatbotScreen = lazy(() => import('./screens/ChatbotScreen'))
 const LoginScreen = lazy(() => import('./screens/LoginScreen'))
 const RegisterScreen = lazy(() => import('./screens/RegisterScreen'))
 const AccountScreen = lazy(() => import('./screens/AccountScreen'))
+const NavigoScreen = lazy(() => import('./screens/NavigoScreen'))
+const InterestsScreen = lazy(() => import('./screens/InterestsScreen'))
+const TripsScreen = lazy(() => import('./screens/TripsScreen'))
 
 function FallbackLoading() {
   const { t } = useTranslation()
@@ -38,6 +41,9 @@ export function App() {
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/mon-espace" element={<ProtectedRoute><AccountScreen /></ProtectedRoute>} />
+            <Route path="/centres-interet" element={<ProtectedRoute><InterestsScreen /></ProtectedRoute>} />
+            <Route path="/navigo" element={<ProtectedRoute><NavigoScreen /></ProtectedRoute>} />
+            <Route path="/trajets" element={<ProtectedRoute><TripsScreen /></ProtectedRoute>} />
             <Route path="*" element={<LandingScreen />} />
           </Routes>
         </Suspense>

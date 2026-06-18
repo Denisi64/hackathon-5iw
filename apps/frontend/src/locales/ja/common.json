@@ -7,7 +7,9 @@
       "subscribe": "申し込む",
       "assistant": "アシスタント",
       "login": "ログイン",
-      "account": "マイページ"
+      "account": "マイページ",
+      "navigo": "Navigo",
+      "trips": "移動"
     },
     "menu": {
       "open": "メニューを開く",
@@ -659,5 +661,100 @@
       "description": "申込フローを開始して、最適なプランを見つけてマイページに紐付けましょう。",
       "cta": "申込を始める"
     }
+  },
+  "navigo": {
+    "title": "マイ Navigo",
+    "subtitle": "デジタル交通定期券",
+    "empty": {
+      "title": "有効な定期券がありません",
+      "body": "申し込むと仮想Navigoカードを取得し、イル＝ド＝フランスを移動できます。",
+      "cta": "今すぐ申し込む"
+    },
+    "qr": {
+      "title": "このコードを改札機にかざしてください",
+      "subtitle": "30秒ごとに更新"
+    },
+    "validSince": "有効開始",
+    "expiresOn": "有効期限",
+    "zones": "対象ゾーン",
+    "zonesValue": "全ゾーン · 1 → 5",
+    "status": "ステータス",
+    "statusActive": "有効",
+    "manage": "定期券を管理",
+    "holder": "名義人"
+  },
+  "gamification": {
+    "title": "わたしの進捗",
+    "points": "ポイント",
+    "level": "レベル {{level}}",
+    "badges": "バッジ",
+    "toNextLevel": "レベル {{level}} まであと {{points}} pts",
+    "noBadges": "バッジはまだありません"
+  },
+  "interests": {
+    "title": "あなたの興味",
+    "optional": "任意",
+    "subtitle": "興味を選択して体験をパーソナライズしましょう。",
+    "validate": "興味を保存",
+    "skip": "このステップをスキップ",
+    "manage": "興味",
+    "items": {
+      "mobility": "モビリティ",
+      "culture": "文化・公演",
+      "sport": "スポーツ",
+      "education": "学び・研修",
+      "work": "仕事・キャリア",
+      "food": "グルメ",
+      "wellbeing": "ウェルビーイング・余暇",
+      "music": "音楽・コンサート",
+      "eco": "エコロジー",
+      "travel": "旅行",
+      "family": "家族",
+      "shopping": "ショッピング"
+    }
+  },
+  "trips": {
+    "kicker": "イル＝ド＝フランス路線網",
+    "title": "わたしの移動",
+    "tabs": {
+      "trip": "移動",
+      "history": "履歴",
+      "plan": "路線図"
+    },
+    "stats": {
+      "trips": "移動",
+      "km": "走行",
+      "co2": "CO₂",
+      "streak": "連続"
+    },
+    "from": "出発",
+    "to": "到着",
+    "chooseFromLine": "出発路線を選択",
+    "chooseToLine": "到着路線を選択",
+    "searchStation": "駅を検索…",
+    "changeLine": "路線を変更",
+    "stations": "駅",
+    "direct": "直通",
+    "transfers": "乗換",
+    "duration": "所要",
+    "points": "ポイント",
+    "stops_one": "{{count}} 駅",
+    "stops_other": "{{count}} 駅",
+    "transferWalk": "徒歩乗換",
+    "transfer": "乗換",
+    "validate": "この移動を記録",
+    "modify": "移動を編集",
+    "emptyHistory": "記録された移動はありません",
+    "emptyHistoryHint": "「移動」タブで最初の移動を記録しましょう",
+    "today": "今日",
+    "yesterday": "昨日",
+    "allStations": "全駅",
+    "logged": "移動を記録 · +15 pts",
+    "itinerary": "ルート",
+    "itineraryHint": "移動を確認",
+    "chooseStation": "路線 {{line}} · どの駅？",
+    "tripDetail": "移動の詳細",
+    "schedule": "時刻",
+    "co2Saved": "CO₂ 削減"
   }
 }

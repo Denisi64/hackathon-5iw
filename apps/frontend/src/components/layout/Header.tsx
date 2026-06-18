@@ -89,6 +89,32 @@ export function Header() {
               {t('header.nav.assistant')}
             </NavLink>
           </li>
+          {user && (
+            <li>
+              <NavLink
+                to="/trajets"
+                className={({ isActive }) => cn(
+                  'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
+                  isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+                )}
+              >
+                {t('header.nav.trips')}
+              </NavLink>
+            </li>
+          )}
+          {user && (
+            <li>
+              <NavLink
+                to="/navigo"
+                className={({ isActive }) => cn(
+                  'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
+                  isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+                )}
+              >
+                {t('header.nav.navigo')}
+              </NavLink>
+            </li>
+          )}
         </ul>
 
         <div className="flex items-center gap-2">
@@ -174,6 +200,28 @@ export function Header() {
           >
             {t('header.nav.assistant')}
           </NavLink>
+          {user && (
+            <NavLink
+              to="/trajets"
+              className={({ isActive }) => cn(
+                'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+              )}
+            >
+              {t('header.nav.trips')}
+            </NavLink>
+          )}
+          {user && (
+            <NavLink
+              to="/navigo"
+              className={({ isActive }) => cn(
+                'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                isActive ? 'text-fg bg-surface' : 'text-fg-muted hover:text-fg hover:bg-surface',
+              )}
+            >
+              {t('header.nav.navigo')}
+            </NavLink>
+          )}
           {user ? (
             <NavLink
               to="/mon-espace"

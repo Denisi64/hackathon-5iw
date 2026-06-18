@@ -7,7 +7,9 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': 'http://backend:3000',
+      // En local (pnpm dev sur l'hôte) le backend est exposé sur localhost:3000.
+      // En conteneur, surcharger via VITE_API_URL=http://backend:3000.
+      '/api': process.env.VITE_API_URL ?? 'http://localhost:3000',
     },
   },
   test: {
