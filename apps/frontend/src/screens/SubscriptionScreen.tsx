@@ -249,6 +249,81 @@ function Header({ step, profileName }: { step: number; profileName?: string }) {
   )
 }
 
+function EpisodeFrame({ children }: { children: ReactNode }) {
+  return (
+    <section className="relative min-h-[720px] overflow-hidden rounded-[2rem] bg-white px-0 pb-4 pt-4 shadow-[0_26px_80px_rgba(9,106,243,0.08)] sm:min-h-[640px] lg:min-h-[540px] lg:px-12 lg:pb-8 lg:pt-8 xl:min-h-[580px] xl:px-16">
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#096AF3]/10 to-transparent" aria-hidden="true" />
+      <img
+        src={lucasImage}
+        alt=""
+        aria-hidden="true"
+        className="absolute bottom-0 left-[-56px] h-[620px] w-[430px] rounded-[2rem] object-cover object-[42%_50%] shadow-[0_24px_70px_rgba(7,5,37,0.16)] sm:left-8 sm:h-[560px] sm:w-[440px] lg:left-10 lg:h-[500px] lg:w-[390px] lg:top-1/2 lg:-translate-y-1/2 xl:left-14 xl:h-[540px] xl:w-[420px]"
+        draggable={false}
+      />
+
+      <div className="relative z-10 ml-auto flex min-h-[690px] w-[min(66%,620px)] min-w-[330px] items-center justify-end pr-0 sm:min-h-[610px] sm:pr-10 lg:min-h-[500px] lg:w-[min(60%,620px)] lg:min-w-0 lg:items-center lg:pr-0 xl:min-h-[540px] xl:w-[min(58%,680px)]">
+        <div className="w-full max-w-[430px] rounded-[2.25rem] border border-slate-200 bg-white px-6 pb-7 pt-5 text-[#070525] shadow-[0_28px_80px_rgba(7,5,37,0.18)] sm:max-w-[500px] sm:rounded-[3rem] sm:px-9 sm:pb-9 sm:pt-7 lg:max-w-none lg:rounded-[2rem] lg:px-8 lg:pb-7 lg:pt-6 xl:px-10 xl:pb-8 xl:pt-7">
+          {children}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function PhoneStatusBar() {
+  return (
+    <div className="flex items-center justify-between text-xs font-extrabold sm:text-sm lg:text-sm">
+      <span>9:41</span>
+      <span className="flex items-center gap-1.5" aria-hidden="true">
+        <span className="flex h-4 items-end gap-0.5">
+          <span className="h-1.5 w-1 rounded-sm bg-current" />
+          <span className="h-2.5 w-1 rounded-sm bg-current" />
+          <span className="h-3.5 w-1 rounded-sm bg-current" />
+        </span>
+        <span className="h-3 w-4 rounded-t-full border-2 border-current border-b-0" />
+        <span className="h-3.5 w-6 rounded border-2 border-current" />
+      </span>
+    </div>
+  )
+}
+
+function EpisodeProgress({ label, episode, total, className, barClassName }: {
+  label: string
+  episode: number
+  total: number
+  className?: string
+  barClassName?: string
+}) {
+  const progress = `${Math.min(100, Math.max(0, (episode / total) * 100))}%`
+  return (
+    <div className={cn('mt-8 text-center lg:mt-5 xl:mt-6', className)}>
+      <p className="text-xs font-black sm:text-sm lg:text-sm">{label}</p>
+      <div className={cn('mx-auto mt-4 h-2 w-56 overflow-hidden rounded-full bg-[#E8EEF5] lg:mt-3 lg:h-1.5', barClassName)}>
+        <div className="h-full rounded-full bg-[#096AF3]" style={{ width: progress }} />
+      </div>
+    </div>
+  )
+}
+
+function EpisodePrimaryButton({ children, onClick, className }: {
+  children: ReactNode
+  onClick: () => void
+  className?: string
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'mt-10 flex h-14 w-full items-center justify-center rounded-xl bg-[#096AF3] px-5 text-lg font-extrabold text-white shadow-[0_12px_28px_rgba(9,106,243,0.28)] transition hover:bg-[#075cd6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#096AF3] focus-visible:ring-offset-2 sm:h-16 sm:text-xl lg:h-12 lg:text-base xl:h-14 xl:text-lg',
+        className,
+      )}
+    >
+      {children}
+    </button>
+  )
+}
+
 function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
   answers: Answers
   setAnswers: (u: Answers) => void
@@ -276,99 +351,70 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
   }
 
   return (
-    <section className="relative min-h-[720px] overflow-hidden rounded-[2rem] bg-white px-0 pb-4 pt-4 shadow-[0_26px_80px_rgba(9,106,243,0.08)] sm:min-h-[640px] lg:min-h-[540px] lg:px-12 lg:pb-8 lg:pt-8 xl:min-h-[580px] xl:px-16">
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#096AF3]/10 to-transparent" aria-hidden="true" />
-      <img
-        src={lucasImage}
-        alt=""
-        aria-hidden="true"
-        className="absolute bottom-0 left-[-56px] h-[620px] w-[430px] rounded-[2rem] object-cover object-[42%_50%] shadow-[0_24px_70px_rgba(7,5,37,0.16)] sm:left-8 sm:h-[560px] sm:w-[440px] lg:left-10 lg:h-[500px] lg:w-[390px] lg:top-1/2 lg:-translate-y-1/2 xl:left-14 xl:h-[540px] xl:w-[420px]"
-        draggable={false}
+    <EpisodeFrame>
+      <PhoneStatusBar />
+      <EpisodeProgress
+        label={t('subscription.situationIntro.episodeProgress')}
+        episode={1}
+        total={5}
+        barClassName="lg:w-40 xl:w-44"
       />
 
-      <div className="relative z-10 ml-auto flex min-h-[690px] w-[min(66%,620px)] min-w-[330px] items-center justify-end pr-0 sm:min-h-[610px] sm:pr-10 lg:min-h-[500px] lg:w-[min(60%,620px)] lg:min-w-0 lg:items-center lg:pr-0 xl:min-h-[540px] xl:w-[min(58%,680px)]">
-        <div className="w-full max-w-[430px] rounded-[2.25rem] border border-slate-200 bg-white px-6 pb-7 pt-5 text-[#070525] shadow-[0_28px_80px_rgba(7,5,37,0.18)] sm:max-w-[500px] sm:rounded-[3rem] sm:px-9 sm:pb-9 sm:pt-7 lg:max-w-none lg:rounded-[2rem] lg:px-8 lg:pb-7 lg:pt-6 xl:px-10 xl:pb-8 xl:pt-7">
-          <div className="flex items-center justify-between text-xs font-extrabold sm:text-sm lg:text-sm">
-            <span>9:41</span>
-            <span className="flex items-center gap-1.5" aria-hidden="true">
-              <span className="flex h-4 items-end gap-0.5">
-                <span className="h-1.5 w-1 rounded-sm bg-current" />
-                <span className="h-2.5 w-1 rounded-sm bg-current" />
-                <span className="h-3.5 w-1 rounded-sm bg-current" />
-              </span>
-              <span className="h-3 w-4 rounded-t-full border-2 border-current border-b-0" />
-              <span className="h-3.5 w-6 rounded border-2 border-current" />
-            </span>
-          </div>
-
-          <div className="mt-8 text-center lg:mt-5 xl:mt-6">
-            <p className="text-xs font-black sm:text-sm lg:text-sm">{t('subscription.situationIntro.episodeProgress')}</p>
-            <div className="mx-auto mt-4 h-2 w-56 overflow-hidden rounded-full bg-[#E8EEF5] lg:mt-3 lg:h-1.5 lg:w-40 xl:w-44">
-              <div className="h-full w-1/4 rounded-full bg-[#096AF3]" />
-            </div>
-          </div>
-
-          <div className="mt-10 lg:mt-7 xl:mt-8">
-            <h2 className="text-2xl font-black leading-tight tracking-normal sm:text-3xl lg:text-2xl xl:text-3xl">
-              {t('subscription.situationIntro.phoneTitle')}
-            </h2>
-          </div>
-
-          <div className="mt-7 divide-y divide-slate-200 lg:mt-5 xl:mt-6">
-            <SituationFormRow
-              icon={<CalendarDays className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
-              label={t('subscription.situationIntro.ageQuestion')}
-            >
-              <label className="sr-only" htmlFor="subscription-age">{t('subscription.situationIntro.ageQuestion')}</label>
-              <input
-                id="subscription-age"
-                type="number"
-                min={0}
-                value={age}
-                onChange={(event) => updateAnswer({ age: event.target.value ? Number(event.target.value) : undefined })}
-                className="w-16 rounded-lg border border-transparent bg-transparent px-1 text-right text-sm font-black text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] sm:w-20 sm:text-base lg:w-16 lg:text-sm xl:text-base"
-              />
-              <span className="text-sm font-black sm:text-base lg:text-sm xl:text-base">{t('subscription.situationIntro.yearsUnit')}</span>
-            </SituationFormRow>
-
-            <SituationFormRow
-              icon={<GraduationCap className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
-              label={t('subscription.situationIntro.studentQuestion')}
-            >
-              <SegmentedYesNo value onChange={() => setProfile('student')} />
-            </SituationFormRow>
-
-            <SituationFormRow
-              icon={<Lock className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
-              label={t('subscription.situationIntro.scholarshipQuestion')}
-            >
-              <SegmentedYesNo value={isScholarship} onChange={(value) => updateAnswer({ scholarship: value })} />
-            </SituationFormRow>
-
-            <SituationFormRow
-              icon={<MapPin className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
-              label={t('subscription.situationIntro.locationQuestion')}
-            >
-              <label className="sr-only" htmlFor="subscription-location">{t('subscription.situationIntro.locationQuestion')}</label>
-              <input
-                id="subscription-location"
-                value={mainLocation}
-                onChange={(event) => updateAnswer({ mainLocation: event.target.value })}
-                className="w-28 rounded-lg border border-transparent bg-transparent px-1 text-right text-sm font-black leading-tight text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] sm:w-32 sm:text-base lg:w-28 lg:text-sm xl:w-32 xl:text-base"
-              />
-            </SituationFormRow>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleContinue}
-            className="mt-10 flex h-14 w-full items-center justify-center rounded-xl bg-[#096AF3] px-5 text-lg font-extrabold text-white shadow-[0_12px_28px_rgba(9,106,243,0.28)] transition hover:bg-[#075cd6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#096AF3] focus-visible:ring-offset-2 sm:h-16 sm:text-xl lg:mt-6 lg:h-12 lg:text-base xl:mt-7 xl:h-14 xl:text-lg"
-          >
-            {t('subscription.situationIntro.continue')}
-          </button>
-        </div>
+      <div className="mt-10 lg:mt-7 xl:mt-8">
+        <h2 className="text-2xl font-black leading-tight tracking-normal sm:text-3xl lg:text-2xl xl:text-3xl">
+          {t('subscription.situationIntro.phoneTitle')}
+        </h2>
       </div>
-    </section>
+
+      <div className="mt-7 divide-y divide-slate-200 lg:mt-5 xl:mt-6">
+        <SituationFormRow
+          icon={<CalendarDays className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
+          label={t('subscription.situationIntro.ageQuestion')}
+        >
+          <label className="sr-only" htmlFor="subscription-age">{t('subscription.situationIntro.ageQuestion')}</label>
+          <input
+            id="subscription-age"
+            type="number"
+            min={0}
+            value={age}
+            onChange={(event) => updateAnswer({ age: event.target.value ? Number(event.target.value) : undefined })}
+            className="w-16 rounded-lg border border-transparent bg-transparent px-1 text-right text-sm font-black text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] sm:w-20 sm:text-base lg:w-16 lg:text-sm xl:text-base"
+          />
+          <span className="text-sm font-black sm:text-base lg:text-sm xl:text-base">{t('subscription.situationIntro.yearsUnit')}</span>
+        </SituationFormRow>
+
+        <SituationFormRow
+          icon={<GraduationCap className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
+          label={t('subscription.situationIntro.studentQuestion')}
+        >
+          <SegmentedYesNo value onChange={() => setProfile('student')} />
+        </SituationFormRow>
+
+        <SituationFormRow
+          icon={<Lock className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
+          label={t('subscription.situationIntro.scholarshipQuestion')}
+        >
+          <SegmentedYesNo value={isScholarship} onChange={(value) => updateAnswer({ scholarship: value })} />
+        </SituationFormRow>
+
+        <SituationFormRow
+          icon={<MapPin className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
+          label={t('subscription.situationIntro.locationQuestion')}
+        >
+          <label className="sr-only" htmlFor="subscription-location">{t('subscription.situationIntro.locationQuestion')}</label>
+          <input
+            id="subscription-location"
+            value={mainLocation}
+            onChange={(event) => updateAnswer({ mainLocation: event.target.value })}
+            className="w-28 rounded-lg border border-transparent bg-transparent px-1 text-right text-sm font-black leading-tight text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] sm:w-32 sm:text-base lg:w-28 lg:text-sm xl:w-32 xl:text-base"
+          />
+        </SituationFormRow>
+      </div>
+
+      <EpisodePrimaryButton onClick={handleContinue} className="lg:mt-6 xl:mt-7">
+        {t('subscription.situationIntro.continue')}
+      </EpisodePrimaryButton>
+    </EpisodeFrame>
   )
 }
 
@@ -409,81 +455,52 @@ function Step2Solution({ plan, onContinue }: { plan: Plan; onContinue: () => voi
   const reasonList = Array.isArray(reasons) ? reasons : []
 
   return (
-    <section className="relative min-h-[720px] overflow-hidden rounded-[2rem] bg-white px-0 pb-4 pt-4 shadow-[0_26px_80px_rgba(9,106,243,0.08)] sm:min-h-[640px] lg:min-h-[540px] lg:px-12 lg:pb-8 lg:pt-8 xl:min-h-[580px] xl:px-16">
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#096AF3]/10 to-transparent" aria-hidden="true" />
-      <img
-        src={lucasImage}
-        alt=""
-        aria-hidden="true"
-        className="absolute bottom-0 left-[-56px] h-[620px] w-[430px] rounded-[2rem] object-cover object-[42%_50%] shadow-[0_24px_70px_rgba(7,5,37,0.16)] sm:left-8 sm:h-[560px] sm:w-[440px] lg:left-10 lg:h-[500px] lg:w-[390px] lg:top-1/2 lg:-translate-y-1/2 xl:left-14 xl:h-[540px] xl:w-[420px]"
-        draggable={false}
+    <EpisodeFrame>
+      <PhoneStatusBar />
+      <EpisodeProgress
+        label={t('subscription.solutionIntro.episodeProgress')}
+        episode={2}
+        total={5}
+        barClassName="lg:w-56 xl:w-64"
       />
 
-      <div className="relative z-10 ml-auto flex min-h-[690px] w-[min(66%,620px)] min-w-[330px] items-center justify-end pr-0 sm:min-h-[610px] sm:pr-10 lg:min-h-[500px] lg:w-[min(60%,620px)] lg:min-w-0 lg:items-center lg:pr-0 xl:min-h-[540px] xl:w-[min(58%,680px)]">
-        <div className="w-full max-w-[430px] rounded-[2.25rem] border border-slate-200 bg-white px-6 pb-7 pt-5 text-[#070525] shadow-[0_28px_80px_rgba(7,5,37,0.18)] sm:max-w-[500px] sm:rounded-[3rem] sm:px-9 sm:pb-9 sm:pt-7 lg:max-w-none lg:rounded-[2rem] lg:px-8 lg:pb-7 lg:pt-6 xl:px-10 xl:pb-8 xl:pt-7">
-          <div className="flex items-center justify-between text-xs font-extrabold sm:text-sm lg:text-sm">
-            <span>9:41</span>
-            <span className="flex items-center gap-1.5" aria-hidden="true">
-              <span className="flex h-4 items-end gap-0.5">
-                <span className="h-1.5 w-1 rounded-sm bg-current" />
-                <span className="h-2.5 w-1 rounded-sm bg-current" />
-                <span className="h-3.5 w-1 rounded-sm bg-current" />
-              </span>
-              <span className="h-3 w-4 rounded-t-full border-2 border-current border-b-0" />
-              <span className="h-3.5 w-6 rounded border-2 border-current" />
-            </span>
-          </div>
+      <h2 className="mt-10 text-2xl font-black leading-tight tracking-normal sm:text-3xl lg:mt-8 lg:text-2xl xl:text-3xl">
+        {t('subscription.solutionIntro.phoneTitle')}
+      </h2>
 
-          <div className="mt-8 text-center lg:mt-5 xl:mt-6">
-            <p className="text-xs font-black sm:text-sm lg:text-sm">{t('subscription.solutionIntro.episodeProgress')}</p>
-            <div className="mx-auto mt-4 h-2 w-56 overflow-hidden rounded-full bg-[#E8EEF5] lg:mt-3 lg:h-1.5 lg:w-56 xl:w-64">
-              <div className="h-full w-1/2 rounded-full bg-[#096AF3]" />
-            </div>
-          </div>
+      <div className="mt-7 rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-[0_8px_24px_rgba(7,5,37,0.08)] sm:px-6 sm:py-6 lg:mt-6 lg:px-7 lg:py-6 xl:mt-7 xl:px-8 xl:py-7">
+        <div className="flex items-start justify-between gap-5">
+          <h3 className="text-xl font-black uppercase leading-tight tracking-normal text-[#096AF3] sm:text-2xl lg:text-2xl xl:text-3xl">
+            {getPlanName(plan, t)}
+          </h3>
+          <WalletCards className="h-11 w-11 shrink-0 text-[#096AF3] sm:h-12 sm:w-12 lg:h-12 lg:w-12 xl:h-14 xl:w-14" strokeWidth={2.2} aria-hidden="true" />
+        </div>
 
-          <h2 className="mt-10 text-2xl font-black leading-tight tracking-normal sm:text-3xl lg:mt-8 lg:text-2xl xl:text-3xl">
-            {t('subscription.solutionIntro.phoneTitle')}
-          </h2>
+        <p className="mt-6 text-base font-black sm:text-lg lg:text-base xl:text-lg">{t('subscription.solutionIntro.why')}</p>
+        <ul className="mt-4 flex flex-col gap-3 sm:mt-5 sm:gap-4 lg:gap-3">
+          {reasonList.map((reason) => (
+            <li key={reason} className="flex items-start gap-3 text-base font-black leading-snug sm:gap-4 sm:text-lg lg:text-base xl:text-lg">
+              <Check className="mt-0.5 h-5 w-5 shrink-0 text-[#070525] sm:h-6 sm:w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6" strokeWidth={3} aria-hidden="true" />
+              <span>{reason}</span>
+            </li>
+          ))}
+        </ul>
 
-          <div className="mt-7 rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-[0_8px_24px_rgba(7,5,37,0.08)] sm:px-6 sm:py-6 lg:mt-6 lg:px-7 lg:py-6 xl:mt-7 xl:px-8 xl:py-7">
-            <div className="flex items-start justify-between gap-5">
-              <h3 className="text-xl font-black uppercase leading-tight tracking-normal text-[#096AF3] sm:text-2xl lg:text-2xl xl:text-3xl">
-                {getPlanName(plan, t)}
-              </h3>
-              <WalletCards className="h-11 w-11 shrink-0 text-[#096AF3] sm:h-12 sm:w-12 lg:h-12 lg:w-12 xl:h-14 xl:w-14" strokeWidth={2.2} aria-hidden="true" />
-            </div>
-
-            <p className="mt-6 text-base font-black sm:text-lg lg:text-base xl:text-lg">{t('subscription.solutionIntro.why')}</p>
-            <ul className="mt-4 flex flex-col gap-3 sm:mt-5 sm:gap-4 lg:gap-3">
-              {reasonList.map((reason) => (
-                <li key={reason} className="flex items-start gap-3 text-base font-black leading-snug sm:gap-4 sm:text-lg lg:text-base xl:text-lg">
-                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-[#070525] sm:h-6 sm:w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6" strokeWidth={3} aria-hidden="true" />
-                  <span>{reason}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-7 flex items-center justify-between gap-4 border-t border-slate-200 pt-5 lg:mt-6 xl:mt-7">
-              <p className="text-2xl font-black tracking-normal text-[#096AF3] sm:text-3xl lg:text-2xl xl:text-3xl">{t('subscription.solutionIntro.price')}</p>
-              <button
-                type="button"
-                className="min-h-0 rounded-lg px-2 py-1 text-sm font-black text-[#096AF3] transition hover:bg-[#096AF3]/5 sm:text-base lg:text-sm xl:text-base"
-              >
-                {t('subscription.solutionIntro.learnMore')}
-              </button>
-            </div>
-          </div>
-
+        <div className="mt-7 flex items-center justify-between gap-4 border-t border-slate-200 pt-5 lg:mt-6 xl:mt-7">
+          <p className="text-2xl font-black tracking-normal text-[#096AF3] sm:text-3xl lg:text-2xl xl:text-3xl">{t('subscription.solutionIntro.price')}</p>
           <button
             type="button"
-            onClick={onContinue}
-            className="mt-10 flex h-14 w-full items-center justify-center rounded-xl bg-[#096AF3] px-5 text-lg font-extrabold text-white shadow-[0_12px_28px_rgba(9,106,243,0.28)] transition hover:bg-[#075cd6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#096AF3] focus-visible:ring-offset-2 sm:h-16 sm:text-xl lg:mt-7 lg:h-12 lg:text-base xl:mt-8 xl:h-14 xl:text-lg"
+            className="min-h-0 rounded-lg px-2 py-1 text-sm font-black text-[#096AF3] transition hover:bg-[#096AF3]/5 sm:text-base lg:text-sm xl:text-base"
           >
-            {t('subscription.solutionIntro.continue')}
+            {t('subscription.solutionIntro.learnMore')}
           </button>
         </div>
       </div>
-    </section>
+
+      <EpisodePrimaryButton onClick={onContinue} className="lg:mt-7 xl:mt-8">
+        {t('subscription.solutionIntro.continue')}
+      </EpisodePrimaryButton>
+    </EpisodeFrame>
   )
 }
 
