@@ -16,24 +16,23 @@ export interface EpisodeContent {
 
 export interface PersonaStory {
   slug: PersonaSlug
-  /** Couleur signature — utilisée pour orb, badge, accents. */
+  /** Signature color used by the orb, badge, and accent treatments. */
   color: 'purple' | 'amber' | 'green' | 'pink'
   /** Tailwind classes for color-tinted decorations (background tints, borders). */
   ringClass: string
   fromClass: string
   toClass: string
   icon: ComponentType<SVGProps<SVGSVGElement>>
-  /** Photo portrait — chargée via import Vite, hash + cache géré. */
+  /** Portrait imported through Vite for hashed caching. */
   photo: string
   age: number
   location: string
   quote: string
-  forfait: { nom: string; prix: string; subtitle: string }
+  plan: { name: string; price: string; subtitle: string }
   episodes: [EpisodeContent, EpisodeContent, EpisodeContent, EpisodeContent, EpisodeContent]
 }
 
-/** Stories per persona. Narrative content kept in French (matches brief PDF tone);
-    structural labels (episode titles, UI chrome) come from i18n. */
+/** Story content per persona. Structural labels and UI chrome come from i18n. */
 export const PERSONA_STORIES: Record<PersonaSlug, PersonaStory> = {
   lucas: {
     slug: 'lucas',
@@ -45,28 +44,28 @@ export const PERSONA_STORIES: Record<PersonaSlug, PersonaStory> = {
     photo: lucasPhoto,
     age: 20,
     location: 'Cergy (95)',
-    quote: 'Je veux faire ma demande depuis mon téléphone en quelques minutes, sans gérer de paperasse.',
-    forfait: { nom: 'Imagine R Étudiant', prix: '392,30 €/an', subtitle: 'Tarif boursier appliqué' },
+    quote: 'Je veux faire ma demande depuis mon telephone en quelques minutes, sans gerer de paperasse.',
+    plan: { name: 'Imagine R Etudiant', price: '392,30 EUR/an', subtitle: 'Tarif boursier applique' },
     episodes: [
       {
-        narrative: "Lucas commence un nouvel épisode de sa vie : ses études supérieures.",
-        items: ['Âge : 20 ans', 'Statut : étudiant', 'Boursier : oui (échelon 4)', 'Zone : Cergy & alentours'],
+        narrative: 'Lucas commence un nouvel episode de sa vie : ses etudes superieures.',
+        items: ['Age : 20 ans', 'Statut : etudiant', 'Boursier : oui, echelon 4', 'Zone : Cergy et alentours'],
       },
       {
-        narrative: "On analyse sa situation et on lui propose la solution la plus adaptée.",
-        items: ['Imagine R Étudiant', 'Boursier détecté automatiquement', '392,30 €/an', 'Déplacements quotidiens IDF'],
+        narrative: 'Sa situation est analysee et la solution la plus adaptee lui est proposee.',
+        items: ['Imagine R Etudiant', 'Bourse detectee automatiquement', '392,30 EUR/an', 'Deplacements quotidiens IDF'],
       },
       {
-        narrative: "Lucas ajoute son justificatif de scolarité en quelques clics.",
-        items: ['Certificat de scolarité', 'Attestation de bourse', 'Vérification IA en cours…', 'Confiance : 94%'],
+        narrative: 'Lucas ajoute son certificat de scolarite en quelques clics.',
+        items: ['Certificat de scolarite', 'Attestation de bourse', 'Verification IA en cours...', 'Confiance : 94%'],
       },
       {
-        narrative: "Tout est validé. Lucas peut profiter de son abonnement.",
-        items: ['Imagine R Étudiant', '392,30 €/an', "Valable à partir du 01/09/2026", 'Paiement échelonné activé'],
+        narrative: 'Tout est valide. Lucas peut utiliser son abonnement.',
+        items: ['Imagine R Etudiant', '392,30 EUR/an', 'Valable a partir du 01/09/2026', 'Paiement echelonne active'],
       },
       {
-        narrative: "Quelques années plus tard, Lucas démarre son premier emploi. Un nouvel épisode commence.",
-        items: ['Nouvelle situation détectée', 'Premier emploi', 'Bascule vers Navigo Annuel', 'Remboursement employeur 50%'],
+        narrative: 'Quelques annees plus tard, Lucas commence son premier emploi. Un nouvel episode commence.',
+        items: ['Nouvelle situation detectee', 'Premier emploi', 'Bascule vers Navigo Annuel', 'Remboursement employeur 50%'],
       },
     ],
   },
@@ -80,28 +79,28 @@ export const PERSONA_STORIES: Record<PersonaSlug, PersonaStory> = {
     photo: valeriePhoto,
     age: 46,
     location: 'Essonne (91)',
-    quote: "Je veux gérer les abonnements de mes enfants rapidement, sans me poser mille questions.",
-    forfait: { nom: 'Imagine R Scolaire × 2', prix: '392,30 €/an /enfant', subtitle: 'Famille gérée centralisée' },
+    quote: 'Je veux gerer les abonnements de mes enfants rapidement, sans me poser mille questions.',
+    plan: { name: 'Imagine R Scolaire x 2', price: '392,30 EUR/an/enfant', subtitle: 'Famille geree de maniere centralisee' },
     episodes: [
       {
-        narrative: "Valérie commence un épisode familial : la rentrée scolaire de ses deux ados.",
-        items: ['Maman de 2 ados', 'Léa, 13 ans', 'Lucas, 16 ans', 'Payeuse pour ses deux enfants'],
+        narrative: 'Valerie commence un episode familial : la rentree de ses deux adolescents.',
+        items: ['Mere de 2 adolescents', 'Lea, 13 ans', 'Lucas, 16 ans', 'Payeuse pour ses deux enfants'],
       },
       {
-        narrative: "On lui propose une gestion centralisée des abonnements de sa tribu.",
-        items: ['Imagine R Scolaire × 2', 'Un seul espace de gestion', '392,30 €/an par enfant', 'Renouvellement annuel'],
+        narrative: 'Un espace centralise de gestion des abonnements lui est propose.',
+        items: ['Imagine R Scolaire x 2', 'Un seul espace de gestion', '392,30 EUR/an par enfant', 'Renouvellement annuel'],
       },
       {
-        narrative: "Un seul livret de famille suffit pour valider les deux dossiers.",
-        items: ['Livret de famille', '2 enfants détectés', "Liens familiaux confirmés", 'Confiance : 97%'],
+        narrative: 'Un seul livret de famille suffit pour valider les deux dossiers.',
+        items: ['Livret de famille', '2 enfants detectes', 'Liens familiaux confirmes', 'Confiance : 97%'],
       },
       {
-        narrative: "Les deux abonnements sont validés en une seule démarche.",
-        items: ['Léa — Imagine R Scolaire', 'Lucas — Imagine R Scolaire', 'Valides année scolaire 2026', 'Rappels automatiques activés'],
+        narrative: 'Les deux abonnements sont valides dans un seul parcours.',
+        items: ['Lea - Imagine R Scolaire', 'Lucas - Imagine R Scolaire', 'Valides pour l\'annee scolaire 2026', 'Rappels automatiques actives'],
       },
       {
-        narrative: "Lucas a 16 ans : il peut maintenant gérer son propre contrat. Valérie reçoit une notification.",
-        items: ['Lucas atteint 16 ans', 'Transfert de gestion proposé', 'Validation parent + enfant requise', 'Valérie reste gestionnaire de Léa'],
+        narrative: 'Lucas a 16 ans : il peut maintenant gerer son propre contrat. Valerie recoit une notification.',
+        items: ['Lucas atteint 16 ans', 'Transfert de gestion propose', 'Validation parent + enfant requise', 'Valerie reste gestionnaire de Lea'],
       },
     ],
   },
@@ -115,28 +114,28 @@ export const PERSONA_STORIES: Record<PersonaSlug, PersonaStory> = {
     photo: jeanpierrePhoto,
     age: 67,
     location: 'Val-de-Marne (94)',
-    quote: "Si je peux bénéficier d'un tarif plus avantageux, je veux que tout se fasse automatiquement et sans risque.",
-    forfait: { nom: 'Navigo Senior', prix: '544,80 €/an', subtitle: '−45 €/mois vs Navigo Mois' },
+    quote: 'Si je peux beneficier d un tarif plus avantageux, je veux que tout se fasse automatiquement et sans risque.',
+    plan: { name: 'Navigo Senior', price: '544,80 EUR/an', subtitle: '-45 EUR/mois vs Navigo Mois' },
     episodes: [
       {
-        narrative: "Jean-Pierre vient de prendre sa retraite. Une nouvelle étape de vie commence.",
-        items: ['Âge : 67 ans', 'Statut : retraité', 'Titulaire actuel : Navigo Annuel', 'Val-de-Marne (94)'],
+        narrative: 'Jean-Pierre vient de prendre sa retraite. Une nouvelle etape de vie commence.',
+        items: ['Age : 67 ans', 'Statut : retraite', 'Titre actuel : Navigo Annuel', 'Val-de-Marne (94)'],
       },
       {
-        narrative: "On détecte automatiquement son éligibilité au tarif Senior et on lui propose la bascule.",
-        items: ['Navigo Senior', 'Éligibilité confirmée (≥62 ans)', '544,80 €/an', 'Économie : 545 €/an vs Navigo Mois'],
+        narrative: 'Son eligibilite au tarif Senior est detectee automatiquement et une bascule lui est proposee.',
+        items: ['Navigo Senior', 'Eligibilite confirmee (62 ans et plus)', '544,80 EUR/an', 'Economie : 545 EUR/an vs Navigo Mois'],
       },
       {
-        narrative: "Une simple pièce d'identité valide l'âge. Pas de déplacement en agence.",
-        items: ["Pièce d'identité (CNI)", 'Lecture IA en cours…', 'Âge vérifié : 67 ans', 'Confiance : 99%'],
+        narrative: 'Une simple piece d identite valide son age. Aucun passage en agence n est necessaire.',
+        items: ['Piece d identite', 'Lecture IA en cours...', 'Age verifie : 67 ans', 'Confiance : 99%'],
       },
       {
-        narrative: "La bascule se fait sans interruption de service. L'ancien contrat est résilié automatiquement.",
-        items: ['Navigo Senior activé', 'Bascule au 1er du mois', 'Aucune coupure', 'Prélèvement ajusté à 45,40 €/mois'],
+        narrative: 'La bascule se fait sans interruption de service. L ancien contrat est resilie automatiquement.',
+        items: ['Navigo Senior active', 'Bascule au 1er du mois', 'Aucune coupure', 'Prelevement ajuste a 45,40 EUR/mois'],
       },
       {
-        narrative: "Quelques mois plus tard, Jean-Pierre découvre une activité solidaire dans sa commune via l'app.",
-        items: ['Notifications activités locales', 'Bénévolat associatif', 'Sorties culturelles IDF', "Gardez l'autonomie"],
+        narrative: 'Quelques mois plus tard, Jean-Pierre decouvre des activites locales via l\'application.',
+        items: ['Notifications d activites locales', 'Benevolat associatif', 'Sorties culturelles IDF', 'Autonomie preservee'],
       },
     ],
   },
@@ -150,28 +149,28 @@ export const PERSONA_STORIES: Record<PersonaSlug, PersonaStory> = {
     photo: amiraPhoto,
     age: 34,
     location: 'Seine-Saint-Denis (93)',
-    quote: "Je veux conserver mes droits sans devoir refaire les mêmes démarches tous les mois.",
-    forfait: { nom: 'Navigo Solidarité 75%', prix: '22,70 €/mois', subtitle: 'Renouvellement mensuel auto' },
+    quote: 'Je veux conserver mes droits sans devoir refaire les memes demarches tous les mois.',
+    plan: { name: 'Navigo Solidarite 75%', price: '22,70 EUR/mois', subtitle: 'Renouvellement mensuel automatique' },
     episodes: [
       {
-        narrative: "Amira est en recherche d'emploi. Elle a besoin de conserver sa mobilité sans complexité.",
-        items: ['Âge : 34 ans', 'Bénéficiaire CSS', "En recherche d'emploi", 'Seine-Saint-Denis (93)'],
+        narrative: 'Amira est en recherche d emploi. Elle a besoin de conserver sa mobilite sans complexite.',
+        items: ['Age : 34 ans', 'Beneficiaire CSS', 'En recherche d emploi', 'Seine-Saint-Denis (93)'],
       },
       {
-        narrative: "On vérifie ses droits CAF en direct — aucun justificatif à uploader.",
-        items: ['Connexion CAF (mock)', 'QF détecté : 480', 'Niveau TST : 75%', "Sans aucune paperasse"],
+        narrative: 'Ses droits CAF sont verifies en direct. Aucun document n est a envoyer.',
+        items: ['Connexion CAF (mock)', 'Quotient familial detecte : 480', 'Niveau TST : 75%', 'Aucune paperasse'],
       },
       {
-        narrative: "Les droits sont validés à la source. Aucun document à transmettre.",
-        items: ['Droits CSS confirmés', 'Validité : 3 mois', 'Renouvellement auto', "Zero stigmatisation"],
+        narrative: 'Les droits sont valides a la source. Aucun document n est transmis.',
+        items: ['Droits CSS confirmes', 'Validite : 3 mois', 'Renouvellement automatique', 'Zero stigmatisation'],
       },
       {
-        narrative: "Amira reçoit son TST Solidarité 75 % en quelques minutes.",
-        items: ['Navigo Solidarité 75% activé', '22,70 €/mois', "Valable jusqu'au 31/08/2026", "SMS de rappel J-15"],
+        narrative: 'Amira recoit son TST Solidarite 75% en quelques minutes.',
+        items: ['Navigo Solidarite 75% active', '22,70 EUR/mois', 'Valable jusqu au 31/08/2026', 'Rappel SMS J-15'],
       },
       {
-        narrative: "Amira retrouve un emploi. Elle peut basculer en douceur vers un Navigo Mois standard.",
-        items: ['Nouvelle situation : emploi', 'Bascule Navigo Mois proposée', "Pas d'interruption", 'Accompagnement assuré'],
+        narrative: 'Amira retrouve un emploi. Elle peut basculer en douceur vers un Navigo Mois standard.',
+        items: ['Nouvelle situation : emploi', 'Bascule Navigo Mois proposee', 'Pas d interruption', 'Accompagnement assure'],
       },
     ],
   },

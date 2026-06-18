@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next'
-import { ForfaitCard } from './ForfaitCard'
+import { PlanCard } from './PlanCard'
 import type { SimulatorResult } from '../../hooks/useSimulator'
 
-export interface ComparateurForfaitsProps {
+export interface PlanComparisonProps {
   results: SimulatorResult[]
-  onSelect?: (forfaitId: string) => void
+  onSelect?: (planId: string) => void
 }
 
-export function ComparateurForfaits({ results, onSelect }: ComparateurForfaitsProps) {
+export function PlanComparison({ results, onSelect }: PlanComparisonProps) {
   const { t } = useTranslation()
 
   if (results.length === 0) {
@@ -21,13 +21,13 @@ export function ComparateurForfaits({ results, onSelect }: ComparateurForfaitsPr
   return (
     <div className="flex flex-col gap-4">
       {results.map((r, i) => (
-        <ForfaitCard
-          key={r.forfait.id}
-          forfait={r.forfait}
-          prixAn={r.prixAn}
-          economie={r.economie}
+        <PlanCard
+          key={r.plan.id}
+          plan={r.plan}
+          yearlyPrice={r.yearlyPrice}
+          savings={r.savings}
           isRecommended={i === 0}
-          onSelect={() => onSelect?.(r.forfait.id)}
+          onSelect={() => onSelect?.(r.plan.id)}
         />
       ))}
     </div>

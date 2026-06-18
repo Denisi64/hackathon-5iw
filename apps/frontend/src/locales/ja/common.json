@@ -1,7 +1,7 @@
 {
   "header": {
     "logoAriaLabel": "コミュティトル、ホーム",
-    "nav": { "simulator": "シミュレーター", "forfaits": "プラン一覧", "subscribe": "申し込む", "assistant": "アシスタント", "login": "ログイン", "account": "マイページ" },
+    "nav": { "simulator": "シミュレーター", "plans": "プラン一覧", "subscribe": "申し込む", "assistant": "アシスタント", "login": "ログイン", "account": "マイページ" },
     "menu": { "open": "メニューを開く", "close": "メニューを閉じる" }
   },
   "themeToggle": {
@@ -46,7 +46,7 @@
       "quote": "「{{text}}」",
       "ctaSimulate": "シミュレーターを開く",
       "otherStories": "その他のストーリー",
-      "recommendedForfait": "おすすめプラン"
+      "recommendedPlan": "おすすめプラン"
     }
   },
   "stats": {
@@ -70,8 +70,8 @@
     }
   },
   "profiles": {
-    "salarie": "会社員", "etudiant": "学生", "scolaire_junior": "ジュニア",
-    "scolaire": "児童・生徒", "senior": "シニア", "tst": "TST", "amethyste": "アメティスト"
+    "employee": "会社員", "student": "学生", "junior_school": "ジュニア",
+    "school": "児童・生徒", "senior": "シニア", "solidarity": "TST", "amethyst": "アメティスト"
   },
   "simulator": {
     "title": "あなたに最適なプランを",
@@ -117,7 +117,7 @@
       "jobseeker": { "title": "求職中 / TST", "description": "権利に応じた連帯交通料金。" },
       "parent": { "title": "保護者", "description": "お子様のために申し込み。" },
       "scholar": { "title": "児童・生徒 11-17", "description": "イル・ド・フランスで学んでいます。" },
-      "amethyste": { "title": "Améthyste", "description": "障害をお持ちの方（MDPH）— 県によって料金が変わります。" }
+      "amethyst": { "title": "Améthyste", "description": "障害をお持ちの方（MDPH）— 県によって料金が変わります。" }
     },
     "questions": {
       "age": "年齢",
@@ -137,22 +137,23 @@
       "jobseeker": { "summary": "連帯交通料金は収入に応じて価格を調整します。", "reasons": ["CAF権利の自動確認", "書類提出不要", "四半期更新が簡単"] },
       "parent":    { "summary": "お子様の定期を一括管理できます。", "reasons": ["お子様ごとに Imagine R 学生", "家族手帳一枚で十分", "新学期前に自動リマインド"] },
       "scholar":   { "summary": "Imagine R 児童・生徒は11-25歳の学年全体をカバーします。", "reasons": ["IDF全ネットワーク込み", "奨学生割引あり", "毎年自動更新"] },
-      "amethyste": { "summary": "Améthyste定期券はお住まいの県とMDPHステータスに合わせて適用されます。", "reasons": ["県ごとに料金が変動", "MDPH通知から自動確認", "年間更新は手続き不要"] }
+      "amethyst": { "summary": "Améthyste定期券はお住まいの県とMDPHステータスに合わせて適用されます。", "reasons": ["県ごとに料金が変動", "MDPH通知から自動確認", "年間更新は手続き不要"] }
     },
     "documents": {
       "upload": "ファイルを選択",
       "franceConnect": "FranceConnectでログイン",
       "analyzing": "AIで解析中…",
       "validated": "承認済み",
+      "optional": "任意",
       "validatedHint": "書類は自動で確認されました。",
-      "certificat_scolarite": { "label": "在学証明書", "help": "当年度に学校から発行された書類。" },
-      "attestation_bourse":   { "label": "奨学金証明", "help": "CROUS奨学金支給通知書。" },
-      "contrat_travail":      { "label": "雇用契約書", "help": "任意 — 雇用主払戻の迅速化に。" },
-      "piece_identite":       { "label": "身分証明書", "help": "年齢確認のための身分証またはパスポート。" },
+      "school_certificate": { "label": "在学証明書", "help": "当年度に学校から発行された書類。" },
+      "scholarship_certificate":   { "label": "奨学金証明", "help": "CROUS奨学金支給通知書。" },
+      "employment_contract":      { "label": "雇用契約書", "help": "任意 — 雇用主払戻の迅速化に。" },
+      "identity_document":       { "label": "身分証明書", "help": "年齢確認のための身分証またはパスポート。" },
       "france_connect":       { "label": "FranceConnect経由のCAF確認", "help": "安全な接続 — 書類提出は不要。" },
-      "livret_famille":       { "label": "家族手帳", "help": "一枚でお子様全員をカバー。" },
-      "carte_invalidite":     { "label": "障害者手帳", "help": "包括モビリティカード（CMI）または旧障害者手帳。" },
-      "notification_mdph":    { "label": "MDPH通知", "help": "県障害者センター（MDPH）の決定通知。" }
+      "family_record_book":       { "label": "家族手帳", "help": "一枚でお子様全員をカバー。" },
+      "disability_card":     { "label": "障害者手帳", "help": "包括モビリティカード（CMI）または旧障害者手帳。" },
+      "mdph_notice":    { "label": "MDPH通知", "help": "県障害者センター（MDPH）の決定通知。" }
     },
     "account": {
       "firstName": "名",
@@ -166,14 +167,14 @@
       "you": "あなた",
       "subtitle": "申込が完了しました。すべて確認済みです。",
       "summary": "概要",
-      "forfait": "プラン",
+      "plan": "プラン",
       "price": "料金",
       "startDate": "開始日",
       "email": "メール",
       "emailSent": "確認メールを{{email}}に送信しました。このウィンドウを閉じても構いません。"
     },
-    "actions": { "back": "戻る", "next": "次へ", "confirm": "確認", "finish": "ホームに戻る", "createAccount": "マイページを作成", "toAccount": "マイページを開く" },
-    "errors": { "required": "必須項目です", "email": "無効なメール" }
+    "actions": { "back": "戻る", "next": "次へ", "confirm": "確認", "finish": "ホームに戻る", "createAccount": "マイページを作成", "toAccount": "マイページを開く", "pay": "支払う" },
+    "errors": { "required": "必須項目です", "email": "無効なメール", "uploadFailed": "書類のアップロードに失敗しました", "createFailed": "申込の作成に失敗しました", "paymentFailed": "支払いエラーが発生しました" }
   },
   "auth": {
     "login": {
@@ -214,7 +215,7 @@
       "network": "認証サーバーに接続できません"
     }
   },
-  "forfaits": {
+  "plans": {
     "kicker": "全プラン",
     "title": "あなたにぴったりのNavigoプランを見つけよう。",
     "subtitle": "Île-de-France Mobilités 2026年公式料金。プロフィールで絞り込んでおすすめを表示します。",
@@ -225,7 +226,7 @@
     "flagDays": "週あたりの利用日数",
     "flag": { "student": "学生", "alternant": "見習い／交互教育", "worker": "会社員", "retired": "退職者", "rsa": "RSA", "css": "CSS（自己負担なし）", "ass": "ASS", "ame": "AME" },
     "recommended": "おすすめ",
-    "type": { "jour": "1日", "hebdo": "週間", "mensuel": "月額", "annuel": "年間", "usage": "従量制" },
+    "type": { "day": "1日", "weekly": "週間", "monthly": "月額", "yearly": "年間", "usage": "従量制" },
     "documents": "必要書類",
     "documentsHint": "件",
     "employerRefund": "雇用主から{{percent}}%還付",
@@ -241,19 +242,19 @@
     "perTrip": "/1回",
     "source": "出典：",
     "catalog": {
-      "navigo_jour": { "name": "Navigo 1日", "description": "1日中、乗り放題で利用できます。" },
-      "navigo_semaine": { "name": "Navigo 週間", "description": "1週間、乗り放題で利用できます。" },
-      "navigo_mois": { "name": "Navigo 月額", "description": "年間契約なしで1か月乗り放題。" },
-      "navigo_annuel": { "name": "Navigo 年間", "description": "1年中利用でき、12か月目が含まれます。" },
+      "navigo_day": { "name": "Navigo 1日", "description": "1日中、乗り放題で利用できます。" },
+      "navigo_week": { "name": "Navigo 週間", "description": "1週間、乗り放題で利用できます。" },
+      "navigo_month": { "name": "Navigo 月額", "description": "年間契約なしで1か月乗り放題。" },
+      "navigo_yearly": { "name": "Navigo 年間", "description": "1年中利用でき、12か月目が含まれます。" },
       "navigo_senior": { "name": "Navigo シニア", "description": "62歳以上向けの優遇料金です。" },
-      "imagine_r_etudiant": { "name": "Imagine R 学生", "description": "Île-de-France の学生向け必須プランです。" },
-      "imagine_r_scolaire": { "name": "Imagine R スクール", "description": "児童・生徒・見習い向けの年間プランです。" },
+      "imagine_r_student": { "name": "Imagine R 学生", "description": "Île-de-France の学生向け必須プランです。" },
+      "imagine_r_school": { "name": "Imagine R スクール", "description": "児童・生徒・見習い向けの年間プランです。" },
       "imagine_r_junior": { "name": "Imagine R Junior", "description": "11歳未満向けの低価格 Imagine R です。" },
-      "liberte_plus": { "name": "Navigo Liberté+", "description": "全ゾーンで1回1.64€から、利用ごとに支払います。" },
-      "navigo_solidarite_75": { "name": "Solidarity 75%", "description": "CSS自己負担なし、またはASS受給者向けの75%割引です。" },
-      "navigo_reduction_50": { "name": "50%割引", "description": "AME受給者向けの50%割引です。" },
-      "navigo_gratuite": { "name": "無料交通", "description": "対象RSA受給者、またはASS + CSS自己負担なし向けの無料交通です。" },
-      "amethyste": { "name": "Améthyste", "description": "障害のある方向けのプランで、県により条件が異なります。" }
+      "liberty_plus": { "name": "Navigo Liberté+", "description": "全ゾーンで1回1.64€から、利用ごとに支払います。" },
+      "navigo_solidarity_75": { "name": "Solidarity 75%", "description": "CSS自己負担なし、またはASS受給者向けの75%割引です。" },
+      "navigo_discount_50": { "name": "50%割引", "description": "AME受給者向けの50%割引です。" },
+      "navigo_free": { "name": "無料交通", "description": "対象RSA受給者、またはASS + CSS自己負担なし向けの無料交通です。" },
+      "amethyst": { "name": "Améthyste", "description": "障害のある方向けのプランで、県により条件が異なります。" }
     },
     "list": {
       "kicker": "プランカタログ",
@@ -266,7 +267,7 @@
       "resultsAria": "プラン一覧",
       "yearlyEquivalent": "年間換算：{{amount}}",
       "viewDetail": "詳細を見る",
-      "filters": { "all": "すべて", "salarie": "会社員", "etudiant": "学生", "scolaire": "児童・生徒", "senior": "シニア", "tst": "ソリダリティ", "amethyste": "Améthyste" }
+      "filters": { "all": "すべて", "employee": "会社員", "student": "学生", "school": "児童・生徒", "senior": "シニア", "solidarity": "ソリダリティ", "amethyst": "Améthyste" }
     },
     "detail": {
       "notFoundBadge": "プランが見つかりません",
@@ -298,9 +299,9 @@
       "pricePerYear": "{{price}} / 年",
       "priceOnFile": "書類に応じた料金",
       "payAsYouGo": "利用ごとの請求",
-      "profiles": { "salarie": "会社員", "etudiant": "学生", "scolaire_junior": "子ども", "scolaire": "児童・生徒", "senior": "シニア", "tst": "ソリダリティ", "amethyste": "障害" },
-      "documents": { "piece_identite": "本人確認書類", "certificat_scolarite": "在学証明書", "attestation_bourse": "奨学金証明書", "livret_famille": "家族手帳", "attestation_caf": "CAF証明書", "avis_imposition": "税務通知", "carte_invalidite": "障害者カード", "notification_mdph": "MDPH通知" },
-      "renewal": { "annuel": "年次更新", "mensuel": "月次更新", "trimestriel": "四半期更新", "hebdomadaire": "1週間有効", "usage": "利用ごとの支払い", "jour": "1日有効" },
+      "profiles": { "employee": "会社員", "student": "学生", "junior_school": "子ども", "school": "児童・生徒", "senior": "シニア", "solidarity": "ソリダリティ", "amethyst": "障害" },
+      "documents": { "identity_document": "本人確認書類", "school_certificate": "在学証明書", "scholarship_certificate": "奨学金証明書", "family_record_book": "家族手帳", "caf_certificate": "CAF証明書", "tax_notice": "税務通知", "disability_card": "障害者カード", "mdph_notice": "MDPH通知" },
+      "renewal": { "yearly": "年次更新", "monthly": "月次更新", "quarterly": "四半期更新", "weekly": "1週間有効", "usage": "利用ごとの支払い", "day": "1日有効" },
       "benefits": { "zones": "ゾーン {{min}}〜{{max}}", "employerRefund": "雇用主から{{percent}}%払戻し", "noDocuments": "必要書類なし", "documentCheck": "書類確認をサポート", "solidarityCheck": "ソリダリティ権利確認", "schoolRhythm": "学校生活に合わせた設計", "payOnlyWhenTraveling": "移動した時だけ支払い" }
     }
   },
@@ -323,7 +324,7 @@
       "send": "送信",
       "stop": "停止",
       "reset": "新しい会話",
-      "viewForfait": "プランを見る",
+      "viewPlan": "プランを見る",
       "subscribe": "申し込む"
     },
     "side": {
@@ -345,12 +346,15 @@
       "stream": "チャットボットの応答を読み取れませんでした。"
     }
   },
-  "monEspace": {
+  "account": {
     "kicker": "マイページ",
     "welcome": "こんにちは、{{firstName}}さん",
     "subtitle": "ご契約内容を確認し、アカウントを管理します。",
     "logout": "ログアウト",
     "subscriptionActive": "有効な契約",
+    "subscriptionPendingPayment": "支払い待ち",
+    "subscriptionPendingDocs": "書類確認中",
+    "subscriptionDraft": "申込中",
     "startDate": "開始日",
     "zones": "ゾーン",
     "status": "ステータス",

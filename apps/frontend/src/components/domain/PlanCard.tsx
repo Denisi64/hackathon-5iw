@@ -1,21 +1,21 @@
 import { useTranslation } from 'react-i18next'
-import type { Forfait } from '../../types/domain'
+import type { Plan } from '../../types/domain'
 import { Card } from '../ui/Card'
 import { Badge } from '../ui/Badge'
 import { Button } from '../ui/Button'
 import { formatCurrency } from '../../lib/formatters'
 import { useLocale } from '../../hooks/useLocale'
-import { getForfaitName } from '../../utils/forfaitDisplay'
+import { getPlanName } from '../../utils/planDisplay'
 
-export interface ForfaitCardProps {
-  forfait: Forfait
-  prixAn: number
-  economie: number
+export interface PlanCardProps {
+  plan: Plan
+  yearlyPrice: number
+  savings: number
   isRecommended?: boolean
   onSelect?: () => void
 }
 
-export function ForfaitCard({ forfait, prixAn, economie, isRecommended, onSelect }: ForfaitCardProps) {
+export function PlanCard({ plan, yearlyPrice, savings, isRecommended, onSelect }: PlanCardProps) {
   const { t } = useTranslation()
   const { locale } = useLocale()
 
@@ -24,9 +24,9 @@ export function ForfaitCard({ forfait, prixAn, economie, isRecommended, onSelect
       <Card.Header>
         <div className="flex flex-col gap-1">
           <span className="text-xs font-mono tracking-widest text-fg-muted uppercase">
-            {forfait.renouvellement}
+            {plan.renewal}
           </span>
-          <h3 className="text-lg font-semibold tracking-tight text-fg">{getForfaitName(forfait, t)}</h3>
+          <h3 className="text-lg font-semibold tracking-tight text-fg">{getPlanName(plan, t)}</h3>
         </div>
         {isRecommended && <Badge variant="recommended">{t('simulator.recommended')}</Badge>}
       </Card.Header>
@@ -34,28 +34,28 @@ export function ForfaitCard({ forfait, prixAn, economie, isRecommended, onSelect
       <Card.Body>
         <div className="flex items-baseline gap-1.5">
           <span className="text-3xl font-semibold tracking-tight text-fg tabular-nums">
-            {prixAn === Infinity ? '—' : formatCurrency(prixAn, locale)}
+            {yearlyPrice === Infinity ? '—' : formatCurrency(yearlyPrice, locale)}
           </span>
           <span className="text-sm text-fg-muted">{t('simulator.perYear')}</span>
         </div>
-        {forfait.prixMois !== null && (
+        {plan.monthlyPrice !== null && (
           <p className="mt-1 text-sm text-fg-muted tabular-nums">
-            {formatCurrency(forfait.prixMois, locale)}{t('simulator.perMonth')}
+            {formatCurrency(plan.monthlyPrice, locale)}{t('simulator.perMonth')}
           </p>
         )}
-        {economie > 0 && (
+        {savings > 0 && (
           <p className="mt-4 text-sm font-medium text-emerald-600 dark:text-emerald-400">
-            {t('simulator.savingVsTickets', { amount: formatCurrency(economie, locale) })}
+            {t('simulator.savingVsTickets', { amount: formatCurrency(savings, locale) })}
           </p>
         )}
-        {forfait.remboursementEmployeur && (
+        {plan.employerRefund && (
           <p className="mt-3 text-xs text-fg-muted">{t('simulator.tipEmployer')}</p>
         )}
       </Card.Body>
 
       <Card.Footer>
         <Button variant={isRecommended ? 'primary' : 'secondary'} size="md" onClick={onSelect} fullWidth>
-          {t('forfaits.list.viewDetail')}
+          {t('plans.list.viewDetail')}
         </Button>
       </Card.Footer>
     </Card>

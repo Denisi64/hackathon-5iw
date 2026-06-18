@@ -8,6 +8,20 @@
       "when": 1781686710341,
       "tag": "0000_lush_sunspot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1781699405235,
+      "tag": "0001_futuristic_iron_patriot",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1781701993308,
+      "tag": "0002_freezing_bulldozer",
+      "breakpoints": true
     }
   ]
 }

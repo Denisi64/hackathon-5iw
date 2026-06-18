@@ -1,5 +1,30 @@
 import { boolean, date, integer, jsonb, pgEnum, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
+export const fraudLevelEnum = pgEnum('fraud_level', ['low', 'medium', 'high'])
+
+export const documentTypeEnum = pgEnum('document_type', [
+  'cni',
+  'certificat_scolarite',
+  'attestation_caf',
+  'carte_invalidite',
+  'livret_famille',
+  'inconnu',
+])
+
+export const offerRenewalEnum = pgEnum('offer_renewal', ['annual', 'monthly', 'weekly', 'quarterly', 'usage'])
+
+export const notificationTypeEnum = pgEnum('notification_type', [
+  'subscription_renewal',
+  'subscription_active',
+  'document_warning',
+  'documents_required',
+  'subscription_suspended',
+  'payment_required',
+  'fraud_alert',
+  'subscription_draft',
+  'tst_expiry',
+])
+
 export const profileEnum = pgEnum('profile', [
   'employee',
   'student',
@@ -29,7 +54,7 @@ export const consentTypeEnum = pgEnum('consent_type', ['rgpd', 'cookies', 'docum
 export const users = pgTable('users', {
   id: uuid('id').defaultRandom().primaryKey(),
   email: varchar('email', { length: 255 }).notNull().unique(),
-  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+  passwordHash: varchar('password_hash', { length: 255 }),
   firstName: varchar('first_name', { length: 100 }).notNull(),
   lastName: varchar('last_name', { length: 100 }).notNull(),
   dateOfBirth: timestamp('date_of_birth'),
@@ -48,7 +73,7 @@ export const offers = pgTable('offers', {
   description: text('description'),
   yearlyPrice: integer('yearly_price'),
   monthlyPrice: integer('monthly_price'),
-  renewal: varchar('renewal', { length: 20 }),
+  renewal: offerRenewalEnum('renewal'),
   active: boolean('active').default(true),
 })
 
@@ -68,7 +93,7 @@ export const subscriptions = pgTable('subscriptions', {
   stripeSubscriptionId: varchar('stripe_subscription_id', { length: 255 }),
   stripeCustomerId: varchar('stripe_customer_id', { length: 255 }),
   fraudScore: integer('fraud_score'),
-  fraudLevel: varchar('fraud_level', { length: 10 }),
+  fraudLevel: fraudLevelEnum('fraud_level'),
   fraudSignals: jsonb('fraud_signals'),
   startDate: timestamp('start_date'),
   endDate: timestamp('end_date'),
@@ -81,7 +106,7 @@ export const documents = pgTable('documents', {
   subscriptionId: uuid('subscription_id')
     .references(() => subscriptions.id)
     .notNull(),
-  type: varchar('type', { length: 50 }).notNull(),
+  type: documentTypeEnum('type').notNull(),
   minioKey: varchar('minio_key', { length: 255 }).notNull(),
   status: documentStatusEnum('status').default('uploaded'),
   aiConfidence: integer('ai_confidence'),
@@ -109,7 +134,7 @@ export const notifications = pgTable('notifications', {
   userId: uuid('user_id')
     .references(() => users.id)
     .notNull(),
-  type: varchar('type', { length: 50 }).notNull(),
+  type: notificationTypeEnum('type').notNull(),
   message: text('message').notNull(),
   readAt: timestamp('read_at'),
   createdAt: timestamp('created_at').defaultNow(),

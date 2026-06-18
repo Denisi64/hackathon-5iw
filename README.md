@@ -36,6 +36,7 @@ Avec le petit LLM local gratuit :
 make start-llm
 ```
 
+
 ```bash
 make stop
 ```
@@ -53,7 +54,8 @@ URLs :
 
 - Front : http://localhost:5173
 - API : http://localhost:3000/api/health
-- Pgweb : http://localhost:8081
+- **Backoffice (Directus)** : http://localhost:8055/admin — `admin@comutitres.fr` / `admin123` — voir [docs/directus.md](docs/directus.md)
+- Pgweb (SQL) : http://localhost:8081
 - MinIO console : http://localhost:9001
 - PostgreSQL : localhost:5432
 
@@ -77,11 +79,30 @@ Si PostgreSQL et MinIO tournent deja :
 make dev
 ```
 
-Separément :
+Separement :
 
 ```bash
 make dev-front
 make dev-back
+```
+
+Variables d'environnement requises dans `apps/backend/.env` :
+
+```
+DATABASE_URL=postgresql://comutitres:comutitres_dev@localhost:5432/comutitres
+JWT_SECRET=...
+JWT_REFRESH_SECRET=...
+ANTHROPIC_API_KEY=sk-ant-...
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+MINIO_ENDPOINT=localhost
+MINIO_PORT=9000
+MINIO_ACCESS_KEY=minioadmin
+MINIO_SECRET_KEY=minioadmin123
+MINIO_BUCKET=comutitres
+ADMIN_EMAIL=admin@comutitres.fr
+ADMIN_PASSWORD=admin123
+ADMIN_COOKIE_SECRET=...
 ```
 
 ## Base de donnees
@@ -97,19 +118,30 @@ Reset :
 
 ```bash
 make docker-down
-docker volume rm hackathon-5iw_pg_data
+docker volume rm hackathon-5iw_pg_data hackathon-5iw_directus_uploads
 make docker-up
 make db-migrate
 make db-seed
 ```
 
-Comptes de test :
+Comptes de test (mot de passe : `password123`) :
 
-- `salarie@test.com`
-- `etudiant@test.com`
-- `tst@test.com`
+| Email | Profil | Scenario |
+|---|---|---|
+| `jean.dupont@test.com` | employee | Navigo Annuel actif + sub expiree |
+| `marie.martin@test.com` | student | Imagine R Etudiant actif, fraude medium |
+| `lucas.bernard@test.com` | junior_school | Imagine R Junior, enfant avec compte |
+| `emma.petit@test.com` | school | Imagine R Scolaire, en attente de documents |
+| `robert.moreau@test.com` | senior | Navigo Senior actif + sub suspendue |
+| `fatima.benali@test.com` | tst | TST Gratuite (QF <= 400), dossier valide |
+| `pierre.legrand@test.com` | amethyste | Amethyste, en attente de paiement |
+| `sophie.dubois@test.com` | employee | Achat pour enfant sans compte (payeur != porteur) |
+| `karim.mansouri@test.com` | tst | TST 50%, fraude HIGH, documents rejetes |
+| `alice.renard@test.com` | employee | Souscription en cours (draft) |
 
-Mot de passe : `password123`
+Statuts couverts : `draft`, `pending_documents`, `pending_payment`, `active`, `suspended`, `cancelled`, `expired`
+
+Niveaux de fraude : `low` (score 0), `medium` (31), `high` (69)
 
 ## IA locale
 
@@ -153,8 +185,6 @@ AI_PROVIDER=mock
 make help
 make build
 make test
-make test-report
-make coverage
 make lint
 make test-chatbot
 make clean
@@ -169,9 +199,12 @@ pnpm test
 pnpm lint
 ```
 
+## Structure
+
 ```text
 apps/
-  frontend/       React + Vite
-  backend/        NestJS + Drizzle
-hackathon-context/ contexte metier
+  frontend/       React + Vite + Tailwind
+  backend/        NestJS + Drizzle + PostgreSQL
+docker-compose.yml  PostgreSQL, MinIO, pgweb, Directus
+Makefile            Commandes raccourcies
 ```

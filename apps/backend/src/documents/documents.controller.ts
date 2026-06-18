@@ -3,6 +3,9 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { memoryStorage } from 'multer'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { DocumentsService } from './documents.service'
+import { documentTypeEnum } from '../db/schema'
+
+type DocumentType = (typeof documentTypeEnum.enumValues)[number]
 
 @UseGuards(JwtAuthGuard)
 @Controller('documents')
@@ -14,7 +17,7 @@ export class DocumentsController {
   upload(
     @UploadedFile() file: Express.Multer.File,
     @Body('subscriptionId') subscriptionId: string,
-    @Body('type') type: string,
+    @Body('type') type: DocumentType,
   ) {
     return this.documentsService.upload(subscriptionId, type, file)
   }

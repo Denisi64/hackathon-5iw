@@ -1,5 +1,6 @@
 .PHONY: help install start start-llm stop refresh-deps wait-api wait-ollama ollama-pull dev dev-front dev-back build test test-report coverage lint ci docker-build docker-up docker-up-bake docker-down db-migrate db-seed test-chatbot clean
 
+
 help:
 	@echo "Commandes disponibles:"
 	@echo "  make start        Lancer le projet complet"
@@ -23,6 +24,9 @@ help:
 	@echo "  make db-migrate   Appliquer le schema BDD"
 	@echo "  make db-seed      Ajouter les donnees de test"
 	@echo "  make test-chatbot Tester le endpoint IA chat"
+
+	@echo "  make directus-setup Configurer les interfaces Directus (une seule fois)"
+
 	@echo "  make clean        Supprimer dist et coverage"
 
 install:
@@ -34,12 +38,14 @@ start:
 	$(MAKE) wait-api
 	docker compose exec -T backend pnpm db:migrate
 	docker compose exec -T backend pnpm db:seed
+	$(MAKE) directus-setup
 	@echo ""
 	@echo "Projet lance:"
-	@echo "  Front: http://localhost:5173"
-	@echo "  API:   http://localhost:3000/api/health"
-	@echo "  Pgweb: http://localhost:8081"
-	@echo "  MinIO: http://localhost:9001"
+	@echo "  Front:     http://localhost:5173"
+	@echo "  API:       http://localhost:3000/api/health"
+	@echo "  Directus:  http://localhost:8055/admin"
+	@echo "  Pgweb:     http://localhost:8081"
+	@echo "  MinIO:     http://localhost:9001"
 
 start-llm:
 	$(MAKE) refresh-deps
@@ -154,6 +160,8 @@ test-chatbot:
 		-H "Authorization: Bearer $$TOKEN" \
 		-H "Content-Type: application/json" \
 		-d '{"messages":[{"role":"user","content":"Bonjour, je suis etudiant, quel abonnement choisir ?"}]}'
+directus-setup:
+	bash scripts/directus-setup.sh
 
 clean:
 	rm -rf apps/frontend/dist apps/backend/dist apps/frontend/coverage apps/backend/coverage apps/frontend/reports apps/backend/reports

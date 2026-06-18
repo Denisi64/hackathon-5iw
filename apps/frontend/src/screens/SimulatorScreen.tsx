@@ -5,12 +5,12 @@ import { Card } from '../components/ui/Card'
 import { Slider } from '../components/ui/Slider'
 import { Input } from '../components/ui/Input'
 import { Badge } from '../components/ui/Badge'
-import { ProfilSelector } from '../components/domain/ProfilSelector'
-import { ComparateurForfaits } from '../components/domain/ComparateurForfaits'
+import { ProfileSelector } from '../components/domain/ProfileSelector'
+import { PlanComparison } from '../components/domain/PlanComparison'
 import { useSimulator } from '../hooks/useSimulator'
-import type { NiveauZone } from '../types/domain'
+import type { ZoneLevel } from '../types/domain'
 
-export default function SimulateurScreen() {
+export default function SimulatorScreen() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { params, update, results } = useSimulator()
@@ -34,14 +34,14 @@ export default function SimulateurScreen() {
         {/* Configurator panel */}
         <Card className="lg:col-span-5 lg:sticky lg:top-24 self-start">
           <Card.Body>
-            <ProfilSelector value={params.profil} onChange={(p) => update('profil', p)} />
+            <ProfileSelector value={params.profile} onChange={(p) => update('profile', p)} />
 
             <div className="mt-8 flex flex-col gap-6">
               <Slider
                 label={t('simulator.slider.days.label')}
                 unit={t('simulator.slider.days.unit')}
-                value={params.joursParSemaine}
-                onChange={(v) => update('joursParSemaine', v)}
+                value={params.daysPerWeek}
+                onChange={(v) => update('daysPerWeek', v)}
                 min={1}
                 max={7}
               />
@@ -49,15 +49,15 @@ export default function SimulateurScreen() {
                 label={t('simulator.slider.zones.label')}
                 unit={t('simulator.slider.zones.unit')}
                 value={params.zones}
-                onChange={(v) => update('zones', v as NiveauZone)}
+                onChange={(v) => update('zones', v as ZoneLevel)}
                 min={1}
                 max={5}
               />
               <Slider
                 label={t('simulator.slider.trips.label')}
                 unit={t('simulator.slider.trips.unit')}
-                value={params.trajetsParJour}
-                onChange={(v) => update('trajetsParJour', v)}
+                value={params.tripsPerDay}
+                onChange={(v) => update('tripsPerDay', v)}
                 min={1}
                 max={10}
               />
@@ -82,7 +82,7 @@ export default function SimulateurScreen() {
               {results.length} / 12
             </span>
           </div>
-          <ComparateurForfaits
+          <PlanComparison
             results={results}
             onSelect={(id) => navigate(`/forfaits/${id}`)}
           />
