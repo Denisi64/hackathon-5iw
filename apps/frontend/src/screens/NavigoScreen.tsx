@@ -59,10 +59,6 @@ export default function NavigoScreen() {
                 value={t('navigo.statusActive')}
               />
             </div>
-
-            <Button variant="ghost" size="md" onClick={() => navigate('/mon-espace')}>
-              {t('navigo.manage')} →
-            </Button>
           </div>
 
           {/* QR de validation (mock) */}

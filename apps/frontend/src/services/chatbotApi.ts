@@ -1,9 +1,5 @@
-import {
-  clearApiTokens,
-  getCurrentStoredUser,
-  readApiAccessToken,
-  saveApiTokens,
-} from '../stores/authStore'
+import { clearApiTokens, readApiAccessToken, saveApiTokens } from '../stores/authStore'
+import { getRefreshToken } from './api'
 
 export type ChatRole = 'user' | 'assistant'
 
@@ -41,46 +37,26 @@ async function postJson<T>(url: string, body: unknown): Promise<T> {
   return response.json() as Promise<T>
 }
 
-async function authenticateWithBackend(locale: string): Promise<string> {
-  const user = getCurrentStoredUser()
-  if (!user) throw new ChatbotApiError('not_authenticated')
+async function refreshAccessToken(): Promise<string> {
+  const refreshToken = getRefreshToken()
+  if (!refreshToken) throw new ChatbotApiError('not_authenticated')
 
   try {
-    const tokens = await postJson<AuthTokens>('/api/auth/login', {
-      email: user.email,
-      password: user.password,
-    })
-    saveApiTokens(tokens)
-    return tokens.access_token
-  } catch (error) {
-    if (!(error instanceof Response) || error.status !== 401) {
-      throw new ChatbotApiError('network')
-    }
-  }
-
-  try {
-    const tokens = await postJson<AuthTokens>('/api/auth/register', {
-      email: user.email,
-      password: user.password,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      language: locale,
-    })
-    saveApiTokens(tokens)
+    const tokens = await postJson<AuthTokens>('/api/auth/refresh', { refresh_token: refreshToken })
+    saveApiTokens({ access_token: tokens.access_token, refresh_token: tokens.refresh_token ?? refreshToken })
     return tokens.access_token
   } catch {
-    throw new ChatbotApiError('backend_auth_failed')
+    clearApiTokens()
+    throw new ChatbotApiError('unauthorized')
   }
 }
 
-async function getAccessToken(locale: string, forceRefresh = false): Promise<string> {
+async function getAccessToken(forceRefresh = false): Promise<string> {
   if (!forceRefresh) {
     const token = readApiAccessToken()
     if (token) return token
   }
-
-  clearApiTokens()
-  return authenticateWithBackend(locale)
+  return refreshAccessToken()
 }
 
 function parseServerSentEvent(event: string, onDelta: (text: string) => void): boolean {
@@ -123,20 +99,20 @@ async function openChatStream(
 
 export async function streamChatResponse({
   messages,
-  locale,
   signal,
   onDelta,
 }: {
   messages: ChatMessagePayload[]
-  locale: string
+  /** Accepté pour compatibilité d'appel ; non utilisé (auth par refresh token). */
+  locale?: string
   signal: AbortSignal
   onDelta: (text: string) => void
 }): Promise<void> {
-  let token = await getAccessToken(locale)
+  let token = await getAccessToken()
   let response = await openChatStream(token, messages, signal)
 
   if (response.status === 401) {
-    token = await getAccessToken(locale, true)
+    token = await getAccessToken(true)
     response = await openChatStream(token, messages, signal)
   }
 

@@ -9,9 +9,14 @@ import { offers, subscriptions } from '../db/schema'
 export class PaymentsService {
   private readonly stripe: Stripe
   private readonly webhookSecret: string
+  /** Faux quand aucune vraie cle Stripe n'est configuree (placeholder) -> mode demo. */
+  private readonly stripeEnabled: boolean
 
   constructor(private readonly configService: ConfigService) {
-    this.stripe = new Stripe(configService.get<string>('STRIPE_SECRET_KEY') ?? '', {
+    const secretKey = configService.get<string>('STRIPE_SECRET_KEY') ?? ''
+    this.stripeEnabled =
+      secretKey.length > 0 && !secretKey.includes('XXX') && !secretKey.toLowerCase().includes('placeholder')
+    this.stripe = new Stripe(secretKey || 'sk_test_unconfigured', {
       apiVersion: '2025-02-24.acacia',
     })
     this.webhookSecret = configService.get<string>('STRIPE_WEBHOOK_SECRET') ?? ''
@@ -24,7 +29,17 @@ export class PaymentsService {
     const [offer] = await db.select().from(offers).where(eq(offers.id, sub.offerId)).limit(1)
     if (!offer) throw new NotFoundException('Offre introuvable')
 
-    const frontendUrl = this.configService.get<string>('FRONTEND_URL') ?? 'http://localhost:5173'
+    const frontendUrl = (this.configService.get<string>('FRONTEND_URL') ?? 'http://localhost:5173').replace(/\/+$/, '')
+
+    // Mode demo : sans vraie cle Stripe, on simule un paiement reussi et on active la souscription.
+    if (!this.stripeEnabled) {
+      const start = new Date()
+      await db
+        .update(subscriptions)
+        .set({ status: 'active', startDate: start, endDate: addPeriod(start, offer.renewal), updatedAt: new Date() })
+        .where(eq(subscriptions.id, subscriptionId))
+      return { url: `${frontendUrl}/mon-espace`, sessionId: 'demo' }
+    }
 
     const session = await this.stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -72,4 +87,25 @@ export class PaymentsService {
 
     return { received: true }
   }
+}
+
+/** Calcule la date d'echeance a partir de la periodicite de l'offre. */
+function addPeriod(from: Date, renewal: string | null): Date {
+  const d = new Date(from)
+  switch (renewal) {
+    case 'weekly':
+      d.setDate(d.getDate() + 7)
+      break
+    case 'monthly':
+      d.setMonth(d.getMonth() + 1)
+      break
+    case 'quarterly':
+      d.setMonth(d.getMonth() + 3)
+      break
+    case 'annual':
+    case 'usage':
+    default:
+      d.setFullYear(d.getFullYear() + 1)
+  }
+  return d
 }
