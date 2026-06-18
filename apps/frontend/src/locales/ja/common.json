@@ -164,8 +164,8 @@
         "description": "ルーカスは人生の新しい章、学業を始めます。"
       },
       "s2": {
-        "title": "あなたのプロフィールは？",
-        "description": "最も近い状況を選択してください。内容に合わせて手続きを調整します。"
+        "title": "解決策を確認する",
+        "description": "状況を分析し、最適な解決策を提案します。"
       },
       "s3": {
         "title": "あなたについて教えてください",
@@ -189,7 +189,6 @@
       }
     },
     "profiles": {
-      "selected": "選択済み",
       "student": {
         "title": "学生",
         "description": "高等教育に在籍中です。"
@@ -373,6 +372,20 @@
       "defaultLocation": "トゥールーズ周辺",
       "yearsUnit": "歳",
       "continue": "続ける"
+    },
+    "stepBadge": "ステップ {{step}}",
+    "solutionIntro": {
+      "episodeProgress": "エピソード 2/5",
+      "phoneTitle": "ルーカスさん、あなたの状況に最も合った解決策はこちらです。",
+      "why": "理由",
+      "reasons": [
+        "学生",
+        "奨学金対象",
+        "オクシタニーでの日常移動"
+      ],
+      "price": "40€/月",
+      "learnMore": "詳しく見る",
+      "continue": "このエピソードを始める"
     }
   },
   "auth": {

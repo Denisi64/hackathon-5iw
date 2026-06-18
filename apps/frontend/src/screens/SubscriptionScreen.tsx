@@ -3,16 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft, ArrowRight, Check, CheckCircle2, Loader2, Upload, Mail,
-  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin,
+  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, WalletCards,
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
 import { Chip } from '../components/ui/Chip'
 import { Badge } from '../components/ui/Badge'
-import { Orb } from '../components/ui/Orb'
 import { Slider } from '../components/ui/Slider'
-import { PROFILES, PROFILE_BY_SLUG, type ProfileSlug } from '../data/subscriptionFlows'
+import { PROFILE_BY_SLUG, type ProfileSlug } from '../data/subscriptionFlows'
 import { PLANS, PLAN_ID_TO_OFFER_ID } from '../utils/faresData'
 import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
@@ -190,7 +189,7 @@ export default function SubscriptionScreen() {
             onContinue={() => { void onNext() }}
           />
         )}
-        {step === 2 && <Step2Profile profile={profile} setProfile={setProfile} />}
+        {step === 2 && plan && <Step2Solution plan={plan} onContinue={() => { void onNext() }} />}
         {step === 3 && profileDef && <Step3Details profile={profileDef.slug} answers={answers} setAnswers={setAnswers} />}
         {step === 4 && profileDef && plan && <Step4Recommendation profile={profileDef.slug} plan={plan} answers={answers} locale={locale} />}
         {step === 5 && profileDef && <Step5Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
@@ -203,7 +202,7 @@ export default function SubscriptionScreen() {
       )}
 
       {/* Nav bar */}
-      {step > 1 && (
+      {step > 2 && (
         <NavBar
           step={step}
           isLoading={isLoading}
@@ -233,18 +232,19 @@ function Header({ step, profileName }: { step: number; profileName?: string }) {
   const { t } = useTranslation()
   const stepTitle = t(`subscription.steps.s${step}.title`)
   const stepDesc = t(`subscription.steps.s${step}.description`)
+  const badgeKey = step === 1 ? 'subscription.kickerShort' : 'subscription.stepBadge'
   return (
     <header className="flex flex-col items-start gap-5 sm:gap-7">
       <div className="flex w-full items-center justify-between gap-3">
-        <span className="rounded-xl bg-[#096AF3] px-6 py-3 text-xl font-black uppercase leading-none tracking-normal text-white shadow-[0_10px_24px_rgba(9,106,243,0.25)] sm:rounded-2xl sm:px-8 sm:py-5 sm:text-3xl lg:px-5 lg:py-3 lg:text-xl">
-          {t('subscription.kickerShort', { step })}
+        <span className="rounded-xl bg-[#096AF3] px-5 py-3 text-lg font-black uppercase leading-none tracking-normal text-white shadow-[0_10px_24px_rgba(9,106,243,0.25)] sm:rounded-2xl sm:px-7 sm:py-4 sm:text-2xl lg:px-5 lg:py-3 lg:text-lg xl:text-xl">
+          {t(badgeKey, { step })}
         </span>
         {profileName && <Badge variant="info">{profileName}</Badge>}
       </div>
-      <h1 className="max-w-5xl text-4xl font-black uppercase leading-[0.95] tracking-normal text-[#096AF3] sm:text-6xl lg:text-4xl xl:text-5xl">
+      <h1 className="max-w-5xl text-3xl font-black uppercase leading-[0.98] tracking-normal text-[#096AF3] sm:text-5xl lg:text-4xl xl:text-5xl">
         {stepTitle}
       </h1>
-      <p className="max-w-4xl text-2xl font-extrabold leading-snug text-[#070525] sm:text-4xl lg:text-2xl xl:text-3xl">{stepDesc}</p>
+      <p className="max-w-4xl text-xl font-extrabold leading-snug text-[#070525] sm:text-3xl lg:text-xl xl:text-2xl">{stepDesc}</p>
     </header>
   )
 }
@@ -287,8 +287,8 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
       />
 
       <div className="relative z-10 ml-auto flex min-h-[690px] w-[min(66%,620px)] min-w-[330px] items-center justify-end pr-0 sm:min-h-[610px] sm:pr-10 lg:min-h-[500px] lg:w-[min(60%,620px)] lg:min-w-0 lg:items-center lg:pr-0 xl:min-h-[540px] xl:w-[min(58%,680px)]">
-        <div className="w-full max-w-[430px] rounded-[2.25rem] border border-slate-200 bg-white px-7 pb-8 pt-6 text-[#070525] shadow-[0_28px_80px_rgba(7,5,37,0.18)] sm:max-w-[500px] sm:rounded-[3rem] sm:px-10 sm:pb-10 sm:pt-8 lg:max-w-none lg:rounded-[2rem] lg:px-8 lg:pb-7 lg:pt-6 xl:px-10 xl:pb-8 xl:pt-7">
-          <div className="flex items-center justify-between text-sm font-extrabold sm:text-base lg:text-xs xl:text-sm">
+        <div className="w-full max-w-[430px] rounded-[2.25rem] border border-slate-200 bg-white px-6 pb-7 pt-5 text-[#070525] shadow-[0_28px_80px_rgba(7,5,37,0.18)] sm:max-w-[500px] sm:rounded-[3rem] sm:px-9 sm:pb-9 sm:pt-7 lg:max-w-none lg:rounded-[2rem] lg:px-8 lg:pb-7 lg:pt-6 xl:px-10 xl:pb-8 xl:pt-7">
+          <div className="flex items-center justify-between text-xs font-extrabold sm:text-sm lg:text-sm">
             <span>9:41</span>
             <span className="flex items-center gap-1.5" aria-hidden="true">
               <span className="flex h-4 items-end gap-0.5">
@@ -301,20 +301,20 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
             </span>
           </div>
 
-          <div className="mt-9 text-center lg:mt-5 xl:mt-6">
-            <p className="text-sm font-black lg:text-xs xl:text-sm">{t('subscription.situationIntro.episodeProgress')}</p>
+          <div className="mt-8 text-center lg:mt-5 xl:mt-6">
+            <p className="text-xs font-black sm:text-sm lg:text-sm">{t('subscription.situationIntro.episodeProgress')}</p>
             <div className="mx-auto mt-4 h-2 w-56 overflow-hidden rounded-full bg-[#E8EEF5] lg:mt-3 lg:h-1.5 lg:w-40 xl:w-44">
               <div className="h-full w-1/4 rounded-full bg-[#096AF3]" />
             </div>
           </div>
 
-          <div className="mt-12 lg:mt-7 xl:mt-8">
-            <h2 className="text-3xl font-black leading-tight tracking-normal sm:text-4xl lg:text-2xl xl:text-3xl">
+          <div className="mt-10 lg:mt-7 xl:mt-8">
+            <h2 className="text-2xl font-black leading-tight tracking-normal sm:text-3xl lg:text-2xl xl:text-3xl">
               {t('subscription.situationIntro.phoneTitle')}
             </h2>
           </div>
 
-          <div className="mt-9 divide-y divide-slate-200 lg:mt-5 xl:mt-6">
+          <div className="mt-7 divide-y divide-slate-200 lg:mt-5 xl:mt-6">
             <SituationFormRow
               icon={<CalendarDays className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
               label={t('subscription.situationIntro.ageQuestion')}
@@ -326,9 +326,9 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
                 min={0}
                 value={age}
                 onChange={(event) => updateAnswer({ age: event.target.value ? Number(event.target.value) : undefined })}
-                className="w-20 rounded-lg border border-transparent bg-transparent px-1 text-right text-base font-black text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] lg:w-14 lg:text-xs xl:w-16 xl:text-sm"
+                className="w-16 rounded-lg border border-transparent bg-transparent px-1 text-right text-sm font-black text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] sm:w-20 sm:text-base lg:w-16 lg:text-sm xl:text-base"
               />
-              <span className="text-base font-black lg:text-xs xl:text-sm">{t('subscription.situationIntro.yearsUnit')}</span>
+              <span className="text-sm font-black sm:text-base lg:text-sm xl:text-base">{t('subscription.situationIntro.yearsUnit')}</span>
             </SituationFormRow>
 
             <SituationFormRow
@@ -354,7 +354,7 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
                 id="subscription-location"
                 value={mainLocation}
                 onChange={(event) => updateAnswer({ mainLocation: event.target.value })}
-                className="w-32 rounded-lg border border-transparent bg-transparent px-1 text-right text-base font-black leading-tight text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] lg:w-24 lg:text-xs xl:w-28 xl:text-sm"
+                className="w-28 rounded-lg border border-transparent bg-transparent px-1 text-right text-sm font-black leading-tight text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] sm:w-32 sm:text-base lg:w-28 lg:text-sm xl:w-32 xl:text-base"
               />
             </SituationFormRow>
           </div>
@@ -362,7 +362,7 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
           <button
             type="button"
             onClick={handleContinue}
-            className="mt-12 flex h-16 w-full items-center justify-center rounded-xl bg-[#096AF3] px-5 text-xl font-extrabold text-white shadow-[0_12px_28px_rgba(9,106,243,0.28)] transition hover:bg-[#075cd6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#096AF3] focus-visible:ring-offset-2 lg:mt-6 lg:h-12 lg:text-base xl:mt-7 xl:h-14 xl:text-lg"
+            className="mt-10 flex h-14 w-full items-center justify-center rounded-xl bg-[#096AF3] px-5 text-lg font-extrabold text-white shadow-[0_12px_28px_rgba(9,106,243,0.28)] transition hover:bg-[#075cd6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#096AF3] focus-visible:ring-offset-2 sm:h-16 sm:text-xl lg:mt-6 lg:h-12 lg:text-base xl:mt-7 xl:h-14 xl:text-lg"
           >
             {t('subscription.situationIntro.continue')}
           </button>
@@ -374,10 +374,10 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
 
 function SituationFormRow({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
   return (
-    <div className="grid grid-cols-[2rem_1fr_auto] items-center gap-4 py-5 lg:grid-cols-[1.5rem_1fr_auto] lg:gap-3 lg:py-3 xl:grid-cols-[1.75rem_1fr_auto] xl:py-4">
+    <div className="grid grid-cols-[1.75rem_1fr_auto] items-center gap-3 py-4 sm:grid-cols-[2rem_1fr_auto] sm:gap-4 sm:py-5 lg:grid-cols-[1.75rem_1fr_auto] lg:gap-3 lg:py-3.5 xl:grid-cols-[2rem_1fr_auto] xl:py-4">
       <span className="text-[#096AF3]">{icon}</span>
-      <span className="text-base font-black leading-tight text-[#070525] lg:text-xs xl:text-sm">{label}</span>
-      <div className="flex min-w-[5.5rem] justify-end text-right lg:min-w-[4.5rem] xl:min-w-[5rem]">{children}</div>
+      <span className="text-sm font-black leading-tight text-[#070525] sm:text-base lg:text-sm xl:text-base">{label}</span>
+      <div className="flex min-w-[5rem] justify-end text-right sm:min-w-[5.5rem] lg:min-w-[5rem] xl:min-w-[5.5rem]">{children}</div>
     </div>
   )
 }
@@ -385,14 +385,14 @@ function SituationFormRow({ icon, label, children }: { icon: ReactNode; label: s
 function SegmentedYesNo({ value, onChange }: { value: boolean; onChange: (value: boolean) => void }) {
   const { t } = useTranslation()
   return (
-    <div className="flex rounded-lg bg-[#F4F8FE] p-1 lg:p-0.5">
+    <div className="flex rounded-lg bg-[#F4F8FE] p-0.5 sm:p-1 lg:p-0.5 xl:p-1">
       {[true, false].map((option) => (
         <button
           key={String(option)}
           type="button"
           onClick={() => onChange(option)}
           className={cn(
-            'h-9 min-h-0 rounded-md px-3 text-sm font-black transition lg:h-7 lg:px-2 lg:text-xs xl:h-8 xl:px-2.5',
+            'h-8 min-h-0 rounded-md px-2.5 text-xs font-black transition sm:h-9 sm:px-3 sm:text-sm lg:h-8 lg:px-2.5 lg:text-sm xl:h-9 xl:px-3',
             value === option ? 'bg-white text-[#096AF3] shadow-sm' : 'text-[#070525]/55 hover:text-[#070525]',
           )}
         >
@@ -403,39 +403,87 @@ function SegmentedYesNo({ value, onChange }: { value: boolean; onChange: (value:
   )
 }
 
-function Step2Profile({ profile, setProfile }: { profile: ProfileSlug | null; setProfile: (p: ProfileSlug) => void }) {
+function Step2Solution({ plan, onContinue }: { plan: Plan; onContinue: () => void }) {
   const { t } = useTranslation()
+  const reasons = t('subscription.solutionIntro.reasons', { returnObjects: true }) as unknown as string[]
+  const reasonList = Array.isArray(reasons) ? reasons : []
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {PROFILES.map((p) => {
-        const Icon = p.icon
-        const isActive = profile === p.slug
-        return (
-          <button
-            key={p.slug}
-            type="button"
-            onClick={() => setProfile(p.slug)}
-            className={cn(
-              'group text-left rounded-2xl border bg-bg-elevated transition-all duration-200 p-5',
-              'hover:-translate-y-0.5 hover:shadow-card-hover',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-base',
-              isActive ? 'border-accent shadow-button' : 'border-border-default shadow-card',
-            )}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <Orb value={<Icon className="h-6 w-6" aria-hidden="true" />} label="" color={p.color} size="md" />
-              {isActive && <Badge variant="recommended">{t('subscription.profiles.selected')}</Badge>}
+    <section className="relative min-h-[720px] overflow-hidden rounded-[2rem] bg-white px-0 pb-4 pt-4 shadow-[0_26px_80px_rgba(9,106,243,0.08)] sm:min-h-[640px] lg:min-h-[540px] lg:px-12 lg:pb-8 lg:pt-8 xl:min-h-[580px] xl:px-16">
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#096AF3]/10 to-transparent" aria-hidden="true" />
+      <img
+        src={lucasImage}
+        alt=""
+        aria-hidden="true"
+        className="absolute bottom-0 left-[-56px] h-[620px] w-[430px] rounded-[2rem] object-cover object-[42%_50%] shadow-[0_24px_70px_rgba(7,5,37,0.16)] sm:left-8 sm:h-[560px] sm:w-[440px] lg:left-10 lg:h-[500px] lg:w-[390px] lg:top-1/2 lg:-translate-y-1/2 xl:left-14 xl:h-[540px] xl:w-[420px]"
+        draggable={false}
+      />
+
+      <div className="relative z-10 ml-auto flex min-h-[690px] w-[min(66%,620px)] min-w-[330px] items-center justify-end pr-0 sm:min-h-[610px] sm:pr-10 lg:min-h-[500px] lg:w-[min(60%,620px)] lg:min-w-0 lg:items-center lg:pr-0 xl:min-h-[540px] xl:w-[min(58%,680px)]">
+        <div className="w-full max-w-[430px] rounded-[2.25rem] border border-slate-200 bg-white px-6 pb-7 pt-5 text-[#070525] shadow-[0_28px_80px_rgba(7,5,37,0.18)] sm:max-w-[500px] sm:rounded-[3rem] sm:px-9 sm:pb-9 sm:pt-7 lg:max-w-none lg:rounded-[2rem] lg:px-8 lg:pb-7 lg:pt-6 xl:px-10 xl:pb-8 xl:pt-7">
+          <div className="flex items-center justify-between text-xs font-extrabold sm:text-sm lg:text-sm">
+            <span>9:41</span>
+            <span className="flex items-center gap-1.5" aria-hidden="true">
+              <span className="flex h-4 items-end gap-0.5">
+                <span className="h-1.5 w-1 rounded-sm bg-current" />
+                <span className="h-2.5 w-1 rounded-sm bg-current" />
+                <span className="h-3.5 w-1 rounded-sm bg-current" />
+              </span>
+              <span className="h-3 w-4 rounded-t-full border-2 border-current border-b-0" />
+              <span className="h-3.5 w-6 rounded border-2 border-current" />
+            </span>
+          </div>
+
+          <div className="mt-8 text-center lg:mt-5 xl:mt-6">
+            <p className="text-xs font-black sm:text-sm lg:text-sm">{t('subscription.solutionIntro.episodeProgress')}</p>
+            <div className="mx-auto mt-4 h-2 w-56 overflow-hidden rounded-full bg-[#E8EEF5] lg:mt-3 lg:h-1.5 lg:w-56 xl:w-64">
+              <div className="h-full w-1/2 rounded-full bg-[#096AF3]" />
             </div>
-            <h3 className="mt-4 text-lg font-semibold tracking-tight text-fg">
-              {t(`subscription.profiles.${p.slug}.title`)}
-            </h3>
-            <p className="mt-1 text-sm text-fg-muted">
-              {t(`subscription.profiles.${p.slug}.description`)}
-            </p>
+          </div>
+
+          <h2 className="mt-10 text-2xl font-black leading-tight tracking-normal sm:text-3xl lg:mt-8 lg:text-2xl xl:text-3xl">
+            {t('subscription.solutionIntro.phoneTitle')}
+          </h2>
+
+          <div className="mt-7 rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-[0_8px_24px_rgba(7,5,37,0.08)] sm:px-6 sm:py-6 lg:mt-6 lg:px-7 lg:py-6 xl:mt-7 xl:px-8 xl:py-7">
+            <div className="flex items-start justify-between gap-5">
+              <h3 className="text-xl font-black uppercase leading-tight tracking-normal text-[#096AF3] sm:text-2xl lg:text-2xl xl:text-3xl">
+                {getPlanName(plan, t)}
+              </h3>
+              <WalletCards className="h-11 w-11 shrink-0 text-[#096AF3] sm:h-12 sm:w-12 lg:h-12 lg:w-12 xl:h-14 xl:w-14" strokeWidth={2.2} aria-hidden="true" />
+            </div>
+
+            <p className="mt-6 text-base font-black sm:text-lg lg:text-base xl:text-lg">{t('subscription.solutionIntro.why')}</p>
+            <ul className="mt-4 flex flex-col gap-3 sm:mt-5 sm:gap-4 lg:gap-3">
+              {reasonList.map((reason) => (
+                <li key={reason} className="flex items-start gap-3 text-base font-black leading-snug sm:gap-4 sm:text-lg lg:text-base xl:text-lg">
+                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-[#070525] sm:h-6 sm:w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6" strokeWidth={3} aria-hidden="true" />
+                  <span>{reason}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-7 flex items-center justify-between gap-4 border-t border-slate-200 pt-5 lg:mt-6 xl:mt-7">
+              <p className="text-2xl font-black tracking-normal text-[#096AF3] sm:text-3xl lg:text-2xl xl:text-3xl">{t('subscription.solutionIntro.price')}</p>
+              <button
+                type="button"
+                className="min-h-0 rounded-lg px-2 py-1 text-sm font-black text-[#096AF3] transition hover:bg-[#096AF3]/5 sm:text-base lg:text-sm xl:text-base"
+              >
+                {t('subscription.solutionIntro.learnMore')}
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onContinue}
+            className="mt-10 flex h-14 w-full items-center justify-center rounded-xl bg-[#096AF3] px-5 text-lg font-extrabold text-white shadow-[0_12px_28px_rgba(9,106,243,0.28)] transition hover:bg-[#075cd6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#096AF3] focus-visible:ring-offset-2 sm:h-16 sm:text-xl lg:mt-7 lg:h-12 lg:text-base xl:mt-8 xl:h-14 xl:text-lg"
+          >
+            {t('subscription.solutionIntro.continue')}
           </button>
-        )
-      })}
-    </div>
+        </div>
+      </div>
+    </section>
   )
 }
 

@@ -164,8 +164,8 @@
         "description": "Lucas inizia un nuovo capitolo della sua vita: gli studi."
       },
       "s2": {
-        "title": "Qual è il tuo profilo?",
-        "description": "Seleziona la situazione più adatta a te. Adattiamo il percorso di conseguenza."
+        "title": "Scopro la mia soluzione",
+        "description": "Analizziamo la sua situazione e gli proponiamo la soluzione più adatta."
       },
       "s3": {
         "title": "Raccontaci di te",
@@ -189,7 +189,6 @@
       }
     },
     "profiles": {
-      "selected": "Selezionato",
       "student": {
         "title": "Studente",
         "description": "Sei iscritto a studi superiori."
@@ -373,6 +372,20 @@
       "defaultLocation": "Tolosa e dintorni",
       "yearsUnit": "anni",
       "continue": "Continua"
+    },
+    "stepBadge": "FASE {{step}}",
+    "solutionIntro": {
+      "episodeProgress": "Episodio 2 di 5",
+      "phoneTitle": "Lucas, ecco la soluzione più adatta alla tua situazione.",
+      "why": "Perché?",
+      "reasons": [
+        "Studente",
+        "Borsista",
+        "Spostamenti quotidiani in Occitania"
+      ],
+      "price": "40€/mese",
+      "learnMore": "Scopri di più",
+      "continue": "Inizia questo episodio"
     }
   },
   "auth": {

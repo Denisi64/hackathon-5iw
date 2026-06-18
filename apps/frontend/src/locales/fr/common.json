@@ -164,8 +164,8 @@
         "description": "Lucas commence un nouvel épisode de sa vie : ses études."
       },
       "s2": {
-        "title": "Quel est votre profil ?",
-        "description": "Sélectionnez la situation qui vous correspond le mieux. Nous adaptons le parcours en conséquence."
+        "title": "Je découvre ma solution",
+        "description": "Nous analysons sa situation et lui proposons la solution la plus adaptée."
       },
       "s3": {
         "title": "Parlez-nous de vous",
@@ -189,7 +189,6 @@
       }
     },
     "profiles": {
-      "selected": "Sélectionné",
       "student": {
         "title": "Étudiant",
         "description": "Vous êtes en études supérieures."
@@ -373,6 +372,20 @@
       "defaultLocation": "Toulouse et alentours",
       "yearsUnit": "ans",
       "continue": "Continuer"
+    },
+    "stepBadge": "ÉTAPE {{step}}",
+    "solutionIntro": {
+      "episodeProgress": "Épisode 2 sur 5",
+      "phoneTitle": "Lucas, voici la solution la plus adaptée à votre situation.",
+      "why": "Pourquoi ?",
+      "reasons": [
+        "Étudiant",
+        "Boursier",
+        "Déplacements quotidiens en Occitanie"
+      ],
+      "price": "40€/mois",
+      "learnMore": "En savoir plus",
+      "continue": "Commencer cet épisode"
     }
   },
   "auth": {

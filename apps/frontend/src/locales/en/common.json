@@ -164,8 +164,8 @@
         "description": "Lucas begins a new chapter of his life: his studies."
       },
       "s2": {
-        "title": "What is your profile?",
-        "description": "Select the situation that fits you best. We adapt the journey accordingly."
+        "title": "I discover my solution",
+        "description": "We analyze his situation and offer him the most suitable solution."
       },
       "s3": {
         "title": "Tell us about yourself",
@@ -189,7 +189,6 @@
       }
     },
     "profiles": {
-      "selected": "Selected",
       "student": {
         "title": "Student",
         "description": "You're in higher education."
@@ -373,6 +372,20 @@
       "defaultLocation": "Toulouse and nearby areas",
       "yearsUnit": "years old",
       "continue": "Continue"
+    },
+    "stepBadge": "STEP {{step}}",
+    "solutionIntro": {
+      "episodeProgress": "Episode 2 of 5",
+      "phoneTitle": "Lucas, here is the solution best suited to your situation.",
+      "why": "Why?",
+      "reasons": [
+        "Student",
+        "Scholarship holder",
+        "Daily travel around Occitanie"
+      ],
+      "price": "€40/month",
+      "learnMore": "Learn more",
+      "continue": "Start this episode"
     }
   },
   "auth": {
