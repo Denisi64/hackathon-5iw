@@ -20,8 +20,7 @@
     "toSystem": "Suivre le système"
   },
   "languageSwitcher": {
-    "label": "Changer de langue",
-    "current": "Langue actuelle : {{lang}}"
+    "label": "Changer de langue"
   },
   "hero": {
     "badge": "Filiale Île-de-France Mobilités",
@@ -94,12 +93,6 @@
       "recommendedPlan": "Forfait recommandé"
     }
   },
-  "stats": {
-    "annualPrice": "Navigo annuel",
-    "employerRefund": "remboursé employeur",
-    "subscribeTime": "souscription",
-    "profilesCovered": "profils couverts"
-  },
   "features": {
     "simulator": {
       "title": "Simulateur de tarif",
@@ -143,13 +136,10 @@
       }
     },
     "ageLabel": "Âge",
-    "scholarshipLabel": "Boursier",
     "empty": "Aucun forfait standard ne correspond. Contactez un conseiller.",
-    "showAll": "Voir tous les forfaits",
     "tipEmployer": "💡 50 % remboursés par votre employeur",
     "savingVsTickets": "Vous économisez {{amount}} vs tickets unité",
     "recommended": "Recommandé pour vous",
-    "subscribe": "Souscrire",
     "perYear": "/an",
     "perMonth": "/mois"
   },
@@ -168,7 +158,6 @@
     "no": "Non"
   },
   "subscription": {
-    "kicker": "Étape {{step}} / {{total}}",
     "steps": {
       "s1": {
         "title": "Je raconte ma situation",
@@ -374,17 +363,6 @@
       "paymentFailed": "Erreur lors du paiement"
     },
     "kickerShort": "ÉPISODE {{step}}",
-    "accountIntro": {
-      "phoneTitle": "Bienvenue !",
-      "phoneSubtitle": "Créez votre compte pour continuer.",
-      "benefits": {
-        "features": "Accédez à toutes les fonctionnalités",
-        "progress": "Suivez votre progression",
-        "personalized": "Profitez d’une expérience personnalisée"
-      },
-      "create": "Créer mon compte",
-      "login": "J’ai déjà un compte"
-    },
     "situationIntro": {
       "episodeProgress": "Épisode 1 sur 5",
       "phoneTitle": "Parlez-nous un peu de vous.",
@@ -437,29 +415,6 @@
     }
   },
   "plans": {
-    "kicker": "Tous les forfaits",
-    "title": "Trouvez le forfait Navigo qui vous ressemble.",
-    "subtitle": "Tarifs officiels Île-de-France Mobilités 2026. Filtrez par profil pour voir nos recommandations.",
-    "filter": {
-      "all": "Tous les forfaits",
-      "recommended": "Recommandés pour moi",
-      "solidaire": "Tarif solidaire"
-    },
-    "flagsKicker": "Votre profil",
-    "flagsHelp": "Cochez ce qui vous correspond — les recommandations s'adaptent en direct.",
-    "flagAge": "Âge",
-    "flagDays": "Jours / semaine",
-    "flag": {
-      "student": "Étudiant",
-      "alternant": "Apprenti / alternant",
-      "worker": "Salarié",
-      "retired": "Retraité",
-      "rsa": "RSA",
-      "css": "CSS sans participation",
-      "ass": "ASS",
-      "ame": "AME"
-    },
-    "recommended": "Recommandé",
     "type": {
       "day": "Jour",
       "weekly": "Semaine",
@@ -467,20 +422,9 @@
       "yearly": "Annuel",
       "usage": "Usage"
     },
-    "documents": "Justificatifs requis",
-    "documentsHint": "document(s)",
-    "employerRefund": "Remboursé {{percent}}% par votre employeur",
-    "officialSource": "Source officielle",
     "free": "Gratuit",
     "priceVariable": "Tarif variable selon le département",
     "pricePerTrip": "dès {{price}} / trajet",
-    "employerBadge": "employeur",
-    "perDay": "par jour",
-    "perWeek": "par semaine",
-    "perMonth": "par mois",
-    "perYear": "par an",
-    "perTrip": "par trajet",
-    "source": "Source :",
     "catalog": {
       "navigo_day": {
         "name": "Navigo Jour",
@@ -544,7 +488,6 @@
       "openSimulator": "Ouvrir le simulateur",
       "filterAria": "Filtrer les forfaits",
       "resultsAria": "Liste des forfaits",
-      "yearlyEquivalent": "Équivalent annuel : {{amount}}",
       "viewDetail": "Voir le détail",
       "filters": {
         "all": "Tous",
@@ -689,7 +632,6 @@
     "subscriptionPendingDocs": "Documents en cours de validation",
     "subscriptionDraft": "Dossier en cours",
     "startDate": "Date d'effet",
-    "zones": "Zones",
     "status": "Statut",
     "statusValid": "Validé",
     "account": "Compte",

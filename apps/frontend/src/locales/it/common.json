@@ -20,8 +20,7 @@
     "toSystem": "Segui il sistema"
   },
   "languageSwitcher": {
-    "label": "Cambia lingua",
-    "current": "Lingua attuale: {{lang}}"
+    "label": "Cambia lingua"
   },
   "hero": {
     "badge": "Filiale di Île-de-France Mobilités",
@@ -94,12 +93,6 @@
       "recommendedPlan": "Abbonamento consigliato"
     }
   },
-  "stats": {
-    "annualPrice": "Navigo annuale",
-    "employerRefund": "rimborso datore",
-    "subscribeTime": "iscrizione",
-    "profilesCovered": "profili coperti"
-  },
   "features": {
     "simulator": {
       "title": "Simulatore tariffario",
@@ -143,13 +136,10 @@
       }
     },
     "ageLabel": "Età",
-    "scholarshipLabel": "Borsista",
     "empty": "Nessun abbonamento standard corrisponde. Contatta un consulente.",
-    "showAll": "Vedi tutti gli abbonamenti",
     "tipEmployer": "💡 50% rimborsato dal datore di lavoro",
     "savingVsTickets": "Risparmi {{amount}} rispetto ai biglietti singoli",
     "recommended": "Consigliato per te",
-    "subscribe": "Iscriviti",
     "perYear": "/anno",
     "perMonth": "/mese"
   },
@@ -168,7 +158,6 @@
     "no": "No"
   },
   "subscription": {
-    "kicker": "Passo {{step}} / {{total}}",
     "steps": {
       "s1": {
         "title": "Racconto la mia situazione",
@@ -374,17 +363,6 @@
       "paymentFailed": "Errore di pagamento"
     },
     "kickerShort": "EPISODIO {{step}}",
-    "accountIntro": {
-      "phoneTitle": "Benvenuto!",
-      "phoneSubtitle": "Crea il tuo account per continuare.",
-      "benefits": {
-        "features": "Accedi a tutte le funzionalità",
-        "progress": "Segui i tuoi progressi",
-        "personalized": "Goditi un’esperienza personalizzata"
-      },
-      "create": "Crea il mio account",
-      "login": "Ho già un account"
-    },
     "situationIntro": {
       "episodeProgress": "Episodio 1 di 5",
       "phoneTitle": "Parlaci un po' di te.",
@@ -437,29 +415,6 @@
     }
   },
   "plans": {
-    "kicker": "Tutti gli abbonamenti",
-    "title": "Trova l'abbonamento Navigo perfetto per te.",
-    "subtitle": "Tariffe ufficiali Île-de-France Mobilités 2026. Filtra per profilo per vedere i nostri consigli.",
-    "filter": {
-      "all": "Tutti gli abbonamenti",
-      "recommended": "Consigliati per me",
-      "solidaire": "Tariffa solidale"
-    },
-    "flagsKicker": "Il tuo profilo",
-    "flagsHelp": "Spunta ciò che ti corrisponde — i consigli si adattano in tempo reale.",
-    "flagAge": "Età",
-    "flagDays": "Giorni a settimana",
-    "flag": {
-      "student": "Studente",
-      "alternant": "Apprendista",
-      "worker": "Lavoratore",
-      "retired": "Pensionato",
-      "rsa": "RSA",
-      "css": "CSS senza compartecipazione",
-      "ass": "ASS",
-      "ame": "AME"
-    },
-    "recommended": "Consigliato",
     "type": {
       "day": "Giorno",
       "weekly": "Settimana",
@@ -467,20 +422,9 @@
       "yearly": "Annuale",
       "usage": "A consumo"
     },
-    "documents": "Documenti richiesti",
-    "documentsHint": "documento/i",
-    "employerRefund": "{{percent}}% rimborsato dal tuo datore di lavoro",
-    "officialSource": "Fonte ufficiale",
     "free": "Gratis",
     "priceVariable": "Tariffa variabile in base al dipartimento",
     "pricePerTrip": "da {{price}} / viaggio",
-    "employerBadge": "datore",
-    "perDay": "al giorno",
-    "perWeek": "a settimana",
-    "perMonth": "al mese",
-    "perYear": "all'anno",
-    "perTrip": "a viaggio",
-    "source": "Fonte:",
     "catalog": {
       "navigo_day": {
         "name": "Navigo Giorno",
@@ -544,7 +488,6 @@
       "openSimulator": "Apri il simulatore",
       "filterAria": "Filtra abbonamenti",
       "resultsAria": "Lista abbonamenti",
-      "yearlyEquivalent": "Equivalente annuo: {{amount}}",
       "viewDetail": "Vedi dettaglio",
       "filters": {
         "all": "Tutti",
@@ -689,7 +632,6 @@
     "subscriptionPendingDocs": "Documenti in validazione",
     "subscriptionDraft": "Pratica in corso",
     "startDate": "Data di inizio",
-    "zones": "Zone",
     "status": "Stato",
     "statusValid": "Convalidato",
     "account": "Account",

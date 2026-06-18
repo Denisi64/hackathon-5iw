@@ -20,8 +20,7 @@
     "toSystem": "Seguir el sistema"
   },
   "languageSwitcher": {
-    "label": "Cambiar idioma",
-    "current": "Idioma actual: {{lang}}"
+    "label": "Cambiar idioma"
   },
   "hero": {
     "badge": "Filial de Île-de-France Mobilités",
@@ -94,12 +93,6 @@
       "recommendedPlan": "Plan recomendado"
     }
   },
-  "stats": {
-    "annualPrice": "Navigo anual",
-    "employerRefund": "reembolso empleador",
-    "subscribeTime": "suscripción",
-    "profilesCovered": "perfiles cubiertos"
-  },
   "features": {
     "simulator": {
       "title": "Simulador de tarifas",
@@ -143,13 +136,10 @@
       }
     },
     "ageLabel": "Edad",
-    "scholarshipLabel": "Becario",
     "empty": "Ningún abono estándar coincide. Contacta con un asesor.",
-    "showAll": "Ver todos los abonos",
     "tipEmployer": "💡 50 % reembolsado por tu empleador",
     "savingVsTickets": "Ahorras {{amount}} frente a billetes sueltos",
     "recommended": "Recomendado para ti",
-    "subscribe": "Suscribirse",
     "perYear": "/año",
     "perMonth": "/mes"
   },
@@ -168,7 +158,6 @@
     "no": "No"
   },
   "subscription": {
-    "kicker": "Paso {{step}} / {{total}}",
     "steps": {
       "s1": {
         "title": "Cuento mi situación",
@@ -374,17 +363,6 @@
       "paymentFailed": "Error en el pago"
     },
     "kickerShort": "EPISODIO {{step}}",
-    "accountIntro": {
-      "phoneTitle": "¡Bienvenido!",
-      "phoneSubtitle": "Cree su cuenta para continuar.",
-      "benefits": {
-        "features": "Acceda a todas las funciones",
-        "progress": "Siga su progreso",
-        "personalized": "Disfrute de una experiencia personalizada"
-      },
-      "create": "Crear mi cuenta",
-      "login": "Ya tengo una cuenta"
-    },
     "situationIntro": {
       "episodeProgress": "Episodio 1 de 5",
       "phoneTitle": "Cuéntenos un poco sobre usted.",
@@ -437,29 +415,6 @@
     }
   },
   "plans": {
-    "kicker": "Todos los planes",
-    "title": "Encuentra el plan Navigo que se adapta a ti.",
-    "subtitle": "Tarifas oficiales Île-de-France Mobilités 2026. Filtra por perfil para ver nuestras recomendaciones.",
-    "filter": {
-      "all": "Todos los planes",
-      "recommended": "Recomendados para mí",
-      "solidaire": "Tarifa solidaria"
-    },
-    "flagsKicker": "Tu perfil",
-    "flagsHelp": "Marca lo que te corresponde — las recomendaciones se adaptan al instante.",
-    "flagAge": "Edad",
-    "flagDays": "Días por semana",
-    "flag": {
-      "student": "Estudiante",
-      "alternant": "Aprendiz / alternancia",
-      "worker": "Empleado",
-      "retired": "Jubilado",
-      "rsa": "RSA",
-      "css": "CSS sin copago",
-      "ass": "ASS",
-      "ame": "AME"
-    },
-    "recommended": "Recomendado",
     "type": {
       "day": "Día",
       "weekly": "Semana",
@@ -467,20 +422,9 @@
       "yearly": "Anual",
       "usage": "Por uso"
     },
-    "documents": "Documentos requeridos",
-    "documentsHint": "documento(s)",
-    "employerRefund": "{{percent}}% reembolsado por tu empleador",
-    "officialSource": "Fuente oficial",
     "free": "Gratis",
     "priceVariable": "Tarifa variable según el departamento",
     "pricePerTrip": "desde {{price}} / viaje",
-    "employerBadge": "empleador",
-    "perDay": "por día",
-    "perWeek": "por semana",
-    "perMonth": "por mes",
-    "perYear": "por año",
-    "perTrip": "por viaje",
-    "source": "Fuente:",
     "catalog": {
       "navigo_day": {
         "name": "Navigo Día",
@@ -544,7 +488,6 @@
       "openSimulator": "Abrir el simulador",
       "filterAria": "Filtrar planes",
       "resultsAria": "Lista de planes",
-      "yearlyEquivalent": "Equivalente anual: {{amount}}",
       "viewDetail": "Ver detalle",
       "filters": {
         "all": "Todos",
@@ -689,7 +632,6 @@
     "subscriptionPendingDocs": "Documentos en validación",
     "subscriptionDraft": "Expediente en curso",
     "startDate": "Fecha de inicio",
-    "zones": "Zonas",
     "status": "Estado",
     "statusValid": "Validada",
     "account": "Cuenta",

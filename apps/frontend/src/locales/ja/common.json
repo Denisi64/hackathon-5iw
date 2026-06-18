@@ -20,8 +20,7 @@
     "toSystem": "システムに従う"
   },
   "languageSwitcher": {
-    "label": "言語を変更",
-    "current": "現在の言語：{{lang}}"
+    "label": "言語を変更"
   },
   "hero": {
     "badge": "イル・ド・フランス・モビリテ系列会社",
@@ -94,12 +93,6 @@
       "recommendedPlan": "おすすめプラン"
     }
   },
-  "stats": {
-    "annualPrice": "ナビゴ年間",
-    "employerRefund": "雇用主払戻",
-    "subscribeTime": "申込",
-    "profilesCovered": "対応プロファイル"
-  },
   "features": {
     "simulator": {
       "title": "料金シミュレーター",
@@ -143,13 +136,10 @@
       }
     },
     "ageLabel": "年齢",
-    "scholarshipLabel": "奨学生",
     "empty": "該当する標準プランがありません。担当者にお問い合わせください。",
-    "showAll": "すべてのプランを見る",
     "tipEmployer": "💡 雇用主から50%払戻あり",
     "savingVsTickets": "単発切符比で{{amount}}節約",
     "recommended": "あなたへのおすすめ",
-    "subscribe": "申し込む",
     "perYear": "/年",
     "perMonth": "/月"
   },
@@ -168,7 +158,6 @@
     "no": "いいえ"
   },
   "subscription": {
-    "kicker": "ステップ {{step}} / {{total}}",
     "steps": {
       "s1": {
         "title": "状況を伝える",
@@ -374,17 +363,6 @@
       "paymentFailed": "支払いエラーが発生しました"
     },
     "kickerShort": "エピソード {{step}}",
-    "accountIntro": {
-      "phoneTitle": "ようこそ！",
-      "phoneSubtitle": "続行するにはアカウントを作成してください。",
-      "benefits": {
-        "features": "すべての機能にアクセス",
-        "progress": "進捗を確認",
-        "personalized": "パーソナライズされた体験"
-      },
-      "create": "アカウントを作成",
-      "login": "すでにアカウントがあります"
-    },
     "situationIntro": {
       "episodeProgress": "エピソード 1/5",
       "phoneTitle": "あなたについて少し教えてください。",
@@ -437,29 +415,6 @@
     }
   },
   "plans": {
-    "kicker": "全プラン",
-    "title": "あなたにぴったりのNavigoプランを見つけよう。",
-    "subtitle": "Île-de-France Mobilités 2026年公式料金。プロフィールで絞り込んでおすすめを表示します。",
-    "filter": {
-      "all": "すべてのプラン",
-      "recommended": "あなたへのおすすめ",
-      "solidaire": "ソリダリティ料金"
-    },
-    "flagsKicker": "あなたのプロフィール",
-    "flagsHelp": "当てはまるものにチェック — おすすめがその場で変化します。",
-    "flagAge": "年齢",
-    "flagDays": "週あたりの利用日数",
-    "flag": {
-      "student": "学生",
-      "alternant": "見習い／交互教育",
-      "worker": "会社員",
-      "retired": "退職者",
-      "rsa": "RSA",
-      "css": "CSS（自己負担なし）",
-      "ass": "ASS",
-      "ame": "AME"
-    },
-    "recommended": "おすすめ",
     "type": {
       "day": "1日",
       "weekly": "週間",
@@ -467,20 +422,9 @@
       "yearly": "年間",
       "usage": "従量制"
     },
-    "documents": "必要書類",
-    "documentsHint": "件",
-    "employerRefund": "雇用主から{{percent}}%還付",
-    "officialSource": "公式ソース",
     "free": "無料",
     "priceVariable": "県により料金が異なります",
     "pricePerTrip": "{{price}}〜 / 1回",
-    "employerBadge": "雇用主",
-    "perDay": "/日",
-    "perWeek": "/週",
-    "perMonth": "/月",
-    "perYear": "/年",
-    "perTrip": "/1回",
-    "source": "出典：",
     "catalog": {
       "navigo_day": {
         "name": "Navigo 1日",
@@ -544,7 +488,6 @@
       "openSimulator": "シミュレーターを開く",
       "filterAria": "プランを絞り込む",
       "resultsAria": "プラン一覧",
-      "yearlyEquivalent": "年間換算：{{amount}}",
       "viewDetail": "詳細を見る",
       "filters": {
         "all": "すべて",
@@ -689,7 +632,6 @@
     "subscriptionPendingDocs": "書類確認中",
     "subscriptionDraft": "申込中",
     "startDate": "開始日",
-    "zones": "ゾーン",
     "status": "ステータス",
     "statusValid": "承認済み",
     "account": "アカウント",
