@@ -27,6 +27,8 @@ services:
       - "3000:3000"
     env_file:
       - .env.example
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     command: sh -c "pnpm db:migrate && pnpm db:seed && pnpm dev"
     volumes:
       - ./apps/backend:/app
@@ -112,12 +114,24 @@ services:
     networks:
       - comutitres
 
+  ollama:
+    image: ollama/ollama:0.6.8
+    profiles:
+      - llm
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - comutitres
+
 volumes:
   pg_data:
   minio_data:
   directus_uploads:
   frontend_node_modules:
   backend_node_modules:
+  ollama_data:
 
 networks:
   comutitres:
