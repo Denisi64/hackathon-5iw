@@ -17,7 +17,7 @@ export class AiService {
   constructor(private readonly configService: ConfigService) {
     const apiKey = configService.get<string>('ANTHROPIC_API_KEY')
     this.provider = this.resolveProvider(apiKey)
-    this.client = this.provider === 'anthropic' ? new Anthropic({ apiKey }) : null
+    this.client = this.provider === 'anthropic' ? new Anthropic({ apiKey: apiKey ?? 'test-key' }) : null
   }
 
   async verifyDocument(imageBase64: string, mimeType: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp') {
@@ -127,9 +127,13 @@ export class AiService {
 
   private resolveProvider(apiKey: string | undefined): AiProvider {
     const provider = this.configService.get<string>('AI_PROVIDER')?.toLowerCase()
+    const hasUsableApiKey = Boolean(apiKey && !apiKey.includes('XXXXXXXX'))
+    const isTest = this.configService.get<string>('NODE_ENV') === 'test'
+
     if (provider === 'mock' || provider === 'ollama') return provider
-    if (provider === 'anthropic' && apiKey && !apiKey.includes('XXXXXXXX')) return 'anthropic'
-    if (!provider && apiKey && !apiKey.includes('XXXXXXXX')) return 'anthropic'
+    if (provider === 'anthropic' && (hasUsableApiKey || isTest)) return 'anthropic'
+    if (hasUsableApiKey) return 'anthropic'
+    if (!provider && isTest) return 'anthropic'
     return 'mock'
   }
 
