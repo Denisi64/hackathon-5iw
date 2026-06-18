@@ -98,6 +98,12 @@ export class SubscriptionsService {
     return renewed
   }
 
+  async cancel(id: string, userId: string) {
+    const sub = await this.findById(id, userId)
+    if (sub.status !== 'draft') throw new ForbiddenException('Seules les souscriptions en brouillon peuvent être annulées')
+    await db.delete(subscriptions).where(eq(subscriptions.id, id))
+  }
+
   async computeFraudScore(id: string, userId: string): Promise<void> {
     await this.findById(id, userId)
     await this.fraudScoreService.compute(id)

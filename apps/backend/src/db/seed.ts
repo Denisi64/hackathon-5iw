@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { db } from './index'
-import { consents, documents, holders, notifications, offers, subscriptions, users } from './schema'
+import { consents, documents, feedItems, holders, lineAlerts, notifications, offers, subscriptions, trips, users } from './schema'
 
 const now = new Date()
 const d = (offset: number) => new Date(now.getTime() + offset * 24 * 60 * 60 * 1000)
@@ -32,30 +32,35 @@ const HIGH_FRAUD: object[] = [
   { name: 'public_api_rights_unverified', weight: 3, triggered: false },
 ]
 
+const TODAY = new Date().toISOString().split('T')[0]
+
 async function seed() {
   console.log('🗑  Nettoyage des tables...')
+  await db.delete(trips)
+  await db.delete(lineAlerts)
   await db.delete(notifications)
   await db.delete(consents)
   await db.delete(documents)
   await db.delete(holders)
   await db.delete(subscriptions)
   await db.delete(users)
+  await db.delete(feedItems)
   await db.delete(offers)
 
   // ── OFFRES ─────────────────────────────────────────────────────────────────
   console.log('📦 Insertion des offres...')
   await db.insert(offers).values([
-    { id: 'navigo_annuel',      name: 'Navigo Annuel',          description: 'Abonnement annuel tout réseau Île-de-France',        yearlyPrice: 90240,  monthlyPrice: 7520,  renewal: 'annual'    },
-    { id: 'navigo_senior',      name: 'Navigo Annuel Senior',   description: 'Tarif préférentiel 62 ans et plus',                  yearlyPrice: 63360,  monthlyPrice: 5280,  renewal: 'annual'    },
-    { id: 'navigo_mois',        name: 'Navigo Mois',            description: 'Abonnement mensuel sans engagement',                 yearlyPrice: 103680, monthlyPrice: 8640,  renewal: 'monthly'   },
-    { id: 'navigo_semaine',     name: 'Navigo Semaine',         description: 'Usage ponctuel à la semaine',                        yearlyPrice: 159900, monthlyPrice: 12300, renewal: 'weekly'    },
-    { id: 'imagine_r_junior',   name: 'Imagine R Junior',       description: 'Enfants de moins de 11 ans',                        yearlyPrice: 41820,  monthlyPrice: 3485,  renewal: 'annual'    },
-    { id: 'imagine_r_scolaire', name: 'Imagine R Scolaire',     description: 'Élèves de 11 à 25 ans (lycéens, collégiens)',        yearlyPrice: 41820,  monthlyPrice: 3485,  renewal: 'annual'    },
-    { id: 'imagine_r_etudiant', name: 'Imagine R Étudiant',     description: 'Étudiants de 18 à 28 ans (boursiers inclus)',        yearlyPrice: 41820,  monthlyPrice: 3485,  renewal: 'annual'    },
-    { id: 'liberte_plus',       name: 'Navigo Liberté+',        description: "Paiement à l'usage (~0,52€/trajet)",                 yearlyPrice: null,   monthlyPrice: null,  renewal: 'usage'     },
-    { id: 'tst_50',             name: 'TST Réduction 50%',      description: 'Solidarité transport 50% — QF entre 600 et 800 €',   yearlyPrice: 51840,  monthlyPrice: 4320,  renewal: 'quarterly' },
-    { id: 'tst_75',             name: 'TST Solidarité 75%',     description: 'Solidarité transport 75% — QF entre 400 et 600 €',   yearlyPrice: 25920,  monthlyPrice: 2160,  renewal: 'quarterly' },
-    { id: 'tst_gratuite',       name: 'TST Gratuité',           description: 'Transport gratuit — QF ≤ 400 €',                    yearlyPrice: 0,      monthlyPrice: 0,     renewal: 'quarterly' },
+    { id: 'navigo_annuel',      name: 'Navigo Annuel',          description: 'Abonnement annuel tout réseau — 12e mois offert',    yearlyPrice: 99880,  monthlyPrice: 9080,  renewal: 'annual'    },
+    { id: 'navigo_senior',      name: 'Navigo Annuel Senior',   description: 'Tarif préférentiel 62 ans et plus (−50%)',           yearlyPrice: 54480,  monthlyPrice: 4540,  renewal: 'annual'    },
+    { id: 'navigo_mois',        name: 'Navigo Mois',            description: 'Abonnement mensuel sans engagement',                 yearlyPrice: null,   monthlyPrice: 9080,  renewal: 'monthly'   },
+    { id: 'navigo_semaine',     name: 'Navigo Semaine',         description: 'Forfait hebdomadaire du lundi au dimanche',          yearlyPrice: 168480, monthlyPrice: 12960, renewal: 'weekly'    },
+    { id: 'imagine_r_junior',   name: 'Imagine R Junior',       description: 'Enfants de moins de 11 ans',                        yearlyPrice: 2520,   monthlyPrice: 210,   renewal: 'annual'    },
+    { id: 'imagine_r_scolaire', name: 'Imagine R Scolaire',     description: 'Élèves de 11 à 25 ans (lycéens, collégiens)',        yearlyPrice: 40130,  monthlyPrice: 3344,  renewal: 'annual'    },
+    { id: 'imagine_r_etudiant', name: 'Imagine R Étudiant',     description: 'Étudiants de 18 à 28 ans (boursiers inclus)',        yearlyPrice: 40130,  monthlyPrice: 3344,  renewal: 'annual'    },
+    { id: 'liberte_plus',       name: 'Navigo Liberté+',        description: "Paiement à l'usage (~1,64 €/trajet)",                yearlyPrice: null,   monthlyPrice: null,  renewal: 'usage'     },
+    { id: 'tst_50',             name: 'TST Réduction 50%',      description: 'Solidarité transport 50% — bénéficiaires AME',       yearlyPrice: 54480,  monthlyPrice: 4540,  renewal: 'quarterly' },
+    { id: 'tst_75',             name: 'TST Solidarité 75%',     description: 'Solidarité transport 75% — CMU-C/CSS/ASS',          yearlyPrice: 27240,  monthlyPrice: 2270,  renewal: 'quarterly' },
+    { id: 'tst_gratuite',       name: 'TST Gratuité',           description: 'Transport gratuit — RSA sous conditions, ASS+CSS',   yearlyPrice: 0,      monthlyPrice: 0,     renewal: 'quarterly' },
     { id: 'amethyste',          name: 'Améthyste',              description: 'Personnes reconnues handicapées (MDPH)',             yearlyPrice: null,   monthlyPrice: null,  renewal: 'annual'    },
   ])
 
@@ -325,6 +330,48 @@ async function seed() {
       { userId: u.id, type: 'document_upload'  as const, accepted: true, acceptedAt: now },
     ])
   )
+
+  // ── FEED ITEMS ─────────────────────────────────────────────────────────────
+  console.log('📰 Insertion des feed items...')
+  await db.insert(feedItems).values([
+    { id: 'student-bourse-2026',    type: 'news',  title: 'Imagine R boursier 2026-2027',          body: 'Les dossiers de renouvellement pour la rentrée 2026 sont ouverts. Souscrivez avant le 31 août pour bénéficier du tarif réduit dès septembre.', emoji: '🎓', tag: 'Étudiant',       relevantInterests: ['student'],            relevantProfiles: ['student'] },
+    { id: 'rers-perturbations',     type: 'alert', title: 'RER A : travaux du 20 au 25 juin',       body: 'Circulation perturbée entre Nation et Vincennes. Des bus de remplacement sont mis en place. Prévoyez 15 min supplémentaires.',               emoji: '🚧', tag: 'Trafic',         relevantInterests: ['commute'],            relevantProfiles: ['employee', 'student', 'school'] },
+    { id: 'employer-refund-tip',    type: 'tip',   title: 'Votre employeur rembourse 50%',          body: 'Pensez à transmettre votre attestation Navigo à votre service RH avant le 10 du mois pour être remboursé sur votre prochaine paie.',          emoji: '💡', tag: 'Conseil',        relevantInterests: ['worker'],             relevantProfiles: ['employee'] },
+    { id: 'senior-transition',      type: 'tip',   title: 'Passez au tarif Senior',                 body: "À partir de 62 ans, vous pouvez bénéficier du Navigo Senior à 45,40 €/mois. Économisez jusqu'à 270 €/an par rapport au tarif standard.",     emoji: '🌿', tag: 'Senior',         relevantInterests: ['senior'],             relevantProfiles: ['senior'] },
+    { id: 'nuit-des-musees',        type: 'promo', title: 'Nuit des musées — entrée gratuite',       body: 'Ce samedi, accédez à plus de 100 musées parisiens gratuitement. Votre pass Navigo vous y emmène sans supplément.',                           emoji: '🎭', tag: 'Culture',        relevantInterests: ['culture'],            relevantProfiles: ['employee', 'student', 'senior'] },
+    { id: 'velo-ile-de-france',     type: 'promo', title: 'Vélib\' + Navigo : l\'été combiné',       body: 'Abonnez-vous à Vélib\' Métropole avec 30% de réduction si vous êtes titulaire d\'un pass Navigo actif.',                                     emoji: '🚴', tag: 'Sport',          relevantInterests: ['sport', 'eco'],       relevantProfiles: ['employee', 'student'] },
+    { id: 'tst-renouvellement',     type: 'alert', title: 'Vos droits TST expirent bientôt',        body: 'Pensez à renouveler votre attestation CAF avant la fin du trimestre pour continuer à bénéficier de la Tarification Solidarité Transport.',   emoji: '📋', tag: 'TST',            relevantInterests: ['solidarity'],         relevantProfiles: ['tst'] },
+    { id: 'imagine-r-junior-2026',  type: 'news',  title: 'Imagine R Junior — rentrée 2026',        body: 'Les inscriptions pour l\'Imagine R Junior (moins de 11 ans) sont ouvertes. Votre enfant voyagera toute l\'année scolaire pour 24,80 €.',      emoji: '👧', tag: 'Famille',        relevantInterests: ['family'],             relevantProfiles: ['employee', 'senior'] },
+    { id: 'co2-stats',              type: 'tip',   title: 'Votre impact CO₂ ce mois-ci',            body: 'En prenant les transports en commun ce mois-ci, vous avez économisé l\'équivalent de 42 kg de CO₂ vs la voiture. Bravo !',                  emoji: '♻️', tag: 'Mobilité verte', relevantInterests: ['eco'],                relevantProfiles: ['employee', 'student'] },
+    { id: 'stade-france-match',     type: 'promo', title: 'Match au Stade de France ce weekend',    body: 'Le RER B vous emmène directement au Stade de France en 20 min depuis Châtelet. Votre Navigo est valable sur tout le réseau.',                emoji: '⚽', tag: 'Sport',          relevantInterests: ['sport'],              relevantProfiles: ['employee', 'student', 'senior'] },
+  ])
+
+  // ── ALERTES LIGNES ─────────────────────────────────────────────────────────
+  console.log('🚨 Insertion des alertes lignes...')
+  await db.insert(lineAlerts).values([
+    { line: 'A',   lineType: 'rer',   type: 'travaux',       title: 'RER A : travaux du 20 au 25 juin',         message: 'Circulation perturbée entre Nation et Vincennes. Des bus de substitution sont mis en place. Prévoyez 15 min supplémentaires.',         startDate: '2026-06-20', endDate: '2026-06-25' },
+    { line: 'RER A', lineType: 'rer', type: 'travaux',       title: 'RER A : travaux du 20 au 25 juin',         message: 'Circulation perturbée entre Nation et Vincennes. Des bus de substitution sont mis en place. Prévoyez 15 min supplémentaires.',         startDate: '2026-06-20', endDate: '2026-06-25' },
+    { line: 'B',   lineType: 'rer',   type: 'perturbation',  title: 'RER B : interruption partielle le weekend', message: 'Pas de service entre l\'Aéroport CDG et Mitry-Claye les samedis et dimanches jusqu\'au 30 juin. Bus de remplacement disponibles.',  startDate: '2026-06-14', endDate: '2026-06-30' },
+    { line: 'M13', lineType: 'metro', type: 'info',          title: 'M13 : fréquence renforcée',                 message: 'Passage toutes les 3 minutes aux heures de pointe (7h–9h30 et 17h–20h) jusqu\'au 30 juin.',                                          startDate: '2026-06-01', endDate: '2026-06-30' },
+    { line: '13',  lineType: 'metro', type: 'info',          title: 'M13 : fréquence renforcée',                 message: 'Passage toutes les 3 minutes aux heures de pointe (7h–9h30 et 17h–20h) jusqu\'au 30 juin.',                                          startDate: '2026-06-01', endDate: '2026-06-30' },
+    { line: 'C',   lineType: 'rer',   type: 'info',          title: 'RER C : nouveau service été',               message: 'Augmentation de la fréquence vers Versailles les vendredis et samedis soirs à partir du 21 juin.',                                    startDate: '2026-06-21', endDate: '2026-08-31' },
+  ])
+
+  // ── TRAJETS ────────────────────────────────────────────────────────────────
+  console.log('🚇 Insertion des trajets...')
+  await db.insert(trips).values([
+    // Jean — Navigo Annuel — trajets domicile/travail M13
+    { userId: jean.id, line: 'M13', lineType: 'metro', from: 'Châtillon – Montrouge', to: 'Saint-Lazare',        departureTime: '08:12', arrivalTime: '08:41', duration: 29, zones: [1, 2], co2Saved: 32, tripDate: TODAY },
+    { userId: jean.id, line: 'M13', lineType: 'metro', from: 'Saint-Lazare',          to: 'Châtillon – Montrouge', departureTime: '18:35', arrivalTime: '19:04', duration: 29, zones: [1, 2], co2Saved: 32, tripDate: TODAY },
+    // Marie — Imagine R Étudiant — RER B université
+    { userId: marie.id, line: 'B',  lineType: 'rer',   from: 'Denfert-Rochereau',     to: 'Orsay – Ville',       departureTime: '08:45', arrivalTime: '09:22', duration: 37, zones: [1, 4], co2Saved: 48, tripDate: TODAY },
+    { userId: marie.id, line: 'B',  lineType: 'rer',   from: 'Orsay – Ville',         to: 'Denfert-Rochereau',   departureTime: '17:10', arrivalTime: '17:47', duration: 37, zones: [4, 1], co2Saved: 48, tripDate: TODAY },
+    // Robert — Navigo Senior — trajet loisir
+    { userId: robert.id, line: 'M4', lineType: 'metro', from: 'Montrouge',            to: 'Châtelet – Les Halles', departureTime: '10:05', arrivalTime: '10:28', duration: 23, zones: [1, 2], co2Saved: 28, tripDate: TODAY },
+    // Fatima — TST — bus quotidien
+    { userId: fatima.id, line: '323', lineType: 'bus', from: 'Villejuif Louis Aragon', to: 'Kremlin-Bicêtre',     departureTime: '07:55', arrivalTime: '08:12', duration: 17, zones: [2, 3], co2Saved: 15, tripDate: TODAY },
+    { userId: fatima.id, line: '323', lineType: 'bus', from: 'Kremlin-Bicêtre',       to: 'Villejuif Louis Aragon', departureTime: '17:30', arrivalTime: '17:47', duration: 17, zones: [3, 2], co2Saved: 15, tripDate: TODAY },
+  ])
 }
 
 seed()

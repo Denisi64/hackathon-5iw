@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { eq } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 import { db } from '../db'
 import { consents, documents, notifications, subscriptions, users } from '../db/schema'
 import type { UpdateUserDto } from './dto/update-user.dto'
@@ -91,6 +91,55 @@ export class UsersService {
     }
 
     return consent
+  }
+
+  async getInterests(userId: string) {
+    const [user] = await db.select({ interests: users.interests }).from(users).where(eq(users.id, userId)).limit(1)
+    if (!user) throw new NotFoundException('Utilisateur introuvable')
+    return { interests: user.interests ?? [] }
+  }
+
+  async updateInterests(userId: string, interests: string[]) {
+    const [updated] = await db
+      .update(users)
+      .set({ interests, updatedAt: new Date() })
+      .where(eq(users.id, userId))
+      .returning({ id: users.id, interests: users.interests })
+    if (!updated) throw new NotFoundException('Utilisateur introuvable')
+    return updated
+  }
+
+  async getGamification(userId: string) {
+    const [user] = await db
+      .select({ points: users.points, level: users.level, badges: users.badges })
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1)
+    if (!user) throw new NotFoundException('Utilisateur introuvable')
+    return {
+      points: user.points ?? 0,
+      level: user.level ?? 1,
+      badges: user.badges ?? [],
+      nextLevelPoints: (user.level ?? 1) * 500,
+    }
+  }
+
+  async getLeaderboard(userId: string) {
+    const all = await db
+      .select({ id: users.id, firstName: users.firstName, lastName: users.lastName, points: users.points, level: users.level, badges: users.badges })
+      .from(users)
+      .orderBy(desc(users.points))
+      .limit(10)
+
+    return all.map((u, i) => ({
+      rank: i + 1,
+      firstName: u.firstName,
+      lastName: u.lastName[0] + '.',
+      points: u.points ?? 0,
+      level: u.level ?? 1,
+      badgeCount: ((u.badges as string[]) ?? []).length,
+      isMe: u.id === userId,
+    }))
   }
 
   async deleteAccount(userId: string) {
