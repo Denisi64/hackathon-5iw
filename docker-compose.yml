@@ -29,8 +29,6 @@ services:
       - .env.example
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    command: pnpm dev
-
     command: sh -c "pnpm db:migrate && pnpm db:seed && pnpm dev"
     volumes:
       - ./apps/backend:/app
