@@ -20,8 +20,7 @@
     "toSystem": "Seguir o sistema"
   },
   "languageSwitcher": {
-    "label": "Mudar de idioma",
-    "current": "Idioma atual: {{lang}}"
+    "label": "Mudar de idioma"
   },
   "hero": {
     "badge": "Filial da Île-de-France Mobilités",
@@ -94,12 +93,6 @@
       "recommendedPlan": "Plano recomendado"
     }
   },
-  "stats": {
-    "annualPrice": "Navigo anual",
-    "employerRefund": "reembolso empregador",
-    "subscribeTime": "subscrição",
-    "profilesCovered": "perfis cobertos"
-  },
   "features": {
     "simulator": {
       "title": "Simulador tarifário",
@@ -143,13 +136,10 @@
       }
     },
     "ageLabel": "Idade",
-    "scholarshipLabel": "Bolseiro",
     "empty": "Nenhum passe padrão corresponde. Contacte um consultor.",
-    "showAll": "Ver todos os passes",
     "tipEmployer": "💡 50% reembolsado pelo seu empregador",
     "savingVsTickets": "Poupa {{amount}} vs bilhetes avulso",
     "recommended": "Recomendado para si",
-    "subscribe": "Subscrever",
     "perYear": "/ano",
     "perMonth": "/mês"
   },
@@ -168,35 +158,37 @@
     "no": "Não"
   },
   "subscription": {
-    "kicker": "Passo {{step}} / {{total}}",
     "steps": {
       "s1": {
-        "title": "Qual é o seu perfil?",
-        "description": "Escolha o perfil que melhor corresponde à sua situação. Adaptamos o percurso."
+        "title": "Conto a minha situação",
+        "description": "Lucas começa um novo capítulo da vida: os seus estudos."
       },
       "s2": {
-        "title": "Conte-nos mais",
-        "description": "Alguns detalhes para personalizar a recomendação."
+        "title": "Descubro a minha solução",
+        "description": "Analisamos a sua situação e propomos a solução mais adequada."
       },
       "s3": {
-        "title": "A nossa recomendação",
-        "description": "Eis o passe que sugerimos para o seu perfil."
+        "title": "Simplifico os meus procedimentos",
+        "description": "Lucas adiciona o seu comprovativo em poucos cliques."
       },
       "s4": {
-        "title": "Os seus comprovativos",
-        "description": "Carregue os seus documentos ou ligue-se aos serviços oficiais. Verificação automática."
+        "title": "Nossa recomendação",
+        "description": "Aqui está o passe que sugerimos com base no seu perfil."
       },
       "s5": {
-        "title": "Crie a sua conta",
-        "description": "Algumas informações para finalizar a subscrição em segurança."
+        "title": "Seus documentos",
+        "description": "Envie seus documentos ou conecte-se aos serviços oficiais. Verificação automática."
       },
       "s6": {
+        "title": "Crie sua conta",
+        "description": "Algumas informações para finalizar sua assinatura com segurança."
+      },
+      "s7": {
         "title": "Bem-vindo a bordo",
-        "description": "Tudo verificado. Prepare-se para começar."
+        "description": "Tudo foi validado. Prepare-se para começar."
       }
     },
     "profiles": {
-      "selected": "Selecionado",
       "student": {
         "title": "Estudante",
         "description": "Está no ensino superior."
@@ -225,17 +217,6 @@
         "title": "Pessoa com deficiência",
         "description": "Pessoa em situação de deficiência (MDPH) — tarifa conforme o departamento."
       }
-    },
-    "questions": {
-      "age": "A sua idade",
-      "scholarship": "É bolseiro?",
-      "zones": "Zonas percorridas",
-      "daysPerWeek": "Dias de utilização por semana",
-      "employerRefund": "O seu empregador reembolsa 50%?",
-      "cafBeneficiary": "É beneficiário CAF / CSS?",
-      "childrenCount": "Quantos filhos a subscrever?",
-      "childrenUnit": "filhos",
-      "firstChildAge": "Idade do primeiro filho"
     },
     "recommendation": {
       "student": {
@@ -368,6 +349,42 @@
       "uploadFailed": "Falha no envio do documento",
       "createFailed": "Não foi possível criar a subscrição",
       "paymentFailed": "Erro no pagamento"
+    },
+    "kickerShort": "EPISÓDIO {{step}}",
+    "situationIntro": {
+      "episodeProgress": "Episódio 1 de 5",
+      "phoneTitle": "Conte-nos um pouco sobre você.",
+      "ageQuestion": "Quantos anos você tem?",
+      "studentQuestion": "Você é estudante?",
+      "scholarshipQuestion": "Você tem bolsa?",
+      "locationQuestion": "Onde você se desloca com mais frequência?",
+      "defaultLocation": "Toulouse e arredores",
+      "yearsUnit": "anos",
+      "continue": "Continuar"
+    },
+    "stepBadge": "ETAPA {{step}}",
+    "solutionIntro": {
+      "episodeProgress": "Episódio 2 de 5",
+      "phoneTitle": "Lucas, aqui está a solução mais adequada à sua situação.",
+      "why": "Porquê?",
+      "learnMore": "Saber mais",
+      "continue": "Começar este episódio",
+      "reasonStudentYes": "Estudante",
+      "reasonStudentNo": "Perfil de estudante a confirmar",
+      "reasonScholarshipYes": "Bolseiro",
+      "reasonScholarshipNo": "Sem bolsa declarada",
+      "reasonLocation": "Deslocações diárias: {{location}}"
+    },
+    "documentIntro": {
+      "episodeProgress": "Episódio 3 de 5",
+      "phoneTitle": "Adicione o seu {{document}}.",
+      "drop": "Solte o seu ficheiro aqui",
+      "browse": "ou procure",
+      "analyzing": "A analisar o ficheiro...",
+      "uploaded": "Ficheiro adicionado",
+      "formats": "Formatos aceites: .pdf, .jpg, .png",
+      "security": "Os seus dados estão seguros e confidenciais.",
+      "continue": "Continuar"
     }
   },
   "auth": {
@@ -410,29 +427,6 @@
     }
   },
   "plans": {
-    "kicker": "Todos os planos",
-    "title": "Encontre o plano Navigo perfeito para si.",
-    "subtitle": "Tarifas oficiais Île-de-France Mobilités 2026. Filtre por perfil para ver as nossas recomendações.",
-    "filter": {
-      "all": "Todos os planos",
-      "recommended": "Recomendados para mim",
-      "solidaire": "Tarifa solidária"
-    },
-    "flagsKicker": "O seu perfil",
-    "flagsHelp": "Marque o que se aplica a si — as recomendações ajustam-se em tempo real.",
-    "flagAge": "Idade",
-    "flagDays": "Dias por semana",
-    "flag": {
-      "student": "Estudante",
-      "alternant": "Aprendiz",
-      "worker": "Trabalhador",
-      "retired": "Reformado",
-      "rsa": "RSA",
-      "css": "CSS sem comparticipação",
-      "ass": "ASS",
-      "ame": "AME"
-    },
-    "recommended": "Recomendado",
     "type": {
       "day": "Dia",
       "weekly": "Semana",
@@ -440,20 +434,9 @@
       "yearly": "Anual",
       "usage": "Por utilização"
     },
-    "documents": "Documentos necessários",
-    "documentsHint": "documento(s)",
-    "employerRefund": "{{percent}}% reembolsado pela sua entidade patronal",
-    "officialSource": "Fonte oficial",
     "free": "Grátis",
     "priceVariable": "Tarifa variável conforme o departamento",
     "pricePerTrip": "desde {{price}} / viagem",
-    "employerBadge": "empregador",
-    "perDay": "por dia",
-    "perWeek": "por semana",
-    "perMonth": "por mês",
-    "perYear": "por ano",
-    "perTrip": "por viagem",
-    "source": "Fonte:",
     "catalog": {
       "navigo_day": {
         "name": "Navigo Dia",
@@ -517,7 +500,6 @@
       "openSimulator": "Abrir o simulador",
       "filterAria": "Filtrar planos",
       "resultsAria": "Lista de planos",
-      "yearlyEquivalent": "Equivalente anual: {{amount}}",
       "viewDetail": "Ver detalhe",
       "filters": {
         "all": "Todos",
@@ -662,7 +644,6 @@
     "subscriptionPendingDocs": "Documentos em validação",
     "subscriptionDraft": "Candidatura em curso",
     "startDate": "Data de início",
-    "zones": "Zonas",
     "status": "Estado",
     "statusValid": "Validada",
     "account": "Conta",

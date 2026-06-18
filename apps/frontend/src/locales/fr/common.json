@@ -20,8 +20,7 @@
     "toSystem": "Suivre le système"
   },
   "languageSwitcher": {
-    "label": "Changer de langue",
-    "current": "Langue actuelle : {{lang}}"
+    "label": "Changer de langue"
   },
   "hero": {
     "badge": "Filiale Île-de-France Mobilités",
@@ -94,12 +93,6 @@
       "recommendedPlan": "Forfait recommandé"
     }
   },
-  "stats": {
-    "annualPrice": "Navigo annuel",
-    "employerRefund": "remboursé employeur",
-    "subscribeTime": "souscription",
-    "profilesCovered": "profils couverts"
-  },
   "features": {
     "simulator": {
       "title": "Simulateur de tarif",
@@ -143,13 +136,10 @@
       }
     },
     "ageLabel": "Âge",
-    "scholarshipLabel": "Boursier",
     "empty": "Aucun forfait standard ne correspond. Contactez un conseiller.",
-    "showAll": "Voir tous les forfaits",
     "tipEmployer": "💡 50 % remboursés par votre employeur",
     "savingVsTickets": "Vous économisez {{amount}} vs tickets unité",
     "recommended": "Recommandé pour vous",
-    "subscribe": "Souscrire",
     "perYear": "/an",
     "perMonth": "/mois"
   },
@@ -168,35 +158,37 @@
     "no": "Non"
   },
   "subscription": {
-    "kicker": "Étape {{step}} / {{total}}",
     "steps": {
       "s1": {
-        "title": "Quel est votre profil ?",
-        "description": "Sélectionnez la situation qui vous correspond le mieux. Nous adaptons le parcours en conséquence."
+        "title": "Je raconte ma situation",
+        "description": "Lucas commence un nouvel épisode de sa vie : ses études."
       },
       "s2": {
-        "title": "Parlez-nous de vous",
-        "description": "Quelques précisions pour personnaliser la recommandation."
+        "title": "Je découvre ma solution",
+        "description": "Nous analysons sa situation et lui proposons la solution la plus adaptée."
       },
       "s3": {
+        "title": "Je simplifie mes démarches",
+        "description": "Lucas ajoute son justificatif en quelques clics."
+      },
+      "s4": {
         "title": "Notre recommandation",
         "description": "Voici le forfait que nous vous suggérons en fonction de votre profil."
       },
-      "s4": {
+      "s5": {
         "title": "Vos justificatifs",
         "description": "Glissez vos documents ou connectez-vous aux services officiels. Vérification automatique."
       },
-      "s5": {
+      "s6": {
         "title": "Créez votre compte",
         "description": "Quelques informations pour finaliser votre souscription en toute sécurité."
       },
-      "s6": {
+      "s7": {
         "title": "Bienvenue à bord",
         "description": "Tout est validé. Préparez-vous à embarquer."
       }
     },
     "profiles": {
-      "selected": "Sélectionné",
       "student": {
         "title": "Étudiant",
         "description": "Vous êtes en études supérieures."
@@ -225,17 +217,6 @@
         "title": "Personne en situation de handicap",
         "description": "Personne en situation de handicap (MDPH) — tarif selon votre département."
       }
-    },
-    "questions": {
-      "age": "Votre âge",
-      "scholarship": "Êtes-vous boursier ?",
-      "zones": "Zones parcourues",
-      "daysPerWeek": "Jours d'utilisation par semaine",
-      "employerRefund": "Votre employeur rembourse-t-il 50% ?",
-      "cafBeneficiary": "Êtes-vous bénéficiaire CAF / CSS ?",
-      "childrenCount": "Combien d'enfants à abonner ?",
-      "childrenUnit": "enfants",
-      "firstChildAge": "Âge du premier enfant"
     },
     "recommendation": {
       "student": {
@@ -368,6 +349,42 @@
       "uploadFailed": "Échec de l'envoi du document",
       "createFailed": "Impossible de créer la souscription",
       "paymentFailed": "Erreur lors du paiement"
+    },
+    "kickerShort": "ÉPISODE {{step}}",
+    "situationIntro": {
+      "episodeProgress": "Épisode 1 sur 5",
+      "phoneTitle": "Parlez-nous un peu de vous.",
+      "ageQuestion": "Quel âge avez-vous ?",
+      "studentQuestion": "Êtes-vous étudiant ?",
+      "scholarshipQuestion": "Êtes-vous boursier ?",
+      "locationQuestion": "Où vous déplacez-vous le plus souvent ?",
+      "defaultLocation": "Toulouse et alentours",
+      "yearsUnit": "ans",
+      "continue": "Continuer"
+    },
+    "stepBadge": "ÉTAPE {{step}}",
+    "solutionIntro": {
+      "episodeProgress": "Épisode 2 sur 5",
+      "phoneTitle": "Lucas, voici la solution la plus adaptée à votre situation.",
+      "why": "Pourquoi ?",
+      "learnMore": "En savoir plus",
+      "continue": "Commencer cet épisode",
+      "reasonStudentYes": "Étudiant",
+      "reasonStudentNo": "Profil étudiant à confirmer",
+      "reasonScholarshipYes": "Boursier",
+      "reasonScholarshipNo": "Sans bourse déclarée",
+      "reasonLocation": "Déplacements quotidiens : {{location}}"
+    },
+    "documentIntro": {
+      "episodeProgress": "Épisode 3 sur 5",
+      "phoneTitle": "Ajoutez votre {{document}}.",
+      "drop": "Déposez votre fichier ici",
+      "browse": "ou parcourez",
+      "analyzing": "Analyse du fichier en cours...",
+      "uploaded": "Fichier ajouté",
+      "formats": "Formats acceptés : .pdf, .jpg, .png",
+      "security": "Vos données sont sécurisées et confidentielles.",
+      "continue": "Continuer"
     }
   },
   "auth": {
@@ -410,29 +427,6 @@
     }
   },
   "plans": {
-    "kicker": "Tous les forfaits",
-    "title": "Trouvez le forfait Navigo qui vous ressemble.",
-    "subtitle": "Tarifs officiels Île-de-France Mobilités 2026. Filtrez par profil pour voir nos recommandations.",
-    "filter": {
-      "all": "Tous les forfaits",
-      "recommended": "Recommandés pour moi",
-      "solidaire": "Tarif solidaire"
-    },
-    "flagsKicker": "Votre profil",
-    "flagsHelp": "Cochez ce qui vous correspond — les recommandations s'adaptent en direct.",
-    "flagAge": "Âge",
-    "flagDays": "Jours / semaine",
-    "flag": {
-      "student": "Étudiant",
-      "alternant": "Apprenti / alternant",
-      "worker": "Salarié",
-      "retired": "Retraité",
-      "rsa": "RSA",
-      "css": "CSS sans participation",
-      "ass": "ASS",
-      "ame": "AME"
-    },
-    "recommended": "Recommandé",
     "type": {
       "day": "Jour",
       "weekly": "Semaine",
@@ -440,20 +434,9 @@
       "yearly": "Annuel",
       "usage": "Usage"
     },
-    "documents": "Justificatifs requis",
-    "documentsHint": "document(s)",
-    "employerRefund": "Remboursé {{percent}}% par votre employeur",
-    "officialSource": "Source officielle",
     "free": "Gratuit",
     "priceVariable": "Tarif variable selon le département",
     "pricePerTrip": "dès {{price}} / trajet",
-    "employerBadge": "employeur",
-    "perDay": "par jour",
-    "perWeek": "par semaine",
-    "perMonth": "par mois",
-    "perYear": "par an",
-    "perTrip": "par trajet",
-    "source": "Source :",
     "catalog": {
       "navigo_day": {
         "name": "Navigo Jour",
@@ -517,7 +500,6 @@
       "openSimulator": "Ouvrir le simulateur",
       "filterAria": "Filtrer les forfaits",
       "resultsAria": "Liste des forfaits",
-      "yearlyEquivalent": "Équivalent annuel : {{amount}}",
       "viewDetail": "Voir le détail",
       "filters": {
         "all": "Tous",
@@ -662,7 +644,6 @@
     "subscriptionPendingDocs": "Documents en cours de validation",
     "subscriptionDraft": "Dossier en cours",
     "startDate": "Date d'effet",
-    "zones": "Zones",
     "status": "Statut",
     "statusValid": "Validé",
     "account": "Compte",

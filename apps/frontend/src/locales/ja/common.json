@@ -20,8 +20,7 @@
     "toSystem": "システムに従う"
   },
   "languageSwitcher": {
-    "label": "言語を変更",
-    "current": "現在の言語：{{lang}}"
+    "label": "言語を変更"
   },
   "hero": {
     "badge": "イル・ド・フランス・モビリテ系列会社",
@@ -94,12 +93,6 @@
       "recommendedPlan": "おすすめプラン"
     }
   },
-  "stats": {
-    "annualPrice": "ナビゴ年間",
-    "employerRefund": "雇用主払戻",
-    "subscribeTime": "申込",
-    "profilesCovered": "対応プロファイル"
-  },
   "features": {
     "simulator": {
       "title": "料金シミュレーター",
@@ -143,13 +136,10 @@
       }
     },
     "ageLabel": "年齢",
-    "scholarshipLabel": "奨学生",
     "empty": "該当する標準プランがありません。担当者にお問い合わせください。",
-    "showAll": "すべてのプランを見る",
     "tipEmployer": "💡 雇用主から50%払戻あり",
     "savingVsTickets": "単発切符比で{{amount}}節約",
     "recommended": "あなたへのおすすめ",
-    "subscribe": "申し込む",
     "perYear": "/年",
     "perMonth": "/月"
   },
@@ -168,35 +158,37 @@
     "no": "いいえ"
   },
   "subscription": {
-    "kicker": "ステップ {{step}} / {{total}}",
     "steps": {
       "s1": {
-        "title": "あなたのプロフィールは？",
-        "description": "最も当てはまる状況を選択してください。それに合わせて手続きを調整します。"
+        "title": "状況を伝える",
+        "description": "ルーカスは人生の新しい章、学業を始めます。"
       },
       "s2": {
-        "title": "もう少し教えてください",
-        "description": "おすすめを最適化するためのいくつかの詳細。"
+        "title": "解決策を確認する",
+        "description": "状況を分析し、最適な解決策を提案します。"
       },
       "s3": {
-        "title": "おすすめプラン",
-        "description": "あなたのプロフィールに基づいた提案プランです。"
+        "title": "手続きを簡単にする",
+        "description": "ルーカスは数クリックで証明書類を追加します。"
       },
       "s4": {
-        "title": "提出書類",
-        "description": "ファイルをアップロードするか、公式サービスに接続してください。自動で確認します。"
+        "title": "おすすめ",
+        "description": "プロフィールに基づいておすすめの定期券をご案内します。"
       },
       "s5": {
-        "title": "アカウントを作成",
-        "description": "安全に申込を完了するためのいくつかの情報。"
+        "title": "証明書類",
+        "description": "書類をアップロードするか、公的サービスに接続してください。自動で確認します。"
       },
       "s6": {
+        "title": "アカウントを作成",
+        "description": "安全に申し込みを完了するための情報です。"
+      },
+      "s7": {
         "title": "ようこそ",
-        "description": "すべて確認済みです。出発の準備が整いました。"
+        "description": "すべて確認済みです。利用開始の準備ができました。"
       }
     },
     "profiles": {
-      "selected": "選択済み",
       "student": {
         "title": "学生",
         "description": "高等教育に在籍中です。"
@@ -225,17 +217,6 @@
         "title": "障害のある方",
         "description": "障害をお持ちの方（MDPH）— 県によって料金が変わります。"
       }
-    },
-    "questions": {
-      "age": "年齢",
-      "scholarship": "奨学生ですか？",
-      "zones": "利用ゾーン",
-      "daysPerWeek": "週あたり利用日数",
-      "employerRefund": "雇用主は50%を払戻しますか？",
-      "cafBeneficiary": "CAF / CSS受給者ですか？",
-      "childrenCount": "申込み対象のお子様の人数は？",
-      "childrenUnit": "人",
-      "firstChildAge": "第一子の年齢"
     },
     "recommendation": {
       "student": {
@@ -368,6 +349,42 @@
       "uploadFailed": "書類のアップロードに失敗しました",
       "createFailed": "申込の作成に失敗しました",
       "paymentFailed": "支払いエラーが発生しました"
+    },
+    "kickerShort": "エピソード {{step}}",
+    "situationIntro": {
+      "episodeProgress": "エピソード 1/5",
+      "phoneTitle": "あなたについて少し教えてください。",
+      "ageQuestion": "年齢はいくつですか？",
+      "studentQuestion": "学生ですか？",
+      "scholarshipQuestion": "奨学金を受けていますか？",
+      "locationQuestion": "最もよく移動する場所は？",
+      "defaultLocation": "トゥールーズ周辺",
+      "yearsUnit": "歳",
+      "continue": "続ける"
+    },
+    "stepBadge": "ステップ {{step}}",
+    "solutionIntro": {
+      "episodeProgress": "エピソード 2/5",
+      "phoneTitle": "ルーカスさん、あなたの状況に最も合った解決策はこちらです。",
+      "why": "理由",
+      "learnMore": "詳しく見る",
+      "continue": "このエピソードを始める",
+      "reasonStudentYes": "学生",
+      "reasonStudentNo": "学生プロフィールを確認してください",
+      "reasonScholarshipYes": "奨学金対象",
+      "reasonScholarshipNo": "奨学金なし",
+      "reasonLocation": "日常移動：{{location}}"
+    },
+    "documentIntro": {
+      "episodeProgress": "エピソード 3/5",
+      "phoneTitle": "{{document}}を追加してください。",
+      "drop": "ここにファイルをドロップ",
+      "browse": "または参照",
+      "analyzing": "ファイルを分析中...",
+      "uploaded": "ファイルを追加しました",
+      "formats": "対応形式：.pdf, .jpg, .png",
+      "security": "データは安全かつ機密に保護されます。",
+      "continue": "続ける"
     }
   },
   "auth": {
@@ -410,29 +427,6 @@
     }
   },
   "plans": {
-    "kicker": "全プラン",
-    "title": "あなたにぴったりのNavigoプランを見つけよう。",
-    "subtitle": "Île-de-France Mobilités 2026年公式料金。プロフィールで絞り込んでおすすめを表示します。",
-    "filter": {
-      "all": "すべてのプラン",
-      "recommended": "あなたへのおすすめ",
-      "solidaire": "ソリダリティ料金"
-    },
-    "flagsKicker": "あなたのプロフィール",
-    "flagsHelp": "当てはまるものにチェック — おすすめがその場で変化します。",
-    "flagAge": "年齢",
-    "flagDays": "週あたりの利用日数",
-    "flag": {
-      "student": "学生",
-      "alternant": "見習い／交互教育",
-      "worker": "会社員",
-      "retired": "退職者",
-      "rsa": "RSA",
-      "css": "CSS（自己負担なし）",
-      "ass": "ASS",
-      "ame": "AME"
-    },
-    "recommended": "おすすめ",
     "type": {
       "day": "1日",
       "weekly": "週間",
@@ -440,20 +434,9 @@
       "yearly": "年間",
       "usage": "従量制"
     },
-    "documents": "必要書類",
-    "documentsHint": "件",
-    "employerRefund": "雇用主から{{percent}}%還付",
-    "officialSource": "公式ソース",
     "free": "無料",
     "priceVariable": "県により料金が異なります",
     "pricePerTrip": "{{price}}〜 / 1回",
-    "employerBadge": "雇用主",
-    "perDay": "/日",
-    "perWeek": "/週",
-    "perMonth": "/月",
-    "perYear": "/年",
-    "perTrip": "/1回",
-    "source": "出典：",
     "catalog": {
       "navigo_day": {
         "name": "Navigo 1日",
@@ -517,7 +500,6 @@
       "openSimulator": "シミュレーターを開く",
       "filterAria": "プランを絞り込む",
       "resultsAria": "プラン一覧",
-      "yearlyEquivalent": "年間換算：{{amount}}",
       "viewDetail": "詳細を見る",
       "filters": {
         "all": "すべて",
@@ -662,7 +644,6 @@
     "subscriptionPendingDocs": "書類確認中",
     "subscriptionDraft": "申込中",
     "startDate": "開始日",
-    "zones": "ゾーン",
     "status": "ステータス",
     "statusValid": "承認済み",
     "account": "アカウント",
