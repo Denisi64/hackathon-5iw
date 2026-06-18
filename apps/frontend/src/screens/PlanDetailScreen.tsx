@@ -27,7 +27,6 @@ import {
   getPlanBenefits,
   getPlanName,
   getPlanPriceLabel,
-  getPlanYearlyLabel,
   getProfileLabel,
   getRenewalLabel,
 } from '../utils/planDisplay'
@@ -79,54 +78,66 @@ export default function PlanDetailScreen() {
       </button>
 
       <section className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-stretch">
-        <Card variant="feature" spotlight className="min-h-[520px]">
-          <div className="grid h-full gap-8 lg:grid-cols-[1fr_340px] lg:items-center">
-            <div className="flex flex-col items-start">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="recommended" icon={<Sparkles className="h-3 w-3" aria-hidden="true" />}>
-                  {t('plans.detail.badge')}
-                </Badge>
-                <Badge variant="info">{t(`plans.type.${plan.type}`)}</Badge>
-                {plan.employerRefund && <Badge variant="success">{t('plans.detail.employerRefundBadge')}</Badge>}
+        <Card variant="feature" spotlight>
+          <div className="flex flex-col gap-8">
+            {/* En-tête : texte + visuel du titre */}
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,300px)] lg:items-center">
+              <div className="flex min-w-0 flex-col items-start">
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="recommended" icon={<Sparkles className="h-3 w-3" aria-hidden="true" />}>
+                    {t('plans.detail.badge')}
+                  </Badge>
+                  <Badge variant="info">{t(`plans.type.${plan.type}`)}</Badge>
+                  {plan.employerRefund && <Badge variant="success">{t('plans.detail.employerRefundBadge')}</Badge>}
+                </div>
+
+                <h1 className="mt-6 text-4xl font-semibold tracking-tight text-fg sm:text-5xl">
+                  {getPlanName(plan, t)}
+                </h1>
+                <p className="mt-4 text-lg leading-8 text-fg-muted">{getPlanDescription(plan, t)}</p>
               </div>
 
-              <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-fg sm:text-5xl">
-                {getPlanName(plan, t)}
-              </h1>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-fg-muted">{getPlanDescription(plan, t)}</p>
-
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                <Metric icon={<WalletCards className="h-4 w-4" aria-hidden="true" />} label={t('plans.detail.metric.price')} value={getPlanPriceLabel(plan, locale, t)} />
-                <Metric icon={<CalendarClock className="h-4 w-4" aria-hidden="true" />} label={t('plans.detail.metric.rhythm')} value={getRenewalLabel(plan.renewal, t)} />
-                <Metric icon={<Ticket className="h-4 w-4" aria-hidden="true" />} label={t('plans.detail.metric.zones')} value={t('plans.display.benefits.zones', { min: plan.zones.min, max: plan.zones.max })} />
-              </div>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button
-                  size="lg"
-                  rightIcon={<ArrowRight className="h-4 w-4" aria-hidden="true" />}
-                  onClick={() => navigate(`/souscrire?plan=${plan.id}`)}
-                >
-                  {t('plans.detail.subscribe')}
-                </Button>
-                <Button size="lg" variant="secondary" onClick={() => navigate('/simulateur')}>
-                  {t('plans.detail.resimulate')}
-                </Button>
+              <div className="flex min-h-[300px] min-w-0 flex-col overflow-hidden rounded-2xl border border-border-default bg-gradient-to-br from-accent/14 via-surface to-bg-elevated">
+                <div className="relative min-h-[210px] flex-1">
+                  {plan.image ? (
+                    <img
+                      src={plan.image}
+                      alt=""
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-5 -top-5 w-[116%] max-w-none object-contain object-right-top"
+                    />
+                  ) : (
+                    <div className="grid h-full place-items-center">
+                      <Ticket className="h-24 w-24 text-accent" aria-hidden="true" />
+                    </div>
+                  )}
+                </div>
+                <div className="border-t border-border-default bg-bg-elevated/60 p-5 backdrop-blur-sm">
+                  <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('plans.detail.indicativePrice')}</p>
+                  <p className="mt-1 text-2xl font-semibold tracking-tight text-fg">{getPlanPriceLabel(plan, locale, t)}</p>
+                </div>
               </div>
             </div>
 
-            <div className="relative min-h-[320px] overflow-hidden rounded-2xl border border-border-default bg-gradient-to-br from-accent/14 via-surface to-bg-elevated">
-              {plan.image ? (
-                <img src={plan.image} alt="" className="h-full w-full object-cover" aria-hidden="true" />
-              ) : (
-                <div className="grid h-full place-items-center text-accent">
-                  <Ticket className="h-28 w-28" aria-hidden="true" />
-                </div>
-              )}
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg-elevated via-bg-elevated/80 to-transparent p-5 pt-16">
-                <p className="font-mono text-xs tracking-widest text-fg-muted uppercase">{t('plans.detail.indicativePrice')}</p>
-                <p className="mt-1 text-2xl font-semibold tracking-tight text-fg">{getPlanYearlyLabel(plan, locale, t)}</p>
-              </div>
+            {/* Métriques — pleine largeur pour rester lisibles */}
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <Metric icon={<WalletCards className="h-4 w-4" aria-hidden="true" />} label={t('plans.detail.metric.price')} value={getPlanPriceLabel(plan, locale, t)} />
+              <Metric icon={<CalendarClock className="h-4 w-4" aria-hidden="true" />} label={t('plans.detail.metric.rhythm')} value={getRenewalLabel(plan.renewal, t)} />
+              <Metric icon={<Ticket className="h-4 w-4" aria-hidden="true" />} label={t('plans.detail.metric.zones')} value={t('plans.display.benefits.zones', { min: plan.zones.min, max: plan.zones.max })} />
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button
+                size="lg"
+                rightIcon={<ArrowRight className="h-4 w-4" aria-hidden="true" />}
+                onClick={() => navigate(`/souscrire?plan=${plan.id}`)}
+              >
+                {t('plans.detail.subscribe')}
+              </Button>
+              <Button size="lg" variant="secondary" onClick={() => navigate('/simulateur')}>
+                {t('plans.detail.resimulate')}
+              </Button>
             </div>
           </div>
         </Card>
@@ -246,12 +257,12 @@ export default function PlanDetailScreen() {
 
 function Metric({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-border-default bg-surface p-4 shadow-inner">
+    <div className="min-w-0 rounded-2xl border border-border-default bg-surface p-4 shadow-inner">
       <div className="flex items-center gap-2 text-accent">
-        {icon}
-        <span className="font-mono text-[10px] tracking-widest uppercase">{label}</span>
+        <span className="shrink-0">{icon}</span>
+        <span className="truncate font-mono text-[10px] tracking-widest uppercase">{label}</span>
       </div>
-      <p className="mt-2 text-sm font-semibold text-fg">{value}</p>
+      <p className="mt-2 text-sm font-semibold leading-snug text-fg [overflow-wrap:anywhere]">{value}</p>
     </div>
   )
 }

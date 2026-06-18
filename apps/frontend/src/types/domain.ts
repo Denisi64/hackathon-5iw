@@ -56,6 +56,12 @@ export interface Plan {
   profiles: UserProfile[]
   yearlyPrice: number | null
   monthlyPrice: number | null
+  /** Per-ticket / per-trip price for single titles (Ticket t+, on-board, airport…). */
+  unitPrice?: number
+  /** Price shown as the localized "variable fare" label when no numeric price applies. */
+  priceVariable?: boolean
+  /** Free-form price label overriding all others (e.g. "−50 %", "dès 30,60 €/jour"). */
+  priceLabel?: string
   zones: { min: ZoneLevel; max: ZoneLevel }
   renewal: 'yearly' | 'monthly' | 'quarterly' | 'weekly' | 'usage' | 'day'
   requiredDocuments: string[]

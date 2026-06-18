@@ -26,7 +26,18 @@ export const PROFILE_LABEL_KEYS: Record<string, string> = {
   amethyst: 'plans.display.profiles.amethyst',
 }
 
+/** Libellé d'un prix à l'unité, selon la cadence du titre (semaine / jour / unité). */
+function getUnitPriceLabel(plan: Plan, locale: Locale | string, t: Translate): string {
+  const price = formatCurrency(plan.unitPrice as number, locale)
+  if (plan.renewal === 'weekly') return t('plans.display.pricePerWeek', { price })
+  if (plan.renewal === 'day') return t('plans.display.pricePerDay', { price })
+  return t('plans.display.pricePerUnit', { price })
+}
+
 export function getPlanPriceLabel(plan: Plan, locale: Locale | string, t: Translate): string {
+  if (plan.priceLabel) return plan.priceLabel
+  if (plan.priceVariable) return t('plans.priceVariable')
+  if (plan.unitPrice != null) return getUnitPriceLabel(plan, locale, t)
   if (plan.yearlyPrice === 0) return t('plans.free')
   if (plan.id === 'liberty_plus') {
     return t('plans.pricePerTrip', { price: formatCurrency(LIBERTE_PLUS_PRICE_PER_TRIP, locale) })
@@ -41,6 +52,7 @@ export function getPlanPriceLabel(plan: Plan, locale: Locale | string, t: Transl
 }
 
 export function getPlanYearlyLabel(plan: Plan, locale: Locale | string, t: Translate): string {
+  if (plan.priceLabel || plan.priceVariable || plan.unitPrice != null) return t('plans.display.allZones')
   if (plan.yearlyPrice === 0) return t('plans.free')
   if (plan.yearlyPrice !== null) {
     return t('plans.display.pricePerYear', { price: formatCurrency(plan.yearlyPrice, locale) })
