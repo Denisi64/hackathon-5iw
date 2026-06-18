@@ -4,6 +4,7 @@ import { Calendar, ChevronRight, LogOut, Sparkles } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Badge } from '../components/ui/Badge'
+import { GamificationCard } from '../components/domain/GamificationCard'
 import { useAuthStore } from '../stores/authStore'
 import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
@@ -90,6 +91,8 @@ export default function AccountScreen() {
         </Card>
       )}
 
+      <GamificationCard />
+
       <section className="grid gap-4 md:grid-cols-2">
         <Card>
           <Card.Body>
@@ -102,6 +105,7 @@ export default function AccountScreen() {
           <Card.Body>
             <span className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">{t('account.actions')}</span>
             <ul className="mt-3 flex flex-col gap-2">
+              <ActionItem to="/centres-interet" label={t('interests.manage')} />
               <ActionItem to="/simulateur" label={t('account.action.simulate')} />
               <ActionItem to="/histoires/lucas" label={t('account.action.stories')} />
               <ActionItem to="/souscrire" label={t('account.action.newSubscription')} />

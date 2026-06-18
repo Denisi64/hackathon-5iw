@@ -7,7 +7,9 @@
       "subscribe": "Subscrever",
       "assistant": "Assistente",
       "login": "Entrar",
-      "account": "O meu espaço"
+      "account": "O meu espaço",
+      "navigo": "Navigo",
+      "trips": "Trajetos"
     },
     "menu": {
       "open": "Abrir menu",
@@ -678,5 +680,100 @@
       "description": "Inicie o percurso de subscrição para encontrar o passe ideal e associá-lo ao seu espaço.",
       "cta": "Começar a subscrição"
     }
+  },
+  "navigo": {
+    "title": "O meu Navigo",
+    "subtitle": "O seu título de transporte digital",
+    "empty": {
+      "title": "Sem assinatura ativa",
+      "body": "Subscreva para obter o seu cartão Navigo virtual e viajar pela Île-de-France.",
+      "cta": "Subscrever agora"
+    },
+    "qr": {
+      "title": "Mostre este código ao validador",
+      "subtitle": "Atualizado a cada 30 segundos"
+    },
+    "validSince": "Válido desde",
+    "expiresOn": "Expira a",
+    "zones": "Zonas cobertas",
+    "zonesValue": "Todas as zonas · 1 → 5",
+    "status": "Estado",
+    "statusActive": "Ativo",
+    "manage": "Gerir a minha assinatura",
+    "holder": "Titular"
+  },
+  "gamification": {
+    "title": "O meu progresso",
+    "points": "pontos",
+    "level": "Nível {{level}}",
+    "badges": "Emblemas",
+    "toNextLevel": "{{points}} pts para o nível {{level}}",
+    "noBadges": "Ainda sem emblemas"
+  },
+  "interests": {
+    "title": "Os seus interesses",
+    "optional": "Opcional",
+    "subtitle": "Selecione os seus interesses para personalizar a sua experiência.",
+    "validate": "Guardar os meus interesses",
+    "skip": "Saltar esta etapa",
+    "manage": "Interesses",
+    "items": {
+      "mobility": "Mobilidade",
+      "culture": "Cultura e espetáculos",
+      "sport": "Desporto",
+      "education": "Estudos e formação",
+      "work": "Emprego e carreira",
+      "food": "Gastronomia",
+      "wellbeing": "Bem-estar e lazer",
+      "music": "Música e concertos",
+      "eco": "Ecologia",
+      "travel": "Viagens",
+      "family": "Família",
+      "shopping": "Compras"
+    }
+  },
+  "trips": {
+    "kicker": "Rede Île-de-France",
+    "title": "Os meus trajetos",
+    "tabs": {
+      "trip": "Trajeto",
+      "history": "Histórico",
+      "plan": "Mapa"
+    },
+    "stats": {
+      "trips": "trajetos",
+      "km": "percorridos",
+      "co2": "CO₂",
+      "streak": "sequência"
+    },
+    "from": "Partida",
+    "to": "Chegada",
+    "chooseFromLine": "Escolha a linha de partida",
+    "chooseToLine": "Escolha a linha de chegada",
+    "searchStation": "Procurar uma estação…",
+    "changeLine": "Mudar de linha",
+    "stations": "est.",
+    "direct": "Direto",
+    "transfers": "transb.",
+    "duration": "Duração",
+    "points": "Pontos",
+    "stops_one": "{{count}} paragem",
+    "stops_other": "{{count}} paragens",
+    "transferWalk": "Transbordo a pé",
+    "transfer": "Transbordo",
+    "validate": "Registar este trajeto",
+    "modify": "Editar trajeto",
+    "emptyHistory": "Nenhum trajeto registado",
+    "emptyHistoryHint": "Registe o seu primeiro trajeto no separador Trajeto",
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "allStations": "Todas as estações",
+    "logged": "Trajeto registado · +15 pts",
+    "itinerary": "Itinerário",
+    "itineraryHint": "Verifique o seu trajeto",
+    "chooseStation": "Linha {{line}} · qual estação?",
+    "tripDetail": "Detalhe do trajeto",
+    "schedule": "Horário",
+    "co2Saved": "CO₂ poupado"
   }
 }

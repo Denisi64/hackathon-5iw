@@ -7,7 +7,9 @@
       "subscribe": "Subscribe",
       "assistant": "Assistant",
       "login": "Sign in",
-      "account": "My space"
+      "account": "My space",
+      "navigo": "Navigo",
+      "trips": "Trips"
     },
     "menu": {
       "open": "Open menu",
@@ -678,5 +680,100 @@
       "description": "Start the subscription flow to find your ideal plan and link it to your space.",
       "cta": "Start subscribing"
     }
+  },
+  "navigo": {
+    "title": "My Navigo",
+    "subtitle": "Your digital travel pass",
+    "empty": {
+      "title": "No active subscription",
+      "body": "Subscribe to get your virtual Navigo card and travel across Île-de-France.",
+      "cta": "Subscribe now"
+    },
+    "qr": {
+      "title": "Show this code to the validator",
+      "subtitle": "Refreshed every 30 seconds"
+    },
+    "validSince": "Valid since",
+    "expiresOn": "Expires on",
+    "zones": "Zones covered",
+    "zonesValue": "All zones · 1 → 5",
+    "status": "Status",
+    "statusActive": "Active",
+    "manage": "Manage my subscription",
+    "holder": "Cardholder"
+  },
+  "gamification": {
+    "title": "My progress",
+    "points": "points",
+    "level": "Level {{level}}",
+    "badges": "Badges",
+    "toNextLevel": "{{points}} pts to reach level {{level}}",
+    "noBadges": "No badge yet"
+  },
+  "interests": {
+    "title": "Your interests",
+    "optional": "Optional",
+    "subtitle": "Select your interests to personalise your experience.",
+    "validate": "Save my interests",
+    "skip": "Skip this step",
+    "manage": "Interests",
+    "items": {
+      "mobility": "Mobility",
+      "culture": "Culture & shows",
+      "sport": "Sport",
+      "education": "Study & training",
+      "work": "Work & career",
+      "food": "Food",
+      "wellbeing": "Wellbeing & leisure",
+      "music": "Music & concerts",
+      "eco": "Ecology",
+      "travel": "Travel",
+      "family": "Family",
+      "shopping": "Shopping"
+    }
+  },
+  "trips": {
+    "kicker": "Île-de-France network",
+    "title": "My trips",
+    "tabs": {
+      "trip": "Trip",
+      "history": "History",
+      "plan": "Map"
+    },
+    "stats": {
+      "trips": "trips",
+      "km": "travelled",
+      "co2": "CO₂",
+      "streak": "streak"
+    },
+    "from": "Departure",
+    "to": "Arrival",
+    "chooseFromLine": "Choose the departure line",
+    "chooseToLine": "Choose the arrival line",
+    "searchStation": "Search a station…",
+    "changeLine": "Change line",
+    "stations": "st.",
+    "direct": "Direct",
+    "transfers": "transfers",
+    "duration": "Duration",
+    "points": "Points",
+    "stops_one": "{{count}} stop",
+    "stops_other": "{{count}} stops",
+    "transferWalk": "Transfer on foot",
+    "transfer": "Transfer",
+    "validate": "Log this trip",
+    "modify": "Edit trip",
+    "emptyHistory": "No trip logged yet",
+    "emptyHistoryHint": "Log your first trip in the Trip tab",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "allStations": "All stations",
+    "logged": "Trip logged · +15 pts",
+    "itinerary": "Itinerary",
+    "itineraryHint": "Check your trip",
+    "chooseStation": "Line {{line}} · which station?",
+    "tripDetail": "Trip details",
+    "schedule": "Schedule",
+    "co2Saved": "CO₂ saved"
   }
 }

@@ -7,7 +7,9 @@
       "subscribe": "Souscrire",
       "assistant": "Assistant",
       "login": "Se connecter",
-      "account": "Mon espace"
+      "account": "Mon espace",
+      "navigo": "Navigo",
+      "trips": "Trajets"
     },
     "menu": {
       "open": "Ouvrir le menu",
@@ -678,5 +680,100 @@
       "description": "Lancez le parcours de souscription pour trouver le forfait idéal et le rattacher à votre espace.",
       "cta": "Commencer la souscription"
     }
+  },
+  "navigo": {
+    "title": "Mon Navigo",
+    "subtitle": "Votre titre de transport dématérialisé",
+    "empty": {
+      "title": "Aucun abonnement actif",
+      "body": "Souscrivez pour obtenir votre carte Navigo virtuelle et voyager en Île-de-France.",
+      "cta": "Souscrire maintenant"
+    },
+    "qr": {
+      "title": "Présentez ce code au valideur",
+      "subtitle": "Actualisé toutes les 30 secondes"
+    },
+    "validSince": "Valide depuis",
+    "expiresOn": "Expire le",
+    "zones": "Zones couvertes",
+    "zonesValue": "Toutes zones · 1 → 5",
+    "status": "Statut",
+    "statusActive": "Actif",
+    "manage": "Gérer mon abonnement",
+    "holder": "Titulaire"
+  },
+  "gamification": {
+    "title": "Ma progression",
+    "points": "points",
+    "level": "Niveau {{level}}",
+    "badges": "Badges",
+    "toNextLevel": "Plus que {{points}} pts avant le niveau {{level}}",
+    "noBadges": "Aucun badge pour l'instant"
+  },
+  "interests": {
+    "title": "Vos centres d'intérêt",
+    "optional": "Optionnel",
+    "subtitle": "Sélectionnez vos centres d'intérêt pour personnaliser votre expérience.",
+    "validate": "Valider mes centres d'intérêt",
+    "skip": "Passer cette étape",
+    "manage": "Centres d'intérêt",
+    "items": {
+      "mobility": "Mobilité",
+      "culture": "Culture & spectacles",
+      "sport": "Sport",
+      "education": "Études & formation",
+      "work": "Emploi & carrière",
+      "food": "Gastronomie",
+      "wellbeing": "Bien-être & loisirs",
+      "music": "Musique & concerts",
+      "eco": "Écologie",
+      "travel": "Voyages",
+      "family": "Famille",
+      "shopping": "Shopping"
+    }
+  },
+  "trips": {
+    "kicker": "Réseau Île-de-France",
+    "title": "Mes trajets",
+    "tabs": {
+      "trip": "Trajet",
+      "history": "Historique",
+      "plan": "Plan"
+    },
+    "stats": {
+      "trips": "trajets",
+      "km": "parcourus",
+      "co2": "CO₂",
+      "streak": "streak"
+    },
+    "from": "Départ",
+    "to": "Arrivée",
+    "chooseFromLine": "Choisissez la ligne de départ",
+    "chooseToLine": "Choisissez la ligne d'arrivée",
+    "searchStation": "Rechercher une station…",
+    "changeLine": "Changer de ligne",
+    "stations": "st.",
+    "direct": "Direct",
+    "transfers": "corresp.",
+    "duration": "Durée",
+    "points": "Points",
+    "stops_one": "{{count}} arrêt",
+    "stops_other": "{{count}} arrêts",
+    "transferWalk": "Correspondance à pied",
+    "transfer": "Correspondance",
+    "validate": "Valider ce trajet",
+    "modify": "Modifier le trajet",
+    "emptyHistory": "Aucun trajet enregistré",
+    "emptyHistoryHint": "Enregistrez votre premier trajet dans l'onglet Trajet",
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "allStations": "Toutes les stations",
+    "logged": "Trajet enregistré · +15 pts",
+    "itinerary": "Itinéraire",
+    "itineraryHint": "Vérifiez votre trajet",
+    "chooseStation": "Ligne {{line}} · quelle station ?",
+    "tripDetail": "Détail du trajet",
+    "schedule": "Horaire",
+    "co2Saved": "CO₂ éco."
   }
 }
