@@ -174,8 +174,8 @@
         "description": "Lucas aggiunge il suo documento in pochi clic."
       },
       "s4": {
-        "title": "La nostra raccomandazione",
-        "description": "Ecco l’abbonamento che ti suggeriamo in base al tuo profilo."
+        "title": "Inizio la mia stagione",
+        "description": "Tutto è convalidato! Lucas può godersi il suo abbonamento."
       },
       "s5": {
         "title": "I tuoi documenti",
@@ -218,64 +218,6 @@
       "amethyst": {
         "title": "Persona con disabilità",
         "description": "Persona con disabilità (MDPH) — tariffa secondo il dipartimento."
-      }
-    },
-    "recommendation": {
-      "student": {
-        "summary": "La tariffa Imagine R Studente ti dà accesso a tutta l'Île-de-France durante l'anno scolastico.",
-        "reasons": [
-          "Tariffa borsista applicata automaticamente",
-          "Tutte le zone incluse",
-          "Rinnovo annuale senza intervento"
-        ]
-      },
-      "worker": {
-        "summary": "Il Navigo Annuale resta l'abbonamento più conveniente per uso quotidiano.",
-        "reasons": [
-          "50% rimborsato dal datore di lavoro",
-          "Risparmio rispetto ai biglietti singoli",
-          "Tutta la rete IDF inclusa"
-        ]
-      },
-      "senior": {
-        "summary": "La tariffa Senior offre uno sconto importante dai 62 anni.",
-        "reasons": [
-          "Verifica dell'età automatica tramite documento",
-          "Risparmio stimato 270 €/anno",
-          "Passaggio senza interruzione del servizio"
-        ]
-      },
-      "jobseeker": {
-        "summary": "La Tariffa Solidale Trasporti adatta il prezzo alle tue risorse.",
-        "reasons": [
-          "Verifica automatica dei diritti CAF",
-          "Nessun documento da caricare",
-          "Rinnovo trimestrale facilitato"
-        ]
-      },
-      "parent": {
-        "summary": "Un unico spazio per gestire tutti gli abbonamenti dei tuoi figli.",
-        "reasons": [
-          "Imagine R Alunno per ogni figlio",
-          "Un solo stato di famiglia basta",
-          "Promemoria automatici prima dell'anno scolastico"
-        ]
-      },
-      "scholar": {
-        "summary": "Imagine R Alunno copre l'intero anno scolastico per 11-25 anni.",
-        "reasons": [
-          "Tutta la rete IDF inclusa",
-          "Tariffa ridotta borsista disponibile",
-          "Rinnovo automatico ogni anno"
-        ]
-      },
-      "amethyst": {
-        "summary": "L'abbonamento Améthyste si adatta al dipartimento di residenza e allo stato MDPH.",
-        "reasons": [
-          "Tariffa variabile per dipartimento",
-          "Verifica automatica tramite notifica MDPH",
-          "Rinnovo annuale senza pratiche"
-        ]
       }
     },
     "documents": {
@@ -387,6 +329,13 @@
       "formats": "Formati accettati: .pdf, .jpg, .png",
       "security": "I tuoi dati sono protetti e riservati.",
       "continue": "Continua"
+    },
+    "validatedIntro": {
+      "episodeProgress": "Episodio 4 di 5",
+      "goodNews": "Buone notizie, Lucas!",
+      "phoneTitle": "Il tuo abbonamento è convalidato.",
+      "validFrom": "Valido dal {{date}}",
+      "continue": "Vedi il mio abbonamento"
     }
   },
   "auth": {

@@ -174,8 +174,8 @@
         "description": "Lucas adiciona o seu comprovativo em poucos cliques."
       },
       "s4": {
-        "title": "Nossa recomendação",
-        "description": "Aqui está o passe que sugerimos com base no seu perfil."
+        "title": "Começo a minha temporada",
+        "description": "Tudo foi validado! Lucas já pode aproveitar a assinatura."
       },
       "s5": {
         "title": "Seus documentos",
@@ -218,64 +218,6 @@
       "amethyst": {
         "title": "Pessoa com deficiência",
         "description": "Pessoa em situação de deficiência (MDPH) — tarifa conforme o departamento."
-      }
-    },
-    "recommendation": {
-      "student": {
-        "summary": "A tarifa Imagine R Estudante dá-lhe acesso a toda a Île-de-France durante o ano letivo.",
-        "reasons": [
-          "Tarifa bolseiro aplicada automaticamente",
-          "Todas as zonas incluídas",
-          "Renovação anual sem intervenção"
-        ]
-      },
-      "worker": {
-        "summary": "O Navigo Anual continua a ser o passe mais vantajoso para uso diário.",
-        "reasons": [
-          "50% reembolsado pelo empregador",
-          "Poupança vs bilhetes avulso",
-          "Toda a rede IDF incluída"
-        ]
-      },
-      "senior": {
-        "summary": "A tarifa Sénior oferece um desconto significativo a partir dos 62 anos.",
-        "reasons": [
-          "Verificação automática de idade via documento",
-          "Poupança estimada 270 €/ano",
-          "Mudança sem interrupção de serviço"
-        ]
-      },
-      "jobseeker": {
-        "summary": "A Tarifa Solidária de Transporte adapta o preço aos seus rendimentos.",
-        "reasons": [
-          "Verificação automática dos direitos CAF",
-          "Sem documentos para enviar",
-          "Renovação trimestral facilitada"
-        ]
-      },
-      "parent": {
-        "summary": "Um único espaço para gerir todas as subscrições dos seus filhos.",
-        "reasons": [
-          "Imagine R Aluno para cada filho",
-          "Um único registo de família basta",
-          "Lembretes automáticos antes do ano letivo"
-        ]
-      },
-      "scholar": {
-        "summary": "Imagine R Aluno cobre todo o ano letivo para os 11-25 anos.",
-        "reasons": [
-          "Toda a rede IDF incluída",
-          "Tarifa reduzida para bolseiros disponível",
-          "Renovação automática a cada ano"
-        ]
-      },
-      "amethyst": {
-        "summary": "O passe Améthyste adapta-se ao seu departamento de residência e ao seu estatuto MDPH.",
-        "reasons": [
-          "Tarifa variável conforme o departamento",
-          "Verificação automática via notificação MDPH",
-          "Renovação anual sem diligências"
-        ]
       }
     },
     "documents": {
@@ -387,6 +329,13 @@
       "formats": "Formatos aceites: .pdf, .jpg, .png",
       "security": "Os seus dados estão seguros e confidenciais.",
       "continue": "Continuar"
+    },
+    "validatedIntro": {
+      "episodeProgress": "Episódio 4 de 5",
+      "goodNews": "Boa notícia, Lucas!",
+      "phoneTitle": "O seu passe foi validado.",
+      "validFrom": "Válido a partir de {{date}}",
+      "continue": "Ver a minha assinatura"
     }
   },
   "auth": {

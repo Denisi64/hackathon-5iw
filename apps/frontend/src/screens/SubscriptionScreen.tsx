@@ -182,7 +182,7 @@ export default function SubscriptionScreen() {
             onContinue={() => { void onNext() }}
           />
         )}
-        {step === 4 && profileDef && plan && <Step4Recommendation profile={profileDef.slug} plan={plan} locale={locale} />}
+        {step === 4 && plan && <Step4Validated plan={plan} locale={locale} onContinue={() => { void onNext() }} />}
         {step === 5 && profileDef && <Step5Documents docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
         {step === 6 && <Step6Account account={account} setAccount={setAccount} errors={accountErrors} />}
         {step === 7 && profileDef && plan && <Step7Confirmation firstName={account.firstName} email={account.email} plan={plan} locale={locale} />}
@@ -193,7 +193,7 @@ export default function SubscriptionScreen() {
       )}
 
       {/* Nav bar */}
-      {step > 2 && (
+      {step > 4 && (
         <NavBar
           step={step}
           isLoading={isLoading}
@@ -582,49 +582,81 @@ function Step3DocumentUpload({ documentLabel, status, onUpload, onContinue }: {
   )
 }
 
-function Step4Recommendation({ profile, plan, locale }: {
-  profile: ProfileSlug
+function Step4Validated({ plan, locale, onContinue }: {
   plan: Plan
   locale: string
+  onContinue: () => void
 }) {
   const { t } = useTranslation()
-  const reasonsKey = `subscription.recommendation.${profile}.reasons`
-  const reasons = t(reasonsKey, { returnObjects: true }) as unknown as string[]
-  const reasonsList = Array.isArray(reasons) ? reasons : []
+  const startDate = new Date()
+  startDate.setDate(startDate.getDate() + 7)
+  const startDateStr = startDate.toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
+  const priceLabel = plan.monthlyPrice !== null
+    ? `${formatCurrency(plan.monthlyPrice, locale)}${t('simulator.perMonth')}`
+    : plan.yearlyPrice !== null
+      ? `${formatCurrency(plan.yearlyPrice, locale)}${t('simulator.perYear')}`
+      : t('plans.priceVariable')
+  const confetti = [
+    'left-[10%] top-[36%] bg-[#096AF3]',
+    'left-[24%] top-[27%] bg-[#F5B700]',
+    'left-[34%] top-[35%] bg-[#18B6C9]',
+    'right-[24%] top-[27%] bg-[#096AF3]',
+    'right-[10%] top-[34%] bg-[#F10AA0]',
+    'right-[20%] top-[42%] bg-[#16A34A]',
+    'right-[11%] top-[50%] bg-[#5B2DF3]',
+  ]
 
   return (
-    <Card variant="feature" spotlight>
-      <Card.Body>
-        <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-start">
-          <div>
-            <Badge variant="recommended">{t('simulator.recommended')}</Badge>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-fg">{getPlanName(plan, t)}</h2>
-            <p className="mt-1 text-fg-muted">{t(`subscription.recommendation.${profile}.summary`)}</p>
-            <ul className="mt-5 flex flex-col gap-2">
-              {reasonsList.map((r, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-fg">
-                  <Check className="h-4 w-4 text-accent shrink-0 mt-0.5" aria-hidden="true" />
-                  <span>{r}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-xl bg-surface border border-border-default p-5 min-w-[180px]">
-            <p className="font-mono text-[10px] tracking-widest uppercase text-fg-muted">
-              {t('simulator.perYear')}
+    <EpisodeFrame>
+      <EpisodeProgress
+        label={t('subscription.validatedIntro.episodeProgress')}
+        episode={4}
+        total={5}
+        barClassName="lg:w-56 xl:w-64"
+      />
+
+      <div className="relative mt-10 flex flex-col items-center text-center lg:mt-8">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-40" aria-hidden="true">
+          {confetti.map((classes) => (
+            <span key={classes} className={cn('absolute h-3 w-3 rotate-45 rounded-[2px]', classes)} />
+          ))}
+        </div>
+        <div className="grid h-24 w-24 place-items-center rounded-full bg-[#096AF3] shadow-[0_18px_40px_rgba(9,106,243,0.28)] sm:h-28 sm:w-28 lg:h-24 lg:w-24 xl:h-28 xl:w-28">
+          <Check className="h-14 w-14 text-white sm:h-16 sm:w-16 lg:h-14 lg:w-14 xl:h-16 xl:w-16" strokeWidth={3.2} aria-hidden="true" />
+        </div>
+      </div>
+
+      <p className="mt-9 text-center text-lg font-black leading-tight sm:text-xl lg:mt-7 lg:text-lg xl:text-xl">
+        {t('subscription.validatedIntro.goodNews')}
+      </p>
+      <h2 className="mt-6 text-center text-3xl font-black leading-tight tracking-normal sm:text-4xl lg:mt-5 lg:text-3xl xl:text-4xl">
+        {t('subscription.validatedIntro.phoneTitle')}
+      </h2>
+
+      <div className="mt-8 rounded-2xl border border-slate-200 bg-white px-5 py-5 text-left shadow-[0_8px_24px_rgba(7,5,37,0.08)] sm:px-6 sm:py-6 lg:mt-7 lg:px-6 lg:py-5 xl:px-7 xl:py-6">
+        <div className="flex items-center gap-4">
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#096AF3]/8 text-[#096AF3] sm:h-14 sm:w-14 lg:h-12 lg:w-12 xl:h-14 xl:w-14">
+            <WalletCards className="h-8 w-8 sm:h-9 sm:w-9 lg:h-8 lg:w-8 xl:h-9 xl:w-9" strokeWidth={2.1} aria-hidden="true" />
+          </span>
+          <div className="min-w-0">
+            <h3 className="text-lg font-black uppercase leading-tight tracking-normal text-[#096AF3] sm:text-xl lg:text-lg xl:text-xl">
+              {getPlanName(plan, t)}
+            </h3>
+            <p className="mt-1 text-lg font-black leading-tight text-[#070525] sm:text-xl lg:text-lg xl:text-xl">
+              {priceLabel}
             </p>
-            <p className="mt-1 text-3xl font-semibold tracking-tight text-fg tabular-nums">
-              {plan.yearlyPrice !== null ? formatCurrency(plan.yearlyPrice, locale) : '—'}
-            </p>
-            {plan.monthlyPrice !== null && (
-              <p className="mt-1 text-sm text-fg-muted">
-                {formatCurrency(plan.monthlyPrice, locale)}{t('simulator.perMonth')}
-              </p>
-            )}
           </div>
         </div>
-      </Card.Body>
-    </Card>
+
+        <p className="mt-5 border-t border-slate-200 pt-4 text-sm font-extrabold text-slate-400 sm:text-base lg:text-sm xl:text-base">
+          {t('subscription.validatedIntro.validFrom', { date: startDateStr })}
+        </p>
+      </div>
+
+      <EpisodePrimaryButton onClick={onContinue} className="lg:mt-7 xl:mt-8">
+        {t('subscription.validatedIntro.continue')}
+      </EpisodePrimaryButton>
+    </EpisodeFrame>
   )
 }
 

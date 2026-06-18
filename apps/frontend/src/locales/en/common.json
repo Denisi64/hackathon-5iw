@@ -174,8 +174,8 @@
         "description": "Lucas adds his supporting document in a few clicks."
       },
       "s4": {
-        "title": "Our recommendation",
-        "description": "Here is the pass we suggest based on your profile."
+        "title": "I start my season",
+        "description": "Everything is approved! Lucas can enjoy his pass."
       },
       "s5": {
         "title": "Your documents",
@@ -218,64 +218,6 @@
       "amethyst": {
         "title": "Person with a disability",
         "description": "Person with disability (MDPH) — fare based on your department."
-      }
-    },
-    "recommendation": {
-      "student": {
-        "summary": "Imagine R Student grants you the full Île-de-France network during the school year.",
-        "reasons": [
-          "Scholarship fare applied automatically",
-          "All zones included",
-          "Annual renewal, no action needed"
-        ]
-      },
-      "worker": {
-        "summary": "Navigo Yearly remains the best deal for daily commuting.",
-        "reasons": [
-          "50% refunded by your employer",
-          "Savings vs single tickets",
-          "Full IDF network included"
-        ]
-      },
-      "senior": {
-        "summary": "Senior fare brings a meaningful discount from age 62.",
-        "reasons": [
-          "Automatic age verification via ID",
-          "Estimated savings €270/year",
-          "Seamless switch, no service interruption"
-        ]
-      },
-      "jobseeker": {
-        "summary": "Solidarity Transport Pricing adapts the fare to your resources.",
-        "reasons": [
-          "Automated CAF rights check",
-          "No documents to upload",
-          "Easy quarterly renewal"
-        ]
-      },
-      "parent": {
-        "summary": "One place to manage all your kids' subscriptions.",
-        "reasons": [
-          "Imagine R Pupil for each child",
-          "A single family record covers all",
-          "Automatic reminders before school year"
-        ]
-      },
-      "scholar": {
-        "summary": "Imagine R Pupil covers the full school year for ages 11-25.",
-        "reasons": [
-          "Full IDF network included",
-          "Discounted scholarship rate available",
-          "Automatic renewal each year"
-        ]
-      },
-      "amethyst": {
-        "summary": "The Améthyste fare adapts to your department of residence and your MDPH status.",
-        "reasons": [
-          "Fare varies by department",
-          "Automatic check via MDPH notification",
-          "Annual renewal with no paperwork"
-        ]
       }
     },
     "documents": {
@@ -387,6 +329,13 @@
       "formats": "Accepted formats: .pdf, .jpg, .png",
       "security": "Your data is secure and confidential.",
       "continue": "Continue"
+    },
+    "validatedIntro": {
+      "episodeProgress": "Episode 4 of 5",
+      "goodNews": "Good news, Lucas!",
+      "phoneTitle": "Your pass is approved.",
+      "validFrom": "Valid from {{date}}",
+      "continue": "View my subscription"
     }
   },
   "auth": {

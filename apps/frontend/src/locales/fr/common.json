@@ -174,8 +174,8 @@
         "description": "Lucas ajoute son justificatif en quelques clics."
       },
       "s4": {
-        "title": "Notre recommandation",
-        "description": "Voici le forfait que nous vous suggérons en fonction de votre profil."
+        "title": "Je commence ma saison",
+        "description": "Tout est validé ! Lucas peut profiter de son abonnement."
       },
       "s5": {
         "title": "Vos justificatifs",
@@ -218,64 +218,6 @@
       "amethyst": {
         "title": "Personne en situation de handicap",
         "description": "Personne en situation de handicap (MDPH) — tarif selon votre département."
-      }
-    },
-    "recommendation": {
-      "student": {
-        "summary": "Le tarif étudiant Imagine R donne accès à toute l'Île-de-France pendant l'année school.",
-        "reasons": [
-          "Tarif boursier appliqué automatiquement",
-          "Toutes zones incluses",
-          "Renouvellement annuel sans intervention"
-        ]
-      },
-      "worker": {
-        "summary": "Le Navigo Annuel reste l'abonnement le plus avantageux pour un usage quotidien.",
-        "reasons": [
-          "50% remboursé par votre employeur",
-          "Économies vs ticket à l'unité",
-          "Tout réseau IDF inclus"
-        ]
-      },
-      "senior": {
-        "summary": "Le tarif Senior offre une réduction significative à partir de 62 ans.",
-        "reasons": [
-          "Vérification d'âge automatique via pièce d'identité",
-          "Économie estimée 270 €/an",
-          "Bascule sans interruption de service"
-        ]
-      },
-      "jobseeker": {
-        "summary": "La Tarification Solidarité Transport adapte le prix à vos ressources.",
-        "reasons": [
-          "Vérification automatique des droits CAF",
-          "Aucun justificatif à uploader",
-          "Renouvellement trimestriel facilité"
-        ]
-      },
-      "parent": {
-        "summary": "Un seul espace pour gérer tous les abonnements de vos enfants.",
-        "reasons": [
-          "Imagine R Scolaire pour chaque enfant",
-          "Un seul livret de famille suffit",
-          "Rappels automatiques avant la rentrée"
-        ]
-      },
-      "scholar": {
-        "summary": "Imagine R Scolaire couvre toute l'année school pour les 11-25 ans.",
-        "reasons": [
-          "Tout réseau IDF inclus",
-          "Tarif réduit boursier disponible",
-          "Renouvellement automatique chaque rentrée"
-        ]
-      },
-      "amethyst": {
-        "summary": "Le forfait Améthyste s'adapte à votre département de résidence et à votre statut MDPH.",
-        "reasons": [
-          "Tarif variable selon votre département",
-          "Vérification automatique via la notification MDPH",
-          "Renouvellement annuel sans démarche"
-        ]
       }
     },
     "documents": {
@@ -387,6 +329,13 @@
       "formats": "Formats acceptés : .pdf, .jpg, .png",
       "security": "Vos données sont sécurisées et confidentielles.",
       "continue": "Continuer"
+    },
+    "validatedIntro": {
+      "episodeProgress": "Épisode 4 sur 5",
+      "goodNews": "Bonne nouvelle Lucas !",
+      "phoneTitle": "Votre forfait est validé.",
+      "validFrom": "Valable à partir du {{date}}",
+      "continue": "Voir mon abonnement"
     }
   },
   "auth": {
