@@ -1,0 +1,162 @@
+name: Mobile builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Platform to build
+        required: true
+        default: both
+        type: choice
+        options:
+          - both
+          - android
+          - ios
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-build-${{ github.ref }}-${{ github.event.inputs.platform }}
+  cancel-in-progress: false
+
+jobs:
+  android:
+    name: Android APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    if: ${{ github.event.inputs.platform == 'both' || github.event.inputs.platform == 'android' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.33.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck mobile
+        run: pnpm --filter @comutitres/mobile typecheck
+
+      - name: Generate Android native project
+        run: pnpm --filter @comutitres/mobile prebuild:android
+
+      - name: Build debug APK
+        working-directory: apps/mobile/android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Collect APK
+        run: |
+          mkdir -p reports/mobile/android
+          cp apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk reports/mobile/android/comutitres-debug.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v6
+        with:
+          name: comutitres-android-apk
+          path: reports/mobile/android/comutitres-debug.apk
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Summary
+        run: |
+          {
+            echo "## Android APK"
+            echo ""
+            echo "Artifact: \`comutitres-android-apk\`"
+            echo ""
+            echo "This is a debug APK for testing, not a Play Store release build."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  ios:
+    name: iOS simulator app
+    runs-on: macos-15
+    timeout-minutes: 60
+    if: ${{ github.event.inputs.platform == 'both' || github.event.inputs.platform == 'ios' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.33.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck mobile
+        run: pnpm --filter @comutitres/mobile typecheck
+
+      - name: Generate iOS native project
+        run: pnpm --filter @comutitres/mobile prebuild:ios
+
+      - name: Install pods
+        working-directory: apps/mobile/ios
+        run: pod install
+
+      - name: Build iOS simulator app
+        working-directory: apps/mobile/ios
+        run: |
+          set -euo pipefail
+          workspace="$(ls *.xcworkspace | head -1)"
+          scheme="$(basename "$workspace" .xcworkspace)"
+          xcodebuild \
+            -workspace "$workspace" \
+            -scheme "$scheme" \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Collect simulator app
+        run: |
+          set -euo pipefail
+          mkdir -p reports/mobile/ios
+          app_path="$(find apps/mobile/ios/build/Build/Products/Debug-iphonesimulator -maxdepth 1 -name '*.app' | head -1)"
+          test -n "$app_path"
+          ditto -c -k --sequesterRsrc --keepParent "$app_path" reports/mobile/ios/comutitres-ios-simulator-app.zip
+
+      - name: Upload iOS simulator app
+        uses: actions/upload-artifact@v6
+        with:
+          name: comutitres-ios-simulator-app
+          path: reports/mobile/ios/comutitres-ios-simulator-app.zip
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Summary
+        run: |
+          {
+            echo "## iOS simulator app"
+            echo ""
+            echo "Artifact: \`comutitres-ios-simulator-app\`"
+            echo ""
+            echo "This is an unsigned simulator build. A real installable .ipa requires Apple signing credentials."
+          } >> "$GITHUB_STEP_SUMMARY"
