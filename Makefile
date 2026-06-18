@@ -20,7 +20,7 @@ help:
 	@echo "  make docker-build Builder les images Docker"
 	@echo "  make docker-up    Lancer tous les services Docker"
 	@echo "  make docker-up-bake Lancer Docker avec BuildKit Bake"
-	@echo "  make docker-down  Arreter Docker"
+	@echo "  make docker-down  Arreter Docker et sipprimer les containers"
 	@echo "  make db-migrate   Appliquer le schema BDD"
 	@echo "  make db-seed      Ajouter les donnees de test"
 	@echo "  make test-chatbot Tester le endpoint IA chat"
@@ -61,7 +61,7 @@ start-llm:
 	@echo "  Ollama: http://localhost:11434"
 
 stop:
-	docker compose down
+	docker compose stop
 
 refresh-deps:
 	docker compose rm -sf backend frontend

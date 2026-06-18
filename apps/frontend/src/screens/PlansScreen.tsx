@@ -118,7 +118,7 @@ export default function PlansScreen() {
                     src={plan.image}
                     alt=""
                     aria-hidden="true"
-                    className="absolute right-0 top-0 h-24 w-auto max-w-[72%] object-contain object-right-top"
+                    className="absolute top-0 left-1/2 -translate-x-1/2 h-24 w-auto max-w-[72%] object-contain object-right-top"
                   />
                 )}
               </div>
