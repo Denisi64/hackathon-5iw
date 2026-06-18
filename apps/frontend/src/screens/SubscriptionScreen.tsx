@@ -13,7 +13,7 @@ import { Badge } from '../components/ui/Badge'
 import { Orb } from '../components/ui/Orb'
 import { Slider } from '../components/ui/Slider'
 import { PROFILES, PROFILE_BY_SLUG, type ProfileSlug } from '../data/subscriptionFlows'
-import { PLANS } from '../utils/faresData'
+import { PLANS, PLAN_ID_TO_OFFER_ID } from '../utils/faresData'
 import { formatCurrency } from '../lib/formatters'
 import { useLocale } from '../hooks/useLocale'
 import { cn } from '../lib/cn'
@@ -120,7 +120,8 @@ export default function SubscriptionScreen() {
       if (user && !subscriptionId) {
         setIsLoading(true)
         try {
-          const sub = await subscriptionsService.create({ offerId: plan.id })
+          const offerId = PLAN_ID_TO_OFFER_ID[plan.id] ?? plan.id
+          const sub = await subscriptionsService.create({ offerId })
           setSubscriptionId(sub.id)
         } catch {
           setApiError(t('subscription.errors.createFailed'))

@@ -13,6 +13,8 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module'
 import { DocumentsModule } from './documents/documents.module'
 import { AiModule } from './ai/ai.module'
 import { PaymentsModule } from './payments/payments.module'
+import { FeedModule } from './feed/feed.module'
+import { TripsModule } from './trips/trips.module'
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { PaymentsModule } from './payments/payments.module'
     DocumentsModule,
     AiModule,
     PaymentsModule,
+    FeedModule,
+    TripsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

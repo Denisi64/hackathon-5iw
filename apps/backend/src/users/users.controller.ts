@@ -52,4 +52,24 @@ export class UsersController {
   ) {
     return this.usersService.saveConsent(user.sub, body.type, body.accepted)
   }
+
+  @Get('me/interests')
+  getInterests(@CurrentUser() user: JwtPayload) {
+    return this.usersService.getInterests(user.sub)
+  }
+
+  @Patch('me/interests')
+  updateInterests(@CurrentUser() user: JwtPayload, @Body() body: { interests: string[] }) {
+    return this.usersService.updateInterests(user.sub, body.interests)
+  }
+
+  @Get('me/gamification')
+  getGamification(@CurrentUser() user: JwtPayload) {
+    return this.usersService.getGamification(user.sub)
+  }
+
+  @Get('leaderboard')
+  getLeaderboard(@CurrentUser() user: JwtPayload) {
+    return this.usersService.getLeaderboard(user.sub)
+  }
 }

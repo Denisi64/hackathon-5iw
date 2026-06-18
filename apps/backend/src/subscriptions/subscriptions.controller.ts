@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import type { JwtPayload } from '../common/types/shared'
@@ -34,6 +34,12 @@ export class SubscriptionsController {
   @Post(':id/renew')
   renew(@CurrentUser() user: JwtPayload, @Param('id') id: string) {
     return this.subscriptionsService.renew(id, user.sub)
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  cancel(@CurrentUser() user: JwtPayload, @Param('id') id: string) {
+    return this.subscriptionsService.cancel(id, user.sub)
   }
 
   @Post(':id/compute-fraud-score')

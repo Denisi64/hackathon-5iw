@@ -96,11 +96,17 @@ export class AuthService {
 
   private buildTokens(user: typeof users.$inferSelect) {
     const payload: JwtPayload = { sub: user.id, email: user.email, role: user.role }
-    const access_token = this.jwtService.sign(payload)
-    const refresh_token = this.jwtService.sign(payload, {
+    const accessToken = this.jwtService.sign(payload)
+    const refreshToken = this.jwtService.sign(payload, {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET') ?? this.configService.get<string>('JWT_SECRET') ?? 'changeme',
       expiresIn: '7d',
     })
-    return { access_token, refresh_token }
+    return {
+      accessToken,
+      refreshToken,
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, profile: user.profile },
+    }
   }
 }
