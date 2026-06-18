@@ -7,7 +7,6 @@ import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Chip } from '../components/ui/Chip'
 import { useLocale } from '../hooks/useLocale'
-import { formatCurrency } from '../lib/formatters'
 import type { UserProfile } from '../types/domain'
 import { PLANS } from '../utils/faresData'
 import {
@@ -15,8 +14,23 @@ import {
   getPlanName,
   getPlanPriceLabel,
   getPlanYearlyLabel,
-  getProfileLabel,
 } from '../utils/planDisplay'
+
+/** Ruban officiel par forfait — calqué sur les visuels IDFM. */
+const RIBBON_BY_PLAN: Record<string, 'online' | 'recharge' | 'app' | 'achat'> = {
+  navigo_yearly: 'online',
+  imagine_r_student: 'online',
+  imagine_r_school: 'online',
+  imagine_r_junior: 'online',
+  navigo_month: 'recharge',
+  navigo_week: 'recharge',
+  navigo_day: 'recharge',
+  liberty_plus: 'app',
+  ticket_metro: 'achat',
+  ticket_bus_tram: 'achat',
+  ticket_airport: 'achat',
+  ticket_onboard: 'achat',
+}
 
 const FILTERS: Array<{ value: 'all' | UserProfile; labelKey: string }> = [
   { value: 'all', labelKey: 'plans.list.filters.all' },
@@ -81,61 +95,51 @@ export default function PlansScreen() {
       </section>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3" aria-label={t('plans.list.resultsAria')}>
-        {plans.map((plan) => (
-          <Card key={plan.id} hover spotlight className="p-0">
-            <div className="relative h-36 overflow-hidden bg-gradient-to-br from-accent/12 via-surface to-bg-elevated">
-              {plan.image ? (
-                <img src={plan.image} alt="" className="h-full w-full object-cover" aria-hidden="true" />
-              ) : (
-                <div className="grid h-full place-items-center text-accent">
-                  <Ticket className="h-16 w-16" aria-hidden="true" />
-                </div>
+        {plans.map((plan) => {
+          const ribbon = RIBBON_BY_PLAN[plan.id]
+          return (
+            <button
+              key={plan.id}
+              type="button"
+              onClick={() => navigate(`/forfaits/${plan.id}`)}
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-border-default bg-bg-elevated text-center shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-base"
+            >
+              {/* Ruban officiel — haut-gauche */}
+              {ribbon && (
+                <span className="absolute left-0 top-5 z-10 rounded-r-md bg-amber-300 py-1 pl-3 pr-3 text-[10px] font-bold uppercase tracking-wide text-slate-900 shadow-sm">
+                  {t(`plans.ribbon.${ribbon}`)}
+                </span>
               )}
-              <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-                <Badge variant="info">{t(`plans.type.${plan.type}`)}</Badge>
-                {plan.employerRefund && <Badge variant="success">{t('plans.employerBadge')}</Badge>}
-              </div>
-            </div>
 
-            <div className="flex flex-1 flex-col p-6">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h2 className="text-xl font-semibold tracking-tight text-fg">{getPlanName(plan, t)}</h2>
-                  <p className="mt-2 text-sm text-fg-muted">{getPlanDescription(plan, t)}</p>
-                </div>
-              </div>
-
-              <div className="mt-5">
-                <p className="text-2xl font-semibold tracking-tight text-fg">
-                  {getPlanPriceLabel(plan, locale, t)}
-                </p>
-                <p className="mt-1 text-sm text-fg-muted">{getPlanYearlyLabel(plan, locale, t)}</p>
-                {plan.yearlyPrice !== null && plan.yearlyPrice > 0 && plan.monthlyPrice !== null && (
-                  <p className="mt-1 text-xs text-fg-subtle">
-                    {t('plans.list.yearlyEquivalent', { amount: formatCurrency(plan.yearlyPrice, locale) })}
-                  </p>
+              {/* Visuel officiel du titre — en angle, haut-droite */}
+              <div className="relative h-24 w-full">
+                {plan.image && (
+                  <img
+                    src={plan.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute right-0 top-0 h-24 w-auto max-w-[72%] object-contain object-right-top"
+                  />
                 )}
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-2">
-                {plan.profiles.slice(0, 3).map((profile) => (
-                  <Badge key={profile} variant="neutral">
-                    {getProfileLabel(profile, t)}
-                  </Badge>
-                ))}
-              </div>
+              {/* Contenu centré */}
+              <div className="flex flex-1 flex-col items-center gap-2 px-6 pb-7">
+                <h2 className="text-lg font-semibold tracking-tight text-fg">{getPlanName(plan, t)}</h2>
+                <p className="max-w-[34ch] text-sm leading-snug text-fg-muted">{getPlanDescription(plan, t)}</p>
 
-              <Button
-                className="mt-6"
-                fullWidth
-                rightIcon={<ArrowRight className="h-4 w-4" aria-hidden="true" />}
-                onClick={() => navigate(`/forfaits/${plan.id}`)}
-              >
-                {t('plans.list.viewDetail')}
-              </Button>
-            </div>
-          </Card>
-        ))}
+                <div className="mt-4">
+                  <p className="text-2xl font-semibold tracking-tight text-fg">{getPlanPriceLabel(plan, locale, t)}</p>
+                  <p className="mt-1 text-xs text-fg-subtle">{getPlanYearlyLabel(plan, locale, t)}</p>
+                </div>
+
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-[gap] group-hover:gap-2.5">
+                  {t('plans.list.viewDetail')} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </span>
+              </div>
+            </button>
+          )
+        })}
       </section>
     </div>
   )

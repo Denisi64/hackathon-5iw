@@ -22,6 +22,21 @@ make start
 
 Ouvrir http://localhost:5173.
 
+BDD via Pgweb : http://localhost:8081.
+
+Assistant : http://localhost:5173/assistant.
+
+```bash
+make test-chatbot
+```
+
+Avec le petit LLM local gratuit :
+
+```bash
+make start-llm
+```
+
+
 ```bash
 make stop
 ```
@@ -128,6 +143,42 @@ Statuts couverts : `draft`, `pending_documents`, `pending_payment`, `active`, `s
 
 Niveaux de fraude : `low` (score 0), `medium` (31), `high` (69)
 
+## IA locale
+
+Par defaut, l'assistant utilise Ollama avec `tinyllama`, un petit modele local gratuit.
+
+Lancer le projet avec le modele :
+
+```bash
+make start-llm
+```
+
+Tester l'endpoint chatbot :
+
+```bash
+make test-chatbot
+```
+
+Si Ollama n'est pas lance ou que le modele n'est pas encore pret, le backend retombe sur le mode demo pour ne pas bloquer le projet.
+
+Configuration :
+
+```env
+AI_PROVIDER=ollama
+OLLAMA_BASE_URL=http://ollama:11434
+OLLAMA_MODEL=tinyllama
+```
+
+Pour revenir au mode demo sans vrai modele :
+
+```env
+AI_PROVIDER=mock
+```
+
+```env
+AI_PROVIDER=mock
+```
+
 ## Commandes utiles
 
 ```bash
@@ -135,6 +186,7 @@ make help
 make build
 make test
 make lint
+make test-chatbot
 make clean
 ```
 
