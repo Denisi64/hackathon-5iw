@@ -171,28 +171,32 @@
     "kicker": "Passo {{step}} / {{total}}",
     "steps": {
       "s1": {
-        "title": "Qual è la tua situazione?",
-        "description": "Scegli il profilo che ti rappresenta meglio. Adattiamo il percorso di conseguenza."
+        "title": "Racconto la mia situazione",
+        "description": "Lucas inizia un nuovo capitolo della sua vita: gli studi."
       },
       "s2": {
-        "title": "Raccontaci un po' di te",
-        "description": "Alcuni dettagli per personalizzare la raccomandazione."
+        "title": "Qual è il tuo profilo?",
+        "description": "Seleziona la situazione più adatta a te. Adattiamo il percorso di conseguenza."
       },
       "s3": {
-        "title": "La nostra raccomandazione",
-        "description": "Ecco l'abbonamento che ti suggeriamo in base al tuo profilo."
+        "title": "Raccontaci di te",
+        "description": "Alcuni dettagli per personalizzare la raccomandazione."
       },
       "s4": {
-        "title": "I tuoi documenti",
-        "description": "Carica i tuoi documenti o accedi ai servizi ufficiali. Verifica automatica."
+        "title": "La nostra raccomandazione",
+        "description": "Ecco l’abbonamento che ti suggeriamo in base al tuo profilo."
       },
       "s5": {
-        "title": "Crea il tuo account",
-        "description": "Alcune informazioni per finalizzare l'iscrizione in tutta sicurezza."
+        "title": "I tuoi documenti",
+        "description": "Carica i documenti o connettiti ai servizi ufficiali. Verifica automatica."
       },
       "s6": {
+        "title": "Crea il tuo account",
+        "description": "Alcune informazioni per finalizzare la sottoscrizione in sicurezza."
+      },
+      "s7": {
         "title": "Benvenuto a bordo",
-        "description": "Tutto è verificato. Pronto a partire."
+        "description": "Tutto è stato convalidato. Preparati a iniziare."
       }
     },
     "profiles": {
@@ -368,6 +372,29 @@
       "uploadFailed": "Caricamento documento fallito",
       "createFailed": "Impossibile creare la sottoscrizione",
       "paymentFailed": "Errore di pagamento"
+    },
+    "kickerShort": "EPISODIO {{step}}",
+    "accountIntro": {
+      "phoneTitle": "Benvenuto!",
+      "phoneSubtitle": "Crea il tuo account per continuare.",
+      "benefits": {
+        "features": "Accedi a tutte le funzionalità",
+        "progress": "Segui i tuoi progressi",
+        "personalized": "Goditi un’esperienza personalizzata"
+      },
+      "create": "Crea il mio account",
+      "login": "Ho già un account"
+    },
+    "situationIntro": {
+      "episodeProgress": "Episodio 1 di 5",
+      "phoneTitle": "Parlaci un po' di te.",
+      "ageQuestion": "Quanti anni hai?",
+      "studentQuestion": "Sei studente?",
+      "scholarshipQuestion": "Hai una borsa di studio?",
+      "locationQuestion": "Dove ti sposti più spesso?",
+      "defaultLocation": "Tolosa e dintorni",
+      "yearsUnit": "anni",
+      "continue": "Continua"
     }
   },
   "auth": {

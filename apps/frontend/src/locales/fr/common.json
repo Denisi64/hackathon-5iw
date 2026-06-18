@@ -171,26 +171,30 @@
     "kicker": "Étape {{step}} / {{total}}",
     "steps": {
       "s1": {
+        "title": "Je raconte ma situation",
+        "description": "Lucas commence un nouvel épisode de sa vie : ses études."
+      },
+      "s2": {
         "title": "Quel est votre profil ?",
         "description": "Sélectionnez la situation qui vous correspond le mieux. Nous adaptons le parcours en conséquence."
       },
-      "s2": {
+      "s3": {
         "title": "Parlez-nous de vous",
         "description": "Quelques précisions pour personnaliser la recommandation."
       },
-      "s3": {
+      "s4": {
         "title": "Notre recommandation",
         "description": "Voici le forfait que nous vous suggérons en fonction de votre profil."
       },
-      "s4": {
+      "s5": {
         "title": "Vos justificatifs",
         "description": "Glissez vos documents ou connectez-vous aux services officiels. Vérification automatique."
       },
-      "s5": {
+      "s6": {
         "title": "Créez votre compte",
         "description": "Quelques informations pour finaliser votre souscription en toute sécurité."
       },
-      "s6": {
+      "s7": {
         "title": "Bienvenue à bord",
         "description": "Tout est validé. Préparez-vous à embarquer."
       }
@@ -368,6 +372,29 @@
       "uploadFailed": "Échec de l'envoi du document",
       "createFailed": "Impossible de créer la souscription",
       "paymentFailed": "Erreur lors du paiement"
+    },
+    "kickerShort": "ÉPISODE {{step}}",
+    "accountIntro": {
+      "phoneTitle": "Bienvenue !",
+      "phoneSubtitle": "Créez votre compte pour continuer.",
+      "benefits": {
+        "features": "Accédez à toutes les fonctionnalités",
+        "progress": "Suivez votre progression",
+        "personalized": "Profitez d’une expérience personnalisée"
+      },
+      "create": "Créer mon compte",
+      "login": "J’ai déjà un compte"
+    },
+    "situationIntro": {
+      "episodeProgress": "Épisode 1 sur 5",
+      "phoneTitle": "Parlez-nous un peu de vous.",
+      "ageQuestion": "Quel âge avez-vous ?",
+      "studentQuestion": "Êtes-vous étudiant ?",
+      "scholarshipQuestion": "Êtes-vous boursier ?",
+      "locationQuestion": "Où vous déplacez-vous le plus souvent ?",
+      "defaultLocation": "Toulouse et alentours",
+      "yearsUnit": "ans",
+      "continue": "Continuer"
     }
   },
   "auth": {

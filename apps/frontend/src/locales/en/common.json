@@ -171,28 +171,32 @@
     "kicker": "Step {{step}} / {{total}}",
     "steps": {
       "s1": {
-        "title": "What's your situation?",
-        "description": "Pick the profile that fits you best. We adapt the journey accordingly."
+        "title": "I describe my situation",
+        "description": "Lucas begins a new chapter of his life: his studies."
       },
       "s2": {
-        "title": "Tell us a bit more",
-        "description": "A few details to tailor the recommendation."
+        "title": "What is your profile?",
+        "description": "Select the situation that fits you best. We adapt the journey accordingly."
       },
       "s3": {
-        "title": "Our recommendation",
-        "description": "Here is the plan we suggest for your profile."
+        "title": "Tell us about yourself",
+        "description": "A few details to personalize the recommendation."
       },
       "s4": {
-        "title": "Your documents",
-        "description": "Drop your files or connect to official services. Automated verification."
+        "title": "Our recommendation",
+        "description": "Here is the pass we suggest based on your profile."
       },
       "s5": {
+        "title": "Your documents",
+        "description": "Upload your documents or connect to official services. Automatic verification."
+      },
+      "s6": {
         "title": "Create your account",
         "description": "A few details to finalize your subscription securely."
       },
-      "s6": {
+      "s7": {
         "title": "Welcome aboard",
-        "description": "Everything is verified. Time to start your journey."
+        "description": "Everything is validated. Get ready to start."
       }
     },
     "profiles": {
@@ -368,6 +372,29 @@
       "uploadFailed": "Document upload failed",
       "createFailed": "Could not create subscription",
       "paymentFailed": "Payment error"
+    },
+    "kickerShort": "EPISODE {{step}}",
+    "accountIntro": {
+      "phoneTitle": "Welcome!",
+      "phoneSubtitle": "Create your account to continue.",
+      "benefits": {
+        "features": "Access all features",
+        "progress": "Track your progress",
+        "personalized": "Enjoy a personalized experience"
+      },
+      "create": "Create my account",
+      "login": "I already have an account"
+    },
+    "situationIntro": {
+      "episodeProgress": "Episode 1 of 5",
+      "phoneTitle": "Tell us a bit about yourself.",
+      "ageQuestion": "How old are you?",
+      "studentQuestion": "Are you a student?",
+      "scholarshipQuestion": "Do you have a scholarship?",
+      "locationQuestion": "Where do you travel most often?",
+      "defaultLocation": "Toulouse and nearby areas",
+      "yearsUnit": "years old",
+      "continue": "Continue"
     }
   },
   "auth": {

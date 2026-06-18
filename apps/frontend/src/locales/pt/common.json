@@ -171,28 +171,32 @@
     "kicker": "Passo {{step}} / {{total}}",
     "steps": {
       "s1": {
-        "title": "Qual é o seu perfil?",
-        "description": "Escolha o perfil que melhor corresponde à sua situação. Adaptamos o percurso."
+        "title": "Conto a minha situação",
+        "description": "Lucas começa um novo capítulo da vida: os seus estudos."
       },
       "s2": {
-        "title": "Conte-nos mais",
-        "description": "Alguns detalhes para personalizar a recomendação."
+        "title": "Qual é o seu perfil?",
+        "description": "Selecione a situação que mais combina com você. Adaptamos o percurso de acordo."
       },
       "s3": {
-        "title": "A nossa recomendação",
-        "description": "Eis o passe que sugerimos para o seu perfil."
+        "title": "Conte-nos sobre você",
+        "description": "Alguns detalhes para personalizar a recomendação."
       },
       "s4": {
-        "title": "Os seus comprovativos",
-        "description": "Carregue os seus documentos ou ligue-se aos serviços oficiais. Verificação automática."
+        "title": "Nossa recomendação",
+        "description": "Aqui está o passe que sugerimos com base no seu perfil."
       },
       "s5": {
-        "title": "Crie a sua conta",
-        "description": "Algumas informações para finalizar a subscrição em segurança."
+        "title": "Seus documentos",
+        "description": "Envie seus documentos ou conecte-se aos serviços oficiais. Verificação automática."
       },
       "s6": {
+        "title": "Crie sua conta",
+        "description": "Algumas informações para finalizar sua assinatura com segurança."
+      },
+      "s7": {
         "title": "Bem-vindo a bordo",
-        "description": "Tudo verificado. Prepare-se para começar."
+        "description": "Tudo foi validado. Prepare-se para começar."
       }
     },
     "profiles": {
@@ -368,6 +372,29 @@
       "uploadFailed": "Falha no envio do documento",
       "createFailed": "Não foi possível criar a subscrição",
       "paymentFailed": "Erro no pagamento"
+    },
+    "kickerShort": "EPISÓDIO {{step}}",
+    "accountIntro": {
+      "phoneTitle": "Bem-vindo!",
+      "phoneSubtitle": "Crie sua conta para continuar.",
+      "benefits": {
+        "features": "Acesse todos os recursos",
+        "progress": "Acompanhe seu progresso",
+        "personalized": "Aproveite uma experiência personalizada"
+      },
+      "create": "Criar minha conta",
+      "login": "Já tenho uma conta"
+    },
+    "situationIntro": {
+      "episodeProgress": "Episódio 1 de 5",
+      "phoneTitle": "Conte-nos um pouco sobre você.",
+      "ageQuestion": "Quantos anos você tem?",
+      "studentQuestion": "Você é estudante?",
+      "scholarshipQuestion": "Você tem bolsa?",
+      "locationQuestion": "Onde você se desloca com mais frequência?",
+      "defaultLocation": "Toulouse e arredores",
+      "yearsUnit": "anos",
+      "continue": "Continuar"
     }
   },
   "auth": {

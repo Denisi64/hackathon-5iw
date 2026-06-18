@@ -171,28 +171,32 @@
     "kicker": "Paso {{step}} / {{total}}",
     "steps": {
       "s1": {
-        "title": "¿Cuál es tu situación?",
-        "description": "Elige el perfil que mejor te corresponde. Adaptamos el recorrido en consecuencia."
+        "title": "Cuento mi situación",
+        "description": "Lucas comienza un nuevo capítulo de su vida: sus estudios."
       },
       "s2": {
-        "title": "Cuéntanos un poco más",
-        "description": "Algunos detalles para personalizar la recomendación."
+        "title": "¿Cuál es su perfil?",
+        "description": "Seleccione la situación que mejor le corresponde. Adaptamos el recorrido en consecuencia."
       },
       "s3": {
-        "title": "Nuestra recomendación",
-        "description": "Este es el abono que te sugerimos según tu perfil."
+        "title": "Cuéntenos sobre usted",
+        "description": "Algunos detalles para personalizar la recomendación."
       },
       "s4": {
-        "title": "Tus justificantes",
-        "description": "Sube tus documentos o conéctate a los servicios oficiales. Verificación automática."
+        "title": "Nuestra recomendación",
+        "description": "Aquí está el abono que le sugerimos según su perfil."
       },
       "s5": {
-        "title": "Crea tu cuenta",
-        "description": "Algunos datos para finalizar tu suscripción de forma segura."
+        "title": "Sus justificantes",
+        "description": "Suba sus documentos o conéctese a servicios oficiales. Verificación automática."
       },
       "s6": {
+        "title": "Cree su cuenta",
+        "description": "Algunos datos para finalizar su suscripción con seguridad."
+      },
+      "s7": {
         "title": "Bienvenido a bordo",
-        "description": "Todo está verificado. Prepárate para empezar."
+        "description": "Todo está validado. Prepárese para empezar."
       }
     },
     "profiles": {
@@ -368,6 +372,29 @@
       "uploadFailed": "Error al subir el documento",
       "createFailed": "No se pudo crear la suscripción",
       "paymentFailed": "Error en el pago"
+    },
+    "kickerShort": "EPISODIO {{step}}",
+    "accountIntro": {
+      "phoneTitle": "¡Bienvenido!",
+      "phoneSubtitle": "Cree su cuenta para continuar.",
+      "benefits": {
+        "features": "Acceda a todas las funciones",
+        "progress": "Siga su progreso",
+        "personalized": "Disfrute de una experiencia personalizada"
+      },
+      "create": "Crear mi cuenta",
+      "login": "Ya tengo una cuenta"
+    },
+    "situationIntro": {
+      "episodeProgress": "Episodio 1 de 5",
+      "phoneTitle": "Cuéntenos un poco sobre usted.",
+      "ageQuestion": "¿Qué edad tiene?",
+      "studentQuestion": "¿Es estudiante?",
+      "scholarshipQuestion": "¿Tiene beca?",
+      "locationQuestion": "¿Dónde se desplaza con más frecuencia?",
+      "defaultLocation": "Toulouse y alrededores",
+      "yearsUnit": "años",
+      "continue": "Continuar"
     }
   },
   "auth": {

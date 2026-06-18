@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft, ArrowRight, Check, CheckCircle2, Loader2, Upload, Mail,
-  User as UserIcon, Lock,
+  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin,
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -23,6 +23,7 @@ import { documentsService } from '../services/documents'
 import { paymentsService } from '../services/payments'
 import { useAuthStore } from '../stores/authStore'
 import { getPlanName } from '../utils/planDisplay'
+import lucasImage from '../assets/images/personas/lucas.png'
 
 type Answers = {
   age?: number
@@ -33,6 +34,7 @@ type Answers = {
   cafBeneficiary?: boolean
   childrenCount?: number
   firstChildAge?: number
+  mainLocation?: string
 }
 
 type Account = {
@@ -44,7 +46,7 @@ type Account = {
 
 type DocStatus = 'idle' | 'analyzing' | 'valid'
 
-const TOTAL_STEPS = 6
+const TOTAL_STEPS = 7
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function SubscriptionScreen() {
@@ -75,7 +77,7 @@ export default function SubscriptionScreen() {
   }, [profile])
 
   useEffect(() => {
-    if (step === 6 && profileDef && plan) {
+    if (step === 7 && profileDef && plan) {
       const startDate = new Date()
       startDate.setDate(startDate.getDate() + 7)
       const sub = {
@@ -91,15 +93,16 @@ export default function SubscriptionScreen() {
   }, [step, profileDef, plan, answers.zones])
 
   function validateStep(): boolean {
-    if (step === 1) return profile !== null
-    if (step === 2) return true
-    if (step === 3) return plan !== undefined
-    if (step === 4) {
+    if (step === 1) return true
+    if (step === 2) return profile !== null
+    if (step === 3) return true
+    if (step === 4) return plan !== undefined
+    if (step === 5) {
       if (!profileDef) return false
       const optional = new Set(profileDef.optionalDocuments ?? [])
       return profileDef.documents.every((d) => optional.has(d) || docStatuses[d] === 'valid')
     }
-    if (step === 5) {
+    if (step === 6) {
       const errs: Partial<Record<keyof Account, string>> = {}
       if (!account.firstName.trim()) errs.firstName = t('subscription.errors.required')
       if (!account.lastName.trim()) errs.lastName = t('subscription.errors.required')
@@ -115,7 +118,7 @@ export default function SubscriptionScreen() {
     if (!validateStep()) return
     setApiError(null)
 
-    if (step === 3 && plan) {
+    if (step === 4 && plan) {
       const user = useAuthStore.getState().user
       if (user && !subscriptionId) {
         setIsLoading(true)
@@ -179,12 +182,20 @@ export default function SubscriptionScreen() {
       <Header step={step} profileName={profile ? t(`subscription.profiles.${profile}.title`) : undefined} />
 
       <div key={step} className="animate-[fade-up_300ms_ease-out]">
-        {step === 1 && <Step1Profile profile={profile} setProfile={setProfile} />}
-        {step === 2 && profileDef && <Step2Details profile={profileDef.slug} answers={answers} setAnswers={setAnswers} />}
-        {step === 3 && profileDef && plan && <Step3Recommendation profile={profileDef.slug} plan={plan} answers={answers} locale={locale} />}
-        {step === 4 && profileDef && <Step4Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
-        {step === 5 && <Step5Account account={account} setAccount={setAccount} errors={accountErrors} />}
-        {step === 6 && profileDef && plan && <Step6Confirmation firstName={account.firstName} email={account.email} plan={plan} answers={answers} locale={locale} />}
+        {step === 1 && (
+          <Step1SituationForm
+            answers={answers}
+            setAnswers={setAnswers}
+            setProfile={setProfile}
+            onContinue={() => { void onNext() }}
+          />
+        )}
+        {step === 2 && <Step2Profile profile={profile} setProfile={setProfile} />}
+        {step === 3 && profileDef && <Step3Details profile={profileDef.slug} answers={answers} setAnswers={setAnswers} />}
+        {step === 4 && profileDef && plan && <Step4Recommendation profile={profileDef.slug} plan={plan} answers={answers} locale={locale} />}
+        {step === 5 && profileDef && <Step5Documents profile={profileDef.slug} docs={profileDef.documents} statuses={docStatuses} confidence={docConfidence} onUpload={handleUpload} />}
+        {step === 6 && <Step6Account account={account} setAccount={setAccount} errors={accountErrors} />}
+        {step === 7 && profileDef && plan && <Step7Confirmation firstName={account.firstName} email={account.email} plan={plan} answers={answers} locale={locale} />}
       </div>
 
       {apiError && (
@@ -192,17 +203,19 @@ export default function SubscriptionScreen() {
       )}
 
       {/* Nav bar */}
-      <NavBar
-        step={step}
-        isLoading={isLoading}
-        onBack={onBack}
-        onNext={() => { void onNext() }}
-        labelNext={step === TOTAL_STEPS
-          ? (useAuthStore.getState().user && subscriptionId ? t('subscription.actions.pay') : useAuthStore.getState().user ? t('subscription.actions.toAccount') : t('subscription.actions.createAccount'))
-          : step === 5 ? t('subscription.actions.confirm') : t('subscription.actions.next')}
-        onSecondary={step === TOTAL_STEPS ? () => navigate('/') : undefined}
-        labelSecondary={step === TOTAL_STEPS ? t('subscription.actions.finish') : undefined}
-      />
+      {step > 1 && (
+        <NavBar
+          step={step}
+          isLoading={isLoading}
+          onBack={onBack}
+          onNext={() => { void onNext() }}
+          labelNext={step === TOTAL_STEPS
+            ? (useAuthStore.getState().user && subscriptionId ? t('subscription.actions.pay') : useAuthStore.getState().user ? t('subscription.actions.toAccount') : t('subscription.actions.createAccount'))
+            : step === 6 ? t('subscription.actions.confirm') : t('subscription.actions.next')}
+          onSecondary={step === TOTAL_STEPS ? () => navigate('/') : undefined}
+          labelSecondary={step === TOTAL_STEPS ? t('subscription.actions.finish') : undefined}
+        />
+      )}
 
       {/* Animations CSS inline car ponctuelles. */}
       <style>{`
@@ -221,36 +234,176 @@ function Header({ step, profileName }: { step: number; profileName?: string }) {
   const stepTitle = t(`subscription.steps.s${step}.title`)
   const stepDesc = t(`subscription.steps.s${step}.description`)
   return (
-    <header className="flex flex-col gap-4">
-      <div className="flex items-baseline justify-between gap-3">
-        <span className="font-mono text-xs tracking-widest uppercase text-fg-muted">
-          {t('subscription.kicker', { step, total: TOTAL_STEPS })}
+    <header className="flex flex-col items-start gap-5 sm:gap-7">
+      <div className="flex w-full items-center justify-between gap-3">
+        <span className="rounded-xl bg-[#096AF3] px-6 py-3 text-xl font-black uppercase leading-none tracking-normal text-white shadow-[0_10px_24px_rgba(9,106,243,0.25)] sm:rounded-2xl sm:px-8 sm:py-5 sm:text-3xl lg:px-5 lg:py-3 lg:text-xl">
+          {t('subscription.kickerShort', { step })}
         </span>
         {profileName && <Badge variant="info">{profileName}</Badge>}
       </div>
-      <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">
-        <span className="bg-gradient-to-b from-fg via-fg to-fg/60 bg-clip-text text-transparent">
-          {stepTitle}
-        </span>
+      <h1 className="max-w-5xl text-4xl font-black uppercase leading-[0.95] tracking-normal text-[#096AF3] sm:text-6xl lg:text-4xl xl:text-5xl">
+        {stepTitle}
       </h1>
-      <p className="max-w-2xl text-fg-muted">{stepDesc}</p>
-      {/* Progress bar */}
-      <div className="mt-2 grid grid-cols-6 gap-1.5">
-        {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map((n) => (
-          <div
-            key={n}
-            className={cn(
-              'h-1 rounded-full transition-colors duration-300',
-              n < step ? 'bg-accent/50' : n === step ? 'bg-accent' : 'bg-surface',
-            )}
-          />
-        ))}
-      </div>
+      <p className="max-w-4xl text-2xl font-extrabold leading-snug text-[#070525] sm:text-4xl lg:text-2xl xl:text-3xl">{stepDesc}</p>
     </header>
   )
 }
 
-function Step1Profile({ profile, setProfile }: { profile: ProfileSlug | null; setProfile: (p: ProfileSlug) => void }) {
+function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
+  answers: Answers
+  setAnswers: (u: Answers) => void
+  setProfile: (p: ProfileSlug) => void
+  onContinue: () => void
+}) {
+  const { t } = useTranslation()
+  const age = answers.age ?? 20
+  const isScholarship = answers.scholarship ?? true
+  const mainLocation = answers.mainLocation ?? t('subscription.situationIntro.defaultLocation')
+
+  function updateAnswer(next: Partial<Answers>) {
+    setAnswers({ ...answers, ...next })
+  }
+
+  function handleContinue() {
+    setProfile('student')
+    setAnswers({
+      ...answers,
+      age,
+      scholarship: isScholarship,
+      mainLocation,
+    })
+    onContinue()
+  }
+
+  return (
+    <section className="relative min-h-[720px] overflow-hidden rounded-[2rem] bg-white px-0 pb-4 pt-4 shadow-[0_26px_80px_rgba(9,106,243,0.08)] sm:min-h-[640px] lg:min-h-[540px] lg:px-12 lg:pb-8 lg:pt-8 xl:min-h-[580px] xl:px-16">
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#096AF3]/10 to-transparent" aria-hidden="true" />
+      <img
+        src={lucasImage}
+        alt=""
+        aria-hidden="true"
+        className="absolute bottom-0 left-[-56px] h-[620px] w-[430px] rounded-[2rem] object-cover object-[42%_50%] shadow-[0_24px_70px_rgba(7,5,37,0.16)] sm:left-8 sm:h-[560px] sm:w-[440px] lg:left-10 lg:h-[500px] lg:w-[390px] lg:top-1/2 lg:-translate-y-1/2 xl:left-14 xl:h-[540px] xl:w-[420px]"
+        draggable={false}
+      />
+
+      <div className="relative z-10 ml-auto flex min-h-[690px] w-[min(66%,620px)] min-w-[330px] items-center justify-end pr-0 sm:min-h-[610px] sm:pr-10 lg:min-h-[500px] lg:w-[min(60%,620px)] lg:min-w-0 lg:items-center lg:pr-0 xl:min-h-[540px] xl:w-[min(58%,680px)]">
+        <div className="w-full max-w-[430px] rounded-[2.25rem] border border-slate-200 bg-white px-7 pb-8 pt-6 text-[#070525] shadow-[0_28px_80px_rgba(7,5,37,0.18)] sm:max-w-[500px] sm:rounded-[3rem] sm:px-10 sm:pb-10 sm:pt-8 lg:max-w-none lg:rounded-[2rem] lg:px-8 lg:pb-7 lg:pt-6 xl:px-10 xl:pb-8 xl:pt-7">
+          <div className="flex items-center justify-between text-sm font-extrabold sm:text-base lg:text-xs xl:text-sm">
+            <span>9:41</span>
+            <span className="flex items-center gap-1.5" aria-hidden="true">
+              <span className="flex h-4 items-end gap-0.5">
+                <span className="h-1.5 w-1 rounded-sm bg-current" />
+                <span className="h-2.5 w-1 rounded-sm bg-current" />
+                <span className="h-3.5 w-1 rounded-sm bg-current" />
+              </span>
+              <span className="h-3 w-4 rounded-t-full border-2 border-current border-b-0" />
+              <span className="h-3.5 w-6 rounded border-2 border-current" />
+            </span>
+          </div>
+
+          <div className="mt-9 text-center lg:mt-5 xl:mt-6">
+            <p className="text-sm font-black lg:text-xs xl:text-sm">{t('subscription.situationIntro.episodeProgress')}</p>
+            <div className="mx-auto mt-4 h-2 w-56 overflow-hidden rounded-full bg-[#E8EEF5] lg:mt-3 lg:h-1.5 lg:w-40 xl:w-44">
+              <div className="h-full w-1/4 rounded-full bg-[#096AF3]" />
+            </div>
+          </div>
+
+          <div className="mt-12 lg:mt-7 xl:mt-8">
+            <h2 className="text-3xl font-black leading-tight tracking-normal sm:text-4xl lg:text-2xl xl:text-3xl">
+              {t('subscription.situationIntro.phoneTitle')}
+            </h2>
+          </div>
+
+          <div className="mt-9 divide-y divide-slate-200 lg:mt-5 xl:mt-6">
+            <SituationFormRow
+              icon={<CalendarDays className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
+              label={t('subscription.situationIntro.ageQuestion')}
+            >
+              <label className="sr-only" htmlFor="subscription-age">{t('subscription.situationIntro.ageQuestion')}</label>
+              <input
+                id="subscription-age"
+                type="number"
+                min={0}
+                value={age}
+                onChange={(event) => updateAnswer({ age: event.target.value ? Number(event.target.value) : undefined })}
+                className="w-20 rounded-lg border border-transparent bg-transparent px-1 text-right text-base font-black text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] lg:w-14 lg:text-xs xl:w-16 xl:text-sm"
+              />
+              <span className="text-base font-black lg:text-xs xl:text-sm">{t('subscription.situationIntro.yearsUnit')}</span>
+            </SituationFormRow>
+
+            <SituationFormRow
+              icon={<GraduationCap className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
+              label={t('subscription.situationIntro.studentQuestion')}
+            >
+              <SegmentedYesNo value onChange={() => setProfile('student')} />
+            </SituationFormRow>
+
+            <SituationFormRow
+              icon={<Lock className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
+              label={t('subscription.situationIntro.scholarshipQuestion')}
+            >
+              <SegmentedYesNo value={isScholarship} onChange={(value) => updateAnswer({ scholarship: value })} />
+            </SituationFormRow>
+
+            <SituationFormRow
+              icon={<MapPin className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
+              label={t('subscription.situationIntro.locationQuestion')}
+            >
+              <label className="sr-only" htmlFor="subscription-location">{t('subscription.situationIntro.locationQuestion')}</label>
+              <input
+                id="subscription-location"
+                value={mainLocation}
+                onChange={(event) => updateAnswer({ mainLocation: event.target.value })}
+                className="w-32 rounded-lg border border-transparent bg-transparent px-1 text-right text-base font-black leading-tight text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] lg:w-24 lg:text-xs xl:w-28 xl:text-sm"
+              />
+            </SituationFormRow>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleContinue}
+            className="mt-12 flex h-16 w-full items-center justify-center rounded-xl bg-[#096AF3] px-5 text-xl font-extrabold text-white shadow-[0_12px_28px_rgba(9,106,243,0.28)] transition hover:bg-[#075cd6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#096AF3] focus-visible:ring-offset-2 lg:mt-6 lg:h-12 lg:text-base xl:mt-7 xl:h-14 xl:text-lg"
+          >
+            {t('subscription.situationIntro.continue')}
+          </button>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function SituationFormRow({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
+  return (
+    <div className="grid grid-cols-[2rem_1fr_auto] items-center gap-4 py-5 lg:grid-cols-[1.5rem_1fr_auto] lg:gap-3 lg:py-3 xl:grid-cols-[1.75rem_1fr_auto] xl:py-4">
+      <span className="text-[#096AF3]">{icon}</span>
+      <span className="text-base font-black leading-tight text-[#070525] lg:text-xs xl:text-sm">{label}</span>
+      <div className="flex min-w-[5.5rem] justify-end text-right lg:min-w-[4.5rem] xl:min-w-[5rem]">{children}</div>
+    </div>
+  )
+}
+
+function SegmentedYesNo({ value, onChange }: { value: boolean; onChange: (value: boolean) => void }) {
+  const { t } = useTranslation()
+  return (
+    <div className="flex rounded-lg bg-[#F4F8FE] p-1 lg:p-0.5">
+      {[true, false].map((option) => (
+        <button
+          key={String(option)}
+          type="button"
+          onClick={() => onChange(option)}
+          className={cn(
+            'h-9 min-h-0 rounded-md px-3 text-sm font-black transition lg:h-7 lg:px-2 lg:text-xs xl:h-8 xl:px-2.5',
+            value === option ? 'bg-white text-[#096AF3] shadow-sm' : 'text-[#070525]/55 hover:text-[#070525]',
+          )}
+        >
+          {option ? t('common.yes') : t('common.no')}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function Step2Profile({ profile, setProfile }: { profile: ProfileSlug | null; setProfile: (p: ProfileSlug) => void }) {
   const { t } = useTranslation()
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -286,7 +439,7 @@ function Step1Profile({ profile, setProfile }: { profile: ProfileSlug | null; se
   )
 }
 
-function Step2Details({ profile, answers, setAnswers }: {
+function Step3Details({ profile, answers, setAnswers }: {
   profile: ProfileSlug
   answers: Answers
   setAnswers: (u: Answers) => void
@@ -386,7 +539,7 @@ function YesNoRow({ label, value, onChange }: { label: string; value?: boolean; 
   )
 }
 
-function Step3Recommendation({ profile, plan, answers, locale }: {
+function Step4Recommendation({ profile, plan, answers, locale }: {
   profile: ProfileSlug
   plan: Plan
   answers: Answers
@@ -434,7 +587,7 @@ function Step3Recommendation({ profile, plan, answers, locale }: {
   )
 }
 
-function Step4Documents({ profile, docs, optionalDocs, statuses, confidence, onUpload }: {
+function Step5Documents({ profile, docs, optionalDocs, statuses, confidence, onUpload }: {
   profile: ProfileSlug
   docs: string[]
   optionalDocs?: string[]
@@ -517,7 +670,7 @@ function Step4Documents({ profile, docs, optionalDocs, statuses, confidence, onU
   )
 }
 
-function Step5Account({ account, setAccount, errors }: {
+function Step6Account({ account, setAccount, errors }: {
   account: Account
   setAccount: (a: Account) => void
   errors: Partial<Record<keyof Account, string>>
@@ -565,7 +718,7 @@ function Step5Account({ account, setAccount, errors }: {
   )
 }
 
-function Step6Confirmation({ firstName, email, plan, answers, locale }: {
+function Step7Confirmation({ firstName, email, plan, answers, locale }: {
   firstName: string
   email: string
   plan: Plan
