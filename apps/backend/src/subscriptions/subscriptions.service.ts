@@ -73,7 +73,7 @@ export class SubscriptionsService {
 
     const [updated] = await db
       .update(subscriptions)
-      .set({ status: 'pending_payment', updatedAt: new Date() })
+      .set({ status: 'active', startDate: new Date(), updatedAt: new Date() })
       .where(eq(subscriptions.id, id))
       .returning()
 

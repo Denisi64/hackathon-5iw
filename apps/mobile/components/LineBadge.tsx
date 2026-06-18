@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image as ExpoImage } from 'expo-image'
+import { Text, View } from 'react-native'
 import { IdfmLine, LineMode, idfmService } from '../services/api'
 
 function detectMode(line: string): LineMode {
@@ -28,7 +29,7 @@ export function LineBadge({ line, mode, size = 36 }: LineBadgeProps) {
   }, [line, resolvedMode])
 
   if (data?.pictoUrl) {
-    return <Image source={{ uri: data.pictoUrl }} style={{ width: size, height: size }} resizeMode="contain" />
+    return <ExpoImage source={{ uri: data.pictoUrl }} style={{ width: size, height: size }} contentFit="contain" />
   }
 
   const isMetro = resolvedMode === 'metro'

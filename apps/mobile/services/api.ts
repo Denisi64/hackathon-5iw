@@ -289,11 +289,16 @@ export const idfmService = {
     const key = `${mode}:${line}`
     if (lineCache.has(key)) return lineCache.get(key)!
     try {
-      const where = `shortname_line="${line}" and transportmode="${modeMap[mode]}"`
-      const res = await fetch(`${IDFM_API}/records?where=${encodeURIComponent(where)}&limit=1`)
-      if (!res.ok) { lineCache.set(key, null); return null }
-      const data = await res.json()
-      const record = data.results?.[0]
+      const fetchRecord = async (where: string) => {
+        const res = await fetch(`${IDFM_API}/records?where=${encodeURIComponent(where)}&limit=1`)
+        if (!res.ok) return null
+        const data = await res.json()
+        return data.results?.[0] ?? null
+      }
+      // Essai 1 : shortname + mode exact
+      let record = await fetchRecord(`shortname_line="${line}" and transportmode="${modeMap[mode]}"`)
+      // Essai 2 : shortname seul (fallback pour les lignes avec transportmode atypique, ex: T14)
+      if (!record) record = await fetchRecord(`shortname_line="${line}"`)
       if (!record) { lineCache.set(key, null); return null }
       const result = recordToLine(record, mode)
       lineCache.set(key, result)
@@ -315,9 +320,9 @@ export const idfmService = {
     preloadPromise = Promise.all(
       modes.map(async ([mode, transportmode]) => {
         try {
-          const where = `transportmode="${transportmode}" and has_picto=true`
+          // Récupère toutes les lignes du mode (avec ou sans picto) pour avoir les couleurs
           const select = 'shortname_line,colourweb_hexa,textcolourweb_hexa,picto'
-          const res = await fetch(`${IDFM_API}/records?where=${encodeURIComponent(where)}&select=${select}&limit=100`)
+          const res = await fetch(`${IDFM_API}/records?where=${encodeURIComponent(`transportmode="${transportmode}"`)}&select=${select}&limit=200`)
           if (!res.ok) return
           const data = await res.json()
           for (const record of data.results ?? []) {

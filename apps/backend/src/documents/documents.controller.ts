@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { memoryStorage } from 'multer'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
@@ -29,6 +29,21 @@ export class DocumentsController {
     @Body('subscriptionId') subscriptionId: string,
   ) {
     return this.documentsService.verify(subscriptionId, file)
+  }
+
+  @Get('pending')
+  findPending() {
+    return this.documentsService.findPending()
+  }
+
+  @Patch(':id/validate')
+  validate(@Param('id') id: string) {
+    return this.documentsService.validate(id)
+  }
+
+  @Patch(':id/reject')
+  reject(@Param('id') id: string) {
+    return this.documentsService.reject(id)
   }
 
   @Get('subscription/:subscriptionId')

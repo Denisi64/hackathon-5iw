@@ -1,13 +1,14 @@
-import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useEffect, useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useRouter } from 'expo-router'
+import { useFocusEffect } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import { usersService } from '../../services/api'
 import { useAuthStore } from '../../stores/auth'
 import { NavigoCard } from '../../components/NavigoCard'
 
-type Sub = { offerId: string; status: string; startDate?: string; endDate?: string }
+type Sub = { id: string; offerId: string; status: string; startDate?: string; endDate?: string }
 
 export default function NavigoScreen() {
   const { token, user } = useAuthStore()
@@ -15,10 +16,11 @@ export default function NavigoScreen() {
   const [sub, setSub] = useState<Sub | null>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     if (!token) { setLoading(false); return }
+    setLoading(true)
     usersService.getSubscription(token).then(setSub).catch(() => null).finally(() => setLoading(false))
-  }, [token])
+  }, [token]))
 
   if (loading) {
     return (
@@ -71,15 +73,17 @@ export default function NavigoScreen() {
             firstName={user.firstName}
             lastName={user.lastName}
             endDate={sub.endDate}
+            subscriptionId={sub.id}
           />
         )}
 
         {/* QR code de validation */}
         <View className="mx-6 mt-4 bg-white border border-border rounded-3xl p-6 items-center">
-          <View className="w-36 h-36 bg-surface border-2 border-border rounded-2xl items-center justify-center mb-3">
-            <Text style={{ fontSize: 64 }}>▣</Text>
-          </View>
-          <Text className="text-xs font-semibold text-fg text-center">Présentez ce code au valideur</Text>
+          <Image
+            source={{ uri: `https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=6&data=NAVIGO-${sub.id}` }}
+            style={{ width: 160, height: 160, borderRadius: 8 }}
+          />
+          <Text className="text-xs font-semibold text-fg text-center mt-4">Présentez ce code au valideur</Text>
           <Text className="text-xs text-muted text-center mt-1">Actualisé toutes les 30 secondes</Text>
         </View>
 
@@ -119,12 +123,6 @@ export default function NavigoScreen() {
           </View>
         </View>
 
-        <TouchableOpacity
-          className="mx-6 mt-5 border border-border py-3 rounded-2xl items-center"
-          onPress={() => router.push('/(tabs)/subscribe')}
-        >
-          <Text className="text-sm text-muted">Gérer mon abonnement →</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   )

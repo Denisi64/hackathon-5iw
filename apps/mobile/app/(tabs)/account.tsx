@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
-import { usersService, leaderboardService, tripsService } from '../../services/api'
+import { usersService, tripsService } from '../../services/api'
 import { useAuthStore } from '../../stores/auth'
 import { OFFER_CARD } from '../../components/NavigoCard'
 
@@ -19,19 +19,19 @@ const LEVELS: { label: string; icon: IoniconName; color: string; min: number }[]
   { label: 'Maestro',     icon: 'trophy-outline',  color: '#EA4335', min: 2000 },
 ]
 
-const MONUMENT_BADGES: Record<string, { emoji: string; label: string; story: string }> = {
-  first_trip:   { emoji: '🎫', label: 'Premier trajet',    story: 'Bienvenue dans l\'aventure ! Votre premier trajet marque le début de votre histoire francilienne.' },
-  tour_eiffel:  { emoji: '🗼', label: 'Tour Eiffel',       story: 'Symbole de Paris depuis 1889. La Tour Eiffel accueille 7 millions de visiteurs par an. Le RER C vous y emmène directement depuis Gare d\'Austerlitz.' },
-  arc_triomphe: { emoji: '🏛️', label: 'Arc de Triomphe',  story: 'Commandé par Napoléon en 1806 pour célébrer ses victoires militaires. La ligne 1 vous conduit à Charles de Gaulle – Étoile.' },
-  sacre_coeur:  { emoji: '⛪', label: 'Sacré-Cœur',       story: 'Perché au sommet de Montmartre (130 m). La ligne 12 vous mène à Abbesses, d\'où le funiculaire monte jusqu\'à la basilique.' },
-  notre_dame:   { emoji: '🕌', label: 'Notre-Dame',        story: 'Chef-d\'œuvre gothique du XIIe siècle. En renaissance après l\'incendie de 2019. La ligne 4 vous dépose à Cité.' },
-  louvre:       { emoji: '🖼️', label: 'Le Louvre',        story: 'Le plus grand musée du monde : 72 735 m² et 35 000 œuvres. Station Palais Royal – Musée du Louvre sur les lignes 1 et 7.' },
-  versailles:   { emoji: '👑', label: 'Versailles',        story: 'Ancienne résidence des rois de France. 800 hectares de jardins. Le RER C vous emmène jusqu\'à Versailles Rive Gauche en 40 min.' },
-  stade_france: { emoji: '🏟️', label: 'Stade de France',  story: '80 000 places. Scène de la finale de la Coupe du Monde 1998. Le RER B ou D vous y dépose en 20 min depuis Châtelet.' },
-  eco_warrior:  { emoji: '♻️', label: 'Éco-guerrier',     story: 'Vous avez économisé 50 kg de CO₂ grâce aux transports en commun. Chaque trajet contribue à un avenir plus vert !' },
-  streak_7:     { emoji: '🔥', label: 'Voyageur régulier', story: '7 jours consécutifs en transports — vous êtes un vrai habitué des réseaux franciliens !' },
-  multimodal:   { emoji: '🚌', label: 'Multimodal',        story: 'Métro, RER et Bus maîtrisés. Vous exploitez tout le potentiel du réseau Île-de-France Mobilités !' },
-  explorer_50:  { emoji: '🏅', label: 'Grand explorateur', story: '50 trajets validés — Paris n\'a plus aucun secret pour vous. La Ville Lumière vous appartient !' },
+const MONUMENT_BADGES: Record<string, { icon: React.ComponentProps<typeof Ionicons>['name']; color: string; label: string; story: string }> = {
+  first_trip:   { icon: 'ticket-outline',   color: '#1A73E8', label: 'Premier trajet',    story: "Bienvenue dans l'aventure ! Votre premier trajet marque le début de votre histoire francilienne." },
+  tour_eiffel:  { icon: 'business-outline', color: '#6B7A99', label: 'Tour Eiffel',       story: "Symbole de Paris depuis 1889. La Tour Eiffel accueille 7 millions de visiteurs par an. Le RER C vous y emmène directement depuis Gare d'Austerlitz." },
+  arc_triomphe: { icon: 'flag-outline',     color: '#8B5CF6', label: 'Arc de Triomphe',  story: 'Commandé par Napoléon en 1806 pour célébrer ses victoires militaires. La ligne 1 vous conduit à Charles de Gaulle – Étoile.' },
+  sacre_coeur:  { icon: 'heart-outline',    color: '#EC4899', label: 'Sacré-Cœur',       story: "Perché au sommet de Montmartre (130 m). La ligne 12 vous mène à Abbesses, d'où le funiculaire monte jusqu'à la basilique." },
+  notre_dame:   { icon: 'home-outline',     color: '#F59E0B', label: 'Notre-Dame',        story: "Chef-d'œuvre gothique du XIIe siècle. En renaissance après l'incendie de 2019. La ligne 4 vous dépose à Cité." },
+  louvre:       { icon: 'image-outline',    color: '#10B981', label: 'Le Louvre',        story: 'Le plus grand musée du monde : 72 735 m² et 35 000 œuvres. Station Palais Royal – Musée du Louvre sur les lignes 1 et 7.' },
+  versailles:   { icon: 'diamond-outline',  color: '#F59E0B', label: 'Versailles',        story: "Ancienne résidence des rois de France. 800 hectares de jardins. Le RER C vous emmène jusqu'à Versailles Rive Gauche en 40 min." },
+  stade_france: { icon: 'football-outline', color: '#1A73E8', label: 'Stade de France',  story: '80 000 places. Scène de la finale de la Coupe du Monde 1998. Le RER B ou D vous y dépose en 20 min depuis Châtelet.' },
+  eco_warrior:  { icon: 'leaf-outline',     color: '#16A34A', label: 'Éco-guerrier',     story: 'Vous avez économisé 50 kg de CO₂ grâce aux transports en commun. Chaque trajet contribue à un avenir plus vert !' },
+  streak_7:     { icon: 'flame-outline',    color: '#EF4444', label: 'Voyageur régulier', story: '7 jours consécutifs en transports — vous êtes un vrai habitué des réseaux franciliens !' },
+  multimodal:   { icon: 'bus-outline',      color: '#0EA5E9', label: 'Multimodal',        story: 'Métro, RER et Bus maîtrisés. Vous exploitez tout le potentiel du réseau Île-de-France Mobilités !' },
+  explorer_50:  { icon: 'trophy-outline',   color: '#F59E0B', label: 'Grand explorateur', story: "50 trajets validés — Paris n'a plus aucun secret pour vous. La Ville Lumière vous appartient !" },
 }
 
 const MEDAL = ['🥇', '🥈', '🥉']
@@ -41,7 +41,6 @@ const MEDAL = ['🥇', '🥈', '🥉']
 interface Gamif { points: number; level: number; badges: string[]; nextLevelPoints: number }
 interface WeekStats { weekTrips: number; weekKm: number; weekCo2Saved: number; streak: number }
 interface TotalStats { totalTrips: number; totalKm: number; weeksActive: number }
-interface LeaderEntry { rank: number; firstName: string; lastName: string; points: number; level: number; badgeCount: number; isMe: boolean }
 interface Sub { id: string; offerId: string; status: string; endDate?: string }
 
 // ─── Sous-composants ──────────────────────────────────────────────────────────
@@ -289,26 +288,6 @@ function TabDefis({ week, total }: { week: WeekStats | null; total: TotalStats |
         })}
       </View>
 
-      {/* Récompenses à venir */}
-      <View className="px-6 mt-6">
-        <Text className="text-sm font-bold text-fg mb-3">Des récompenses à venir</Text>
-        <View className="flex-row gap-3 flex-wrap">
-          {[
-            { icon: 'pricetag-outline' as IoniconName, color: '#7C3AED', label: 'Réductions\npartenaires' },
-            { icon: 'film-outline' as IoniconName,     color: '#EA4335', label: 'Avantages\nculturels' },
-            { icon: 'ticket-outline' as IoniconName,   color: '#1A73E8', label: 'Expériences\nà gagner' },
-            { icon: 'gift-outline' as IoniconName,     color: '#F59E0B', label: 'Bons\ncadeaux' },
-          ].map((r) => (
-            <View key={r.label} className="bg-surface border border-border rounded-2xl p-3 items-center" style={{ width: '47%' }}>
-              <Ionicons name={r.icon} size={28} color={r.color} style={{ marginBottom: 4 }} />
-              <Text className="text-xs text-muted text-center leading-tight">{r.label}</Text>
-              <View className="mt-2 bg-amber-100 px-2 py-0.5 rounded-full">
-                <Text className="text-[10px] font-bold text-amber-700">Bientôt</Text>
-              </View>
-            </View>
-          ))}
-        </View>
-      </View>
     </ScrollView>
   )
 }
@@ -317,7 +296,7 @@ function TabDefis({ week, total }: { week: WeekStats | null; total: TotalStats |
 
 function TabBadges({ earned, onPress }: {
   earned: string[]
-  onPress: (b: { emoji: string; label: string; story: string; unlocked: boolean }) => void
+  onPress: (b: { icon: React.ComponentProps<typeof Ionicons>['name']; color: string; label: string; story: string; unlocked: boolean }) => void
 }) {
   const entries = Object.entries(MONUMENT_BADGES)
   const unlockedCount = entries.filter(([id]) => earned.includes(id)).length
@@ -350,7 +329,7 @@ function TabBadges({ earned, onPress }: {
                 <View className={`w-full aspect-square rounded-3xl items-center justify-center mb-1 border-2 ${
                   unlocked ? 'bg-primary/10 border-primary/40' : 'bg-surface border-border opacity-30'
                 }`}>
-                  <Text className="text-4xl">{meta.emoji}</Text>
+                  <Ionicons name={meta.icon} size={32} color={unlocked ? meta.color : '#CBD5E1'} />
                   {unlocked && (
                     <View className="absolute -top-1 -right-1 w-5 h-5 bg-green-400 rounded-full items-center justify-center">
                       <Ionicons name="checkmark" size={11} color="white" />
@@ -375,93 +354,6 @@ function TabBadges({ earned, onPress }: {
   )
 }
 
-// ─── TAB 3 : Classement ──────────────────────────────────────────────────────
-
-function TabClassement({ leaderboard }: { leaderboard: LeaderEntry[] }) {
-  const top3 = leaderboard.slice(0, 3)
-  const rest = leaderboard.slice(3)
-  const me = leaderboard.find((e) => e.isMe)
-
-  return (
-    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 32 }}>
-      {/* Podium */}
-      {top3.length >= 3 && (
-        <View className="px-6 pt-5 mb-4">
-          <View className="flex-row items-end justify-center gap-2">
-            {/* 2e */}
-            <View className="items-center flex-1">
-              <View className="w-14 h-14 bg-gray-100 rounded-full items-center justify-center mb-1">
-                <Text className="text-xl font-black text-fg">{top3[1]?.firstName[0]}</Text>
-              </View>
-              <Text className="text-xs font-bold text-fg text-center" numberOfLines={1}>{top3[1]?.firstName}</Text>
-              <Text className="text-xs text-muted">{top3[1]?.points} pts</Text>
-              <View className="w-full h-16 bg-gray-200 rounded-t-xl mt-2 items-center justify-center">
-                <Text className="text-2xl">🥈</Text>
-              </View>
-            </View>
-            {/* 1er */}
-            <View className="items-center flex-1">
-              <View className="w-16 h-16 bg-primary rounded-full items-center justify-center mb-1">
-                <Text className="text-2xl font-black text-white">{top3[0]?.firstName[0]}</Text>
-              </View>
-              <Text className="text-xs font-bold text-fg text-center" numberOfLines={1}>{top3[0]?.firstName}</Text>
-              <Text className="text-xs text-muted">{top3[0]?.points} pts</Text>
-              <View className="w-full h-24 bg-primary rounded-t-xl mt-2 items-center justify-center">
-                <Text className="text-3xl">🥇</Text>
-              </View>
-            </View>
-            {/* 3e */}
-            <View className="items-center flex-1">
-              <View className="w-14 h-14 bg-amber-100 rounded-full items-center justify-center mb-1">
-                <Text className="text-xl font-black text-amber-700">{top3[2]?.firstName[0]}</Text>
-              </View>
-              <Text className="text-xs font-bold text-fg text-center" numberOfLines={1}>{top3[2]?.firstName}</Text>
-              <Text className="text-xs text-muted">{top3[2]?.points} pts</Text>
-              <View className="w-full h-10 bg-amber-200 rounded-t-xl mt-2 items-center justify-center">
-                <Text className="text-2xl">🥉</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      )}
-
-      {/* Liste */}
-      <View className="px-6">
-        <View className="bg-white border border-border rounded-2xl overflow-hidden">
-          {leaderboard.map((entry, i) => (
-            <View
-              key={i}
-              className={`flex-row items-center px-4 py-3 gap-3 ${i > 0 ? 'border-t border-border' : ''} ${entry.isMe ? 'bg-primary/5' : ''}`}
-            >
-              <Text className="w-6 text-sm font-black text-center text-muted">
-                {i < 3 ? MEDAL[i] : `${entry.rank}`}
-              </Text>
-              <View className={`w-9 h-9 rounded-full items-center justify-center ${entry.isMe ? 'bg-primary' : 'bg-surface border border-border'}`}>
-                <Text className={`text-sm font-black ${entry.isMe ? 'text-white' : 'text-fg'}`}>{entry.firstName[0]}</Text>
-              </View>
-              <View className="flex-1">
-                <Text className={`text-sm font-semibold ${entry.isMe ? 'text-primary' : 'text-fg'}`}>
-                  {entry.firstName} {entry.lastName}{entry.isMe ? ' · moi' : ''}
-                </Text>
-                <Text className="text-xs text-muted">Niv. {entry.level} · {entry.badgeCount} badge{entry.badgeCount !== 1 ? 's' : ''}</Text>
-              </View>
-              <Text className={`text-sm font-black ${entry.isMe ? 'text-primary' : 'text-fg'}`}>{entry.points} pts</Text>
-            </View>
-          ))}
-        </View>
-
-        {me && (
-          <View className="mt-3 bg-primary/5 border border-primary/20 rounded-2xl px-4 py-3 flex-row items-center gap-3">
-            <Ionicons name="location-outline" size={18} color="#1A73E8" />
-            <Text className="flex-1 text-sm text-fg">Votre rang : <Text className="font-black text-primary">#{me.rank}</Text></Text>
-            <Text className="text-sm font-black text-primary">{me.points} pts</Text>
-          </View>
-        )}
-      </View>
-    </ScrollView>
-  )
-}
-
 // ─── Écran principal ──────────────────────────────────────────────────────────
 
 export default function AccountScreen() {
@@ -473,9 +365,8 @@ export default function AccountScreen() {
   const [week, setWeek] = useState<WeekStats | null>(null)
   const [total, setTotal] = useState<TotalStats | null>(null)
   const [sub, setSub] = useState<Sub | null>(null)
-  const [leaderboard, setLeaderboard] = useState<LeaderEntry[]>([])
   const [loading, setLoading] = useState(false)
-  const [badgeModal, setBadgeModal] = useState<{ emoji: string; label: string; story: string; unlocked: boolean } | null>(null)
+  const [badgeModal, setBadgeModal] = useState<{ icon: React.ComponentProps<typeof Ionicons>['name']; color: string; label: string; story: string; unlocked: boolean } | null>(null)
 
   useEffect(() => {
     if (!token) return
@@ -485,7 +376,6 @@ export default function AccountScreen() {
       usersService.getSubscription(token).then(setSub).catch(() => null),
       tripsService.getWeek(token).then((d) => setWeek({ weekTrips: d.weekTrips, weekKm: d.weekKm, weekCo2Saved: d.weekCo2Saved, streak: d.streak })).catch(() => null),
       tripsService.getStats(token).then((d) => setTotal({ totalTrips: d.totalTrips, totalKm: d.totalKm, weeksActive: d.weeksActive })).catch(() => null),
-      leaderboardService.get(token).then(setLeaderboard).catch(() => []),
     ]).finally(() => setLoading(false))
   }, [token])
 
@@ -524,18 +414,22 @@ export default function AccountScreen() {
             )}
           </View>
           {loading && <ActivityIndicator size="small" color="#1A73E8" />}
+          {['admin@comutitres.fr', 'ly.jerem@gmail.com', 'jey@gmail.com'].includes(user?.email ?? '') && (
+            <TouchableOpacity onPress={() => router.push('/admin')} className="mr-2">
+              <Ionicons name="shield-outline" size={18} color="#1A73E8" />
+            </TouchableOpacity>
+          )}
           <TouchableOpacity onPress={() => { logout(); router.replace('/onboarding') }}>
             <Text className="text-xs text-muted">Déco.</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <InnerTabs tabs={['Profil', 'Défis', 'Badges', 'Classement']} active={tab} onChange={setTab} />
+      <InnerTabs tabs={['Profil', 'Défis', 'Badges']} active={tab} onChange={setTab} />
 
       {tab === 0 && <TabProfil gamif={gamif} week={week} total={total} sub={sub} />}
       {tab === 1 && <TabDefis week={week} total={total} />}
       {tab === 2 && <TabBadges earned={gamif?.badges ?? []} onPress={setBadgeModal} />}
-      {tab === 3 && <TabClassement leaderboard={leaderboard} />}
 
       {/* Modal badge */}
       <Modal visible={!!badgeModal} transparent animationType="slide">
@@ -547,7 +441,7 @@ export default function AccountScreen() {
           <View className="bg-white rounded-t-3xl p-6" onStartShouldSetResponder={() => true}>
             <View className="items-center mb-5">
               <View className={`w-24 h-24 rounded-3xl items-center justify-center mb-3 ${badgeModal?.unlocked ? 'bg-primary/10' : 'bg-surface border-2 border-border'}`}>
-                <Text className="text-5xl">{badgeModal?.emoji}</Text>
+                {badgeModal && <Ionicons name={badgeModal.icon} size={44} color={badgeModal.unlocked ? badgeModal.color : '#CBD5E1'} />}
               </View>
               <Text className="text-2xl font-black text-fg">{badgeModal?.label}</Text>
               {!badgeModal?.unlocked

@@ -18,6 +18,8 @@
     "@expo/vector-icons": "*",
     "expo": "~54.0.0",
     "expo-document-picker": "~14.0.8",
+    "expo-image": "^56.0.11",
+    "expo-image-picker": "^16.0.6",
     "expo-linear-gradient": "^15.0.8",
     "expo-router": "^6.0.24",
     "expo-status-bar": "^3.0.9",

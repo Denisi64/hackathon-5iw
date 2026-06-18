@@ -1,7 +1,8 @@
-import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Image, useWindowDimensions, Modal, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { useState, useCallback } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import { feedService, tripsService, usersService } from '../../services/api'
 import { useAuthStore } from '../../stores/auth'
@@ -9,12 +10,6 @@ import { OFFER_CARD } from '../../components/NavigoCard'
 import { LineBadge } from '../../components/LineBadge'
 
 
-const PERSONAS: { name: string; role: string; episode: string; icon: React.ComponentProps<typeof Ionicons>['name']; color: string; iconColor: string }[] = [
-  { name: 'Lucas',       role: 'Étudiant',      episode: 'Épisode 1', icon: 'school-outline',       color: '#E8F4FE', iconColor: '#1A73E8' },
-  { name: 'Valérie',     role: 'Mère active',   episode: 'Épisode 2', icon: 'people-outline',       color: '#FEF3E8', iconColor: '#EA6D25' },
-  { name: 'Jean-Pierre', role: 'Senior',         episode: 'Épisode 3', icon: 'leaf-outline',         color: '#E8FEF0', iconColor: '#16A34A' },
-  { name: 'Amira',       role: 'Nouveau départ', episode: 'Épisode 4', icon: 'star-outline',         color: '#F3E8FE', iconColor: '#7C3AED' },
-]
 
 const FEED_ICONS: Record<string, React.ComponentProps<typeof Ionicons>['name']> = {
   news:  'newspaper-outline',
@@ -41,15 +36,17 @@ const OFFER_ICONS: Record<string, React.ComponentProps<typeof Ionicons>['name']>
 export default function HomeScreen() {
   const router = useRouter()
   const { token, user } = useAuthStore()
+  const { width: screenWidth } = useWindowDimensions()
 
   const [gamif, setGamif] = useState<{ points: number; level: number; badges: string[] } | null>(null)
   const [todayTrips, setTodayTrips] = useState<{ totalTrips: number; totalCo2Saved: number; trips: { line: string; lineType: string; from: string; to: string; departureTime: string; tripDate?: string }[] } | null>(null)
-  const [recentTrips, setRecentTrips] = useState<{ line: string; from: string; to: string; departureTime: string; tripDate: string }[]>([])
+  const [recentTrips, setRecentTrips] = useState<{ id: string; line: string; from: string; to: string; departureTime: string; tripDate: string }[]>([])
   const [feed, setFeed] = useState<{ id: string; emoji: string; title: string; body: string; tag: string; type: string }[]>([])
+  const [selectedFeed, setSelectedFeed] = useState<{ id: string; emoji: string; title: string; body: string; tag: string; type: string } | null>(null)
   const [subscription, setSubscription] = useState<{ offerId: string; status: string; startDate?: string; endDate?: string } | null>(null)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     if (!token) return
     setLoading(true)
     Promise.all([
@@ -59,7 +56,7 @@ export default function HomeScreen() {
       feedService.getFeed(token).then(setFeed).catch(() => []),
       usersService.getSubscription(token).then(setSubscription).catch(() => null),
     ]).finally(() => setLoading(false))
-  }, [token])
+  }, [token]))
 
   const FEED_TYPE_COLORS: Record<string, string> = {
     news: 'bg-blue-50 text-blue-700', tip: 'bg-amber-50 text-amber-700',
@@ -153,7 +150,7 @@ export default function HomeScreen() {
                   </View>
                 )}
                 {!isToday && recentTrips.length > 0 && (
-                  <TouchableOpacity onPress={() => router.push('/(tabs)/trips')}>
+                  <TouchableOpacity onPress={() => router.push({ pathname: '/(tabs)/trips', params: { tab: '1' } })}>
                     <Text className="text-xs text-primary font-semibold">Tout voir →</Text>
                   </TouchableOpacity>
                 )}
@@ -164,7 +161,7 @@ export default function HomeScreen() {
                     <TouchableOpacity
                       key={i}
                       className={`flex-row items-center px-4 py-3 ${i > 0 ? 'border-t border-border' : ''}`}
-                      onPress={() => router.push('/(tabs)/trips')}
+                      onPress={() => router.push({ pathname: '/(tabs)/trips', params: { tab: '1', tripId: trip.id } })}
                       activeOpacity={0.7}
                     >
                       <View className="mr-3">
@@ -206,7 +203,7 @@ export default function HomeScreen() {
             </View>
             <View className="gap-3">
               {feed.slice(0, 3).map((item) => (
-                <View key={item.id} className="bg-card border border-border rounded-2xl p-4">
+                <TouchableOpacity key={item.id} className="bg-card border border-border rounded-2xl p-4" onPress={() => setSelectedFeed(item)} activeOpacity={0.7}>
                   <View className="flex-row items-start gap-3">
                     <View className={`w-9 h-9 rounded-xl items-center justify-center ${FEED_TYPE_COLORS[item.type]?.split(' ')[0] ?? 'bg-surface'}`}>
                       <Ionicons name={FEED_ICONS[item.type] ?? 'information-circle-outline'} size={18} color={item.type === 'news' ? '#1d4ed8' : item.type === 'tip' ? '#b45309' : item.type === 'promo' ? '#15803d' : '#b91c1c'} />
@@ -220,36 +217,51 @@ export default function HomeScreen() {
                       <Text className="text-sm font-bold text-fg">{item.title}</Text>
                       <Text className="text-xs text-muted mt-1" numberOfLines={2}>{item.body}</Text>
                     </View>
+                    <Ionicons name="chevron-forward" size={16} color="#CBD5E1" />
                   </View>
-                </View>
+                </TouchableOpacity>
               ))}
             </View>
           </View>
         )}
 
-        {/* Histoires / Personas */}
+        {/* Bannière histoires */}
         <View className="mt-6 mb-8">
-          <View className="px-6 mb-3">
-            <View className="flex-row items-center gap-2">
-              <Ionicons name="book-outline" size={16} color="#6B7A99" />
-              <Text className="text-base font-bold text-fg">Les histoires</Text>
-            </View>
-            <Text className="text-xs text-muted mt-0.5">Chaque trajet raconte une histoire.</Text>
-          </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerClassName="px-6 gap-3">
-            {PERSONAS.map((p) => (
-              <View key={p.name} style={{ backgroundColor: p.color }} className="w-40 rounded-3xl p-4">
-                <View className="w-10 h-10 rounded-2xl items-center justify-center mb-2" style={{ backgroundColor: p.iconColor + '22' }}>
-                  <Ionicons name={p.icon} size={22} color={p.iconColor} />
-                </View>
-                <Text className="text-xs text-muted font-medium">{p.episode}</Text>
-                <Text className="text-base font-black text-fg">{p.name}</Text>
-                <Text className="text-xs text-muted">{p.role}</Text>
-              </View>
-            ))}
-          </ScrollView>
+<Image
+            source={require('../../assets/collageBanniere.png')}
+            style={{ width: screenWidth - 48, marginHorizontal: 24, height: (screenWidth - 48) / 3.54 }}
+            resizeMode="contain"
+          />
         </View>
+
       </ScrollView>
+
+      {/* Modal détail news */}
+      <Modal visible={!!selectedFeed} transparent animationType="slide" onRequestClose={() => setSelectedFeed(null)}>
+        <Pressable className="flex-1 bg-black/50 justify-end" onPress={() => setSelectedFeed(null)}>
+          <Pressable onPress={() => {}} className="bg-white rounded-t-3xl p-6" style={{ minHeight: 300 }}>
+            {selectedFeed && (
+              <>
+                <View className="flex-row items-center gap-3 mb-4">
+                  <View className={`w-11 h-11 rounded-2xl items-center justify-center ${FEED_TYPE_COLORS[selectedFeed.type]?.split(' ')[0] ?? 'bg-surface'}`}>
+                    <Ionicons name={FEED_ICONS[selectedFeed.type] ?? 'information-circle-outline'} size={22} color={selectedFeed.type === 'news' ? '#1d4ed8' : selectedFeed.type === 'tip' ? '#b45309' : selectedFeed.type === 'promo' ? '#15803d' : '#b91c1c'} />
+                  </View>
+                  <View className="flex-1">
+                    <View className={`self-start px-2 py-0.5 rounded-full mb-1 ${FEED_TYPE_COLORS[selectedFeed.type] ?? 'bg-surface'}`}>
+                      <Text className="text-xs font-semibold">{selectedFeed.tag}</Text>
+                    </View>
+                    <Text className="text-lg font-black text-fg">{selectedFeed.title}</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => setSelectedFeed(null)}>
+                    <Ionicons name="close-circle" size={26} color="#CBD5E1" />
+                  </TouchableOpacity>
+                </View>
+                <Text className="text-sm text-fg leading-relaxed">{selectedFeed.body}</Text>
+              </>
+            )}
+          </Pressable>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   )
 }

@@ -45,14 +45,14 @@ export class UsersService {
   }
 
   async getSubscription(userId: string) {
-    const [sub] = await db
+    const all = await db
       .select()
       .from(subscriptions)
       .where(eq(subscriptions.payerId, userId))
-      .orderBy(subscriptions.createdAt)
-      .limit(1)
+      .orderBy(desc(subscriptions.createdAt))
 
-    return sub ?? null
+    const active = all.find((s) => s.status === 'active')
+    return active ?? all[0] ?? null
   }
 
   async getDocuments(userId: string) {

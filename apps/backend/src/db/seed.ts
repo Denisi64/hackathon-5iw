@@ -50,18 +50,18 @@ async function seed() {
   // ── OFFRES ─────────────────────────────────────────────────────────────────
   console.log('📦 Insertion des offres...')
   await db.insert(offers).values([
-    { id: 'navigo_annuel',      name: 'Navigo Annuel',          description: 'Abonnement annuel tout réseau — 12e mois offert',    yearlyPrice: 99880,  monthlyPrice: 9080,  renewal: 'annual'    },
-    { id: 'navigo_senior',      name: 'Navigo Annuel Senior',   description: 'Tarif préférentiel 62 ans et plus (−50%)',           yearlyPrice: 54480,  monthlyPrice: 4540,  renewal: 'annual'    },
-    { id: 'navigo_mois',        name: 'Navigo Mois',            description: 'Abonnement mensuel sans engagement',                 yearlyPrice: null,   monthlyPrice: 9080,  renewal: 'monthly'   },
-    { id: 'navigo_semaine',     name: 'Navigo Semaine',         description: 'Forfait hebdomadaire du lundi au dimanche',          yearlyPrice: 168480, monthlyPrice: 12960, renewal: 'weekly'    },
-    { id: 'imagine_r_junior',   name: 'Imagine R Junior',       description: 'Enfants de moins de 11 ans',                        yearlyPrice: 2520,   monthlyPrice: 210,   renewal: 'annual'    },
-    { id: 'imagine_r_scolaire', name: 'Imagine R Scolaire',     description: 'Élèves de 11 à 25 ans (lycéens, collégiens)',        yearlyPrice: 40130,  monthlyPrice: 3344,  renewal: 'annual'    },
-    { id: 'imagine_r_etudiant', name: 'Imagine R Étudiant',     description: 'Étudiants de 18 à 28 ans (boursiers inclus)',        yearlyPrice: 40130,  monthlyPrice: 3344,  renewal: 'annual'    },
-    { id: 'liberte_plus',       name: 'Navigo Liberté+',        description: "Paiement à l'usage (~1,64 €/trajet)",                yearlyPrice: null,   monthlyPrice: null,  renewal: 'usage'     },
-    { id: 'tst_50',             name: 'TST Réduction 50%',      description: 'Solidarité transport 50% — bénéficiaires AME',       yearlyPrice: 54480,  monthlyPrice: 4540,  renewal: 'quarterly' },
-    { id: 'tst_75',             name: 'TST Solidarité 75%',     description: 'Solidarité transport 75% — CMU-C/CSS/ASS',          yearlyPrice: 27240,  monthlyPrice: 2270,  renewal: 'quarterly' },
-    { id: 'tst_gratuite',       name: 'TST Gratuité',           description: 'Transport gratuit — RSA sous conditions, ASS+CSS',   yearlyPrice: 0,      monthlyPrice: 0,     renewal: 'quarterly' },
-    { id: 'amethyste',          name: 'Améthyste',              description: 'Personnes reconnues handicapées (MDPH)',             yearlyPrice: null,   monthlyPrice: null,  renewal: 'annual'    },
+    { id: 'navigo_annuel',      name: 'Navigo Annuel',          description: 'Voyagez toute l\'année sans y penser — 12e mois offert, 50% remboursé par votre employeur.',    yearlyPrice: 99880,  monthlyPrice: 9080,  renewal: 'annual'    },
+    { id: 'navigo_senior',      name: 'Navigo Annuel Senior',   description: 'Le même abonnement illimité, à moitié prix dès 62 ans. Économisez jusqu\'à 540 €/an.',           yearlyPrice: 54480,  monthlyPrice: 4540,  renewal: 'annual'    },
+    { id: 'navigo_mois',        name: 'Navigo Mois',            description: 'Toutes les lignes, tout le mois, sans engagement. Résiliable à tout moment.',                    yearlyPrice: null,   monthlyPrice: 9080,  renewal: 'monthly'   },
+    { id: 'navigo_semaine',     name: 'Navigo Semaine',         description: 'Voyages illimités du lundi au dimanche. Idéal pour les déplacements ponctuels ou les vacances.',  yearlyPrice: 168480, monthlyPrice: 12960, renewal: 'weekly'    },
+    { id: 'imagine_r_junior',   name: 'Imagine R Junior',       description: 'Pour les enfants de moins de 11 ans résidant en IDF. Toutes zones pour seulement 25,20 €/an.',     yearlyPrice: 2520,   monthlyPrice: 210,   renewal: 'annual'    },
+    { id: 'imagine_r_scolaire', name: 'Imagine R Scolaire',     description: 'Élèves du primaire, secondaire et apprentis résidant en IDF. Toutes zones incluses.',             yearlyPrice: 40130,  monthlyPrice: 3344,  renewal: 'annual'    },
+    { id: 'imagine_r_etudiant', name: 'Imagine R Étudiant',     description: 'Moins de 26 ans, dans l\'enseignement supérieur, résidant en IDF. Tarif boursier disponible.',     yearlyPrice: 40130,  monthlyPrice: 3344,  renewal: 'annual'    },
+    { id: 'liberte_plus',       name: 'Navigo Liberté+',        description: 'Payez uniquement ce que vous utilisez, à 1,64 €/trajet. Aucun engagement, aucun abonnement.',      yearlyPrice: null,   monthlyPrice: null,  renewal: 'usage'     },
+    { id: 'tst_50',             name: 'TST Réduction 50%',      description: 'La moitié du prix pour les bénéficiaires de l\'AME. Votre droit automatiquement vérifié.',         yearlyPrice: 54480,  monthlyPrice: 4540,  renewal: 'quarterly' },
+    { id: 'tst_75',             name: 'TST Solidarité 75%',     description: '75% de réduction pour les bénéficiaires CMU-C, CSS ou ASS. Renouvelable tous les 3 mois.',        yearlyPrice: 27240,  monthlyPrice: 2270,  renewal: 'quarterly' },
+    { id: 'tst_gratuite',       name: 'TST Gratuité',           description: 'Transport 100% gratuit si vous bénéficiez du RSA ou de l\'ASS avec la CSS. Zéro euro par mois.',  yearlyPrice: 0,      monthlyPrice: 0,     renewal: 'quarterly' },
+    { id: 'amethyste',          name: 'Améthyste',              description: 'Un abonnement adapté, reconnu par la MDPH. Voyagez librement sur tout le réseau francilien.',      yearlyPrice: null,   monthlyPrice: null,  renewal: 'annual'    },
   ])
 
   // ── UTILISATEURS ───────────────────────────────────────────────────────────
