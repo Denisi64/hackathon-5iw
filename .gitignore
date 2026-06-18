@@ -24,6 +24,9 @@ apps/frontend/coverage/
 apps/backend/coverage/
 apps/frontend/reports/
 apps/backend/reports/
+apps/mobile/android/
+apps/mobile/ios/
+apps/mobile/reports/
 .turbo/
 .DS_Store
 .pnpm-store/
