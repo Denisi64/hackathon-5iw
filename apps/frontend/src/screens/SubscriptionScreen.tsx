@@ -24,6 +24,7 @@ import lucasImage from '../assets/images/personas/lucas.png'
 
 type Answers = {
   age?: number
+  student?: boolean
   scholarship?: boolean
   zones: number
   daysPerWeek?: number
@@ -46,6 +47,12 @@ type DocStatus = 'idle' | 'analyzing' | 'valid'
 const TOTAL_STEPS = 7
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+function inferProfileFromAnswers({ age, student }: Answers): ProfileSlug {
+  if (student && (age === undefined || age < 29)) return 'student'
+  if ((age ?? 0) >= 62) return 'senior'
+  return 'worker'
+}
+
 export default function SubscriptionScreen() {
   const { t } = useTranslation()
   const { locale } = useLocale()
@@ -67,6 +74,7 @@ export default function SubscriptionScreen() {
     () => (profileDef ? PLANS.find((f) => f.id === profileDef.recommendedPlanId) : undefined),
     [profileDef],
   )
+  const primaryDocumentKey = profileDef?.documents[0] ?? 'school_certificate'
 
   // Reset document statuses when the profile changes.
   useEffect(() => {
@@ -187,11 +195,12 @@ export default function SubscriptionScreen() {
             onContinue={() => { void onNext() }}
           />
         )}
-        {step === 2 && plan && <Step2Solution plan={plan} onContinue={() => { void onNext() }} />}
-        {step === 3 && (
+        {step === 2 && plan && <Step2Solution plan={plan} answers={answers} locale={locale} onContinue={() => { void onNext() }} />}
+        {step === 3 && profileDef && (
           <Step3DocumentUpload
-            status={docStatuses.school_certificate ?? 'idle'}
-            onUpload={(file) => handleUpload('school_certificate', file)}
+            documentLabel={t(`subscription.documents.${primaryDocumentKey}.label`)}
+            status={docStatuses[primaryDocumentKey] ?? 'idle'}
+            onUpload={(file) => handleUpload(primaryDocumentKey, file)}
             onContinue={() => { void onNext() }}
           />
         )}
@@ -336,6 +345,7 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
 }) {
   const { t } = useTranslation()
   const age = answers.age ?? 20
+  const isStudent = answers.student ?? true
   const isScholarship = answers.scholarship ?? true
   const mainLocation = answers.mainLocation ?? t('subscription.situationIntro.defaultLocation')
 
@@ -344,13 +354,15 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
   }
 
   function handleContinue() {
-    setProfile('student')
-    setAnswers({
+    const nextAnswers = {
       ...answers,
       age,
+      student: isStudent,
       scholarship: isScholarship,
       mainLocation,
-    })
+    }
+    setProfile(inferProfileFromAnswers(nextAnswers))
+    setAnswers(nextAnswers)
     onContinue()
   }
 
@@ -391,7 +403,7 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
           icon={<GraduationCap className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
           label={t('subscription.situationIntro.studentQuestion')}
         >
-          <SegmentedYesNo value onChange={() => setProfile('student')} />
+          <SegmentedYesNo value={isStudent} onChange={(value) => updateAnswer({ student: value })} />
         </SituationFormRow>
 
         <SituationFormRow
@@ -453,10 +465,25 @@ function SegmentedYesNo({ value, onChange }: { value: boolean; onChange: (value:
   )
 }
 
-function Step2Solution({ plan, onContinue }: { plan: Plan; onContinue: () => void }) {
+function Step2Solution({ plan, answers, locale, onContinue }: {
+  plan: Plan
+  answers: Answers
+  locale: string
+  onContinue: () => void
+}) {
   const { t } = useTranslation()
-  const reasons = t('subscription.solutionIntro.reasons', { returnObjects: true }) as unknown as string[]
-  const reasonList = Array.isArray(reasons) ? reasons : []
+  const reasonList = [
+    t(answers.student === false ? 'subscription.solutionIntro.reasonStudentNo' : 'subscription.solutionIntro.reasonStudentYes'),
+    t(answers.scholarship === false ? 'subscription.solutionIntro.reasonScholarshipNo' : 'subscription.solutionIntro.reasonScholarshipYes'),
+    t('subscription.solutionIntro.reasonLocation', {
+      location: answers.mainLocation || t('subscription.situationIntro.defaultLocation'),
+    }),
+  ]
+  const priceLabel = plan.monthlyPrice !== null
+    ? `${formatCurrency(plan.monthlyPrice, locale)}${t('simulator.perMonth')}`
+    : plan.yearlyPrice !== null
+      ? `${formatCurrency(plan.yearlyPrice, locale)}${t('simulator.perYear')}`
+      : t('plans.priceVariable')
 
   return (
     <EpisodeFrame>
@@ -491,7 +518,7 @@ function Step2Solution({ plan, onContinue }: { plan: Plan; onContinue: () => voi
         </ul>
 
         <div className="mt-7 flex items-center justify-between gap-4 border-t border-slate-200 pt-5 lg:mt-6 xl:mt-7">
-          <p className="text-2xl font-black tracking-normal text-[#096AF3] sm:text-3xl lg:text-2xl xl:text-3xl">{t('subscription.solutionIntro.price')}</p>
+          <p className="text-2xl font-black tracking-normal text-[#096AF3] sm:text-3xl lg:text-2xl xl:text-3xl">{priceLabel}</p>
           <button
             type="button"
             className="min-h-0 rounded-lg px-2 py-1 text-sm font-black text-[#096AF3] transition hover:bg-[#096AF3]/5 sm:text-base lg:text-sm xl:text-base"
@@ -508,7 +535,8 @@ function Step2Solution({ plan, onContinue }: { plan: Plan; onContinue: () => voi
   )
 }
 
-function Step3DocumentUpload({ status, onUpload, onContinue }: {
+function Step3DocumentUpload({ documentLabel, status, onUpload, onContinue }: {
+  documentLabel: string
   status: DocStatus
   onUpload: (file: File) => void
   onContinue: () => void
@@ -531,7 +559,7 @@ function Step3DocumentUpload({ status, onUpload, onContinue }: {
       />
 
       <h2 className="mt-10 text-2xl font-black leading-tight tracking-normal sm:text-3xl lg:mt-8 lg:text-2xl xl:text-3xl">
-        {t('subscription.documentIntro.phoneTitle')}
+        {t('subscription.documentIntro.phoneTitle', { document: documentLabel })}
       </h2>
 
       <input

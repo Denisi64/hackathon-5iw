@@ -367,18 +367,17 @@
       "episodeProgress": "エピソード 2/5",
       "phoneTitle": "ルーカスさん、あなたの状況に最も合った解決策はこちらです。",
       "why": "理由",
-      "reasons": [
-        "学生",
-        "奨学金対象",
-        "オクシタニーでの日常移動"
-      ],
-      "price": "40€/月",
       "learnMore": "詳しく見る",
-      "continue": "このエピソードを始める"
+      "continue": "このエピソードを始める",
+      "reasonStudentYes": "学生",
+      "reasonStudentNo": "学生プロフィールを確認してください",
+      "reasonScholarshipYes": "奨学金対象",
+      "reasonScholarshipNo": "奨学金なし",
+      "reasonLocation": "日常移動：{{location}}"
     },
     "documentIntro": {
       "episodeProgress": "エピソード 3/5",
-      "phoneTitle": "在学証明書または学生証を追加してください。",
+      "phoneTitle": "{{document}}を追加してください。",
       "drop": "ここにファイルをドロップ",
       "browse": "または参照",
       "analyzing": "ファイルを分析中...",

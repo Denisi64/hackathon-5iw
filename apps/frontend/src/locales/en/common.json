@@ -367,18 +367,17 @@
       "episodeProgress": "Episode 2 of 5",
       "phoneTitle": "Lucas, here is the solution best suited to your situation.",
       "why": "Why?",
-      "reasons": [
-        "Student",
-        "Scholarship holder",
-        "Daily travel around Occitanie"
-      ],
-      "price": "€40/month",
       "learnMore": "Learn more",
-      "continue": "Start this episode"
+      "continue": "Start this episode",
+      "reasonStudentYes": "Student",
+      "reasonStudentNo": "Student profile to confirm",
+      "reasonScholarshipYes": "Scholarship holder",
+      "reasonScholarshipNo": "No scholarship declared",
+      "reasonLocation": "Daily travel: {{location}}"
     },
     "documentIntro": {
       "episodeProgress": "Episode 3 of 5",
-      "phoneTitle": "Add your enrollment certificate or your student card.",
+      "phoneTitle": "Add your {{document}}.",
       "drop": "Drop your file here",
       "browse": "or browse",
       "analyzing": "Analyzing file...",

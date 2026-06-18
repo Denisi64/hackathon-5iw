@@ -367,18 +367,17 @@
       "episodeProgress": "Episodio 2 di 5",
       "phoneTitle": "Lucas, ecco la soluzione più adatta alla tua situazione.",
       "why": "Perché?",
-      "reasons": [
-        "Studente",
-        "Borsista",
-        "Spostamenti quotidiani in Occitania"
-      ],
-      "price": "40€/mese",
       "learnMore": "Scopri di più",
-      "continue": "Inizia questo episodio"
+      "continue": "Inizia questo episodio",
+      "reasonStudentYes": "Studente",
+      "reasonStudentNo": "Profilo studente da confermare",
+      "reasonScholarshipYes": "Borsista",
+      "reasonScholarshipNo": "Nessuna borsa dichiarata",
+      "reasonLocation": "Spostamenti quotidiani: {{location}}"
     },
     "documentIntro": {
       "episodeProgress": "Episodio 3 di 5",
-      "phoneTitle": "Aggiungi il certificato di iscrizione o la tessera studente.",
+      "phoneTitle": "Aggiungi il tuo documento: {{document}}.",
       "drop": "Trascina qui il file",
       "browse": "o sfoglia",
       "analyzing": "Analisi del file in corso...",

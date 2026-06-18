@@ -367,18 +367,17 @@
       "episodeProgress": "Episodio 2 de 5",
       "phoneTitle": "Lucas, esta es la solución más adecuada para su situación.",
       "why": "¿Por qué?",
-      "reasons": [
-        "Estudiante",
-        "Becario",
-        "Desplazamientos diarios en Occitania"
-      ],
-      "price": "40€/mes",
       "learnMore": "Más información",
-      "continue": "Empezar este episodio"
+      "continue": "Empezar este episodio",
+      "reasonStudentYes": "Estudiante",
+      "reasonStudentNo": "Perfil de estudiante por confirmar",
+      "reasonScholarshipYes": "Becario",
+      "reasonScholarshipNo": "Sin beca declarada",
+      "reasonLocation": "Desplazamientos diarios: {{location}}"
     },
     "documentIntro": {
       "episodeProgress": "Episodio 3 de 5",
-      "phoneTitle": "Añada su certificado de escolaridad o su carnet de estudiante.",
+      "phoneTitle": "Añada su {{document}}.",
       "drop": "Suelte su archivo aquí",
       "browse": "o examine",
       "analyzing": "Analizando el archivo...",

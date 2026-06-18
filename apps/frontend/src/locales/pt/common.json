@@ -367,18 +367,17 @@
       "episodeProgress": "Episódio 2 de 5",
       "phoneTitle": "Lucas, aqui está a solução mais adequada à sua situação.",
       "why": "Porquê?",
-      "reasons": [
-        "Estudante",
-        "Bolseiro",
-        "Deslocações diárias na Occitânia"
-      ],
-      "price": "40€/mês",
       "learnMore": "Saber mais",
-      "continue": "Começar este episódio"
+      "continue": "Começar este episódio",
+      "reasonStudentYes": "Estudante",
+      "reasonStudentNo": "Perfil de estudante a confirmar",
+      "reasonScholarshipYes": "Bolseiro",
+      "reasonScholarshipNo": "Sem bolsa declarada",
+      "reasonLocation": "Deslocações diárias: {{location}}"
     },
     "documentIntro": {
       "episodeProgress": "Episódio 3 de 5",
-      "phoneTitle": "Adicione o seu comprovativo de matrícula ou cartão de estudante.",
+      "phoneTitle": "Adicione o seu {{document}}.",
       "drop": "Solte o seu ficheiro aqui",
       "browse": "ou procure",
       "analyzing": "A analisar o ficheiro...",

@@ -367,18 +367,17 @@
       "episodeProgress": "Épisode 2 sur 5",
       "phoneTitle": "Lucas, voici la solution la plus adaptée à votre situation.",
       "why": "Pourquoi ?",
-      "reasons": [
-        "Étudiant",
-        "Boursier",
-        "Déplacements quotidiens en Occitanie"
-      ],
-      "price": "40€/mois",
       "learnMore": "En savoir plus",
-      "continue": "Commencer cet épisode"
+      "continue": "Commencer cet épisode",
+      "reasonStudentYes": "Étudiant",
+      "reasonStudentNo": "Profil étudiant à confirmer",
+      "reasonScholarshipYes": "Boursier",
+      "reasonScholarshipNo": "Sans bourse déclarée",
+      "reasonLocation": "Déplacements quotidiens : {{location}}"
     },
     "documentIntro": {
       "episodeProgress": "Épisode 3 sur 5",
-      "phoneTitle": "Ajoutez votre justificatif de scolarité ou votre carte d’étudiant.",
+      "phoneTitle": "Ajoutez votre {{document}}.",
       "drop": "Déposez votre fichier ici",
       "browse": "ou parcourez",
       "analyzing": "Analyse du fichier en cours...",
