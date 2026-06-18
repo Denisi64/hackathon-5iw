@@ -378,7 +378,13 @@
       "passwordMismatch": "Le password non coincidono",
       "noAccount": "Nessun account trovato per questa email",
       "badPassword": "Password errata",
-      "network": "Impossibile contattare il server di autenticazione"
+      "network": "Impossibile contattare il server di autenticazione",
+      "franceConnect": "Accesso FranceConnect non disponibile"
+    },
+    "franceConnect": {
+      "login": "Accedi con FranceConnect",
+      "register": "Crea il mio account con FranceConnect",
+      "or": "o"
     }
   },
   "plans": {

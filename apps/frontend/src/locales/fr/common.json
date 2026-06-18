@@ -378,7 +378,13 @@
       "passwordMismatch": "Les mots de passe ne correspondent pas",
       "noAccount": "Aucun compte trouvé avec cet email",
       "badPassword": "Mot de passe incorrect",
-      "network": "Impossible de joindre le serveur d'authentification"
+      "network": "Impossible de joindre le serveur d'authentification",
+      "franceConnect": "Connexion FranceConnect indisponible"
+    },
+    "franceConnect": {
+      "login": "Se connecter avec FranceConnect",
+      "register": "Créer mon compte avec FranceConnect",
+      "or": "ou"
     }
   },
   "plans": {

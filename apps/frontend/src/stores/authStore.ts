@@ -43,6 +43,7 @@ interface AuthState {
     language?: string
   }) => Promise<{ ok: true } | { ok: false; error: string }>
   login: (email: string, password: string) => Promise<{ ok: true } | { ok: false; error: string }>
+  loginWithFranceConnect: () => Promise<{ ok: true } | { ok: false; error: string }>
   logout: () => void
 }
 
@@ -95,6 +96,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       return { ok: true }
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message ?? 'Identifiants invalides'
+      return { ok: false, error: String(msg) }
+    }
+  },
+
+  loginWithFranceConnect: async () => {
+    try {
+      const { data } = await api.post<{ access_token: string; refresh_token: string }>('/auth/franceconnect/mock')
+      setTokens(data.access_token, data.refresh_token)
+      const { data: me } = await api.get<UserAccount>('/auth/me')
+      set({ user: me, token: data.access_token })
+      return { ok: true }
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message ?? 'Erreur FranceConnect'
       return { ok: false, error: String(msg) }
     }
   },

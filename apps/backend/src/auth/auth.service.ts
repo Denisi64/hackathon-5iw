@@ -48,6 +48,28 @@ export class AuthService {
     return this.buildTokens(user)
   }
 
+  async franceConnectMock() {
+    const email = 'lucas.franceconnect@example.com'
+    const [existingUser] = await db.select().from(users).where(eq(users.email, email)).limit(1)
+    if (existingUser) return this.buildTokens(existingUser)
+
+    const [user] = await db
+      .insert(users)
+      .values({
+        email,
+        passwordHash: null,
+        firstName: 'Lucas',
+        lastName: 'Martin',
+        profile: 'student',
+        language: 'fr',
+        gdprConsent: true,
+        gdprConsentAt: new Date(),
+      })
+      .returning()
+
+    return this.buildTokens(user)
+  }
+
   async getMe(userId: string) {
     const [user] = await db
       .select({

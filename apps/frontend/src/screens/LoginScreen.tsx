@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Eye, EyeOff, LogIn, Lock, Mail } from 'lucide-react'
+import { Eye, EyeOff, LogIn, Lock, Mail, ShieldCheck } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Input } from '../components/ui/Input'
@@ -14,6 +14,7 @@ export default function LoginScreen() {
   const navigate = useNavigate()
   const location = useLocation()
   const login = useAuthStore((s) => s.login)
+  const loginWithFranceConnect = useAuthStore((s) => s.loginWithFranceConnect)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -21,6 +22,7 @@ export default function LoginScreen() {
   const [error, setError] = useState<string | null>(null)
   const [emailError, setEmailError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isFranceConnectSubmitting, setIsFranceConnectSubmitting] = useState(false)
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -49,6 +51,21 @@ export default function LoginScreen() {
     navigate(from, { replace: true })
   }
 
+  async function onFranceConnect() {
+    setError(null)
+    setEmailError(null)
+    setIsFranceConnectSubmitting(true)
+    const result = await loginWithFranceConnect()
+    setIsFranceConnectSubmitting(false)
+
+    if (!result.ok) {
+      setError(t('auth.errors.franceConnect'))
+      return
+    }
+    const from = (location.state as { from?: string } | null)?.from ?? '/mon-espace'
+    navigate(from, { replace: true })
+  }
+
   return (
     <div className="mx-auto max-w-md flex flex-col gap-8 py-12">
       <header className="flex flex-col gap-3 text-center">
@@ -64,6 +81,25 @@ export default function LoginScreen() {
       <Card>
         <Card.Body>
           <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
+            <Button
+              type="button"
+              variant="outline"
+              size="md"
+              fullWidth
+              loading={isFranceConnectSubmitting}
+              onClick={onFranceConnect}
+              leftIcon={<ShieldCheck className="h-4 w-4 text-[#000091]" aria-hidden="true" />}
+              className="border-[#000091]/30 text-[#000091] hover:border-[#000091] hover:bg-[#000091]/5"
+            >
+              {t('auth.franceConnect.login')}
+            </Button>
+
+            <div className="flex items-center gap-3 text-xs font-medium uppercase tracking-normal text-fg-muted">
+              <span className="h-px flex-1 bg-border-default" />
+              {t('auth.franceConnect.or')}
+              <span className="h-px flex-1 bg-border-default" />
+            </div>
+
             <Input
               label={t('auth.fields.email')}
               type="email"

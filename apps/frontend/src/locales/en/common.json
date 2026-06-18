@@ -378,7 +378,13 @@
       "passwordMismatch": "Passwords don't match",
       "noAccount": "No account found for this email",
       "badPassword": "Incorrect password",
-      "network": "Unable to reach the authentication server"
+      "network": "Unable to reach the authentication server",
+      "franceConnect": "FranceConnect sign-in is unavailable"
+    },
+    "franceConnect": {
+      "login": "Sign in with FranceConnect",
+      "register": "Create my account with FranceConnect",
+      "or": "or"
     }
   },
   "plans": {
