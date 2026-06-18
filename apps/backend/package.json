@@ -13,7 +13,7 @@
     "db:generate": "node_modules/.bin/drizzle-kit generate",
     "db:migrate": "node_modules/.bin/drizzle-kit migrate",
     "db:prepare": "node_modules/.bin/tsx src/db/prepare.ts",
-    "db:push": "pnpm db:prepare && node_modules/.bin/drizzle-kit push --force",
+    "db:push": "pnpm db:prepare",
     "db:seed": "node_modules/.bin/tsx src/db/seed.ts"
   },
   "dependencies": {
