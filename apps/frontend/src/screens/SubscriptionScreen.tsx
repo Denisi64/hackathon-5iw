@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft, ArrowRight, Check, CheckCircle2, Loader2, Upload, Mail,
-  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, WalletCards, CloudUpload,
+  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, WalletCards, CloudUpload, Briefcase,
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'

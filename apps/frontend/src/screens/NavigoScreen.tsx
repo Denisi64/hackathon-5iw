@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Calendar, CheckCircle2, CreditCard, MapPin, QrCode, RefreshCw } from 'lucide-react'
+import { Calendar, CheckCircle2, CreditCard, MapPin, RefreshCw } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { NavigoCard } from '../components/domain/NavigoCard'
@@ -61,12 +61,18 @@ export default function NavigoScreen() {
             </div>
           </div>
 
-          {/* QR de validation (mock) */}
+          {/* QR de validation */}
           <Card>
             <Card.Body>
               <div className="flex flex-col items-center gap-3 py-4 text-center">
-                <div className="grid h-40 w-40 place-items-center rounded-2xl border-2 border-border-default bg-surface text-fg-subtle">
-                  <QrCode className="h-24 w-24" aria-hidden="true" />
+                <div className="grid h-40 w-40 place-items-center rounded-2xl border-2 border-border-default bg-white p-2">
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=6&data=NAVIGO-${encodeURIComponent(sub.id)}`}
+                    alt={t('navigo.qr.title')}
+                    width={144}
+                    height={144}
+                    className="h-full w-full object-contain"
+                  />
                 </div>
                 <p className="text-sm font-semibold text-fg">{t('navigo.qr.title')}</p>
                 <p className="text-xs text-fg-muted">{t('navigo.qr.subtitle')}</p>

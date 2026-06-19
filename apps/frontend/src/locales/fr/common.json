@@ -303,7 +303,7 @@
     "stepBadge": "ÉTAPE {{step}}",
     "solutionIntro": {
       "episodeProgress": "Épisode 2 sur 5",
-      "phoneTitle": "Lucas, voici la solution la plus adaptée à votre situation.",
+      "phoneTitle": "Voici la solution la plus adaptée à votre situation.",
       "why": "Pourquoi ?",
       "learnMore": "En savoir plus",
       "continue": "Commencer cet épisode",
@@ -326,14 +326,14 @@
     },
     "validatedIntro": {
       "episodeProgress": "Épisode 4 sur 5",
-      "goodNews": "Bonne nouvelle Lucas !",
+      "goodNews": "Bonne nouvelle !",
       "phoneTitle": "Votre forfait est validé.",
       "validFrom": "Valable à partir du {{date}}",
       "continue": "Voir mon abonnement"
     },
     "seasonIntro": {
       "episodeProgress": "Épisode 5 sur 5",
-      "greeting": "Bonjour Lucas 👋",
+      "greeting": "Bonjour 👋",
       "observation": "Nous avons remarqué que votre situation a évolué.",
       "newSeason": "Une nouvelle saison commence :",
       "seasonName": "Premier emploi",
@@ -442,14 +442,14 @@
         "description": "Transport gratuit pour les bénéficiaires RSA sous conditions ou ASS + CSS sans participation."
       },
       "amethyst": {
-        "name": "Améthyste",
+        "name": "Personne en situation de handicap",
         "description": "Forfait pour les personnes en situation de handicap, selon département."
       }
     },
     "list": {
       "kicker": "Catalogue des forfaits",
       "title": "Trouvez le forfait qui accompagne votre prochain trajet.",
-      "subtitle": "Une liste globale des forfaits Navigo, Imagine R, Solidarité et Améthyste, alignée avec le simulateur et le tunnel de souscription.",
+      "subtitle": "Une liste globale des forfaits Navigo, Imagine R, Solidarité et personne en situation de handicap, alignée avec le simulateur et le tunnel de souscription.",
       "recommendationTitle": "Besoin d'une recommandation ?",
       "recommendationBody": "Le simulateur trie ces forfaits selon votre profil, votre âge et vos usages.",
       "openSimulator": "Ouvrir le simulateur",
@@ -463,7 +463,7 @@
         "school": "Scolaire",
         "senior": "Senior",
         "solidarity": "Solidarité",
-        "amethyst": "Améthyste"
+        "amethyst": "Personne en situation de handicap"
       }
     },
     "detail": {

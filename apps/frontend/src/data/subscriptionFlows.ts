@@ -18,7 +18,7 @@ export interface ProfileDef {
 
 export const PROFILES: ProfileDef[] = [
   { slug: 'student',   icon: GraduationCap, color: 'purple',  recommendedPlanId: 'imagine_r_student', documents: ['school_certificate', 'scholarship_certificate'] },
-  { slug: 'worker',    icon: Briefcase,     color: 'primary', recommendedPlanId: 'navigo_month',        documents: ['employment_contract'] },
+  { slug: 'worker',    icon: Briefcase,     color: 'primary', recommendedPlanId: 'navigo_yearly',       documents: ['employment_contract'] },
   { slug: 'senior',    icon: Leaf,          color: 'green',   recommendedPlanId: 'navigo_senior',      documents: ['identity_document'] },
   { slug: 'jobseeker', icon: Search,        color: 'pink',    recommendedPlanId: 'navigo_solidarity_75', documents: ['france_connect'] },
   { slug: 'parent',    icon: Users,         color: 'amber',   recommendedPlanId: 'imagine_r_school', documents: ['family_record_book'] },

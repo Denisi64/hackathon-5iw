@@ -245,7 +245,7 @@ export const PLANS: Plan[] = [
   },
   {
     id: 'amethyst',
-    name: 'Amethyste',
+    name: 'Personne en situation de handicap',
     type: 'yearly',
     description: 'Forfait pour les personnes en situation de handicap, selon le departement.',
     image: amethystImage,
