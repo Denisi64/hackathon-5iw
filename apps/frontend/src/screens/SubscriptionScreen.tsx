@@ -20,7 +20,7 @@ import { documentsService } from '../services/documents'
 import { paymentsService } from '../services/payments'
 import { useAuthStore } from '../stores/authStore'
 import { getPlanName } from '../utils/planDisplay'
-import lucasImage from '../assets/images/personas/lucas.png'
+import subscriptionManImage from '../assets/images/personas/subscriptionMan.png'
 
 type Answers = {
   age?: number
@@ -272,7 +272,7 @@ function EpisodeFrame({ children }: { children: ReactNode }) {
     <section className="relative min-h-[720px] overflow-hidden rounded-[2rem] bg-white px-0 pb-4 pt-4 shadow-[0_26px_80px_rgba(9,106,243,0.08)] sm:min-h-[640px] lg:min-h-[540px] lg:px-12 lg:pb-8 lg:pt-8 xl:min-h-[580px] xl:px-16">
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#096AF3]/10 to-transparent" aria-hidden="true" />
       <img
-        src={lucasImage}
+        src={subscriptionManImage}
         alt=""
         aria-hidden="true"
         className="absolute bottom-0 left-[-56px] h-[620px] w-[430px] rounded-[2rem] object-cover object-[42%_50%] shadow-[0_24px_70px_rgba(7,5,37,0.16)] sm:left-8 sm:h-[560px] sm:w-[440px] lg:left-10 lg:h-[500px] lg:w-[390px] lg:top-1/2 lg:-translate-y-1/2 xl:left-14 xl:h-[540px] xl:w-[420px]"
