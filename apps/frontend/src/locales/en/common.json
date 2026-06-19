@@ -303,7 +303,7 @@
     "stepBadge": "STEP {{step}}",
     "solutionIntro": {
       "episodeProgress": "Episode 2 of 5",
-      "phoneTitle": "Lucas, here is the solution best suited to your situation.",
+      "phoneTitle": "Here is the solution best suited to your situation.",
       "why": "Why?",
       "learnMore": "Learn more",
       "continue": "Start this episode",
@@ -326,14 +326,14 @@
     },
     "validatedIntro": {
       "episodeProgress": "Episode 4 of 5",
-      "goodNews": "Good news, Lucas!",
+      "goodNews": "Good news!",
       "phoneTitle": "Your pass is approved.",
       "validFrom": "Valid from {{date}}",
       "continue": "View my subscription"
     },
     "seasonIntro": {
       "episodeProgress": "Episode 5 of 5",
-      "greeting": "Hello Lucas 👋",
+      "greeting": "Hello 👋",
       "observation": "We noticed that your situation has changed.",
       "newSeason": "A new season begins:",
       "seasonName": "First job",
@@ -442,14 +442,14 @@
         "description": "Free transport for eligible RSA beneficiaries or ASS + CSS without contribution."
       },
       "amethyst": {
-        "name": "Améthyste",
+        "name": "Person with a disability",
         "description": "Plan for people with disabilities, depending on department."
       }
     },
     "list": {
       "kicker": "Plan catalog",
       "title": "Find the plan that fits your next journey.",
-      "subtitle": "A global list of Navigo, Imagine R, Solidarity and Améthyste plans, aligned with the simulator and subscription flow.",
+      "subtitle": "A global list of Navigo, Imagine R, Solidarity and person with a disability plans, aligned with the simulator and subscription flow.",
       "recommendationTitle": "Need a recommendation?",
       "recommendationBody": "The simulator sorts these plans according to your profile, age and travel habits.",
       "openSimulator": "Open the simulator",
@@ -463,7 +463,7 @@
         "school": "School",
         "senior": "Senior",
         "solidarity": "Solidarity",
-        "amethyst": "Améthyste"
+        "amethyst": "Person with a disability"
       }
     },
     "detail": {

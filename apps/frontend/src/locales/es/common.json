@@ -303,7 +303,7 @@
     "stepBadge": "PASO {{step}}",
     "solutionIntro": {
       "episodeProgress": "Episodio 2 de 5",
-      "phoneTitle": "Lucas, esta es la solución más adecuada para su situación.",
+      "phoneTitle": "Esta es la solución más adecuada para su situación.",
       "why": "¿Por qué?",
       "learnMore": "Más información",
       "continue": "Empezar este episodio",
@@ -326,14 +326,14 @@
     },
     "validatedIntro": {
       "episodeProgress": "Episodio 4 de 5",
-      "goodNews": "¡Buenas noticias, Lucas!",
+      "goodNews": "¡Buenas noticias!",
       "phoneTitle": "Tu abono está validado.",
       "validFrom": "Válido a partir del {{date}}",
       "continue": "Ver mi suscripción"
     },
     "seasonIntro": {
       "episodeProgress": "Episodio 5 de 5",
-      "greeting": "Hola Lucas 👋",
+      "greeting": "Hola 👋",
       "observation": "Hemos notado que tu situación ha cambiado.",
       "newSeason": "Comienza una nueva temporada:",
       "seasonName": "Primer empleo",
@@ -442,14 +442,14 @@
         "description": "Transporte gratuito para beneficiarios RSA elegibles o ASS + CSS sin participación."
       },
       "amethyst": {
-        "name": "Améthyste",
+        "name": "Persona con discapacidad",
         "description": "Plan para personas con discapacidad, según el departamento."
       }
     },
     "list": {
       "kicker": "Catálogo de planes",
       "title": "Encuentra el plan que acompaña tu próximo trayecto.",
-      "subtitle": "Una lista global de planes Navigo, Imagine R, Solidaridad y Améthyste, alineada con el simulador y el flujo de suscripción.",
+      "subtitle": "Una lista global de planes Navigo, Imagine R, Solidaridad y persona con discapacidad, alineada con el simulador y el flujo de suscripción.",
       "recommendationTitle": "¿Necesitas una recomendación?",
       "recommendationBody": "El simulador ordena estos planes según tu perfil, edad y hábitos de viaje.",
       "openSimulator": "Abrir el simulador",
@@ -463,7 +463,7 @@
         "school": "Escolar",
         "senior": "Senior",
         "solidarity": "Solidaridad",
-        "amethyst": "Améthyste"
+        "amethyst": "Persona con discapacidad"
       }
     },
     "detail": {

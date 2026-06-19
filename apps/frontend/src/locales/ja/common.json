@@ -303,7 +303,7 @@
     "stepBadge": "ステップ {{step}}",
     "solutionIntro": {
       "episodeProgress": "エピソード 2/5",
-      "phoneTitle": "ルーカスさん、あなたの状況に最も合った解決策はこちらです。",
+      "phoneTitle": "あなたの状況に最も合った解決策はこちらです。",
       "why": "理由",
       "learnMore": "詳しく見る",
       "continue": "このエピソードを始める",
@@ -326,14 +326,14 @@
     },
     "validatedIntro": {
       "episodeProgress": "エピソード4/5",
-      "goodNews": "Lucas、よいお知らせです！",
+      "goodNews": "よいお知らせです！",
       "phoneTitle": "あなたの定期券が承認されました。",
       "validFrom": "{{date}}から有効",
       "continue": "サブスクリプションを見る"
     },
     "seasonIntro": {
       "episodeProgress": "エピソード5/5",
-      "greeting": "こんにちは Lucas 👋",
+      "greeting": "こんにちは 👋",
       "observation": "状況が変わったことを確認しました。",
       "newSeason": "新しいシーズンが始まります:",
       "seasonName": "初めての仕事",
@@ -442,14 +442,14 @@
         "description": "対象RSA受給者、またはASS + CSS自己負担なし向けの無料交通です。"
       },
       "amethyst": {
-        "name": "Améthyste",
+        "name": "障害のある方",
         "description": "障害のある方向けのプランで、県により条件が異なります。"
       }
     },
     "list": {
       "kicker": "プランカタログ",
       "title": "次の移動に合うプランを見つけましょう。",
-      "subtitle": "Navigo、Imagine R、Solidarity、Améthyste のプラン一覧。シミュレーターと申込フローに連動しています。",
+      "subtitle": "Navigo、Imagine R、Solidarity、障害のある方 のプラン一覧。シミュレーターと申込フローに連動しています。",
       "recommendationTitle": "おすすめが必要ですか？",
       "recommendationBody": "シミュレーターがプロフィール、年齢、利用習慣に合わせてプランを並べ替えます。",
       "openSimulator": "シミュレーターを開く",
@@ -463,7 +463,7 @@
         "school": "児童・生徒",
         "senior": "シニア",
         "solidarity": "ソリダリティ",
-        "amethyst": "Améthyste"
+        "amethyst": "障害のある方"
       }
     },
     "detail": {

@@ -2,8 +2,8 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNod
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
-  ArrowLeft, ArrowRight, Briefcase, Check, CheckCircle2, Loader2, Mail,
-  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, WalletCards, CloudUpload,
+  ArrowLeft, ArrowRight, Check, CheckCircle2, Loader2, Upload, Mail,
+  User as UserIcon, Lock, CalendarDays, GraduationCap, MapPin, WalletCards, CloudUpload, Briefcase,
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -20,7 +20,6 @@ import { documentsService } from '../services/documents'
 import { paymentsService } from '../services/payments'
 import { useAuthStore } from '../stores/authStore'
 import { getPlanName } from '../utils/planDisplay'
-import lucasImage from '../assets/images/personas/lucas.png'
 
 type Answers = {
   age?: number
@@ -236,18 +235,10 @@ function Header({ step, profileName }: { step: number; profileName?: string }) {
 
 function EpisodeFrame({ children }: { children: ReactNode }) {
   return (
-    <section className="relative min-h-[720px] overflow-hidden rounded-[2rem] bg-white px-0 pb-4 pt-4 shadow-[0_26px_80px_rgba(9,106,243,0.08)] sm:min-h-[640px] lg:min-h-[540px] lg:px-12 lg:pb-8 lg:pt-8 xl:min-h-[580px] xl:px-16">
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#096AF3]/10 to-transparent" aria-hidden="true" />
-      <img
-        src={lucasImage}
-        alt=""
-        aria-hidden="true"
-        className="absolute bottom-0 left-[-56px] h-[620px] w-[430px] rounded-[2rem] object-cover object-[42%_50%] shadow-[0_24px_70px_rgba(7,5,37,0.16)] sm:left-8 sm:h-[560px] sm:w-[440px] lg:left-10 lg:h-[500px] lg:w-[390px] lg:top-1/2 lg:-translate-y-1/2 xl:left-14 xl:h-[540px] xl:w-[420px]"
-        draggable={false}
-      />
-
-      <div className="relative z-10 ml-auto flex min-h-[690px] w-[min(66%,620px)] min-w-[330px] items-center justify-end pr-0 sm:min-h-[610px] sm:pr-10 lg:min-h-[500px] lg:w-[min(60%,620px)] lg:min-w-0 lg:items-center lg:pr-0 xl:min-h-[540px] xl:w-[min(58%,680px)]">
-        <div className="w-full max-w-[430px] rounded-[2.25rem] border border-slate-200 bg-white px-6 pb-7 pt-5 text-[#070525] shadow-[0_28px_80px_rgba(7,5,37,0.18)] sm:max-w-[500px] sm:rounded-[3rem] sm:px-9 sm:pb-9 sm:pt-7 lg:max-w-none lg:rounded-[2rem] lg:px-8 lg:pb-7 lg:pt-6 xl:px-10 xl:pb-8 xl:pt-7">
+    <section className="relative overflow-hidden rounded-[2rem] bg-white px-4 pb-8 pt-8 shadow-[0_26px_80px_rgba(9,106,243,0.08)] sm:px-8 lg:px-12 xl:px-16">
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#096AF3]/8 to-transparent" aria-hidden="true" />
+      <div className="relative z-10 mx-auto w-full max-w-2xl">
+        <div className="w-full rounded-[2rem] border border-slate-200 bg-white px-6 pb-8 pt-6 text-[#070525] shadow-[0_28px_80px_rgba(7,5,37,0.18)] sm:rounded-[2.5rem] sm:px-10 sm:pb-10 sm:pt-8 lg:px-12">
           {children}
         </div>
       </div>
@@ -365,19 +356,6 @@ function Step1SituationForm({ answers, setAnswers, setProfile, onContinue }: {
           label={t('subscription.situationIntro.scholarshipQuestion')}
         >
           <SegmentedYesNo value={isScholarship} onChange={(value) => updateAnswer({ scholarship: value })} />
-        </SituationFormRow>
-
-        <SituationFormRow
-          icon={<MapPin className="h-7 w-7 lg:h-5 lg:w-5 xl:h-6 xl:w-6" aria-hidden="true" />}
-          label={t('subscription.situationIntro.locationQuestion')}
-        >
-          <label className="sr-only" htmlFor="subscription-location">{t('subscription.situationIntro.locationQuestion')}</label>
-          <input
-            id="subscription-location"
-            value={mainLocation}
-            onChange={(event) => updateAnswer({ mainLocation: event.target.value })}
-            className="w-28 rounded-lg border border-transparent bg-transparent px-1 text-right text-sm font-black leading-tight text-[#070525] outline-none focus:border-[#096AF3] focus:bg-[#F4F8FE] sm:w-32 sm:text-base lg:w-28 lg:text-sm xl:w-32 xl:text-base"
-          />
         </SituationFormRow>
       </div>
 

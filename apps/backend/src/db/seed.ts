@@ -61,7 +61,7 @@ async function seed() {
     { id: 'tst_50',             name: 'TST Réduction 50%',      description: 'La moitié du prix pour les bénéficiaires de l\'AME. Votre droit automatiquement vérifié.',         yearlyPrice: 54480,  monthlyPrice: 4540,  renewal: 'quarterly' },
     { id: 'tst_75',             name: 'TST Solidarité 75%',     description: '75% de réduction pour les bénéficiaires CMU-C, CSS ou ASS. Renouvelable tous les 3 mois.',        yearlyPrice: 27240,  monthlyPrice: 2270,  renewal: 'quarterly' },
     { id: 'tst_gratuite',       name: 'TST Gratuité',           description: 'Transport 100% gratuit si vous bénéficiez du RSA ou de l\'ASS avec la CSS. Zéro euro par mois.',  yearlyPrice: 0,      monthlyPrice: 0,     renewal: 'quarterly' },
-    { id: 'amethyste',          name: 'Améthyste',              description: 'Un abonnement adapté, reconnu par la MDPH. Voyagez librement sur tout le réseau francilien.',      yearlyPrice: null,   monthlyPrice: null,  renewal: 'annual'    },
+    { id: 'amethyste',          name: 'Personne en situation de handicap', description: 'Un abonnement adapté, reconnu par la MDPH. Voyagez librement sur tout le réseau francilien.',      yearlyPrice: null,   monthlyPrice: null,  renewal: 'annual'    },
   ])
 
   // ── UTILISATEURS ───────────────────────────────────────────────────────────
@@ -173,7 +173,7 @@ async function seed() {
     stripeCustomerId: 'cus_test_fatima',
   }).returning()
 
-  // Pierre — Améthyste — PENDING_PAYMENT (docs valides, attend paiement)
+  // Pierre — Personne en situation de handicap — PENDING_PAYMENT (docs valides, attend paiement)
   const [pierreSub] = await db.insert(subscriptions).values({
     payerId: pierre.id, holderId: pierre.id, offerId: 'amethyste',
     status: 'pending_payment',
@@ -316,7 +316,7 @@ async function seed() {
     { userId: emma.id,    type: 'documents_required',     message: 'Votre certificat de scolarité est en cours de vérification par notre équipe.' },
     { userId: robert.id,  type: 'subscription_suspended', message: 'Votre abonnement Navigo Annuel a été suspendu suite à un impayé. Veuillez régulariser votre situation.' },
     { userId: fatima.id,  type: 'subscription_renewal',   message: 'Votre droit TST Gratuité expire le 30 juin 2026. Renouvelez votre attestation CAF.' },
-    { userId: pierre.id,  type: 'payment_required',       message: 'Vos documents ont été validés. Finalisez votre souscription Améthyste en renseignant votre moyen de paiement.' },
+    { userId: pierre.id,  type: 'payment_required',       message: 'Vos documents ont été validés. Finalisez votre souscription « Personne en situation de handicap » en renseignant votre moyen de paiement.' },
     { userId: karim.id,   type: 'fraud_alert',            message: 'Un problème a été détecté sur votre dossier. Veuillez contacter le support Comutitres au 3424 (lun–ven 8h–20h).' },
     { userId: alice.id,   type: 'subscription_draft',     message: 'Vous avez une souscription en cours. Reprenez votre parcours pour finaliser votre abonnement.' },
   ])
