@@ -179,6 +179,38 @@ AI_PROVIDER=mock
 AI_PROVIDER=mock
 ```
 
+## Application mobile
+
+L'app mobile (Expo) tourne sur un téléphone physique et doit joindre le backend.
+
+### Mac / Linux natif
+
+Utiliser l'IP locale de la machine (même WiFi que le téléphone) :
+
+```ts
+// apps/mobile/constants/api.ts
+export const API_BASE_URL = 'http://192.168.1.XX:3000/api'
+```
+
+### WSL2
+
+Le téléphone ne peut pas joindre WSL2 via l'IP locale Windows. Il faut exposer le backend avec un tunnel cloudflared.
+
+Lancer le tunnel (dans le container ou en local) :
+
+```bash
+cloudflared tunnel --url http://localhost:3000
+```
+
+Copier l'URL générée (ex: `https://xxx.trycloudflare.com`) et la mettre dans :
+
+```ts
+// apps/mobile/constants/api.ts
+export const API_BASE_URL = 'https://xxx.trycloudflare.com/api'
+```
+
+> L'URL change à chaque relance du tunnel — ne pas commiter cette valeur.
+
 ## Commandes utiles
 
 ```bash
